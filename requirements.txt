@@ -1,0 +1,4 @@
+##
+#Manga box Requirements
+##
+-r requirements/production.txt
