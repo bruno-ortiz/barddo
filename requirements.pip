@@ -1,4 +1,4 @@
 ##
 #Manga box Requirements
 ##
--r requirements/production.txt
+-r requirements/production.pip

@@ -1,1 +1,0 @@
-NÃO APAGUE, o arquivo serve para versionar a pasta static, dado que o mercurial não versiona diretórios vazios
