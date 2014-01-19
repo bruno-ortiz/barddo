@@ -1,5 +1,5 @@
 ##
-# Manga box development requirements
+# barddo box development requirements
 ##
 django==1.6.1
 South==0.8.4

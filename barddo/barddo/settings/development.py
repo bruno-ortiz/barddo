@@ -1,6 +1,4 @@
 """Development settings and globals."""
-from os.path import join, normpath
-
 from base import *
 
 ########## DEBUG CONFIGURATION
@@ -23,7 +21,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.mysql',
-#        'NAME': 'manga-box.dev',
+#        'NAME': 'barddo.dev',
 #        'USER': 'root',
 #        'PASSWORD': 'root',
 #        'HOST': 'localhost',
