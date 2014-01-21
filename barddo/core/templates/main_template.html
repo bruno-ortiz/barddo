@@ -35,9 +35,10 @@
         <!--[if lte IE 8]>
 		  <link rel="stylesheet" href="{{ STATIC_URL }}css/ace-ie.min.css" />
 		<![endif]-->
-
         <!-- inline styles related to this page -->
+    {% endcompress %}
 
+    {% compress js %}
         <!-- ace settings handler -->
 
         <script src="{{ STATIC_URL }}js/ace-extra.min.js"></script>
@@ -49,6 +50,7 @@
 		<script src="{{ STATIC_URL }}js/respond.min.js"></script>
 		<![endif]-->
     {% endcompress %}
+
 </head>
 
 <body>
