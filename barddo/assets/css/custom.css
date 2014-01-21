@@ -1,0 +1,4 @@
+
+.datepicker, .datepicker-dropdown {
+    z-index: 9999 !important;
+}

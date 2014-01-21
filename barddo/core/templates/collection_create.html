@@ -1,0 +1,185 @@
+{% extends 'main_template.html' %}
+
+{% block header %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/datepicker.css" />
+{% endblock %}
+
+{% block content %}
+    <a href="#new-collection-wizard" data-toggle="modal" class="pink"> New Collection </a>
+
+    <div id="new-collection-wizard" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- HEADER -->
+                <div class="modal-header" data-target="#modal-step-contents">
+                    <ul class="wizard-steps">
+                        <li data-target="#modal-start" class="active">
+                            <span class="step">1</span>
+                            <span class="title">Verification</span>
+                        </li>
+
+                        <li data-target="#modal-details">
+                            <span class="step">2</span>
+                            <span class="title">Collection Details</span>
+                        </li>
+
+                        <li data-target="#modal-confirmation">
+                            <span class="step">3</span>
+                            <span class="title">Confirmation</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- CONTENT -->
+                <div class="modal-body step-content" id="modal-step-contents">
+                    <div class="step-pane active" id="modal-start">
+                        {% include "collection_form/_name_validation.html" %}
+                    </div>
+
+                    <div class="step-pane" id="modal-details">
+                        {% include "collection_form/_general_information.html" %}
+                    </div>
+
+                    <div class="step-pane" id="modal-confirmation">
+                        {% include "collection_form/_confirmation.html" %}
+                    </div>
+                </div>
+
+                <!-- NAVIGATION -->
+                <div class="modal-footer wizard-actions">
+                    <button class="btn btn-sm btn-prev">
+                        <i class="icon-arrow-left"></i>
+                        Prev
+                    </button>
+
+                    <button class="btn btn-success btn-sm btn-next" data-last="Finish ">
+                        Next
+                        <i class="icon-arrow-right icon-on-right"></i>
+                    </button>
+
+                    <button class="btn btn-danger btn-sm pull-left" data-dismiss="modal">
+                        <i class="icon-remove"></i>
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block page_specific_javascript %}
+    <script src="{{ STATIC_URL }}js/fuelux/fuelux.wizard.min.js"></script>
+    <script src="{{ STATIC_URL }}js/bootbox.min.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.validate.min.js"></script>
+    <script src="{{ STATIC_URL }}js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap-tag.min.js"></script>
+{% endblock %}
+
+{% block bottom_page %}
+    <script type="text/javascript">
+        jQuery(function($) {
+            $('#collection-name-form').validate({
+                errorElement: 'div',
+                errorClass: 'help-block',
+                focusInvalid: false,
+                rules: {
+                    name: {
+                        required: true
+                    }
+                },
+
+                messages: {
+                    name: "Please provide a valid email."
+                },
+
+                invalidHandler: function (event, validator) { //display error alert on form submit
+                    $('.alert-danger', $('.login-form')).show();
+                },
+
+                highlight: function (e) {
+                    $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+                },
+
+                success: function (e) {
+                    $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+                    $(e).remove();
+                },
+
+                errorPlacement: function (error, element) {
+                    if(element.is(':checkbox') || element.is(':radio')) {
+                        var controls = element.closest('div[class*="col-"]');
+                        if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                        else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                    }
+                    else if(element.is('.select2')) {
+                        error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                    }
+                    else if(element.is('.chosen-select')) {
+                        error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+                    }
+                    else error.insertAfter(element.parent());
+                },
+
+                submitHandler: function (form) {
+                },
+                invalidHandler: function (form) {
+                }
+            });
+
+            $('#new-collection-wizard .modal-header').ace_wizard()
+
+                    .on('finished', function(e) {
+                        bootbox.dialog({
+                            message: "Thank you! Your collection was successfully created!",
+                            buttons: {
+                                "success" : {
+                                    "label" : "Thanks!",
+                                    "className" : "btn-sm btn-primary"
+                                }
+                            }
+                        });
+
+                        $('#new-collection-wizard').modal('hide');
+                    })
+
+                    .on('change' , function(e, info){
+                        if(info.step == 1) {
+                            if(!$('#collection-name-form').valid()) return false;
+                        }
+                    });
+
+            $('#new-collection-wizard .wizard-actions .btn[data-dismiss=modal]').removeAttr('disabled');
+
+            $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
+                $(this).prev().focus();
+            });
+
+            $('#new-collection-wizard input[type=file]').ace_file_input({
+                style:'well',
+                btn_choose:'Drop your collection cover here or click to choose',
+                btn_change:null,
+                no_icon:'icon-cloud-upload',
+                droppable:true,
+                thumbnail:'large'
+            });
+
+            //we could just set the data-provide="tag" of the element inside HTML, but IE8 fails!
+            var tag_input = $('#categories');
+            if(! ( /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase())) )
+            {
+                tag_input.tag(
+                    {
+                        placeholder:tag_input.attr('placeholder'),
+                        //enable typeahead by specifying the source array
+                        source: ace.variable_US_STATES,//defined in ace.js >> ace.enable_search_ahead
+                    }
+                );
+            }
+            else {
+                //display a textarea for old IE, because it doesn't support this plugin or another one I tried!
+                tag_input.after('<textarea id="'+tag_input.attr('id')+'" name="'+tag_input.attr('name')+'" rows="3">'+tag_input.val()+'</textarea>').remove();
+            }
+        });
+    </script>
+{% endblock %}
