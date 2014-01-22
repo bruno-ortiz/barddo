@@ -1,9 +1,7 @@
 from django.conf.urls import patterns, url
-from .views import index
+from .views import logged
 
-urlpatterns = patterns('',
-
-    url(r'^$',
-        index,
-        name='core.index'),
+urlpatterns = patterns(
+    '',
+    url(r'^$', logged, name='core.index'),
 )

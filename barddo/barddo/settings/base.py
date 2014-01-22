@@ -39,13 +39,12 @@ MANAGERS = ADMINS
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'barddo.db', # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': 'localhost', # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '', # Set to empty string for default.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'barddo_dev',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 ########## END DATABASE CONFIGURATION
@@ -205,6 +204,7 @@ THIRD_PARTY_APPS = (
 # Apps specific for this project go here.
 LOCAL_APPS = (
     'core',
+    'barddo_auth',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -262,3 +262,47 @@ COMPRESS_PRECOMPILERS = (
 
 COMPRESS_ROOT = STATIC_ROOT
 ########## END OF SCSS COMPRESSOR CONFIGURATION
+
+##
+#SOCIAL AUTH CONFIG
+##
+AUTHENTICATION_BACKENDS = (
+    'barddo_auth.models.BarddoUserAuthBackend',
+    'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.google.GoogleOAuth2Backend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+AUTH_USER_MODEL = 'barddo_auth.BarddoUser'
+
+SOCIAL_AUTH_USER_MODEL = AUTH_USER_MODEL
+
+SOCIAL_AUTH_DEFAULT_USERNAME = 'Barddo'
+SOCIAL_AUTH_UID_LENGTH = 16
+SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 16
+SOCIAL_AUTH_NONCE_SERVER_URL_LENGTH = 16
+SOCIAL_AUTH_ASSOCIATION_SERVER_URL_LENGTH = 16
+
+FACEBOOK_APP_ID = '579142508831157'
+FACEBOOK_API_SECRET = '3b9439528f2bd7cce28f25f8948f03fe'
+FACEBOOK_EXTENDED_PERMISSIONS = ['email', 'user_about_me', 'user_birthday']
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_auth.backends.pipeline.social.social_auth_user',
+    'social_auth.backends.pipeline.associate.associate_by_email',
+    'social_auth.backends.pipeline.user.get_username',
+    'social_auth.backends.pipeline.user.create_user',
+    'social_auth.backends.pipeline.social.associate_user',
+    'social_auth.backends.pipeline.social.load_extra_data',
+    'social_auth.backends.pipeline.user.update_user_details',
+    'barddo_auth.pipelines.get_avatar',
+    'barddo_auth.pipelines.get_birth_date',
+    'barddo_auth.pipelines.get_gender',
+)
+
+LOGIN_URL = '/login'
+LOGIN_REDIRECT_URL = '/'
+LOGIN_ERROR_URL = '/login-error'
+
+GOOGLE_OAUTH2_CLIENT_ID = '1010521892059-tf5leugg86ib3t2vsa2g4sbqm04lkj43.apps.googleusercontent.com'
+GOOGLE_OAUTH2_CLIENT_SECRET = 'VWrV9x7s6Xxsr058StR6G09Q'
