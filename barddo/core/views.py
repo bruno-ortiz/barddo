@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .forms import CollectionForm
 
 
 def index(request):
@@ -14,4 +15,5 @@ def collection_list(request):
 
 
 def collection_create(request):
-    return render(request, "collection_create.html")
+    form = CollectionForm()
+    return render(request, "collection_create.html", {'form': form})

@@ -1,4 +1,6 @@
 {% extends 'main_template.html' %}
+{% load dajaxice_templatetags %}
+{% load static %}
 
 {% block header %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/datepicker.css" />
@@ -52,7 +54,7 @@
                         Prev
                     </button>
 
-                    <button class="btn btn-success btn-sm btn-next" data-last="Finish ">
+                    <button id="collection-next" class="btn btn-success btn-sm btn-next" data-last="Finish ">
                         Next
                         <i class="icon-arrow-right icon-on-right"></i>
                     </button>
@@ -74,61 +76,30 @@
     <script src="{{ STATIC_URL }}js/jquery.validate.min.js"></script>
     <script src="{{ STATIC_URL }}js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="{{ STATIC_URL }}js/bootstrap-tag.min.js"></script>
+
+    {% dajaxice_js_import 'nocsrf' %}
+    <script type="text/javascript" src="{{ STATIC_URL }}dajax/jquery.dajax.core.js"></script>
+
+    <script type="text/javascript" src="{% static "js/pages/collection.create.js" %}"></script>
 {% endblock %}
 
 {% block bottom_page %}
     <script type="text/javascript">
+        var formValid = false;
+
+        function callback_validate_collection_error() {
+            formValid = false;
+        }
+
+        function callback_validate_collection_ok() {
+            if(!formValid) {
+                formValid = true;
+                $("#collection-next").trigger("click");
+            }
+        }
+
         jQuery(function($) {
-            $('#collection-name-form').validate({
-                errorElement: 'div',
-                errorClass: 'help-block',
-                focusInvalid: false,
-                rules: {
-                    name: {
-                        required: true
-                    }
-                },
-
-                messages: {
-                    name: "Please provide a valid email."
-                },
-
-                invalidHandler: function (event, validator) { //display error alert on form submit
-                    $('.alert-danger', $('.login-form')).show();
-                },
-
-                highlight: function (e) {
-                    $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
-                },
-
-                success: function (e) {
-                    $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
-                    $(e).remove();
-                },
-
-                errorPlacement: function (error, element) {
-                    if(element.is(':checkbox') || element.is(':radio')) {
-                        var controls = element.closest('div[class*="col-"]');
-                        if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
-                        else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
-                    }
-                    else if(element.is('.select2')) {
-                        error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
-                    }
-                    else if(element.is('.chosen-select')) {
-                        error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
-                    }
-                    else error.insertAfter(element.parent());
-                },
-
-                submitHandler: function (form) {
-                },
-                invalidHandler: function (form) {
-                }
-            });
-
             $('#new-collection-wizard .modal-header').ace_wizard()
-
                     .on('finished', function(e) {
                         bootbox.dialog({
                             message: "Thank you! Your collection was successfully created!",
@@ -144,10 +115,20 @@
                     })
 
                     .on('change' , function(e, info){
-                        if(info.step == 1) {
-                            if(!$('#collection-name-form').valid()) return false;
+
+                        // Ajax validation
+                        if(info.direction == "next") {
+                            if(info.step == 2) {
+                                Dajaxice.core.register_a_collection(Dajax.process, {
+                                    'form': $('#collection-form').serialize(true)
+                                });
+
+                                return formValid;
+                            }
                         }
                     });
+
+
 
             $('#new-collection-wizard .wizard-actions .btn[data-dismiss=modal]').removeAttr('disabled');
 
@@ -169,17 +150,19 @@
             if(! ( /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase())) )
             {
                 tag_input.tag(
-                    {
-                        placeholder:tag_input.attr('placeholder'),
-                        //enable typeahead by specifying the source array
-                        source: ace.variable_US_STATES,//defined in ace.js >> ace.enable_search_ahead
-                    }
+                        {
+                            placeholder:tag_input.attr('placeholder'),
+                            //enable typeahead by specifying the source array
+                            source: ace.variable_US_STATES,//defined in ace.js >> ace.enable_search_ahead
+                        }
                 );
             }
             else {
                 //display a textarea for old IE, because it doesn't support this plugin or another one I tried!
                 tag_input.after('<textarea id="'+tag_input.attr('id')+'" name="'+tag_input.attr('name')+'" rows="3">'+tag_input.val()+'</textarea>').remove();
             }
+
+            $("#collection-next").prop("disabled", true);
         });
     </script>
 {% endblock %}
