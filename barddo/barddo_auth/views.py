@@ -1,13 +1,10 @@
 from django.contrib.auth import logout
-from django.shortcuts import render
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 
 __author__ = 'bruno'
 
 
 def logout_user(request):
     logout(request)
-    return login(request)
-
-
-def login(request):
-    return render(request, "index.html")
+    return HttpResponseRedirect(reverse('core.views.index'))
