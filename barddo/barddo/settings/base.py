@@ -63,6 +63,8 @@ LANGUAGE_CODE = 'pt-br'
 
 SITE_ID = 1
 
+DATE_INPUT_FORMATS = ('%d-%m-%Y')
+
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True
@@ -123,6 +125,7 @@ ALLOWED_HOSTS = []
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-FIXTURE_DIRS
 FIXTURE_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'fixtures')),
+    path.normpath(path.join(SITE_ROOT, 'core', 'fixtures')),
 )
 ########## END FIXTURE CONFIGURATION
 

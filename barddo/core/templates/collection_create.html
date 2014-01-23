@@ -99,6 +99,8 @@
         }
 
         jQuery(function($) {
+            $({{ form.start_date.auto_id }}).datepicker('setValue', new Date());
+
             $('#new-collection-wizard .modal-header').ace_wizard()
                     .on('finished', function(e) {
                         bootbox.dialog({

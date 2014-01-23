@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import CollectionUnit
 
-# Register your models here.
+
+class CollectionUnitAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(CollectionUnit, CollectionUnitAdmin)

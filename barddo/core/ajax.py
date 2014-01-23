@@ -7,8 +7,8 @@ from django.utils.html import escape
 from dajaxice.utils import deserialize_form
 from django.contrib.auth.decorators import login_required
 
-@dajaxice_register
 #@login_required
+@dajaxice_register
 def validate_unique_collection(request, collection_name):
     """
     Used to validate when collection name is valid or not
@@ -25,6 +25,7 @@ def validate_unique_collection(request, collection_name):
     return ajax.json()
 
 
+#@login_required
 @dajaxice_register
 def register_a_collection(request, form):
     ajax = Dajax()
@@ -34,9 +35,10 @@ def register_a_collection(request, form):
         ajax.script('callback_validate_collection_ok()')
     else:
         ajax.script('callback_validate_collection_error()')
-        ajax.remove_css_class('#collection-form', 'has-error')
+        ajax.remove_css_class("#collection-form div.form-group", "has-error")
+
         for error in form.errors:
             print error
-            ajax.add_css_class('#id_%s' % error, 'has-error')
+            ajax.script('$("#id_%s").closest("div.form-group").addClass("has-error")' % error)
 
     return ajax.json()
