@@ -1,13 +1,14 @@
 {% extends 'main_template.html' %}
 {% load dajaxice_templatetags %}
 {% load static %}
+{% load compress %}
 
 {% block header %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/datepicker.css" />
 {% endblock %}
 
 {% block content %}
-    <a href="#new-collection-wizard" data-toggle="modal" class="pink"> New Collection </a>
+    <a id="collection-wizard-link" href="#new-collection-wizard" data-toggle="modal" class="pink"> New Collection </a>
 
     <div id="new-collection-wizard" class="modal">
         <div class="modal-dialog">
@@ -17,12 +18,12 @@
                     <ul class="wizard-steps">
                         <li data-target="#modal-start" class="active">
                             <span class="step">1</span>
-                            <span class="title">Verification</span>
+                            <span class="title">Name Verification</span>
                         </li>
 
                         <li data-target="#modal-details">
                             <span class="step">2</span>
-                            <span class="title">Collection Details</span>
+                            <span class="title">Details</span>
                         </li>
 
                         <li data-target="#modal-confirmation">
@@ -49,19 +50,19 @@
 
                 <!-- NAVIGATION -->
                 <div class="modal-footer wizard-actions">
-                    <button class="btn btn-sm btn-prev">
+                    <button id="collection-prev" class="btn btn-sm btn-prev">
                         <i class="icon-arrow-left"></i>
                         Prev
                     </button>
 
-                    <button id="collection-next" class="btn btn-success btn-sm btn-next" data-last="Finish ">
+                    <button id="collection-next" class="btn btn-success btn-sm btn-next">
                         Next
                         <i class="icon-arrow-right icon-on-right"></i>
                     </button>
 
                     <button class="btn btn-danger btn-sm pull-left" data-dismiss="modal">
                         <i class="icon-remove"></i>
-                        Cancel
+                        Close
                     </button>
                 </div>
             </div>
@@ -71,20 +72,22 @@
 {% endblock %}
 
 {% block page_specific_javascript %}
-    <script src="{{ STATIC_URL }}js/fuelux/fuelux.wizard.min.js"></script>
-    <script src="{{ STATIC_URL }}js/bootbox.min.js"></script>
-    <script src="{{ STATIC_URL }}js/jquery.validate.min.js"></script>
-    <script src="{{ STATIC_URL }}js/date-time/bootstrap-datepicker.min.js"></script>
-    <script src="{{ STATIC_URL }}js/bootstrap-tag.min.js"></script>
-
-    {% dajaxice_js_import 'nocsrf' %}
-    <script type="text/javascript" src="{{ STATIC_URL }}dajax/jquery.dajax.core.js"></script>
-
-    <script type="text/javascript" src="{% static "js/pages/collection.create.js" %}"></script>
+    {% compress js %}
+        <script src="{{ STATIC_URL }}js/fuelux/fuelux.wizard.min.js"></script>
+        <script src="{{ STATIC_URL }}js/bootbox.min.js"></script>
+        <script src="{{ STATIC_URL }}js/jquery.validate.min.js"></script>
+        <script src="{{ STATIC_URL }}js/date-time/bootstrap-datepicker.min.js"></script>
+        <script src="{{ STATIC_URL }}js/bootstrap-tag.min.js"></script>
+        {% dajaxice_js_import 'nocsrf' %}
+        <script type="text/javascript" src="{{ STATIC_URL }}dajax/jquery.dajax.core.js"></script>
+        <script type="text/javascript" src="{% static "js/barddo/pages/collection.create.js" %}"></script>
+    {% endcompress %}
 {% endblock %}
 
 {% block bottom_page %}
     <script type="text/javascript">
+
+        // Workaround to handle form validation in an asynchronous way
         var formValid = false;
 
         function callback_validate_collection_error() {
@@ -98,73 +101,58 @@
             }
         }
 
-        jQuery(function($) {
-            $({{ form.start_date.auto_id }}).datepicker('setValue', new Date());
+        function init_wizard() {
+            $("#collection-name-group").removeClass("has-error has-success").addClass("has-info");
+            $("#collection-next").html('Next <i class="icon-arrow-right icon-on-right"></i>');
+            $("#collection-next").prop("disabled", true);
+            $("#collection-name-validation").val('');
+            $("#collection-name-group i").removeClass().addClass('icon-info-sign');
+            setTimeout(function() {$("#collection-name-validation").focus(); }, 500);
+            formValid = false;
+        }
 
+        jQuery(function($) {
+            // TODO: change text to internationalized
             $('#new-collection-wizard .modal-header').ace_wizard()
                     .on('finished', function(e) {
-                        bootbox.dialog({
-                            message: "Thank you! Your collection was successfully created!",
-                            buttons: {
-                                "success" : {
-                                    "label" : "Thanks!",
-                                    "className" : "btn-sm btn-primary"
-                                }
-                            }
-                        });
-
                         $('#new-collection-wizard').modal('hide');
                     })
 
-                    .on('change' , function(e, info){
+                    .on('stepclick', function(e){
+                        return false; //prevent clicking on steps
+                    })
 
-                        // Ajax validation
-                        if(info.direction == "next") {
-                            if(info.step == 2) {
-                                Dajaxice.core.register_a_collection(Dajax.process, {
-                                    'form': $('#collection-form').serialize(true)
-                                });
+                    .on('change' , function(e, info){
+                        if(info.step == 1) {
+                            $("#collection-next").html("<i class='icon-star'></i> Create Now!");
+                        }
+
+                        if(info.step == 2) {
+                            if(info.direction == "next") {
+                                if(formValid) {
+                                    $("#collection-next").html("<i class='icon-heart'></i> Thank you!");
+                                    $("#collection-prev").hide();
+                                } else {
+                                    Dajaxice.core.register_a_collection(Dajax.process, {
+                                        'form': $('#collection-form').serialize(true)
+                                    });
+                                }
 
                                 return formValid;
+                            } else {
+                                init_wizard();
                             }
                         }
                     });
 
 
+            $('#collection-wizard-link').on('click', function() {
+                wizardMoveFirst($('#new-collection-wizard .modal-header'));
+            });
 
             $('#new-collection-wizard .wizard-actions .btn[data-dismiss=modal]').removeAttr('disabled');
 
-            $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
-                $(this).prev().focus();
-            });
-
-            $('#new-collection-wizard input[type=file]').ace_file_input({
-                style:'well',
-                btn_choose:'Drop your collection cover here or click to choose',
-                btn_change:null,
-                no_icon:'icon-cloud-upload',
-                droppable:true,
-                thumbnail:'large'
-            });
-
-            //we could just set the data-provide="tag" of the element inside HTML, but IE8 fails!
-            var tag_input = $('#categories');
-            if(! ( /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase())) )
-            {
-                tag_input.tag(
-                        {
-                            placeholder:tag_input.attr('placeholder'),
-                            //enable typeahead by specifying the source array
-                            source: ace.variable_US_STATES,//defined in ace.js >> ace.enable_search_ahead
-                        }
-                );
-            }
-            else {
-                //display a textarea for old IE, because it doesn't support this plugin or another one I tried!
-                tag_input.after('<textarea id="'+tag_input.attr('id')+'" name="'+tag_input.attr('name')+'" rows="3">'+tag_input.val()+'</textarea>').remove();
-            }
-
-            $("#collection-next").prop("disabled", true);
+            init_wizard();
         });
     </script>
 {% endblock %}

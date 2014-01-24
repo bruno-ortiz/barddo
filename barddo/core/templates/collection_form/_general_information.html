@@ -47,14 +47,27 @@
             </span>
         </div>
     </div>
-
-    <div class="form-group">
-        <label for="{{ form.cover.auto_id }}" class="col-xs-12 col-sm-3 control-label no-padding-right">{{ form.cover.label }}</label>
-
-        <div class="col-xs-12 col-sm-5">
-            <span class="block">
-                {% render_field form.cover type="file" %}
-            </span>
-        </div>
-    </div>
 </form>
+
+{% block bottom_page %}
+    <script type="text/javascript">
+        jQuery(function($) {
+            // A new collection start date may be today
+            $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
+                $(this).prev().focus();
+            });
+
+            $({{ form.start_date.auto_id }}).datepicker('setValue', new Date());
+
+            // Use a beauty drop file widget
+            $('#new-collection-wizard input[type=file]').ace_file_input({
+                style:'well',
+                btn_choose:'Drop your collection cover here or click to choose',
+                btn_change:null,
+                no_icon:'icon-cloud-upload',
+                droppable:true,
+                thumbnail:'large'
+            });
+        });
+    </script>
+{% endblock %}

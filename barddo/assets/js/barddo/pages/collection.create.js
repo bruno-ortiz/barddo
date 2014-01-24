@@ -1,24 +1,19 @@
-
-
 /**
- * A delayed function to use when need the user interaction
+ * Called when the collection name provided is no avaliable.
+ * Should handle error class and messages to the user.
  */
-var delay = (function(){
-  var timer = 0;
-
-  return function(callback, ms){
-    clearTimeout (timer);
-    timer = setTimeout(callback, ms);
-  };
-})();
-
-
 function callback_collection_name_is_not_avaliable() {
     $("#collection-name-group").removeClass("has-success has-info").addClass("has-error")
     $("#collection-name-group i").removeClass().addClass("icon-exclamation-sign")
     $("#collection-next").prop('disabled', true);
+
+    error_tooltip('#collection-name-validation', 'Name already in use!')
 }
 
+/**
+ * Called when the collection name provided is avaliable.
+ * Should handle success class and messages to the user.
+ */
 function callback_collection_name_is_avaliable() {
     $("#collection-name-group").removeClass("has-error has-info").addClass("has-success")
     $("#collection-name-group i").removeClass().addClass("icon-ok-sign")
@@ -33,10 +28,13 @@ function callback_collection_name_is_avaliable() {
  */
 $('#collection-name-validation').keyup(function() {
     delay(function(){
-        Dajaxice.core.validate_unique_collection(Dajax.process, {
-            'collection_name': $('#collection-name-validation').val()
-        });
+        var name = $('#collection-name-validation').val();
+        if(name.length > 2) {
+            Dajaxice.core.validate_unique_collection(Dajax.process, {
+                'collection_name': $('#collection-name-validation').val()
+            });
 
-        $('#collection-name-group i').removeClass('icon-info-sign').addClass('icon-spinner icon-spin');
+            $('#collection-name-group i').removeClass('icon-info-sign').addClass('icon-spinner icon-spin');
+        }
     }, 1000);
 });

@@ -20,14 +20,6 @@ class CollectionUnit(models.Model):
         return self.description
 
 
-def get_collection_cover_path(instance, filename):
-    """
-        Default collection cover path
-    """
-    # TODO: covers should be stored by convention
-    return os.path.join('covers', 'collection', filename)
-
-
 class Collection(models.Model):
     """
     A collection is a catalog of works from one or more artists.
@@ -46,15 +38,14 @@ class Collection(models.Model):
         (STATUS_STOPPED, _('Stopped')),
     )
 
-    name = models.CharField(_('Collection Name'), max_length=250, db_index=True)
+    name = models.CharField(_('Collection Name'), max_length=250, unique=True)
     summary = models.TextField(_('Summary'))
-    cover = models.ImageField(_('Cover Art'), upload_to=get_collection_cover_path)
 
     slug = models.SlugField(_('Slug'), max_length=250, db_index=True)
     status = models.SmallIntegerField(_('Status'), choices=STATUS_CHOICES, default=STATUS_ONGOING, db_index=True)
     unit = models.ForeignKey(CollectionUnit)
 
-    start_date = models.DateField(_('Start Date'), blank=True, null=True)
+    start_date = models.DateField(_('Start Date'), blank=False, null=False)
     end_date = models.DateField(_('End Date'), blank=True, null=True)
 
     # TODO: collection tags
@@ -67,7 +58,7 @@ class Collection(models.Model):
         This will only create a new slug, there's no need to update with collection name
         """
         if not self.id:
-            self.slug = slugify(self.q)
+            self.slug = slugify(self.name)
 
         super(Collection, self).save(*args, **kwargs)
 

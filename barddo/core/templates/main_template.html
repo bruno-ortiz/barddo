@@ -41,6 +41,9 @@
     {% endcompress %}
 
     {% compress js %}
+        <!-- Always load jquery on header, so we can use javascript on the page body -->
+        <script src="{%  static 'js/jquery-2.0.3.min.js'%}"></script>
+
         <!-- ace settings handler -->
 
         <script src="{{ STATIC_URL }}js/ace-extra.min.js"></script>
@@ -339,7 +342,7 @@
 
 <!-- basic scripts -->
 
-<script src="{{ STATIC_URL }}js/jquery-2.0.3.min.js"></script>
+
 
 <script type="text/javascript">
     if("ontouchend" in document) document.write("<script src='{{ STATIC_URL }}js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
@@ -357,6 +360,8 @@
 <script src="{{ STATIC_URL }}js/jquery.ui.touch-punch.min.js"></script>
 <script src="{{ STATIC_URL }}js/jquery.slimscroll.min.js"></script>
 
+<script src="{{ STATIC_URL }}js/barddo/utils.js"></script>
+
 {% block page_specific_javascript %}
 
 {% endblock %}
@@ -365,7 +370,6 @@
 
 <script src="{{ STATIC_URL }}js/ace-elements.min.js"></script>
 <script src="{{ STATIC_URL }}js/ace.min.js"></script>
-
 
 {% block bottom_page %}
 
