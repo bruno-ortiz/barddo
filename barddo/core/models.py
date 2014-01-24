@@ -105,3 +105,4 @@ class Work(models.Model):
 
     # TODO: work tags
     # TODO: work categories
+    # TODO: store files by convention
