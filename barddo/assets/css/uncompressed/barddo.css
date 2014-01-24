@@ -38,3 +38,7 @@
     border-radius: 0;
     border: 1px solid #FFF;
 }
+
+.datepicker, .datepicker-dropdown {
+    z-index: 9999 !important;
+}

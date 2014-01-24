@@ -7,7 +7,7 @@ from django.utils.html import escape
 from dajaxice.utils import deserialize_form
 from django.contrib.auth.decorators import login_required
 
-# TODO: @login_required
+@login_required
 @dajaxice_register
 def validate_unique_collection(request, collection_name):
     """
@@ -25,7 +25,7 @@ def validate_unique_collection(request, collection_name):
     return ajax.json()
 
 
-# TODO: @login_required
+@login_required
 @dajaxice_register
 def register_a_collection(request, form):
     """
