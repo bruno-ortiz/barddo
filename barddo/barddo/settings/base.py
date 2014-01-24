@@ -28,7 +28,7 @@ TEMPLATE_DEBUG = DEBUG
 ########## MANAGER CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
-    ('Barddo-Box Team', ''),
+    ('Barddo Team', ''),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
@@ -58,9 +58,11 @@ TIME_ZONE = 'America/Sao_Paulo'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'pt-br'
+LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
+
+DATE_INPUT_FORMATS = ('%d-%m-%Y')
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -122,6 +124,7 @@ ALLOWED_HOSTS = []
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-FIXTURE_DIRS
 FIXTURE_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'fixtures')),
+    path.normpath(path.join(SITE_ROOT, 'core', 'fixtures')),
 )
 ########## END FIXTURE CONFIGURATION
 

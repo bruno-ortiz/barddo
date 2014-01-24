@@ -1,5 +1,6 @@
 .pyc$
 .idea/
-.bd
+.db
 static/
+.DS_Store
 user_avatar/
