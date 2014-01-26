@@ -4,13 +4,22 @@ from base import *
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": ":memory:",
+        "NAME": "barddo.db",
         "USER": "",
         "PASSWORD": "",
         "HOST": "",
         "PORT": "",
     },
 }
+
+PASSWORD_HASHERS = (
+    'django.contrib.auth.hashers.SHA1PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptPasswordHasher',
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+    'django.contrib.auth.hashers.CryptPasswordHasher',
+)
 
 ########## JENKINS TESTS CONFIGURATION
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
@@ -32,3 +41,15 @@ JENKINS_TASKS = (
 
 PROJECT_APPS = LOCAL_APPS
 ########## END OF JENKINS TESTS CONFIGURATION
+
+DEBUG = False
+
+########## MISC CONFIGURATION
+COMPRESS_OFFLINE = False
+
+
+##
+# Disable SOUTH
+##
+SOUTH_TESTS_MIGRATE = False
+SKIP_SOUTH_TESTS = True

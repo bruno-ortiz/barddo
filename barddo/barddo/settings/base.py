@@ -303,7 +303,7 @@ SOCIAL_AUTH_PIPELINE = (
     'barddo_auth.pipelines.get_gender',
 )
 
-LOGIN_URL = '/login'
+LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_ERROR_URL = '/login-error'
 

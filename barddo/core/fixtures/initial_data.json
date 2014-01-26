@@ -1,25 +1,44 @@
 [
-  {
-    "model": "core.CollectionUnit",
-    "pk": 1,
-    "fields": {
-      "description": "Volume"
-    }
-  },
+    {
+        "model": "core.CollectionUnit",
+        "pk": 1,
+        "fields": {
+            "description": "Volume"
+        }
+    },
 
-  {
-    "model": "core.CollectionUnit",
-    "pk": 2,
-    "fields": {
-      "description": "Chapter"
-    }
-  },
+    {
+        "model": "core.CollectionUnit",
+        "pk": 2,
+        "fields": {
+            "description": "Chapter"
+        }
+    },
 
-  {
-    "model": "core.CollectionUnit",
-    "pk": 3,
-    "fields": {
-      "description": "Book"
+    {
+        "model": "core.CollectionUnit",
+        "pk": 3,
+        "fields": {
+            "description": "Book"
+        }
+    },
+    {
+        "model": "barddo_auth.BarddoUser",
+        "pk": 100000,
+        "fields": {
+            "username": "test",
+            "password": "sha1$1hvX9MDMto9N$8270872c6738077195fe5bd0387752441aa734af",
+            "is_active": true,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "barddo_auth.BarddoUserProfile",
+        "pk": 100000,
+        "fields": {
+            "user": 100000,
+            "gender": "m",
+            "birth_date": "1990-02-15"
+        }
     }
-  }
 ]
