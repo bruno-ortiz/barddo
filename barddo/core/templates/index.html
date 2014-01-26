@@ -8,44 +8,33 @@
 
 {% block content %}
     <div class="main-container-inner">
-        <a class="menu-toggler" id="menu-toggler" href="#">
-            <span class="menu-text"></span>
-        </a>
-
         <div class="main-content">
             <div class="breadcrumbs" id="breadcrumbs">
-                <script type="text/javascript">
-                    try {
-                        ace.settings.check('breadcrumbs', 'fixed')
-                    } catch (e) {
-                    }
-                </script>
+                <div class="pull-left">
+                    <div id="options">
+                            <ul id="filters" class="option-set clearfix" data-option-key="filter">
+                                <li><a href="#filter" data-option-value="*" class="selected"><i class="icon icon icon-th-large"></i> All Items</a></li>
+                                <li><a href="#filter" data-option-value=".collection-great"><i class="icon icon-star"></i> New</a></li>
+                                <li><a href="#filter" data-option-value=".collection-good"><i class="icon icon-comments"></i> Trending</a></li>
+                                <li><a href="#filter" data-option-value=".collection-common"><i class="icon icon-circle-arrow-up"></i> Rising</a></li>
+                            </ul>
+                        </div>
+                </div>
 
-                <ul class="breadcrumb">
-                    <li>
-                        <i class="icon-home home-icon"></i>
-                        <a href="#">Home</a>
-                    </li>
-                    <li class="active">Dashboard</li>
-                </ul>
-                <!-- .breadcrumb -->
+                <div class="pull-right nav-search" id="nav-search">
+                    <form class="form-search">
+                        <span class="input-icon">
+                            <input type="text" placeholder="Search for collections" class="nav-search-input" id="nav-search-input" autocomplete="off"/>
+                            <i class="icon-search nav-search-icon"></i>
+                        </span>
+                    </form>
+                </div>
             </div>
 
             <div class="page-content">
 
                 <div class="row">
                     <!-- PAGE CONTENT BEGINS -->
-                    <div class="col-lg-12  col-md-12 col-sm-12 col-xs-12">
-                        <div id="options">
-                            <ul id="filters" class="option-set clearfix" data-option-key="filter">
-                                <li><a href="#filter" data-option-value="*" class="selected"><i class="icon icon-reorder"></i> All Items</a></li>
-                                <li><a href="#filter" data-option-value=".collection-great"><i class="icon icon-th-large"></i> Great</a></li>
-                                <li><a href="#filter" data-option-value=".collection-good"><i class="icon icon-th-list"></i> Good</a></li>
-                                <li><a href="#filter" data-option-value=".collection-common"><i class="icon icon-th"></i> Common</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
 
                     <div id="collection-content" class="col-lg-12  col-md-12 col-sm-12 col-xs-12 collections-wrap">
                         <div class="row">
@@ -59,8 +48,7 @@
 
                                         <div class="roll">
                                             <div class="wrapcaption">
-                                                <a href="projectdetail.html"><i class="icon-link captionicons"></i></a>
-                                                <a data-gal="prettyPhoto[gallery1]" href="http://cdn.joentjuh.nl/manga/103058-v1-front-normal.jpg" title="La Chaux De Fonds"><i class="icon-zoom-in captionicons"></i></a>
+                                                <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
                                             </div>
                                         </div>
                                         <h1><a href="projectdetail.html">La Chaux De Fonds</a></h1>
@@ -75,8 +63,7 @@
                                         </div>
                                         <div class="roll">
                                             <div class="wrapcaption">
-                                                <a href="projectdetail.html"><i class="icon-link captionicons"></i></a>
-                                                <a data-gal="prettyPhoto[gallery1]" href="http://www.wowthemes.net/demo/serenity/img/temp/masonry/2.jpg" title="Taj Mahal"><i class="icon-zoom-in captionicons"></i></a>
+                                                <a href="projectdetail.html"><i class="icon-star captionicons liked"></i></a>
                                             </div>
                                         </div>
                                         <h1><a href="projectdetail.html">Taj Mahal</a></h1>
@@ -90,8 +77,7 @@
                                         </div>
                                         <div class="roll">
                                             <div class="wrapcaption">
-                                                <a href="projectdetail.html"><i class="icon-link captionicons"></i></a>
-                                                <a data-gal="prettyPhoto[gallery1]" href="http://www.wowthemes.net/demo/serenity/img/temp/masonry/3.jpg" title="Title Here"><i class="icon-zoom-in captionicons"></i></a>
+                                                <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
                                             </div>
                                         </div>
                                         <h1><a href="projectdetail.html">Versailles, France</a></h1>
@@ -105,8 +91,7 @@
                                         </div>
                                         <div class="roll">
                                             <div class="wrapcaption">
-                                                <a href="projectdetail.html"><i class="icon-link captionicons"></i></a>
-                                                <a data-gal="prettyPhoto[gallery1]" href="http://www.wowthemes.net/demo/serenity/img/temp/masonry/4.jpg" title="Title Here"><i class="icon-zoom-in captionicons"></i></a>
+                                                <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
                                             </div>
                                         </div>
                                         <h1><a href="projectdetail.html">St Petersburg, Russia</a></h1>
@@ -120,8 +105,7 @@
                                         </div>
                                         <div class="roll">
                                             <div class="wrapcaption">
-                                                <a href="projectdetail.html"><i class="icon-link captionicons"></i></a>
-                                                <a data-gal="prettyPhoto[gallery1]" href="http://www.wowthemes.net/demo/serenity/img/temp/masonry/5.jpg" title="Title Here"><i class="icon-zoom-in captionicons"></i></a>
+                                                <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
                                             </div>
                                         </div>
                                         <h1><a href="projectdetail.html">Grunge Architecture</a></h1>
@@ -135,8 +119,7 @@
                                         </div>
                                         <div class="roll">
                                             <div class="wrapcaption">
-                                                <a href="projectdetail.html"><i class="icon-link captionicons"></i></a>
-                                                <a data-gal="prettyPhoto[gallery1]" href="http://www.wowthemes.net/demo/serenity/img/temp/masonry/5.jpg" title="Title Here"><i class="icon-zoom-in captionicons"></i></a>
+                                                <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
                                             </div>
                                         </div>
                                         <h1><a href="projectdetail.html">Grunge Architecture</a></h1>
@@ -150,8 +133,7 @@
                                         </div>
                                         <div class="roll">
                                             <div class="wrapcaption">
-                                                <a href="projectdetail.html"><i class="icon-link captionicons"></i></a>
-                                                <a data-gal="prettyPhoto[gallery1]" href="http://www.wowthemes.net/demo/serenity/img/temp/masonry/5.jpg" title="Title Here"><i class="icon-zoom-in captionicons"></i></a>
+                                                <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
                                             </div>
                                         </div>
                                         <h1><a href="projectdetail.html">Grunge Architecture</a></h1>
@@ -165,8 +147,7 @@
                                         </div>
                                         <div class="roll">
                                             <div class="wrapcaption">
-                                                <a href="projectdetail.html"><i class="icon-link captionicons"></i></a>
-                                                <a data-gal="prettyPhoto[gallery1]" href="http://www.wowthemes.net/demo/serenity/img/temp/masonry/5.jpg" title="Title Here"><i class="icon-zoom-in captionicons"></i></a>
+                                                <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
                                             </div>
                                         </div>
                                         <h1><a href="projectdetail.html">Grunge Architecture</a></h1>
@@ -180,8 +161,7 @@
                                         </div>
                                         <div class="roll">
                                             <div class="wrapcaption">
-                                                <a href="projectdetail.html"><i class="icon-link captionicons"></i></a>
-                                                <a data-gal="prettyPhoto[gallery1]" href="http://www.wowthemes.net/demo/serenity/img/temp/masonry/5.jpg" title="Title Here"><i class="icon-zoom-in captionicons"></i></a>
+                                                <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
                                             </div>
                                         </div>
                                         <h1><a href="projectdetail.html">Grunge Architecture</a></h1>
@@ -195,8 +175,7 @@
                                         </div>
                                         <div class="roll">
                                             <div class="wrapcaption">
-                                                <a href="projectdetail.html"><i class="icon-link captionicons"></i></a>
-                                                <a data-gal="prettyPhoto[gallery1]" href="http://www.wowthemes.net/demo/serenity/img/temp/masonry/5.jpg" title="Title Here"><i class="icon-zoom-in captionicons"></i></a>
+                                                <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
                                             </div>
                                         </div>
                                         <h1><a href="projectdetail.html">Grunge Architecture</a></h1>
@@ -210,8 +189,7 @@
                                         </div>
                                         <div class="roll">
                                             <div class="wrapcaption">
-                                                <a href="projectdetail.html"><i class="icon-link captionicons"></i></a>
-                                                <a data-gal="prettyPhoto[gallery1]" href="http://www.wowthemes.net/demo/serenity/img/temp/masonry/5.jpg" title="Title Here"><i class="icon-zoom-in captionicons"></i></a>
+                                                <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
                                             </div>
                                         </div>
                                         <h1><a href="projectdetail.html">Grunge Architecture</a></h1>
@@ -225,8 +203,7 @@
                                         </div>
                                         <div class="roll">
                                             <div class="wrapcaption">
-                                                <a href="projectdetail.html"><i class="icon-link captionicons"></i></a>
-                                                <a data-gal="prettyPhoto[gallery1]" href="http://www.wowthemes.net/demo/serenity/img/temp/masonry/5.jpg" title="Title Here"><i class="icon-zoom-in captionicons"></i></a>
+                                                <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
                                             </div>
                                         </div>
                                         <h1><a href="projectdetail.html">Grunge Architecture</a></h1>
@@ -264,7 +241,7 @@
                 $(".roll").css("opacity","0");
                 $(".roll").hover(function () {
                             $(this).stop().animate({
-                                opacity: .8
+                                opacity: 1
                             }, "slow");
                         },
                         function () {

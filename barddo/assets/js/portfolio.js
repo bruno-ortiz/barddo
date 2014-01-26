@@ -1,13 +1,29 @@
 /*----------------------------------------------------*/
 /*	Isotope Portfolio Filter Section
-/*----------------------------------------------------*/
+ /*----------------------------------------------------*/
 
 jQuery(function () {
 
+    function applyIsotope() {
+
+    }
+
     var jQuerycontainer = jQuery('.portfolio');
 
-    jQuerycontainer.isotope({
-        itemSelector: '.item'
+    //jQuerycontainer.isotope({
+    //    itemSelector: '.item'
+    //});
+
+    jQuerycontainer.imagesLoaded( function(){
+        jQuerycontainer.isotope({
+            itemSelector: '.item',
+            filter: '*',
+            animationOptions: {
+                duration: 750,
+                easing: 'linear',
+                queue: false
+            }
+        });
     });
 
 
@@ -41,6 +57,8 @@ jQuery(function () {
 
         return false;
     });
+
+
 
 
 });
