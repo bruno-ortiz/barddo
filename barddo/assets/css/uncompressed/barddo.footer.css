@@ -1,0 +1,52 @@
+
+/* Footer */
+
+footer{
+    padding-top:30px;
+    background: rgb(37, 37, 37) repeat;
+    color:#ccc;
+}
+
+footer  a{
+    color:#aaa;
+}
+
+footer a:hover{
+    text-decoration:none;
+    color:#eee;
+}
+
+
+
+footer hr{
+    margin-top: 30px;
+    margin-bottom:30px;
+    border-top: #101010 1px solid;
+    border-bottom: #222 1px solid;
+}
+
+footer .footer-link{
+    padding-top:15px;
+}
+
+footer .footer-link h5{
+    color:#fff;
+    font-size:18px;
+}
+
+footer .footer-link a{
+    margin-bottom:10px;
+    display:inline-block;
+}
+
+
+
+footer .copy{
+    margin-bottom:20px;
+    font-size:13px;
+}
+
+.btn-scroll-up {
+    bottom: 300px;
+right: 80px;
+}

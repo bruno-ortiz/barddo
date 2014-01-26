@@ -4,11 +4,10 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>Dashboard - Ace Admin</title>
+    <title>{% block title %} Welcome to The Barddo {% endblock %}</title>
 
     <meta name="description" content="overview &amp; stats"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
 
     {% compress css %}
         <!-- basic styles -->
@@ -28,9 +27,9 @@
 
         <!-- ace styles -->
 
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/ace.min.css"/>
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/uncompressed/ace.css"/>
         <link rel="stylesheet" href="{{ STATIC_URL }}css/ace-rtl.min.css"/>
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/ace-skins.min.css"/>
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/uncompressed/ace-skins.css"/>
 
         <!--[if lte IE 8]>
 		  <link rel="stylesheet" href="{{ STATIC_URL }}css/ace-ie.min.css" />
@@ -39,6 +38,7 @@
         <!-- barddo styles -->
 
         <link rel="stylesheet" href="{{ STATIC_URL }}css/uncompressed/barddo.css"/>
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/uncompressed/barddo.footer.css"/>
     {% endcompress %}
 
     {% compress js %}
@@ -63,16 +63,9 @@
 
 </head>
 
-<body>
-<div class="navbar navbar-default" id="navbar">
-<script type="text/javascript">
-    try {
-        ace.settings.check('navbar', 'fixed')
-    } catch (e) {
-    }
-</script>
-
-<div class="navbar-container" id="navbar-container">
+<body class="navbar-fixed skin-1">
+<div class="navbar navbar-default navbar-fixed-top" id="navbar">
+<div class="navbar-container container" id="navbar-container">
 <div class="navbar-header pull-left">
     <a href="{% url "core.index" %}" class="navbar-brand">
         <small>
@@ -80,206 +73,80 @@
             Ace Admin
         </small>
     </a><!-- /.brand -->
+
+
 </div>
 <!-- /.navbar-header -->
 
+<div class="navbar-header pull-left nav-search" id="nav-search">
+    <form class="form-search">
+        <span class="input-icon">
+            <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off"/>
+            <i class="icon-search nav-search-icon"></i>
+        </span>
+    </form>
+</div>
+
 <div class="navbar-header pull-right" role="navigation">
-{% if user.is_authenticated %}
-    <ul class="nav ace-nav">
-    <li class="grey">
-        <a  href="{% url "collections.create" %}">
-            <i class="icon-tasks"></i>
-            Collections
-        </a>
-    </li>
-
-
-    <li class="purple">
-        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-            <i class="icon-bell-alt icon-animated-bell"></i>
-            <span class="badge badge-important">8</span>
-        </a>
-
-        <ul class="pull-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
-            <li class="dropdown-header">
-                <i class="icon-warning-sign"></i>
-                8 Notifications
-            </li>
-
-            <li>
-                <a href="#">
-                    <div class="clearfix">
-											<span class="pull-left">
-												<i class="btn btn-xs no-hover btn-pink icon-comment"></i>
-												New Comments
-											</span>
-                        <span class="pull-right badge badge-info">+12</span>
-                    </div>
+    {% if user.is_authenticated %}
+        <ul class="nav ace-nav">
+            <li class="grey">
+                <a  href="{% url "collections.create" %}">
+                    <i class="icon-tasks"></i>
+                    Collections
                 </a>
             </li>
 
-            <li>
-                <a href="#">
-                    <i class="btn btn-xs btn-primary icon-user"></i>
-                    Bob just signed up as an editor ...
-                </a>
-            </li>
-
-            <li>
-                <a href="#">
-                    <div class="clearfix">
-											<span class="pull-left">
-												<i class="btn btn-xs no-hover btn-success icon-shopping-cart"></i>
-												New Orders
-											</span>
-                        <span class="pull-right badge badge-success">+8</span>
-                    </div>
-                </a>
-            </li>
-
-            <li>
-                <a href="#">
-                    <div class="clearfix">
-											<span class="pull-left">
-												<i class="btn btn-xs no-hover btn-info icon-twitter"></i>
-												Followers
-											</span>
-                        <span class="pull-right badge badge-info">+11</span>
-                    </div>
-                </a>
-            </li>
-
-            <li>
-                <a href="#">
-                    See all notifications
-                    <i class="icon-arrow-right"></i>
-                </a>
-            </li>
-        </ul>
-    </li>
-
-    <li class="green">
-        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-            <i class="icon-envelope icon-animated-vertical"></i>
-            <span class="badge badge-success">5</span>
-        </a>
-
-        <ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
-            <li class="dropdown-header">
-                <i class="icon-envelope-alt"></i>
-                5 Messages
-            </li>
-
-            <li>
-                <a href="#">
-                    <img src="{{ STATIC_URL }}avatars/avatar.png" class="msg-photo" alt="Alex's Avatar"/>
-										<span class="msg-body">
-											<span class="msg-title">
-												<span class="blue">Alex:</span>
-												Ciao sociis natoque penatibus et auctor ...
-											</span>
-
-											<span class="msg-time">
-												<i class="icon-time"></i>
-												<span>a moment ago</span>
-											</span>
-										</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="#">
-                    <img src="{{ STATIC_URL }}avatars/avatar3.png" class="msg-photo" alt="Susan's Avatar"/>
-										<span class="msg-body">
-											<span class="msg-title">
-												<span class="blue">Susan:</span>
-												Vestibulum id ligula porta felis euismod ...
-											</span>
-
-											<span class="msg-time">
-												<i class="icon-time"></i>
-												<span>20 minutes ago</span>
-											</span>
-										</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="#">
-                    <img src="{{ STATIC_URL }}avatars/avatar4.png" class="msg-photo" alt="Bob's Avatar"/>
-										<span class="msg-body">
-											<span class="msg-title">
-												<span class="blue">Bob:</span>
-												Nullam quis risus eget urna mollis ornare ...
-											</span>
-
-											<span class="msg-time">
-												<i class="icon-time"></i>
-												<span>3:15 pm</span>
-											</span>
-										</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="inbox.html">
-                    See all messages
-                    <i class="icon-arrow-right"></i>
-                </a>
-            </li>
-        </ul>
-    </li>
-
-    <li class="light-blue">
-        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-            <img class="nav-user-photo" src="{{ MEDIA_URL }}{{ avatar }}" alt="Jason's Photo"/>
+            <li class="light-blue">
+                <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                    <img class="nav-user-photo" src="{{ MEDIA_URL }}{{ avatar }}" alt="Jason's Photo"/>
 								<span class="user-info">
 									<small>Welcome,</small>
 									{{ username }}
 								</span>
 
-            <i class="icon-caret-down"></i>
-        </a>
-
-        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-            <li>
-                <a href="#">
-                    <i class="icon-cog"></i>
-                    Settings
+                    <i class="icon-caret-down"></i>
                 </a>
-            </li>
 
-            <li>
-                <a href="#">
-                    <i class="icon-user"></i>
-                    Profile
-                </a>
-            </li>
+                <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                    <li>
+                        <a href="#">
+                            <i class="icon-cog"></i>
+                            Settings
+                        </a>
+                    </li>
 
-            <li class="divider"></li>
+                    <li>
+                        <a href="#">
+                            <i class="icon-user"></i>
+                            Profile
+                        </a>
+                    </li>
 
-            <li>
-                <a href="{% url 'logout' %}">
-                    <i class="icon-off"></i>
-                    Logout
-                </a>
+                    <li class="divider"></li>
+
+                    <li>
+                        <a href="{% url 'logout' %}">
+                            <i class="icon-off"></i>
+                            Logout
+                        </a>
+                    </li>
+                </ul>
             </li>
         </ul>
-    </li>
-    </ul>
-{% else %}
-    <button class="btn btn-signin" data-toggle="modal" data-target="#loginModal">
-        <i class="icon-signin"></i> Login
-    </button>
-{% endif %}
-<!-- /.ace-nav -->
+    {% else %}
+        <button class="btn btn-signin" data-toggle="modal" data-target="#loginModal">
+            <i class="icon-signin"></i> Login
+        </button>
+    {% endif %}
+    <!-- /.ace-nav -->
 </div>
 <!-- /.navbar-header -->
 </div>
 <!-- /.container -->
 </div>
 
-<div class="main-container" id="main-container">
+<div class="main-container container" id="main-container">
     {% block content %}
 
     {% endblock %}
@@ -290,6 +157,62 @@
 </div>
 {% include "login-modal.html" %}
 <!-- /.main-container -->
+
+<!-- Footer starts -->
+<footer>
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-md-3  col-xs-6">
+                <div class="footer-link">
+                    <h5>About Us</h5>
+                    <a href="#">Nullam pharetra nec</a><br>
+                    <a href="#">Vulputate vitae</a><br>
+                    <a href="#">Phasellus</a>
+                </div>
+            </div>
+            <div class="col-md-3  col-xs-6">
+                <div class="footer-link">
+                    <h5>Help</h5>
+                    <a href="#">Aliquam nec</a><br>
+                    <a href="#">Nam pulvinar massa</a><br>
+                    <a href="#">Maecenas fringilla nec</a>
+                </div>
+            </div>
+            <div class="col-md-3  col-xs-6">
+                <div class="footer-link">
+                    <h5>Artists</h5>
+                    <a href="#">Consectetur adipiscing elit</a><br>
+                    <a href="#">Commodo a fermentum vel</a><br>
+                    <a href="#">Eleifend neque</a>
+                </div>
+            </div>
+            <div class="col-md-3  col-xs-6">
+                <div class="footer-link">
+                    <h5>Misc</h5>
+                    <a href="#">Pellentesque</a><br>
+                    <a href="#">Startups</a><br>
+                    <a href="#">Habitasse platea dictumst</a>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <hr>
+                <div class="copy text-center">
+                    &copy; 2014 <a href="#">The Barddo</a> - Made with love and care!
+                </div>
+            </div>
+        </div>
+
+    </div>
+</footer>
+<!-- Footer Ends -->
 
 <!-- basic scripts -->
 
