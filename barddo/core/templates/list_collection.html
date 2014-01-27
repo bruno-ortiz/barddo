@@ -20,10 +20,30 @@
 
 {% block content %}
     <div class="page-content">
-        <div class="row">
-            <a id="collection-wizard-link" href="#new-collection-wizard" data-toggle="modal" class="btn btn-danger btn-block"> New Collection </a>
-        </div>
+        {% if not collections %}
+            <div class="row" style="padding-top: 125px;">
+                <div class="col-sm-12">
+                    <div class="center">
+                        <h3 class="red"><i class="icon-frown icon-5x"></i></h3>
+                        <h3 class="red">Oh noes!</h3>
+                        Looks like you have not created any collections yet! But do not fear, this is something easy to fix!
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 50px;">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <a id="collection-wizard-link" href="#new-collection-wizard" data-toggle="modal" class="btn btn-success btn-block"><i class="icon-plus-sign-alt"></i> Create a new collection (and awesome), now! </a>
+                </div>
+            </div>
+        {% else %}
+            <ul>
+            {% for collection in collections %}
+                <li>{{ collection.name }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
     </div>
+
 
     <div id="new-collection-wizard" class="modal">
         <div class="modal-dialog">
@@ -83,7 +103,6 @@
             </div>
         </div>
     </div>
-
 {% endblock %}
 
 {% block page_specific_javascript %}
@@ -93,9 +112,10 @@
         <script src="{% static "js/date-time/bootstrap-datepicker.min.js" %}"></script>
         <script src="{% static "js/bootstrap-tag.min.js" %}"></script>
         {% dajaxice_js_import 'nocsrf' %}
-        <script type="text/javascript" src="{% static "dajax/jquery.dajax.core.js" %}"></script>
+
         <script type="text/javascript" src="{% static "js/barddo/pages/collection.create.js" %}"></script>
     {% endcompress %}
+    <script type="text/javascript" src="{% static "dajax/jquery.dajax.core.js" %}"></script>
 {% endblock %}
 
 {% block bottom_page %}

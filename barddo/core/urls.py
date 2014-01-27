@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 from .views import index
-from .views import collection_list, create_collection
+from .views import list_collection
 
 urlpatterns = patterns(
     '',
@@ -8,11 +8,7 @@ urlpatterns = patterns(
         index,
         name='core.index'),
 
-    url(r'^collections/create$',
-        create_collection,
-        name='collections.create'),
-
     url(r'^collections$',
-        collection_list,
+        list_collection,
         name='collections.list'),
 )

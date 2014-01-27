@@ -1,10 +1,10 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
 from django.views.generic import View
 from django.views.generic.base import TemplateResponseMixin, ContextMixin
 from .forms import CollectionForm
+from .models import Collection
 
 
 class UserNotProvided(Exception):
@@ -47,19 +47,17 @@ index = IndexView.as_view()
 ###
 
 
-class CreateCollectionView(LoginRequiredMixin, ProfileAwareView):
-    template_name = 'collection_create.html'
+class ListCollectionView(LoginRequiredMixin, ProfileAwareView):
+    template_name = 'list_collection.html'
 
     def get_context_data(self, **kwargs):
-        context = {'form': CollectionForm()}
+        collections = Collection.objects.filter(author_id=kwargs['user'].id)
+
+        context = {
+            'form': CollectionForm(),
+            'collections': collections
+        }
         context.update(kwargs)
-        return super(CreateCollectionView, self).get_context_data(**context)
+        return super(ListCollectionView, self).get_context_data(**context)
 
-
-create_collection = CreateCollectionView.as_view()
-
-
-@login_required
-def collection_list(request):
-    # TODO: implement
-    return render(request, "index.html")
+list_collection = ListCollectionView.as_view()

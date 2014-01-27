@@ -2,6 +2,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
+from barddo_auth.models import BarddoUser
 import os
 
 
@@ -48,9 +49,11 @@ class Collection(models.Model):
     start_date = models.DateField(_('Start Date'), blank=False, null=False)
     end_date = models.DateField(_('End Date'), blank=True, null=True)
 
+    # TODO: a collection can have multiple authors
+    author = models.ForeignKey(BarddoUser, null=False)
+
     # TODO: collection tags
     # TODO: collection categories
-    # TODO: collection artists
 
     def save(self, *args, **kwargs):
         """

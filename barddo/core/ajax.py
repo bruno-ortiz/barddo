@@ -36,7 +36,10 @@ def register_a_collection(request, form):
     form = CollectionForm(deserialize_form(form))
 
     if form.is_valid():
-        form.save()
+        collection = form.save(commit=False)
+        collection.author = request.user
+        collection.save()
+
         ajax.script('callback_validate_collection_ok()')
     else:
         ajax.script('callback_validate_collection_error()')
@@ -46,4 +49,6 @@ def register_a_collection(request, form):
             ajax.script("error_tooltip('#id_%s', '%s');" % (field, "<br />".join(errors)))
             ajax.script('$("#id_%s").closest("div.form-group").addClass("has-error")' % field)
 
-    return ajax.json()
+    j = ajax.json()
+    print j
+    return j

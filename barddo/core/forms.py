@@ -10,3 +10,4 @@ class CollectionForm(ModelForm):
     class Meta:
         model = Collection
         fields = ['name', 'summary', 'unit', 'start_date']
+        exclude = ['author']
