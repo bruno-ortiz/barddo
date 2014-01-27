@@ -4,11 +4,26 @@
 {% load compress %}
 
 {% block header %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/datepicker.css" />
+    <link rel="stylesheet" href="{% static "css/datepicker.css" %}" />
+{% endblock %}
+
+{% block breadcrumbs %}
+    <!-- TODO: extract this logic to a template tag, so the breadcrumbs are calculated by the system -->
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="{% url "core.index" %}">Home</a>
+        </li>
+        <li class="active">My Collections</li>
+    </ul><!-- .breadcrumb -->
 {% endblock %}
 
 {% block content %}
-    <a id="collection-wizard-link" href="#new-collection-wizard" data-toggle="modal" class="pink btn"> New Collection </a>
+    <div class="page-content">
+        <div class="row">
+            <a id="collection-wizard-link" href="#new-collection-wizard" data-toggle="modal" class="btn btn-danger btn-block"> New Collection </a>
+        </div>
+    </div>
 
     <div id="new-collection-wizard" class="modal">
         <div class="modal-dialog">
@@ -73,13 +88,12 @@
 
 {% block page_specific_javascript %}
     {% compress js %}
-        <script src="{{ STATIC_URL }}js/fuelux/fuelux.wizard.min.js"></script>
-        <script src="{{ STATIC_URL }}js/bootbox.min.js"></script>
-        <script src="{{ STATIC_URL }}js/jquery.validate.min.js"></script>
-        <script src="{{ STATIC_URL }}js/date-time/bootstrap-datepicker.min.js"></script>
-        <script src="{{ STATIC_URL }}js/bootstrap-tag.min.js"></script>
+        <script src="{% static "js/fuelux/fuelux.wizard.min.js" %}"></script>
+        <script src="{% static "js/jquery.validate.min.js" %}"></script>
+        <script src="{% static "js/date-time/bootstrap-datepicker.min.js" %}"></script>
+        <script src="{% static "js/bootstrap-tag.min.js" %}"></script>
         {% dajaxice_js_import 'nocsrf' %}
-        <script type="text/javascript" src="{{ STATIC_URL }}dajax/jquery.dajax.core.js"></script>
+        <script type="text/javascript" src="{% static "dajax/jquery.dajax.core.js" %}"></script>
         <script type="text/javascript" src="{% static "js/barddo/pages/collection.create.js" %}"></script>
     {% endcompress %}
 {% endblock %}

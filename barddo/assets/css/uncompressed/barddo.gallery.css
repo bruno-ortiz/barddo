@@ -1,0 +1,224 @@
+.isotope-item {
+    z-index:2
+}
+.isotope-hidden.isotope-item {
+    pointer-events:none;
+    z-index:1;
+}
+.isotope,.isotope .isotope-item {
+    /* change duration value to whatever you like */ -webkit-transition-duration:0.8s;
+    -moz-transition-duration:0.8s;
+    transition-duration:0.8s;
+}
+.isotope {
+    -webkit-transition-property:height,width;
+    -moz-transition-property:height,width;
+    transition-property:height,width;
+}
+.isotope .isotope-item {
+    -webkit-transition-property:-webkit-transform,opacity;
+    -moz-transition-property:-moz-transform,opacity;
+    transition-property:transform,opacity;
+}
+#content {
+    max-width:1000px;
+    z-index:0;
+    margin-left:-20px;
+    overflow:hidden;
+}
+#options ul {
+    margin-left:0px;
+    font-size:104%;
+}
+#options {
+    margin-top:5px;
+}
+#options ul li {
+    list-style:none;
+    float:left;
+    margin-left:15px;
+    padding:3px 5px;
+
+    background: transparent;
+    display:initial;
+    line-height: 1.5;
+    margin-top: 2px;
+}
+#options ul li a {
+    color:#333;
+    margin-bottom:20px;
+}
+#options ul li .selected {
+    color: #e7402f !Important;
+}
+/* MASONRY */
+.boxportfolio4 {
+    float:left;
+    width:22.90%;
+    display:inline-block;
+    margin-bottom:20px;
+    position:relative;
+    z-index:0;
+    margin-left:20px;
+}
+.boxportfolio3 {
+    float:left;
+    display:inline-block;
+    margin-bottom:20px;
+    position:relative;
+    z-index:0;
+    width:31.23%;
+    margin-left:20px;
+}
+.boxportfolio2 {
+    float:left;
+    margin-left:20px;
+    width:47.90%;
+    display:inline-block;
+    margin-bottom:20px;
+    position:relative;
+    z-index:0;
+}
+.roll {
+    position:absolute;
+    font-size:30px;
+    width:100%;
+    margin:0px auto;
+    height:100%;
+    top:0.0px;
+    display:table-cell;
+    vertical-align:middle;
+    background:#000;
+    z-index:10;
+    -webkit-box-shadow:0 0 4px #000;
+    -moz-box-shadow:0 0 4px #000;
+    box-shadow:0 0 4px #000;
+    opacity:0;
+    -ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    filter:alpha(opacity=0);
+    zoom:1;
+}
+
+
+.roll {
+    /* Fallback for web browsers that doesn't support RGBa */
+    background: rgb(0, 0, 0);
+    /* RGBa with 0.6 opacity */
+    background: rgba(0, 0, 0, 0.4);
+    /* For IE 5.5 - 7*/
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+    /* For IE 8*/
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+}
+
+
+.boxcontainer {
+    border:1px solid #ededed;
+    background:#fff;
+    font-size:13px;
+    text-align:center;
+    transition:border 500ms ease-out;
+    -webkit-transition:border 500ms ease-out;
+    -moz-transition:border 500ms ease-out;
+    -o-transition:border 500ms ease-out;
+    position:relative;
+    overflow:hidden;
+
+    transition:background-color 500ms ease-out;
+    -webkit-transition:background-color 500ms ease-out;
+    -moz-transition:background-color 500ms ease-out;
+    -o-transition:background-color 500ms ease-out;
+}
+.boxcontainer:hover {
+    background-color: rgb(230, 238, 236);
+}
+
+.boxcontainer p {
+    margin-bottom:10px;
+    color:#666;
+}
+.boxcontainer h1 {
+    font-size:13px;
+    line-height:1;
+    font-weight:bold;
+    padding-left:10px;
+    padding-right:10px;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: "Century Gothic","Avenir Next",Futura,"URW Gothic L",sans-serif,"Malgun Gothic";
+}
+.boxcontainer h1 a {
+    padding-top:10px;
+    padding-bottom:10px;
+    display:block;
+    color:#666;
+    line-height:20px;
+}
+.boxcontainer img {
+    position:relative;
+}
+.wrapcaption {
+    position:absolute;
+    font-size:30px;
+    background:transparent;
+    width:100%;
+    margin:0px auto;
+    display:table-cell;
+    vertical-align:middle;
+    top:45%;
+}
+
+.captionicons {
+    font-size:20px;
+    padding:13px;
+    background: #D5DAD6;
+    margin-right:0px;
+    border-radius:50%;
+    color:#DDB6B6;
+    position:relative;
+    top:55%;
+    vertical-align:middle;
+    margin-top:0px;
+    margin:0 auto;
+    border: 5px solid black;
+    background: #D5DAD6;
+}
+
+.captionicons.liked {
+    color: #D13D3D;
+}
+
+
+
+.captionicons:hover {
+    opacity:0.9;
+}
+.boxportfolio2 .captionicons {
+    top:57%;
+}
+
+.collection {
+    max-width: 250px;
+}
+
+.collection-great {
+}
+
+.collection-good {
+}
+
+.collection-common {
+}
+
+.collections {
+    overflow: hidden;
+}
+
+.cover-wrap {
+    max-height: 300px;
+    overflow: hidden;
+}
+
+.portfolio > div {
+    margin-bottom: 30px;
+}
