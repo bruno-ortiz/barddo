@@ -42,3 +42,11 @@
 .datepicker, .datepicker-dropdown {
     z-index: 9999 !important;
 }
+
+.navbar  {
+ background:#393939;
+}
+
+img {
+    max-width: 100%;
+}
