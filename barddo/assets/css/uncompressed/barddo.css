@@ -42,3 +42,11 @@
 .datepicker, .datepicker-dropdown {
     z-index: 9999 !important;
 }
+
+.profile-content {
+    margin-left: 300px;
+    margin-right: 300px;
+    margin-top: 0;
+    min-height: 100%;
+    padding: 0;
+}

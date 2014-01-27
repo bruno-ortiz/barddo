@@ -4,6 +4,8 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
 from django.views.generic import View
 from django.views.generic.base import TemplateResponseMixin, ContextMixin
+from django.views.generic.detail import DetailView
+from barddo_auth.models import BarddoUser
 from .forms import CollectionForm
 
 
@@ -63,3 +65,11 @@ create_collection = CreateCollectionView.as_view()
 def collection_list(request):
     # TODO: implement
     return render(request, "index.html")
+
+
+class UserProfileView(LoginRequiredMixin, UserContextMixin, DetailView):
+    model = BarddoUser
+    template_name = 'profile/profile.html'
+
+
+profile = ProfileAwareView.as_view(template_name='profile/profile.html')
