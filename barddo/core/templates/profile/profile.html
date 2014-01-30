@@ -2,7 +2,6 @@
 {% load dajaxice_templatetags %}
 {% load staticfiles %}
 {% load compress %}
-{% load custom_tags %}
 
 {% block header %}
     <link rel="stylesheet" href="{% static "css/jquery-ui-1.10.3.custom.min.css" %}"/>
@@ -54,7 +53,7 @@
 
         <div class="space-6"></div>
 
-        {% if editable|is_false %}
+        {% if not editable %}
             <div class="profile-contact-info">
                 <a href="#" class="btn btn-sm btn-block btn-success">
                     <i class="icon-plus-sign bigger-120"></i>
