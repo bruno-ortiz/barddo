@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from barddo_auth.views import logout_user
+from accounts.views import logout_user
 
 __author__ = 'bruno'
 

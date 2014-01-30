@@ -1106,7 +1106,7 @@
                 success: function (response, newValue) {
                     if (current_username != newValue) {
                         current_username = newValue;
-                        Dajaxice.barddo_auth.edit_profile(Dajax.process, {
+                        Dajaxice.accounts.edit_profile(Dajax.process, {
                             'model': 'BarddoUser',
                             '_id':{{ viewing_user.id }},
                             'field': 'username',
@@ -1131,7 +1131,7 @@
                 success: function (response, newValue) {
                     if (current_country != newValue) {
                         current_country = newValue;
-                        Dajaxice.barddo_auth.edit_profile(Dajax.process, {
+                        Dajaxice.accounts.edit_profile(Dajax.process, {
                             'model': 'BarddoUserProfile',
                             '_id':{{ viewing_user_profile.id }},
                             'field': 'country',
@@ -1152,7 +1152,7 @@
                 success: function (response, newValue) {
                     if (current_birth_date != newValue) {
                         current_birth_date = newValue;
-                        Dajaxice.barddo_auth.edit_profile(Dajax.process, {
+                        Dajaxice.accounts.edit_profile(Dajax.process, {
                             'model': 'BarddoUserProfile',
                             '_id':{{ viewing_user_profile.id }},
                             'field': 'birth_date',
@@ -1170,7 +1170,7 @@
                 success: function (response, newValue) {
                     if (current_email != newValue) {
                         current_email = newValue;
-                        Dajaxice.barddo_auth.edit_profile(Dajax.process, {
+                        Dajaxice.accounts.edit_profile(Dajax.process, {
                             'model': 'BarddoUser',
                             '_id':{{ viewing_user.id }},
                             'field': 'email',
@@ -1193,7 +1193,7 @@
                 success: function (response, newValue) {
                     if (current_gender != newValue) {
                         current_gender = newValue;
-                        Dajaxice.barddo_auth.edit_profile(Dajax.process, {
+                        Dajaxice.accounts.edit_profile(Dajax.process, {
                             'model': 'BarddoUserProfile',
                             '_id':{{ viewing_user_profile.id }},
                             'field': 'gender',

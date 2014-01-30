@@ -3,8 +3,8 @@ from dajaxice.decorators import dajaxice_register
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
 
-from barddo_auth.forms import BarddoUserForm, BarddoUserProfileForm
-from barddo_auth.models import BarddoUser, BarddoUserProfile
+from accounts.forms import BarddoUserForm, BarddoUserProfileForm
+from accounts.models import BarddoUser, BarddoUserProfile
 
 
 __author__ = 'bruno'

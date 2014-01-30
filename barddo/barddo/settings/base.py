@@ -62,7 +62,7 @@ LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
 
-DATE_INPUT_FORMATS = ('%d-%m-%Y')
+DATE_INPUT_FORMATS = ('%d-%m-%Y',)
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -206,7 +206,7 @@ THIRD_PARTY_APPS = (
 # Apps specific for this project go here.
 LOCAL_APPS = (
     'core',
-    'barddo_auth',
+    'accounts',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -269,13 +269,13 @@ COMPRESS_ROOT = STATIC_ROOT
 #SOCIAL AUTH CONFIG
 ##
 AUTHENTICATION_BACKENDS = (
-    'barddo_auth.models.BarddoUserAuthBackend',
+    'accounts.models.BarddoUserAuthBackend',
     'social_auth.backends.facebook.FacebookBackend',
     'social_auth.backends.google.GoogleOAuth2Backend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
-AUTH_USER_MODEL = 'barddo_auth.BarddoUser'
+AUTH_USER_MODEL = 'accounts.BarddoUser'
 
 SOCIAL_AUTH_USER_MODEL = AUTH_USER_MODEL
 
@@ -297,10 +297,10 @@ SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.social.associate_user',
     'social_auth.backends.pipeline.social.load_extra_data',
     'social_auth.backends.pipeline.user.update_user_details',
-    'barddo_auth.pipelines.get_avatar',
-    'barddo_auth.pipelines.get_birth_date',
-    'barddo_auth.pipelines.get_gender',
-    'barddo_auth.pipelines.get_country',
+    'accounts.pipelines.get_avatar',
+    'accounts.pipelines.get_birth_date',
+    'accounts.pipelines.get_gender',
+    'accounts.pipelines.get_country',
 )
 
 LOGIN_URL = '/'

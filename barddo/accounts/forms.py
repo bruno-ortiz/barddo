@@ -1,5 +1,5 @@
 from django.forms import ModelForm, DateField
-from barddo_auth.models import BarddoUser, BarddoUserProfile
+from accounts.models import BarddoUser, BarddoUserProfile
 
 __author__ = 'bruno'
 

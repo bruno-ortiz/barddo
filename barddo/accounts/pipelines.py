@@ -7,7 +7,7 @@ from django.template.defaultfilters import slugify
 from facepy.graph_api import GraphAPI
 from social_auth.backends import google
 from social_auth.backends.facebook import FacebookBackend
-from barddo_auth.models import BarddoUserProfile
+from accounts.models import BarddoUserProfile
 
 __author__ = 'bruno'
 

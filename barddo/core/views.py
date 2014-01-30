@@ -5,7 +5,7 @@ from django.utils.translation import ugettext as _
 from django.views.generic import View
 from django.views.generic.base import TemplateResponseMixin, ContextMixin
 from django.views.generic.detail import SingleObjectMixin
-from barddo_auth.models import BarddoUser
+from accounts.models import BarddoUser
 from .forms import CollectionForm
 
 
