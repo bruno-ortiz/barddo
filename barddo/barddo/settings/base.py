@@ -123,7 +123,6 @@ ALLOWED_HOSTS = []
 ########## FIXTURE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-FIXTURE_DIRS
 FIXTURE_DIRS = (
-    path.normpath(path.join(SITE_ROOT, 'fixtures')),
     path.normpath(path.join(SITE_ROOT, 'core', 'fixtures')),
 )
 ########## END FIXTURE CONFIGURATION
@@ -288,7 +287,7 @@ SOCIAL_AUTH_ASSOCIATION_SERVER_URL_LENGTH = 32
 
 FACEBOOK_APP_ID = '579142508831157'
 FACEBOOK_API_SECRET = '3b9439528f2bd7cce28f25f8948f03fe'
-FACEBOOK_EXTENDED_PERMISSIONS = ['email', 'user_about_me', 'user_birthday']
+FACEBOOK_EXTENDED_PERMISSIONS = ['email', 'user_about_me', 'user_birthday', 'user_location']
 
 SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.social.social_auth_user',
@@ -301,6 +300,7 @@ SOCIAL_AUTH_PIPELINE = (
     'barddo_auth.pipelines.get_avatar',
     'barddo_auth.pipelines.get_birth_date',
     'barddo_auth.pipelines.get_gender',
+    'barddo_auth.pipelines.get_country',
 )
 
 LOGIN_URL = '/'

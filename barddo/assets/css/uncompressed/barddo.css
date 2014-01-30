@@ -50,3 +50,15 @@
 img {
     max-width: 100%;
 }
+
+.birthday form.editableform {
+    width: 130px;
+}
+
+.field-error {
+    color: red;
+}
+
+.field-success {
+    color: green;
+}

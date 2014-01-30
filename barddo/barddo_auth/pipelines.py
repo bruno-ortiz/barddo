@@ -4,6 +4,7 @@ from urllib2 import urlopen, HTTPError
 import datetime
 from django.core.files.base import ContentFile
 from django.template.defaultfilters import slugify
+from facepy.graph_api import GraphAPI
 from social_auth.backends import google
 from social_auth.backends.facebook import FacebookBackend
 from barddo_auth.models import BarddoUserProfile
@@ -38,7 +39,7 @@ def get_birth_date(backend, user, response, is_new=False, **kwargs):
             birth_date = '02/15/1990'  # default date
         if birth_date:
             profile = user.user_profile
-            profile.birth_date = datetime.datetime.strptime('02/15/1990', '%m/%d/%Y').date()
+            profile.birth_date = datetime.datetime.strptime(birth_date, '%m/%d/%Y').date()
             profile.save()
 
 
@@ -51,5 +52,20 @@ def get_gender(backend, user, response, is_new=False, **kwargs):
             gender = response['gender'][:1]
         if gender:
             profile = user.user_profile
-            profile.gender = gender
+            profile.gender = gender.upper()
+            profile.save()
+
+
+def get_country(backend, user, response, is_new=False, **kwargs):
+    if is_new:
+        country = None
+        if backend.__class__ is FacebookBackend:
+            graph = GraphAPI(oauth_token=response['access_token'])
+            country_query = graph.fql(r'SELECT current_location FROM user WHERE uid=me()')
+            country = country_query['data'][0]['current_location']['country']
+        elif backend.__class__ is google.GoogleOAuth2Backend:
+            country = 'Brazil'
+        if country:
+            profile = user.user_profile
+            profile.country = country
             profile.save()

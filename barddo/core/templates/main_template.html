@@ -74,14 +74,14 @@
                     Ace Admin
                 </small>
             </a><!-- /.brand -->
-</div>
-<!-- /.navbar-header -->
+        </div>
+        <!-- /.navbar-header -->
 
         <div class="navbar-header pull-right" role="navigation">
             {% if user.is_authenticated %}
                 <ul class="nav ace-nav">
                     <li class="grey">
-                        <a  href="{% url "collections.create" %}">
+                        <a href="{% url "collections.create" %}">
                             <i class="icon-tasks"></i>
                             Collections
                         </a>
@@ -90,10 +90,10 @@
                     <li class="light-blue">
                         <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                             <img class="nav-user-photo" src="{{ MEDIA_URL }}{{ avatar }}" alt="Jason's Photo"/>
-								<span class="user-info">
-									<small>Welcome,</small>
-									{{ username }}
-								</span>
+                            <span class="user-info">
+                                <small>Welcome,</small>
+                                {{ username }}
+                            </span>
 
                             <i class="icon-caret-down"></i>
                         </a>
@@ -107,7 +107,7 @@
                             </li>
 
                             <li>
-                                <a href="#">
+                                <a href="{% url 'core.editable_profile' %}">
                                     <i class="icon-user"></i>
                                     Profile
                                 </a>
@@ -163,7 +163,8 @@
         </div>
         <!-- /.main-content -->
 
-    </div><!-- /.main-container-inner -->
+    </div>
+    <!-- /.main-container-inner -->
 
     <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
         <i class="icon-double-angle-up icon-only bigger-110"></i>
@@ -213,7 +214,6 @@
         </div>
 
 
-
         <div class="row">
             <div class="col-md-12">
 
@@ -229,7 +229,6 @@
 <!-- Footer Ends -->
 
 <!-- basic scripts -->
-
 
 
 <script type="text/javascript">

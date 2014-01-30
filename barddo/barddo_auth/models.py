@@ -1,13 +1,19 @@
 import datetime
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import AbstractUser
+from django.core.urlresolvers import reverse
 from django.db import models
+from django.utils.translation import ugettext as _
+
 
 __author__ = 'bruno'
 
 
 class BarddoUser(AbstractUser):
     is_publisher = models.BooleanField(default=False)
+
+    def user_url(self):
+        return reverse('core.profile', args=(self.id,))
 
 
 class BarddoUserAuthBackend(ModelBackend):
@@ -32,3 +38,4 @@ class BarddoUserProfile(models.Model):
     avatar = models.ImageField(upload_to='user_avatar/')
     birth_date = models.DateField(default=datetime.date.today())
     gender = models.CharField(max_length=1, choices=(('M', 'Male'), ('F', 'Female')), default='M')
+    country = models.CharField(max_length='30', default=_('Brazil'))
