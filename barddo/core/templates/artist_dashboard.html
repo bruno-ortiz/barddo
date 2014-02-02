@@ -227,7 +227,8 @@
 
                                             <div class="roll">
                                                 <div class="wrapcaption">
-                                                    <a href="projectdetail.html"><i class="icon-cog"></i></a>
+                                                    <a href="#collection-detail-modal" data-rel="tooltip" data-placement="top" title="Tooltip on top"><i class="icon-plus-sign green" ></i></a>
+                                                    <a href="#collection-detail-modal" data-rel="tooltip" data-placement="top" title="Tooltip on top"><i class="icon-cog red"></i></a>
                                                 </div>
                                             </div>
                                             <h1><a href="projectdetail.html">La Chaux De Fonds</a></h1>
@@ -343,6 +344,96 @@
         </div>
 
     {% endif %}
+    </div>
+
+
+    <div id="collection-detail-modal" class="modal full-screen-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="loginModalLabel"><i class="icon-th-large"></i> Collection Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div id="task-tab" class="tab-pane active">
+                                <h4 class="smaller lighter green">
+                                    <i class="icon-list"></i>
+                                    Select a work bellow
+                                </h4>
+
+                                <ul id="tasks" class="item-list ui-sortable">
+
+                                    <li class="item-orange clearfix" style="position: relative; opacity: 1; z-index: auto;">
+                                        <label class="inline">
+                                            <span class="badge badge-purple">7</span>
+                                            <span class="lbl"> Answering customer questions</span>
+                                        </label>
+
+                                    </li>
+                                    <li class="item-red clearfix">
+                                        <label class="inline">
+                                            <span class="badge badge-purple">6</span>
+                                            <span class="lbl"> Fixing bugs</span>
+                                        </label>
+                                    </li>
+
+                                    <li class="item-default clearfix">
+                                        <label class="inline">
+                                            <span class="badge badge-purple">5</span>
+                                            <span class="lbl"> Adding new features</span>
+                                        </label>
+                                    </li>
+
+                                    <li class="item-blue clearfix">
+                                        <label class="inline">
+                                            <span class="badge badge-purple">4</span>
+                                            <span class="lbl"> Upgrading scripts used in template</span>
+                                        </label>
+                                    </li>
+
+                                    <li class="item-grey clearfix">
+                                        <label class="inline">
+                                            <span class="badge badge-purple">3</span>
+                                            <span class="lbl"> Adding new skins</span>
+                                        </label>
+                                    </li>
+
+                                    <li class="item-green clearfix">
+                                        <label class="inline">
+                                            <span class="badge badge-purple">2</span>
+                                            <span class="lbl"> Updating server software up</span>
+                                        </label>
+                                    </li>
+
+                                    <li class="item-pink clearfix">
+                                        <label class="inline">
+                                            <span class="badge badge-purple">1</span>
+                                            <span class="lbl"> Cleaning up</span>
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="widget-box transparent">
+                                <div class="widget-header">
+                                    <h4 class="lighter">Transparent Box</h4>
+                                </div>
+
+                                <div class="widget-body">
+                                    <div class="widget-main padding-6 no-padding-left no-padding-right">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis. Nullam interdum massa vel nisl fringilla sed viverra erat tincidunt. Phasellus in ipsum velit. Maecenas id erat vel sem convallis blandit. Nunc aliquam enim ut arcu aliquet adipiscing. Fusce dignissim volutpat justo non consectetur.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -560,7 +651,6 @@
                 var barColor = !$box.hasClass('infobox-dark') ? $box.css('color') : '#FFF';
                 $(this).sparkline('html', {tagValuesAttribute:'data-values', type: 'bar', barColor: barColor , chartRangeMin:$(this).data('min') || 0} );
             });
-
         });
     </script>
 {% endblock %}

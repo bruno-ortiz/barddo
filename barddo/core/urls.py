@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 from .views import index
-from .views import list_collection
+from .views import artist_dashboard
 
 urlpatterns = patterns(
     '',
@@ -8,7 +8,7 @@ urlpatterns = patterns(
         index,
         name='core.index'),
 
-    url(r'^collections$',
-        list_collection,
-        name='collections.list'),
+    url(r'^dashboard',
+        artist_dashboard,
+        name='core.dashboard'),
 )

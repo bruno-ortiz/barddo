@@ -207,3 +207,12 @@
 .portfolio > div {
     margin-bottom: 30px;
 }
+
+.full-screen-modal .modal-dialog {
+  width: 90%;
+  height: 90%;
+}
+
+.full-screen-modal .modal-content {
+  height: 100%;
+}

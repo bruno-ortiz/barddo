@@ -43,12 +43,12 @@ class IndexView(ProfileAwareView):
 index = IndexView.as_view()
 
 ###
-### Collection related views
+### Artist Dashboard
 ###
 
 
-class ListCollectionView(ProfileAwareView):
-    template_name = 'list_collection.html'
+class ArtistDashboardView(ProfileAwareView):
+    template_name = 'artist_dashboard.html'
 
     def get_context_data(self, **kwargs):
         collections = Collection.objects.filter(author_id=kwargs['user'].id)
@@ -58,6 +58,6 @@ class ListCollectionView(ProfileAwareView):
             'collections': collections
         }
         context.update(kwargs)
-        return super(ListCollectionView, self).get_context_data(**context)
+        return super(ArtistDashboardView, self).get_context_data(**context)
 
-list_collection = ListCollectionView.as_view()
+artist_dashboard = ArtistDashboardView.as_view()
