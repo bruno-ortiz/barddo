@@ -43,10 +43,22 @@
     z-index: 9999 !important;
 }
 
-.navbar  {
- background:#393939;
+.navbar {
+    background: #393939;
 }
 
 img {
     max-width: 100%;
+}
+
+.birthday form.editableform {
+    width: 130px;
+}
+
+.field-error {
+    color: red;
+}
+
+.field-success {
+    color: green;
 }

@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 from dajax.core import Dajax
 from dajaxice.decorators import dajaxice_register
-from core.models import Collection
-from .forms import CollectionForm
 from django.utils.html import escape
+
 from dajaxice.utils import deserialize_form
 from django.contrib.auth.decorators import login_required
+
+from core.models import Collection
+from .forms import CollectionForm
+
 
 @login_required
 @dajaxice_register

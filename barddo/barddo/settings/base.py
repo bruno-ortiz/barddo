@@ -62,7 +62,7 @@ LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
 
-DATE_INPUT_FORMATS = ('%d-%m-%Y')
+DATE_INPUT_FORMATS = ('%d-%m-%Y',)
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -123,7 +123,6 @@ ALLOWED_HOSTS = []
 ########## FIXTURE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-FIXTURE_DIRS
 FIXTURE_DIRS = (
-    path.normpath(path.join(SITE_ROOT, 'fixtures')),
     path.normpath(path.join(SITE_ROOT, 'core', 'fixtures')),
 )
 ########## END FIXTURE CONFIGURATION
@@ -207,7 +206,7 @@ THIRD_PARTY_APPS = (
 # Apps specific for this project go here.
 LOCAL_APPS = (
     'core',
-    'barddo_auth',
+    'accounts',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -270,13 +269,13 @@ COMPRESS_ROOT = STATIC_ROOT
 #SOCIAL AUTH CONFIG
 ##
 AUTHENTICATION_BACKENDS = (
-    'barddo_auth.models.BarddoUserAuthBackend',
+    'accounts.models.BarddoUserAuthBackend',
     'social_auth.backends.facebook.FacebookBackend',
     'social_auth.backends.google.GoogleOAuth2Backend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
-AUTH_USER_MODEL = 'barddo_auth.BarddoUser'
+AUTH_USER_MODEL = 'accounts.BarddoUser'
 
 SOCIAL_AUTH_USER_MODEL = AUTH_USER_MODEL
 
@@ -288,7 +287,7 @@ SOCIAL_AUTH_ASSOCIATION_SERVER_URL_LENGTH = 32
 
 FACEBOOK_APP_ID = '579142508831157'
 FACEBOOK_API_SECRET = '3b9439528f2bd7cce28f25f8948f03fe'
-FACEBOOK_EXTENDED_PERMISSIONS = ['email', 'user_about_me', 'user_birthday']
+FACEBOOK_EXTENDED_PERMISSIONS = ['email', 'user_about_me', 'user_birthday', 'user_location']
 
 SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.social.social_auth_user',
@@ -298,9 +297,10 @@ SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.social.associate_user',
     'social_auth.backends.pipeline.social.load_extra_data',
     'social_auth.backends.pipeline.user.update_user_details',
-    'barddo_auth.pipelines.get_avatar',
-    'barddo_auth.pipelines.get_birth_date',
-    'barddo_auth.pipelines.get_gender',
+    'accounts.pipelines.get_avatar',
+    'accounts.pipelines.get_birth_date',
+    'accounts.pipelines.get_gender',
+    'accounts.pipelines.get_country',
 )
 
 LOGIN_URL = '/'
