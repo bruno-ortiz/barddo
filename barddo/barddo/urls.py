@@ -11,7 +11,7 @@ dajaxice_autodiscover()
 urlpatterns = patterns(
     '',
     url(r'^', include("core.urls")),
-    url(r'^', include('barddo_auth.urls')),
+    url(r'^', include('accounts.urls')),
 
     # Third Party URLs
     url(r'^admin/', include(admin.site.urls)),

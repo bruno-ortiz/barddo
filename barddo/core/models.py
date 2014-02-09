@@ -2,7 +2,8 @@
 from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
-from barddo_auth.models import BarddoUser
+from django.conf import settings
+from accounts.models import  BarddoUser
 import os
 
 
@@ -99,11 +100,13 @@ class Work(models.Model):
         ...
     """
 
+    collection = models.ForeignKey(Collection)
+
     title = models.CharField(_('Title'), max_length=250, db_index=True)
     summary = models.TextField(_('Summary'))
     cover = models.ImageField(_('Cover Art'), upload_to=get_work_cover_path)
 
-    unit_count = models.IntegerField(_('{0} Number'))
+    unit_count = models.IntegerField(_('Item Number'))
     total_pages = models.SmallIntegerField(_('Total Pages'))
 
     # TODO: work tags

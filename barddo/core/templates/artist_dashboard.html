@@ -6,6 +6,7 @@
 {% block header %}
     <link rel="stylesheet" href="{% static "css/datepicker.css" %}" />
     <link rel="stylesheet" href="{% static "css/uncompressed/barddo.dashboard.css" %}" />
+    <link rel="stylesheet" href="{% static "css/crop/imgareaselect-animated.css" %}" />
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -15,7 +16,7 @@
             <i class="icon-home home-icon"></i>
             <a href="{% url "core.index" %}">Home</a>
         </li>
-        <li class="active">Artist Dashboard</li>
+        <li class="active">Dashboard</li>
     </ul><!-- .breadcrumb -->
 {% endblock %}
 
@@ -37,6 +38,7 @@
             </div>
         </div>
     {% else %}
+
         <div class="row">
             <div class="col-sm-5">
                 <div class="widget-box transparent">
@@ -227,8 +229,8 @@
 
                                             <div class="roll">
                                                 <div class="wrapcaption">
-                                                    <a href="#collection-detail-modal" data-rel="tooltip" data-placement="top" title="Tooltip on top"><i class="icon-plus-sign green" ></i></a>
-                                                    <a href="#collection-detail-modal" data-rel="tooltip" data-placement="top" title="Tooltip on top"><i class="icon-cog red"></i></a>
+                                                    <a href="#new-work-wizard" data-toggle="modal" data-collection="1" onclick="$('#{{ work_form.collection.auto_id }}').val($(this).attr('data-collection'));"><i class="icon-plus-sign green" ></i></a>
+                                                    <a href="#collection-detail-modal" data-toggle="modal"><i class="icon-cog red"></i></a>
                                                 </div>
                                             </div>
                                             <h1><a href="projectdetail.html">La Chaux De Fonds</a></h1>
@@ -348,86 +350,200 @@
 
 
     <div id="collection-detail-modal" class="modal full-screen-modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="loginModalLabel"><i class="icon-th-large"></i> Collection Details</h4>
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="loginModalLabel"><i class="icon-th-large"></i> Collection Details</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-4">
+                    <a id="new-work-button" class="btn btn-danger btn-block" href="#new-collection-wizard" data-toggle="modal" ><i class="icon-upload-alt"></i> Upload a brand new work now!</a>
+
+                    <div id="task-tab" class="tab-pane active">
+                        <h4 class="smaller lighter green">
+                            <i class="icon-list"></i>
+                            Select a work bellow
+                        </h4>
+
+                        <ul id="tasks" class="item-list ui-sortable">
+
+                            <li class="item-orange clearfix" style="padding:0">
+                                <label class="inline" style="width: 100%;">
+                                    <a href="#" style="display:block; padding: 10px">
+                                        <span class="badge badge-purple">7</span>
+                                        <span class="lbl"> Answering a customer questions</span>
+                                    </a>
+                                </label>
+                            </li>
+                            <li class="item-red clearfix">
+                                <label class="inline">
+                                    <span class="badge badge-purple">6</span>
+                                    <span class="lbl"> Fixing bugs</span>
+                                </label>
+                            </li>
+
+                            <li class="item-default clearfix">
+                                <label class="inline">
+                                    <span class="badge badge-purple">5</span>
+                                    <span class="lbl"> Adding new features</span>
+                                </label>
+                            </li>
+
+                            <li class="item-blue clearfix">
+                                <label class="inline">
+                                    <span class="badge badge-purple">4</span>
+                                    <span class="lbl"> Upgrading scripts used in template</span>
+                                </label>
+                            </li>
+
+                            <li class="item-grey clearfix">
+                                <label class="inline">
+                                    <span class="badge badge-purple">3</span>
+                                    <span class="lbl"> Adding new skins</span>
+                                </label>
+                            </li>
+
+                            <li class="item-green clearfix">
+                                <label class="inline">
+                                    <span class="badge badge-purple">2</span>
+                                    <span class="lbl"> Updating server software up</span>
+                                </label>
+                            </li>
+
+                            <li class="item-pink clearfix">
+                                <label class="inline">
+                                    <span class="badge badge-purple">1</span>
+                                    <span class="lbl"> Cleaning up</span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div id="task-tab" class="tab-pane active">
-                                <h4 class="smaller lighter green">
-                                    <i class="icon-list"></i>
-                                    Select a work bellow
-                                </h4>
+                <div class="col-sm-8">
+                    <div class="page-header">
+                        <h1>
+                            Collection Name
+                            <small>
+                                <i class="icon-double-angle-right"></i>
+                                Work Title
+                            </small>
+                        </h1>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div id="user-profile-2" class="user-profile">
+                        <div class="tabbable">
+                            <ul class="nav nav-tabs padding-18">
+                                <li class="active">
+                                    <a data-toggle="tab" href="#general">
+                                        <i class="blue icon-info-sign bigger-120"></i>
+                                        General
+                                    </a>
+                                </li>
 
-                                <ul id="tasks" class="item-list ui-sortable">
+                                <li>
+                                    <a data-toggle="tab" href="#files">
+                                        <i class="green icon-picture bigger-120"></i>
+                                        Files
+                                    </a>
+                                </li>
 
-                                    <li class="item-orange clearfix" style="position: relative; opacity: 1; z-index: auto;">
-                                        <label class="inline">
-                                            <span class="badge badge-purple">7</span>
-                                            <span class="lbl"> Answering customer questions</span>
-                                        </label>
+                                <li>
+                                    <a data-toggle="tab" href="#stats">
+                                        <i class="pink icon-bar-chart bigger-120"></i>
+                                        Statistics
+                                    </a>
+                                </li>
+                            </ul>
 
-                                    </li>
-                                    <li class="item-red clearfix">
-                                        <label class="inline">
-                                            <span class="badge badge-purple">6</span>
-                                            <span class="lbl"> Fixing bugs</span>
-                                        </label>
-                                    </li>
+                            <div class="tab-content no-border padding-24">
+                                <div id="general" class="tab-pane in active">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-4 center">
+															<span class="profile-picture">
+																<img class="editable img-responsive" alt="Alex's Avatar" id="avatar2" src="http://cdn.joentjuh.nl/manga/103058-v1-front-normal.jpg" />
+															</span>
+                                        </div><!-- /span -->
 
-                                    <li class="item-default clearfix">
-                                        <label class="inline">
-                                            <span class="badge badge-purple">5</span>
-                                            <span class="lbl"> Adding new features</span>
-                                        </label>
-                                    </li>
+                                        <div class="col-xs-12 col-sm-8">
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-email">Volume N*:</label>
 
-                                    <li class="item-blue clearfix">
-                                        <label class="inline">
-                                            <span class="badge badge-purple">4</span>
-                                            <span class="lbl"> Upgrading scripts used in template</span>
-                                        </label>
-                                    </li>
+                                                <div class="col-sm-9">
+                                                    <input type="text" id="form-field-email" value="1">
+                                                </div>
+                                            </div>
 
-                                    <li class="item-grey clearfix">
-                                        <label class="inline">
-                                            <span class="badge badge-purple">3</span>
-                                            <span class="lbl"> Adding new skins</span>
-                                        </label>
-                                    </li>
+                                            <br />
 
-                                    <li class="item-green clearfix">
-                                        <label class="inline">
-                                            <span class="badge badge-purple">2</span>
-                                            <span class="lbl"> Updating server software up</span>
-                                        </label>
-                                    </li>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-email">Title</label>
 
-                                    <li class="item-pink clearfix">
-                                        <label class="inline">
-                                            <span class="badge badge-purple">1</span>
-                                            <span class="lbl"> Cleaning up</span>
-                                        </label>
-                                    </li>
-                                </ul>
-                            </div>
+                                                <div class="col-sm-9">
+																	<span class="input-icon input-icon-right">
+																		<input type="email" id="form-field-email" value="Work Title">
+																		<i class="icon-envelope"></i>
+																	</span>
+                                                </div>
+                                            </div>
 
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="widget-box transparent">
-                                <div class="widget-header">
-                                    <h4 class="lighter">Transparent Box</h4>
-                                </div>
+                                            <br />
 
-                                <div class="widget-body">
-                                    <div class="widget-main padding-6 no-padding-left no-padding-right">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis. Nullam interdum massa vel nisl fringilla sed viverra erat tincidunt. Phasellus in ipsum velit. Maecenas id erat vel sem convallis blandit. Nunc aliquam enim ut arcu aliquet adipiscing. Fusce dignissim volutpat justo non consectetur.
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-email">Summary</label>
+
+                                                <div class="col-sm-9">
+                                                    <textarea class="col-sm-12"></textarea>
+                                                </div>
+                                            </div>
+                                        </div><!-- /span -->
+                                    </div><!-- /row-fluid -->
+
+                                </div><!-- #home -->
+
+                                <div id="stats" class="tab-pane">
+                                    <div class="profile-feed row-fluid">
+                                        <div id="work-sales-charts"></div>
                                     </div>
-                                </div>
+                                </div><!-- /#feed -->
+
+                                <div id="files" class="tab-pane">
+                                    <div class="profile-feed row-fluid">
+                                        <div class="dd dd-draghandle">
+                                            <ol class="dd-list">
+                                                <li class="dd-item dd2-item" data-id="13">
+                                                    <div class="dd-handle dd2-handle">
+                                                        <i class="normal-icon icon-move blue bigger-130"></i>
+
+                                                        <i class="drag-icon icon-move bigger-125"></i>
+                                                    </div>
+                                                    <div class="dd2-content">Click on an icon to start dragging</div>
+                                                </li>
+
+                                                <li class="dd-item dd2-item" data-id="14">
+                                                    <div class="dd-handle dd2-handle">
+                                                        <i class="normal-icon icon-move bigger-130"></i>
+
+                                                        <i class="drag-icon icon-move bigger-125"></i>
+                                                    </div>
+                                                    <div class="dd2-content">Recent Posts</div>
+                                                </li>
+
+                                                <li class="dd-item dd2-item" data-id="19">
+                                                    <div class="dd-handle dd2-handle">
+                                                        <i class="normal-icon icon-move blue bigger-130"></i>
+
+                                                        <i class="drag-icon icon-move bigger-125"></i>
+                                                    </div>
+                                                    <div class="dd2-content">Menu</div>
+                                                </li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </div><!-- /#feed -->
                             </div>
                         </div>
                     </div>
@@ -435,6 +551,11 @@
             </div>
         </div>
     </div>
+    </div>
+    </div>
+
+
+    {% include "_new_work_modal.html" %}
 
 
     <div id="new-collection-wizard" class="modal">
@@ -513,8 +634,14 @@
     <script src="{% static "js/flot/jquery.flot.pie.min.js"%}"></script>
     <script src="{% static "js/flot/jquery.flot.resize.min.js"%}"></script>
 
+    <script src="{% static "js/jquery.Jcrop.min.js" %}"></script>
+    <script src="{% static "js/jquery.imgareaselect.min.js" %}"></script>
+
+
     <script src="{% static "js/jquery.isotope.min.js" %}"></script>
     <script src="{% static "js/portfolio.js" %}"></script>
+    <script src="{% static "js/jquery.nestable.min.js" %}"></script>
+    <script src="{% static "js/jquery.form.min.js" %}"></script>
 {% endblock %}
 
 {% block bottom_page %}
@@ -579,6 +706,13 @@
                     });
 
 
+
+
+
+            $('#new-work-button').on('click', function() {
+                $('#new-collection-wizard').modal('hide');
+            });
+
             $('#collection-wizard-link').on('click', function() {
                 wizardMoveFirst($('#new-collection-wizard .modal-header'));
             });
@@ -631,6 +765,34 @@
                 }
             });
 
+            var work_charts = $('#work-sales-charts').css({'width':'100%' , 'height':'220px'});
+            $.plot("#work-sales-charts", [
+                { label: "Domains", data: d1 },
+                { label: "Hosting", data: d2 },
+                { label: "Services", data: d3 }
+            ], {
+                hoverable: true,
+                shadowSize: 0,
+                series: {
+                    lines: { show: true },
+                    points: { show: true }
+                },
+                xaxis: {
+                    tickLength: 0
+                },
+                yaxis: {
+                    ticks: 10,
+                    min: -2,
+                    max: 2,
+                    tickDecimals: 3
+                },
+                grid: {
+                    backgroundColor: { colors: [ "#fff", "#fff" ] },
+                    borderWidth: 1,
+                    borderColor:'#555'
+                }
+            });
+
             //ROLL ON HOVER
             $(function() {
                 $(".roll").css("opacity","0");
@@ -651,6 +813,135 @@
                 var barColor = !$box.hasClass('infobox-dark') ? $box.css('color') : '#FFF';
                 $(this).sparkline('html', {tagValuesAttribute:'data-values', type: 'bar', barColor: barColor , chartRangeMin:$(this).data('min') || 0} );
             });
+
+            $('.dd').nestable();
+
+            $('.dd-handle a').on('mousedown', function(e){
+                e.stopPropagation();
+            });
+
+            $('[data-rel="tooltip"]').tooltip();
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        var workFormValid = false;
+        var workFormCreate = false;
+
+        function callback_validate_work_error() {
+            workFormValid = false;
+        }
+
+        function callback_validate_work_ok() {
+            if(!workFormValid) {
+                workFormValid = true;
+                $("#form-work-next").trigger("click");
+            }
+        }
+
+        function callback_create_work_error() {
+            workFormCreate = false;
+        }
+
+        function callback_create_work_ok() {
+            if(!workFormCreate) {
+                workFormCreate = true;
+                $("#form-work-next").trigger("click");
+            }
+        }
+
+        function init_work_wizard() {
+            $("#form-work-next").html('Next <i class="icon-arrow-right icon-on-right"></i>');
+            workFormValid = false;
+        }
+
+        jQuery(function($) {
+
+            $('#new-work-wizard .modal-header').ace_wizard()
+                    .on('finished', function(e) {
+                        $('#new-work-wizard').modal('hide');
+                    })
+
+                    .on('stepclick', function(e){
+                        return false; //prevent clicking on steps
+                    })
+
+                    .on('change' , function(e, info){
+                        if(info.step == 2) {
+                            if(info.direction == "next") {
+                                if(workFormCreate) {
+                                    window.selectedArea.cancelSelection();
+                                    $("#form-work-next").html("<i class='icon-heart'></i> Thank you!");
+                                    $("#form-work-prev").hide();
+                                } else {
+                                    var crop = window.selectedArea.getSelection();
+
+                                    var options = {
+                                        //target:        '#output2',   // target element(s) to be updated with server response
+                                        //beforeSubmit:  showRequest,  // pre-submit callback
+                                        success:       Dajax.process,  // post-submit callback
+
+                                        // other available options:
+                                        url:       "/dajaxice/core.register_a_work/",         // override for form's 'action' attribute
+                                        type:      "post",        // 'get' or 'post', override for form's 'method' attribute
+                                        data: { 'crop_x': crop.x1,
+                                                'crop_y': crop.y1,
+                                                'crop_w': crop.x2,
+                                                'crop_h': crop.y2
+                                        }
+
+                                        //dataType:  null        // 'xml', 'script', or 'json' (expected server response type)
+                                        //clearForm: true        // clear all form fields after successful submit
+                                        //resetForm: true        // reset the form after successful submit
+
+                                        // $.ajax options can be used here too, for example:
+                                        //timeout:   3000
+                                    };
+
+
+                                    $('#work-form').ajaxSubmit(options);
+
+                                    /*Dajaxice.core.register_a_work(Dajax.process, {
+                                        'form': $('#work-form').formSerialize(),
+                                        'crop': [crop.x1, crop.y1, crop.x2, crop.y2]
+                                    });*/
+                                }
+                                return workFormCreate;
+                            } else {
+                                $("#form-work-next").html('Next <i class="icon-arrow-right icon-on-right"></i>').prop("disabled", false);
+                            }
+
+                            if(window.selectedArea) {
+                                window.selectedArea.cancelSelection();
+                            }
+                        }
+
+                        if(info.step == 1) {
+                            if(info.direction == "next") {
+                                if(workFormValid) {
+                                    $("#form-work-next").html("<i class='icon-star'></i> Select a Cover!").prop("disabled", true);
+                                } else {
+                                    Dajaxice.core.validate_work_information(Dajax.process, {
+                                        'form_id': "#work-form",
+                                        'form': $('#work-form').serialize(true)
+                                    });
+                                }
+
+                                return workFormValid;
+                            } else {
+                                init_work_wizard();
+                            }
+                        }
+                    });
+
+            init_work_wizard();
+        });
+
+        $('#new-work-wizard').on('hidden.bs.modal', function (e) {
+            if(window.selectedArea) {
+                window.selectedArea.cancelSelection();
+            }
         });
     </script>
 {% endblock %}

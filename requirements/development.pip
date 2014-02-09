@@ -13,3 +13,4 @@ django-extensions
 lxml
 django-compressor
 django-debug-toolbar
+facepy

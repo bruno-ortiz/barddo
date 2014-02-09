@@ -1,9 +1,54 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+{% extends 'main_template.html' %}
+{% load dajaxice_templatetags %}
+{% load static %}
+{% load compress %}
 
-</body>
-</html>
+{% block header %}
+    <link rel="stylesheet" href="{% static "css/datepicker.css" %}" />
+    <link rel="stylesheet" href="{% static "css/uncompressed/barddo.dashboard.css" %}" />
+{% endblock %}
+
+{% block breadcrumbs %}
+    <!-- TODO: extract this logic to a template tag, so the breadcrumbs are calculated by the system -->
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="{% url "core.index" %}">Home</a>
+        </li>
+        <li>
+            <a href="{% url "core.dashboard" %}">Dashboard</a>
+        </li>
+        <li class="active">
+            {{ collection.name }}
+        </li>
+    </ul><!-- .breadcrumb -->
+{% endblock %}
+    {% if not collections %}
+        <div class="row" style="padding-top: 125px;">
+            <div class="col-sm-12">
+                <div class="center">
+                    <h3 class="red"><i class="icon-frown icon-5x"></i></h3>
+                    <h3 class="red">Oh noes!</h3>
+                    Looks like you have not created any collections yet! But do not fear, this is something easy to fix!
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding-top: 50px;">
+            <div class="col-sm-6 col-sm-offset-3">
+                <a id="collection-wizard-link" href="#new-collection-wizard" data-toggle="modal" class="btn btn-success btn-block"><i class="icon-plus-sign-alt"></i> Create a new collection (and awesome), now! </a>
+            </div>
+        </div>
+    {% else %}
+    {% endif %}
+{% block content %}
+{% endblock %}
+
+{% block page_specific_javascript %}
+    {% compress js %}
+    {% endcompress %}
+{% endblock %}
+
+{% block bottom_page %}
+    <script type="text/javascript">
+    </script>
+{% endblock %}

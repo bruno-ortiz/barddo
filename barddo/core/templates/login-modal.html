@@ -7,9 +7,9 @@
                 <h4 class="modal-title" id="loginModalLabel">Entrar no Barddo</h4>
             </div>
             <div class="modal-body">
-                <a href="{% url 'socialauth_begin' 'facebook' %}" class="btn btn-block facebook-color"><i class="icon-facebook-sign"></i>
+                <a href="{% url 'socialauth_begin' 'facebook' %}{% if next_url %}?next={{ next_url }}{% endif %}" class="btn btn-block facebook-color"><i class="icon-facebook-sign"></i>
                     Login with Facebook</a>
-                <a href="{% url 'socialauth_begin' 'google-oauth2' %}" class="btn btn-block google-color"><i class="icon-google-plus-sign"></i>
+                <a href="{% url 'socialauth_begin' 'google-oauth2' %}{% if next_url %}?next={{ next_url }}{% endif %}" class="btn btn-block google-color"><i class="icon-google-plus-sign"></i>
                     Login with Google</a>
             </div>
         </div>

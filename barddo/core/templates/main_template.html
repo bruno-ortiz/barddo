@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>{% block title %} Welcome to The Barddo {% endblock %}</title>
+    <title>{% block title %} Barddo - Because we like art {% endblock %}</title>
 
     <meta name="description" content="overview &amp; stats"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -43,7 +43,7 @@
 
     {% compress js %}
         <!-- Always load jquery on header, so we can use javascript on the page body -->
-        <script src="{%  static 'js/jquery-2.0.3.min.js'%}"></script>
+        <script src="{% static 'js/jquery-2.0.3.min.js' %}"></script>
 
         <!-- ace settings handler -->
 
@@ -73,8 +73,6 @@
                     Barddo
                 </small>
             </a><!-- /.brand -->
-
-
         </div>
         <!-- /.navbar-header -->
 
@@ -83,7 +81,7 @@
                 <ul class="nav ace-nav">
                     <li class="grey">
                         <a  href="{% url "core.dashboard" %}">
-                            <i class="icon-tasks"></i>
+                            <i class="icon-dashboard"></i>
                             Dashboard
                         </a>
                     </li>
@@ -91,10 +89,10 @@
                     <li class="light-blue">
                         <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                             <img class="nav-user-photo" src="{{ MEDIA_URL }}{{ avatar }}" alt="Jason's Photo"/>
-								<span class="user-info">
-									<small>Welcome,</small>
-									{{ username }}
-								</span>
+                            <span class="user-info">
+                                <small>Welcome,</small>
+                                {{ username }}
+                            </span>
 
                             <i class="icon-caret-down"></i>
                         </a>
@@ -108,7 +106,7 @@
                             </li>
 
                             <li>
-                                <a href="#">
+                                <a href="{% url 'core.editable_profile' %}">
                                     <i class="icon-user"></i>
                                     Profile
                                 </a>
@@ -170,7 +168,9 @@
         <i class="icon-double-angle-up icon-only bigger-110"></i>
     </a>
 </div>
-{% include "login-modal.html" %}
+{% if not user.is_authenticated %}
+    {% include "login-modal.html" %}
+{% endif %}
 <!-- /.main-container -->
 
 <!-- Footer starts -->
@@ -213,8 +213,6 @@
             </div>
         </div>
 
-
-
         <div class="row">
             <div class="col-md-12">
 
@@ -230,7 +228,6 @@
 <!-- Footer Ends -->
 
 <!-- basic scripts -->
-
 
 
 <script type="text/javascript">

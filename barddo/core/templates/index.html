@@ -215,6 +215,9 @@
 {% block bottom_page %}
     <script type="text/javascript">
         $(document).ready(function(){
+            {% if next_url %}
+                $("#loginModal").modal();
+            {% endif %}
 
             //ROLL ON HOVER
             $(function() {
