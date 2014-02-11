@@ -14,3 +14,4 @@ django-compressor
 gunicorn
 facepy
 Pillow
+BeautifulSoup<4
