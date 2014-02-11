@@ -14,3 +14,4 @@ lxml
 django-compressor
 django-debug-toolbar
 facepy
+pillow
