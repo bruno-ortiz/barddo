@@ -81,3 +81,5 @@ CACHES = {
 INSTALLED_APPS += (
     'gunicorn',
 )
+
+DEBUG = True
