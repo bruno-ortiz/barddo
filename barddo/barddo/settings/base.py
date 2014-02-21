@@ -288,10 +288,6 @@ SOCIAL_AUTH_ASSOCIATION_HANDLE_LENGTH = 32
 SOCIAL_AUTH_NONCE_SERVER_URL_LENGTH = 32
 SOCIAL_AUTH_ASSOCIATION_SERVER_URL_LENGTH = 32
 
-FACEBOOK_APP_ID = '579142508831157'
-FACEBOOK_API_SECRET = '3b9439528f2bd7cce28f25f8948f03fe'
-FACEBOOK_EXTENDED_PERMISSIONS = ['email', 'user_about_me', 'user_birthday', 'user_location']
-
 SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.social.social_auth_user',
     'social_auth.backends.pipeline.associate.associate_by_email',
@@ -310,8 +306,7 @@ LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_ERROR_URL = '/login-error'
 
-GOOGLE_OAUTH2_CLIENT_ID = '1010521892059-tf5leugg86ib3t2vsa2g4sbqm04lkj43.apps.googleusercontent.com'
-GOOGLE_OAUTH2_CLIENT_SECRET = 'VWrV9x7s6Xxsr058StR6G09Q'
+FACEBOOK_EXTENDED_PERMISSIONS = ['email', 'user_about_me', 'user_birthday', 'user_location']
 
 ########## Image crop settings
 THUMBNAIL_ALIASES = {
