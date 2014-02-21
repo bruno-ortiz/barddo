@@ -16,4 +16,5 @@ django-debug-toolbar
 facepy
 pillow
 easy-thumbnails
-imagekit
+django-imagekit
+pilkit
