@@ -2,6 +2,7 @@
 {% load dajaxice_templatetags %}
 {% load static %}
 {% load compress %}
+{% load thumbnail %}
 
 {% block header %}
     <link rel="stylesheet" href="{% static "css/datepicker.css" %}" />
@@ -193,7 +194,7 @@
                     <div class="widget-header header-color-dark">
                         <h5 class="smaller">
                             <i class="icon-inbox"></i>
-                            My Collections (12)
+                            My Collections ({{ collections|length }})
                         </h5>
 
                         <div class="widget-toolbar">
@@ -220,122 +221,27 @@
                         <div class="widget-main padding-6">
                             <div class="row">
                                 <div class="portfolio">
-                                    <!-- box 1 -->
-                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 item collection-great">
-                                        <div class="boxcontainer">
-                                            <div class="cover-wrap">
-                                                <img src="http://cdn.joentjuh.nl/manga/103058-v1-front-normal.jpg" alt="">
-                                            </div>
+                                    {% for collection in collections %}
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 item collection-great">
+                                            <div class="boxcontainer">
+                                                <div class="cover-wrap">
+                                                    {% if collection.cover %}
+                                                        <img src="{{ collection.cover|thumbnail_url:"small_cover" }}" alt="">
+                                                    {% else %}
 
-                                            <div class="roll">
-                                                <div class="wrapcaption">
-                                                    <a href="#new-work-wizard" data-toggle="modal" data-collection="1" onclick="$('#{{ work_form.collection.auto_id }}').val($(this).attr('data-collection'));"><i class="icon-plus-sign green" ></i></a>
-                                                    <a href="#collection-detail-modal" data-toggle="modal"><i class="icon-cog red"></i></a>
+                                                    {% endif %}
                                                 </div>
-                                            </div>
-                                            <h1><a href="projectdetail.html">La Chaux De Fonds</a></h1>
-                                        </div>
-                                    </div>
 
-                                    <!-- box 2 -->
-                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 item collection-great">
-                                        <div class="boxcontainer">
-                                            <div class="cover-wrap">
-                                                <img src="http://cdn.joentjuh.nl/manga/108068-v1-front-normal.jpg" alt="">
-                                            </div>
-                                            <div class="roll">
-                                                <div class="wrapcaption">
-                                                    <a href="projectdetail.html"><i class="icon-cog"></i></a>
+                                                <div class="roll">
+                                                    <div class="wrapcaption">
+                                                        <a href="#new-work-wizard" data-toggle="modal" data-collection="{{ collection.id }}" onclick="$('#{{ work_form.collection.auto_id }}').val($(this).attr('data-collection'));"><i class="icon-plus-sign green" ></i></a>
+                                                        <a href="#" class="collection-view" data-collection="{{ collection.id }}"><i class="icon-cog red"></i></a>
+                                                    </div>
                                                 </div>
+                                                <h1><a href="projectdetail.html">{{ collection.name }}</a></h1>
                                             </div>
-                                            <h1><a href="projectdetail.html">Taj Mahal</a></h1>
                                         </div>
-                                    </div>
-                                    <!-- box 3 -->
-                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 item">
-                                        <div class="boxcontainer">
-                                            <div class="cover-wrap">
-                                                <img src="http://cdn.joentjuh.nl/manga/62667-v1-front-normal.jpg" alt="">
-                                            </div>
-                                            <div class="roll">
-                                                <div class="wrapcaption">
-                                                    <a href="projectdetail.html"><i class="icon-cog"></i></a>
-                                                </div>
-                                            </div>
-                                            <h1><a href="projectdetail.html">Versailles, France</a></h1>
-                                        </div>
-                                    </div>
-                                    <!-- box 4 -->
-                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 item">
-                                        <div class="boxcontainer">
-                                            <div class="cover-wrap">
-                                                <img src="http://cdn.joentjuh.nl/manga/19604-v1-front-normal.jpg" alt="">
-                                            </div>
-                                            <div class="roll">
-                                                <div class="wrapcaption">
-                                                    <a href="projectdetail.html"><i class="icon-cog"></i></a>
-                                                </div>
-                                            </div>
-                                            <h1><a href="projectdetail.html">St Petersburg, Russia</a></h1>
-                                        </div>
-                                    </div>
-                                    <!-- box 5 -->
-                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 item">
-                                        <div class="boxcontainer">
-                                            <div class="cover-wrap">
-                                                <img src="http://cdn.joentjuh.nl/manga/48477-v4-front-normal.jpg" alt="">
-                                            </div>
-                                            <div class="roll">
-                                                <div class="wrapcaption">
-                                                    <a href="projectdetail.html"><i class="icon-cog"></i></a>
-                                                </div>
-                                            </div>
-                                            <h1><a href="projectdetail.html">Grunge Architecture</a></h1>
-                                        </div>
-                                    </div>
-                                    <!-- box 5 -->
-                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 item">
-                                        <div class="boxcontainer">
-                                            <div class="cover-wrap">
-                                                <img src="http://cdn.joentjuh.nl/manga/48477-v4-front-normal.jpg" alt="">
-                                            </div>
-                                            <div class="roll">
-                                                <div class="wrapcaption">
-                                                    <a href="projectdetail.html"><i class="icon-cog"></i></a>
-                                                </div>
-                                            </div>
-                                            <h1><a href="projectdetail.html">Grunge Architecture</a></h1>
-                                        </div>
-                                    </div>
-                                    <!-- box 5 -->
-                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 item">
-                                        <div class="boxcontainer">
-                                            <div class="cover-wrap">
-                                                <img src="http://cdn.joentjuh.nl/manga/48477-v4-front-normal.jpg" alt="">
-                                            </div>
-                                            <div class="roll">
-                                                <div class="wrapcaption">
-                                                    <a href="projectdetail.html"><i class="icon-cog"></i></a>
-                                                </div>
-                                            </div>
-                                            <h1><a href="projectdetail.html">Grunge Architecture</a></h1>
-                                        </div>
-                                    </div>
-                                    <!-- box 5 -->
-                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 item">
-                                        <div class="boxcontainer">
-                                            <div class="cover-wrap">
-                                                <img src="http://cdn.joentjuh.nl/manga/48477-v4-front-normal.jpg" alt="">
-                                            </div>
-                                            <div class="roll">
-                                                <div class="wrapcaption">
-                                                    <a href="projectdetail.html"><i class="icon-cog"></i></a>
-                                                </div>
-                                            </div>
-                                            <h1><a href="projectdetail.html">Grunge Architecture</a></h1>
-                                        </div>
-                                    </div>
-                                    <!-- next box etc -->
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
@@ -348,274 +254,10 @@
     {% endif %}
     </div>
 
-
-    <div id="collection-detail-modal" class="modal full-screen-modal">
-    <div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="loginModalLabel"><i class="icon-th-large"></i> Collection Details</h4>
-        </div>
-        <div class="modal-body">
-            <div class="row">
-                <div class="col-sm-4">
-                    <a id="new-work-button" class="btn btn-danger btn-block" href="#new-collection-wizard" data-toggle="modal" ><i class="icon-upload-alt"></i> Upload a brand new work now!</a>
-
-                    <div id="task-tab" class="tab-pane active">
-                        <h4 class="smaller lighter green">
-                            <i class="icon-list"></i>
-                            Select a work bellow
-                        </h4>
-
-                        <ul id="tasks" class="item-list ui-sortable">
-
-                            <li class="item-orange clearfix" style="padding:0">
-                                <label class="inline" style="width: 100%;">
-                                    <a href="#" style="display:block; padding: 10px">
-                                        <span class="badge badge-purple">7</span>
-                                        <span class="lbl"> Answering a customer questions</span>
-                                    </a>
-                                </label>
-                            </li>
-                            <li class="item-red clearfix">
-                                <label class="inline">
-                                    <span class="badge badge-purple">6</span>
-                                    <span class="lbl"> Fixing bugs</span>
-                                </label>
-                            </li>
-
-                            <li class="item-default clearfix">
-                                <label class="inline">
-                                    <span class="badge badge-purple">5</span>
-                                    <span class="lbl"> Adding new features</span>
-                                </label>
-                            </li>
-
-                            <li class="item-blue clearfix">
-                                <label class="inline">
-                                    <span class="badge badge-purple">4</span>
-                                    <span class="lbl"> Upgrading scripts used in template</span>
-                                </label>
-                            </li>
-
-                            <li class="item-grey clearfix">
-                                <label class="inline">
-                                    <span class="badge badge-purple">3</span>
-                                    <span class="lbl"> Adding new skins</span>
-                                </label>
-                            </li>
-
-                            <li class="item-green clearfix">
-                                <label class="inline">
-                                    <span class="badge badge-purple">2</span>
-                                    <span class="lbl"> Updating server software up</span>
-                                </label>
-                            </li>
-
-                            <li class="item-pink clearfix">
-                                <label class="inline">
-                                    <span class="badge badge-purple">1</span>
-                                    <span class="lbl"> Cleaning up</span>
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-                <div class="col-sm-8">
-                    <div class="page-header">
-                        <h1>
-                            Collection Name
-                            <small>
-                                <i class="icon-double-angle-right"></i>
-                                Work Title
-                            </small>
-                        </h1>
-                    </div>
-                </div>
-                <div class="col-sm-8">
-                    <div id="user-profile-2" class="user-profile">
-                        <div class="tabbable">
-                            <ul class="nav nav-tabs padding-18">
-                                <li class="active">
-                                    <a data-toggle="tab" href="#general">
-                                        <i class="blue icon-info-sign bigger-120"></i>
-                                        General
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a data-toggle="tab" href="#files">
-                                        <i class="green icon-picture bigger-120"></i>
-                                        Files
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a data-toggle="tab" href="#stats">
-                                        <i class="pink icon-bar-chart bigger-120"></i>
-                                        Statistics
-                                    </a>
-                                </li>
-                            </ul>
-
-                            <div class="tab-content no-border padding-24">
-                                <div id="general" class="tab-pane in active">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-4 center">
-															<span class="profile-picture">
-																<img class="editable img-responsive" alt="Alex's Avatar" id="avatar2" src="http://cdn.joentjuh.nl/manga/103058-v1-front-normal.jpg" />
-															</span>
-                                        </div><!-- /span -->
-
-                                        <div class="col-xs-12 col-sm-8">
-                                            <div class="form-group">
-                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-email">Volume N*:</label>
-
-                                                <div class="col-sm-9">
-                                                    <input type="text" id="form-field-email" value="1">
-                                                </div>
-                                            </div>
-
-                                            <br />
-
-                                            <div class="form-group">
-                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-email">Title</label>
-
-                                                <div class="col-sm-9">
-																	<span class="input-icon input-icon-right">
-																		<input type="email" id="form-field-email" value="Work Title">
-																		<i class="icon-envelope"></i>
-																	</span>
-                                                </div>
-                                            </div>
-
-                                            <br />
-
-                                            <div class="form-group">
-                                                <label class="col-sm-3 control-label no-padding-right" for="form-field-email">Summary</label>
-
-                                                <div class="col-sm-9">
-                                                    <textarea class="col-sm-12"></textarea>
-                                                </div>
-                                            </div>
-                                        </div><!-- /span -->
-                                    </div><!-- /row-fluid -->
-
-                                </div><!-- #home -->
-
-                                <div id="stats" class="tab-pane">
-                                    <div class="profile-feed row-fluid">
-                                        <div id="work-sales-charts"></div>
-                                    </div>
-                                </div><!-- /#feed -->
-
-                                <div id="files" class="tab-pane">
-                                    <div class="profile-feed row-fluid">
-                                        <div class="dd dd-draghandle">
-                                            <ol class="dd-list">
-                                                <li class="dd-item dd2-item" data-id="13">
-                                                    <div class="dd-handle dd2-handle">
-                                                        <i class="normal-icon icon-move blue bigger-130"></i>
-
-                                                        <i class="drag-icon icon-move bigger-125"></i>
-                                                    </div>
-                                                    <div class="dd2-content">Click on an icon to start dragging</div>
-                                                </li>
-
-                                                <li class="dd-item dd2-item" data-id="14">
-                                                    <div class="dd-handle dd2-handle">
-                                                        <i class="normal-icon icon-move bigger-130"></i>
-
-                                                        <i class="drag-icon icon-move bigger-125"></i>
-                                                    </div>
-                                                    <div class="dd2-content">Recent Posts</div>
-                                                </li>
-
-                                                <li class="dd-item dd2-item" data-id="19">
-                                                    <div class="dd-handle dd2-handle">
-                                                        <i class="normal-icon icon-move blue bigger-130"></i>
-
-                                                        <i class="drag-icon icon-move bigger-125"></i>
-                                                    </div>
-                                                    <div class="dd2-content">Menu</div>
-                                                </li>
-                                            </ol>
-                                        </div>
-                                    </div>
-                                </div><!-- /#feed -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    </div>
-
-
     {% include "_new_work_modal.html" %}
 
+    {% include "_new_collection_modal.html" %}
 
-    <div id="new-collection-wizard" class="modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- HEADER -->
-                <div class="modal-header" data-target="#modal-step-contents">
-                    <ul class="wizard-steps">
-                        <li data-target="#modal-start" class="active">
-                            <span class="step">1</span>
-                            <span class="title">Name Verification</span>
-                        </li>
-
-                        <li data-target="#modal-details">
-                            <span class="step">2</span>
-                            <span class="title">Details</span>
-                        </li>
-
-                        <li data-target="#modal-confirmation">
-                            <span class="step">3</span>
-                            <span class="title">Confirmation</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- CONTENT -->
-                <div class="modal-body step-content" id="modal-step-contents">
-                    <div class="step-pane active" id="modal-start">
-                        {% include "collection_form/_name_validation.html" %}
-                    </div>
-
-                    <div class="step-pane" id="modal-details">
-                        {% include "collection_form/_general_information.html" %}
-                    </div>
-
-                    <div class="step-pane" id="modal-confirmation">
-                        {% include "collection_form/_confirmation.html" %}
-                    </div>
-                </div>
-
-                <!-- NAVIGATION -->
-                <div class="modal-footer wizard-actions">
-                    <button id="collection-prev" class="btn btn-sm btn-prev">
-                        <i class="icon-arrow-left"></i>
-                        Prev
-                    </button>
-
-                    <button id="collection-next" class="btn btn-success btn-sm btn-next">
-                        Next
-                        <i class="icon-arrow-right icon-on-right"></i>
-                    </button>
-
-                    <button class="btn btn-danger btn-sm pull-left" data-dismiss="modal">
-                        <i class="icon-remove"></i>
-                        Close
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
 {% endblock %}
 
 {% block page_specific_javascript %}
@@ -642,6 +284,8 @@
     <script src="{% static "js/portfolio.js" %}"></script>
     <script src="{% static "js/jquery.nestable.min.js" %}"></script>
     <script src="{% static "js/jquery.form.min.js" %}"></script>
+
+    <script src="{% static "js/barddo/pages/dashboard.js" %}"></script>
 {% endblock %}
 
 {% block bottom_page %}
@@ -765,7 +409,7 @@
                 }
             });
 
-            var work_charts = $('#work-sales-charts').css({'width':'100%' , 'height':'220px'});
+            /*var work_charts = $('#work-sales-charts').css({'width':'100%' , 'height':'220px'});
             $.plot("#work-sales-charts", [
                 { label: "Domains", data: d1 },
                 { label: "Hosting", data: d2 },
@@ -792,7 +436,7 @@
                     borderColor:'#555'
                 }
             });
-
+*/
             //ROLL ON HOVER
             $(function() {
                 $(".roll").css("opacity","0");
@@ -826,6 +470,8 @@
 
 
     <script type="text/javascript">
+
+        // TODO: merge this with the new collection validation
         var workFormValid = false;
         var workFormCreate = false;
 
@@ -901,11 +547,6 @@
 
 
                                     $('#work-form').ajaxSubmit(options);
-
-                                    /*Dajaxice.core.register_a_work(Dajax.process, {
-                                        'form': $('#work-form').formSerialize(),
-                                        'crop': [crop.x1, crop.y1, crop.x2, crop.y2]
-                                    });*/
                                 }
                                 return workFormCreate;
                             } else {
@@ -923,7 +564,6 @@
                                     $("#form-work-next").html("<i class='icon-star'></i> Select a Cover!").prop("disabled", true);
                                 } else {
                                     Dajaxice.core.validate_work_information(Dajax.process, {
-                                        'form_id': "#work-form",
                                         'form': $('#work-form').serialize(true)
                                     });
                                 }

@@ -1,0 +1,61 @@
+<div id="modal-collection-{{ collection.id }}" class="modal fade full-screen-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="loginModalLabel"><i class="icon-th-large"></i> Collection Details</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <a id="new-work-button" class="btn btn-danger btn-block" href="#new-collection-wizard" data-toggle="modal" ><i class="icon-upload-alt"></i> Upload a brand new work now!</a>
+
+                        <div id="task-tab" class="tab-pane active">
+                            <h4 class="smaller lighter green">
+                                <i class="icon-list"></i>
+                                Select a work bellow
+                            </h4>
+
+                            <ul id="tasks" class="item-list ui-sortable">
+
+                                {% for work in works %}
+                                    <li class="item-orange clearfix" style="padding:0">
+                                        <label class="inline" style="width: 100%;">
+                                            <a href="#" class="work-detail-load" data-id="{{ work.id }}" style="display:block; padding: 10px">
+                                                <span class="badge badge-purple">#{{ work.unit_count }}</span>
+                                                <span class="lbl"> {{ work.title }}</span>
+                                            </a>
+                                        </label>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div id="work-detail">
+                        {% include "modals/collection_detail.html" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block bottom_page %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".work-detail-load").on("click", function() {
+
+                var id = $(this).attr("data-id");
+
+                $.ajax({
+                    url: "modal/work/" + id,
+                    success: function(data) {
+                        $("#work-detail").html(data);
+                    },
+                    dataType: 'html'
+                });
+            });
+        });
+    </script>
+{% endblock %}

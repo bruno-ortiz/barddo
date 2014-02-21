@@ -5,9 +5,10 @@ from django.utils.html import escape
 
 from dajaxice.utils import deserialize_form
 from django.contrib.auth.decorators import login_required
-
 from core.models import Collection
 from .forms import CollectionForm, WorkForm
+from pilkit.processors import Crop
+from PIL import Image
 
 
 @login_required
@@ -54,9 +55,14 @@ def register_a_collection(request, form):
 
     return ajax.json()
 
+
 @login_required
 @dajaxice_register
-def validate_work_information(request, form_id, form):
+def validate_work_information(request, form):
+    """
+    Partially validates a new artist work. Basically, we ignore cover validation, that will only be
+    considered on a later step
+    """
     ajax = Dajax()
     form = WorkForm(deserialize_form(form))
 
@@ -73,20 +79,45 @@ def validate_work_information(request, form_id, form):
 
     return ajax.json()
 
+
 @login_required
 @dajaxice_register
 def register_a_work(request):
+    """
+    Create a new artist work. The most important part here, is the cover parsing. We need to save the cover before
+    cropping it.
+
+    Note that we also set the collection cover to the new one.
+    """
     ajax = Dajax()
     form = WorkForm(request.POST, request.FILES)
 
+    # TODO: validate minimal image size
     if form.is_valid():
+        new_work = form.save(commit=False)
+        new_work.total_pages = 0
+        new_work.save()
+
+        crop_image(new_work, -int(request.POST["crop_x"]), -int(request.POST["crop_y"]),
+                   int(request.POST["crop_w"]), int(request.POST["crop_h"]))
+
+        # TODO: only set as collection cover when user opted for it
+        new_work.collection.cover = new_work.cover
+        new_work.collection.save()
+
         ajax.script('callback_create_work_ok()')
-        object = form.save(commit=False)
-        object.total_pages = 0
-        object.save()
     else:
         ajax.script('callback_create_work_error()')
         for field, errors in form.errors.items():
             print field, errors
 
     return ajax.json()
+
+
+def crop_image(work, x, y, width, height):
+    """
+    Crop given image with given coords and size
+    """
+    image = Image.open(work.cover.path)
+    crop = Crop(width=width, height=height, x=x, y=y)
+    crop.process(image).save(work.cover.path, 'JPEG', quality=75)

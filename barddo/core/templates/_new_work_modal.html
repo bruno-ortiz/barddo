@@ -2,19 +2,19 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- HEADER -->
-            <div class="modal-header" data-target="#modal-step-contents">
+            <div class="modal-header" data-target="#work-step-contents">
                 <ul class="wizard-steps">
-                    <li data-target="#modal-start" class="active">
+                    <li data-target="#work-details" class="active">
                         <span class="step">1</span>
                         <span class="title">Details</span>
                     </li>
 
-                    <li data-target="#modal-details">
+                    <li data-target="#work-cover">
                         <span class="step">2</span>
                         <span class="title">Cover</span>
                     </li>
 
-                    <li data-target="#modal-confirmation">
+                    <li data-target="#work-confirmation">
                         <span class="step">3</span>
                         <span class="title">Confirmation</span>
                     </li>
@@ -22,18 +22,18 @@
             </div>
 
             <!-- CONTENT -->
-            <div class="modal-body step-content" id="modal-step-contents">
+            <div class="modal-body step-content" id="work-step-contents">
                 <form class="form-horizontal" id="work-form" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <div class="step-pane active" id="modal-start">
+                    <div class="step-pane active" id="work-details">
                         {% include "work_form/_general.html" %}
                     </div>
 
-                    <div class="step-pane" id="modal-details">
+                    <div class="step-pane" id="work-cover">
                         {% include "work_form/_cover.html" %}
                     </div>
 
-                    <div class="step-pane" id="modal-confirmation">
+                    <div class="step-pane" id="work-confirmation">
                         {% include "work_form/_confirmation.html" %}
                     </div>
                 </form>

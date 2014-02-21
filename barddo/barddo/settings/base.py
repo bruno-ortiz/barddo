@@ -1,6 +1,7 @@
 from os import path
 import sys
 from os.path import dirname, abspath, basename
+from easy_thumbnails.conf import Settings as thumbnail_settings
 
 ########## PATH CONFIGURATION
 # Absolute filesystem path to the Django project directory:
@@ -201,6 +202,8 @@ THIRD_PARTY_APPS = (
     'widget_tweaks',
     'social_auth',
     'endless_pagination',
+    'imagekit',
+    'easy_thumbnails'
 )
 
 # Apps specific for this project go here.
@@ -309,3 +312,13 @@ LOGIN_ERROR_URL = '/login-error'
 
 GOOGLE_OAUTH2_CLIENT_ID = '1010521892059-tf5leugg86ib3t2vsa2g4sbqm04lkj43.apps.googleusercontent.com'
 GOOGLE_OAUTH2_CLIENT_SECRET = 'VWrV9x7s6Xxsr058StR6G09Q'
+
+########## Image crop settings
+THUMBNAIL_ALIASES = {
+    '': {
+        'big_cover': { 'size': (261, 348), 'crop': True},
+        'small_cover': { 'size': (163, 236), 'crop': True},
+    },
+}
+
+########## End of image crop settings

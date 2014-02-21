@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
+import os
+
 from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
-from django.conf import settings
-from accounts.models import  BarddoUser
-import os
+from hashlib import md5
+
+from accounts.models import BarddoUser
 
 
 class CollectionUnit(models.Model):
@@ -15,11 +17,17 @@ class CollectionUnit(models.Model):
         - Volumes
         - Pages
     """
-
     description = models.CharField(_('Description'), max_length=250, unique=True)
 
     def __unicode__(self):
         return self.description
+
+
+def get_collection_cover_path(instance, filename):
+    """
+        Default work cover path
+    """
+    return os.path.join('covers', 'collection', md5(filename).hexdigest())
 
 
 class Collection(models.Model):
@@ -50,8 +58,8 @@ class Collection(models.Model):
     start_date = models.DateField(_('Start Date'), blank=False, null=False)
     end_date = models.DateField(_('End Date'), blank=True, null=True)
 
-    # TODO: a collection can have multiple authors
     author = models.ForeignKey(BarddoUser, null=False)
+    cover = models.ImageField(_('Cover Art'), upload_to=get_collection_cover_path, blank=True, null=True)
 
     # TODO: collection tags
     # TODO: collection categories
@@ -74,8 +82,7 @@ def get_work_cover_path(instance, filename):
     """
         Default work cover path
     """
-    # TODO: covers should be stored by convention
-    return os.path.join('covers', 'works', filename)
+    return os.path.join('covers', 'works', md5(filename).hexdigest())
 
 
 class Work(models.Model):
@@ -108,6 +115,9 @@ class Work(models.Model):
 
     unit_count = models.IntegerField(_('Item Number'))
     total_pages = models.SmallIntegerField(_('Total Pages'))
+
+    class Meta:
+        unique_together = (("collection", "unit_count"), ("collection", "title"))
 
     # TODO: work tags
     # TODO: work categories
