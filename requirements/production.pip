@@ -9,7 +9,6 @@ django-dajaxice-ng
 django-dajax-ng
 django-widget-tweaks
 django-endless-pagination
-django-extensions
 lxml
 django-compressor
 gunicorn
