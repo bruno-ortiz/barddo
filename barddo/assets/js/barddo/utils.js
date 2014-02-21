@@ -1,11 +1,11 @@
 /**
  * Easy way to create a delayed action, just pass your function callback
  */
-var delay = (function(){
+var delay = (function () {
     var timer = 0;
 
-    return function(callback, ms){
-        clearTimeout (timer);
+    return function (callback, ms) {
+        clearTimeout(timer);
         timer = setTimeout(callback, ms);
     };
 })();
@@ -23,13 +23,13 @@ function error_tooltip(id, message, delay, placement) {
     placement = placement || "top";
 
     $(id).tooltip('destroy').tooltip({
-        title:message,
+        title: message,
         trigger: "manual",
         placement: placement,
         html: true
     }).tooltip('show');
 
-    setTimeout(function() {
+    setTimeout(function () {
         $(id).tooltip('hide');
     }, delay);
 }
@@ -47,4 +47,23 @@ function wizardMoveFirst($wizard) {
     for (var i = currentStep; i > 0; i--) {
         $wizard.wizard('previous');
     }
+}
+
+function gritterSuccess(title, message) {
+    $.gritter.add({
+        title: title,
+        text: message,
+        time: '2000',
+        class_name: 'gritter-success'
+    });
+}
+
+
+function gritterError(title, message) {
+    $.gritter.add({
+        title: title,
+        text: message,
+        time: '2000',
+        class_name: 'gritter-error'
+    });
 }
