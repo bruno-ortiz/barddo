@@ -52,13 +52,13 @@ SERVER_EMAIL = EMAIL_HOST_USER
 ########## DATABASE CONFIGURATION
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'barddo', # Or path to database file if using sqlite3.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'barddo',  # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': 'barddo',
         'PASSWORD': 'barddo@01',
-        'HOST': 'datanode.israelcrisanto.com', # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '5432', # Set to empty string for default.
+        'HOST': 'datanode.israelcrisanto.com',  # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '5432',  # Set to empty string for default.
     }
 }
 ########## END DATABASE CONFIGURATION
@@ -82,4 +82,13 @@ INSTALLED_APPS += (
     'gunicorn',
 )
 
-DEBUG = True
+DEBUG = False
+
+##
+#OAuth apps
+##
+FACEBOOK_APP_ID = '1375067126097037'
+FACEBOOK_API_SECRET = '1be5226a3b8fa841b35e178baf026b01'
+
+GOOGLE_OAUTH2_CLIENT_ID = '1010521892059-25jnl53uid47dpoqj7ljdqh9m4sanvvg.apps.googleusercontent.com'
+GOOGLE_OAUTH2_CLIENT_SECRET = 'YCWhljOVuudcJhg59ws26M1j'

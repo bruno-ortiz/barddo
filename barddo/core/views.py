@@ -5,6 +5,7 @@ from django.utils.translation import ugettext as _
 from django.views.generic import View
 from django.views.generic.base import TemplateResponseMixin, ContextMixin
 from django.views.generic.detail import SingleObjectMixin
+
 from accounts.models import BarddoUser
 from .forms import CollectionForm
 
@@ -106,4 +107,3 @@ class UserProfileView(LoginRequiredMixin, UserProfileMixin, TemplateResponseMixi
 
 profile = UserProfileView.as_view()
 editable_profile = UserProfileView.as_view(editable=True)
-# profile = ProfileAwareView.as_view(template_name='profile/profile.html')
