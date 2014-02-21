@@ -196,8 +196,8 @@ THIRD_PARTY_APPS = (
     'django_extensions',
     'compressor',
 
-    'dajaxice-ng',
-    'dajax-ng',
+    'dajaxice',
+    'dajax',
 
     'widget_tweaks',
     'social_auth',
