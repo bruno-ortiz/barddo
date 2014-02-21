@@ -15,3 +15,4 @@ gunicorn
 facepy
 Pillow
 BeautifulSoup<4
+easy-thumbnails
