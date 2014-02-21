@@ -7,8 +7,8 @@ psycopg2==2.4.5
 django-widget-tweaks==1.3
 django-dajaxice-ng
 django-dajax-ng
-django-widget-tweaks
 django-endless-pagination
+django-extensions
 lxml
 django-compressor
 gunicorn
