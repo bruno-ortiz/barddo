@@ -18,7 +18,7 @@ def get_env_setting(setting):
 
 ########## HOST CONFIGURATION
 # See: https://docs.djangoproject.com/en/1.5/releases/1.5/#allowed-hosts-required-in-production
-ALLOWED_HOSTS = ['127.0.0.1:8001', 'barddo.com']
+ALLOWED_HOSTS = ['.barddo.com', 'barddo.com', '127.0.0.1:8000']
 ########## END HOST CONFIGURATION
 
 
@@ -30,10 +30,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = environ.get('EMAIL_HOST', 'smtp.gmail.com')
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-host-password
-EMAIL_HOST_PASSWORD = environ.get('EMAIL_HOST_PASSWORD', '')
+EMAIL_HOST_PASSWORD = environ.get('EMAIL_HOST_PASSWORD', 'barddo@01')
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-host-user
-EMAIL_HOST_USER = environ.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_USER = environ.get('EMAIL_HOST_USER', 'barddoteam')
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-port
 EMAIL_PORT = environ.get('EMAIL_PORT', 587)
@@ -83,6 +83,8 @@ INSTALLED_APPS += (
 )
 
 DEBUG = False
+
+TEMPLATE_DEBUG = DEBUG
 
 ##
 #OAuth apps
