@@ -1,0 +1,35 @@
+{% load widget_tweaks %}
+
+
+    <input type="hidden" name="{{ work_form.collection.name }}" value="-1" id="{{ work_form.collection.auto_id }}">
+
+    <div class="form-group">
+        <label for="{{ work_form.title.auto_id }}" class="col-xs-12 col-sm-3 control-label no-padding-right">{{ work_form.title.label }}</label>
+
+        <div class="col-xs-12 col-sm-9">
+            <span class="block">
+                {% render_field work_form.title class="width-100" %}
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="{{ work_form.summary.auto_id }}" class="col-xs-12 col-sm-3 control-label no-padding-right">{{ work_form.summary.label }}</label>
+
+        <div class="col-xs-12 col-sm-9">
+            <span class="block">
+                {% render_field work_form.summary class="form-control" %}
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="{{ work_form.unit_count.auto_id }}" class="col-xs-12 col-sm-3 control-label no-padding-right">{{ work_form.unit_count.label }}</label>
+
+        <div class="col-xs-12 col-sm-9">
+            <div class="input-group">
+                {% render_field work_form.unit_count class="input-mini spinner-input" value="0" %}
+            </div>
+        </div>
+    </div>
+

@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% load dajaxice_templatetags %}
 {% load compress %}
+{% load thumbnail %}
 
 {% block header %}
     <link rel="stylesheet" href="{% static "css/uncompressed/barddo.gallery.css" %}"/>
@@ -26,177 +27,26 @@
             <div id="collection-content" class="col-lg-12  col-md-12 col-sm-12 col-xs-12 collections-wrap">
                 <div class="row">
                     <div class="portfolio">
-                        <!-- box 1 -->
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 item collection-great">
-                            <div class="boxcontainer">
-                                <div class="cover-wrap">
-                                    <img src="http://cdn.joentjuh.nl/manga/103058-v1-front-normal.jpg" alt="">
-                                </div>
+                        {% for work in works %}
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 item collection-great">
+                                <div class="boxcontainer">
+                                    <div class="cover-wrap">
+                                        <img src="{{ work.cover|thumbnail_url:"big_cover" }}" alt="">
+                                    </div>
 
-                                <div class="roll">
-                                    <div class="wrapcaption">
-                                        <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
+                                    <div class="roll">
+                                        <div class="wrapcaption">
+                                            <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="work-information">
+                                        <span class="badge badge-grey pull-right work-number">#{{ work.unit_count }}</span>
+                                        <h1>{{ work.title }}</h1>
+                                        <h2>{{ work.collection.name }}</h2>
                                     </div>
                                 </div>
-                                <h1><a href="projectdetail.html">La Chaux De Fonds</a></h1>
                             </div>
-                        </div>
-
-                        <!-- box 2 -->
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 item collection-great">
-                            <div class="boxcontainer">
-                                <div class="cover-wrap">
-                                    <img src="http://cdn.joentjuh.nl/manga/108068-v1-front-normal.jpg" alt="">
-                                </div>
-                                <div class="roll">
-                                    <div class="wrapcaption">
-                                        <a href="projectdetail.html"><i class="icon-star captionicons liked"></i></a>
-                                    </div>
-                                </div>
-                                <h1><a href="projectdetail.html">Taj Mahal</a></h1>
-                            </div>
-                        </div>
-                        <!-- box 3 -->
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 item">
-                            <div class="boxcontainer">
-                                <div class="cover-wrap">
-                                    <img src="http://cdn.joentjuh.nl/manga/62667-v1-front-normal.jpg" alt="">
-                                </div>
-                                <div class="roll">
-                                    <div class="wrapcaption">
-                                        <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
-                                    </div>
-                                </div>
-                                <h1><a href="projectdetail.html">Versailles, France</a></h1>
-                            </div>
-                        </div>
-                        <!-- box 4 -->
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 item">
-                            <div class="boxcontainer">
-                                <div class="cover-wrap">
-                                    <img src="http://cdn.joentjuh.nl/manga/19604-v1-front-normal.jpg" alt="">
-                                </div>
-                                <div class="roll">
-                                    <div class="wrapcaption">
-                                        <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
-                                    </div>
-                                </div>
-                                <h1><a href="projectdetail.html">St Petersburg, Russia</a></h1>
-                            </div>
-                        </div>
-                        <!-- box 5 -->
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 item">
-                            <div class="boxcontainer">
-                                <div class="cover-wrap">
-                                    <img src="http://cdn.joentjuh.nl/manga/48477-v4-front-normal.jpg" alt="">
-                                </div>
-                                <div class="roll">
-                                    <div class="wrapcaption">
-                                        <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
-                                    </div>
-                                </div>
-                                <h1><a href="projectdetail.html">Grunge Architecture</a></h1>
-                            </div>
-                        </div>
-                        <!-- box 5 -->
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 item">
-                            <div class="boxcontainer">
-                                <div class="cover-wrap">
-                                    <img src="http://cdn.joentjuh.nl/manga/48477-v4-front-normal.jpg" alt="">
-                                </div>
-                                <div class="roll">
-                                    <div class="wrapcaption">
-                                        <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
-                                    </div>
-                                </div>
-                                <h1><a href="projectdetail.html">Grunge Architecture</a></h1>
-                            </div>
-                        </div>
-                        <!-- box 5 -->
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 item">
-                            <div class="boxcontainer">
-                                <div class="cover-wrap">
-                                    <img src="http://cdn.joentjuh.nl/manga/48477-v4-front-normal.jpg" alt="">
-                                </div>
-                                <div class="roll">
-                                    <div class="wrapcaption">
-                                        <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
-                                    </div>
-                                </div>
-                                <h1><a href="projectdetail.html">Grunge Architecture</a></h1>
-                            </div>
-                        </div>
-                        <!-- box 5 -->
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 item">
-                            <div class="boxcontainer">
-                                <div class="cover-wrap">
-                                    <img src="http://cdn.joentjuh.nl/manga/48477-v4-front-normal.jpg" alt="">
-                                </div>
-                                <div class="roll">
-                                    <div class="wrapcaption">
-                                        <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
-                                    </div>
-                                </div>
-                                <h1><a href="projectdetail.html">Grunge Architecture</a></h1>
-                            </div>
-                        </div>
-                        <!-- box 5 -->
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 item">
-                            <div class="boxcontainer">
-                                <div class="cover-wrap">
-                                    <img src="http://cdn.joentjuh.nl/manga/48477-v4-front-normal.jpg" alt="">
-                                </div>
-                                <div class="roll">
-                                    <div class="wrapcaption">
-                                        <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
-                                    </div>
-                                </div>
-                                <h1><a href="projectdetail.html">Grunge Architecture</a></h1>
-                            </div>
-                        </div>
-                        <!-- box 5 -->
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 item">
-                            <div class="boxcontainer">
-                                <div class="cover-wrap">
-                                    <img src="http://cdn.joentjuh.nl/manga/48477-v4-front-normal.jpg" alt="">
-                                </div>
-                                <div class="roll">
-                                    <div class="wrapcaption">
-                                        <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
-                                    </div>
-                                </div>
-                                <h1><a href="projectdetail.html">Grunge Architecture</a></h1>
-                            </div>
-                        </div>
-                        <!-- box 5 -->
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 item">
-                            <div class="boxcontainer">
-                                <div class="cover-wrap">
-                                    <img src="http://cdn.joentjuh.nl/manga/48477-v4-front-normal.jpg" alt="">
-                                </div>
-                                <div class="roll">
-                                    <div class="wrapcaption">
-                                        <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
-                                    </div>
-                                </div>
-                                <h1><a href="projectdetail.html">Grunge Architecture</a></h1>
-                            </div>
-                        </div>
-                        <!-- box 5 -->
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 item collection-great">
-                            <div class="boxcontainer">
-                                <div class="cover-wrap">
-                                    <img src="http://cdn.joentjuh.nl/manga/48477-v4-front-normal.jpg" alt="">
-                                </div>
-                                <div class="roll">
-                                    <div class="wrapcaption">
-                                        <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
-                                    </div>
-                                </div>
-                                <h1><a href="projectdetail.html">Grunge Architecture</a></h1>
-                            </div>
-                        </div>
-                        <!-- next box etc -->
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -216,7 +66,10 @@
 
 {% block bottom_page %}
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function(){
+            {% if next_url %}
+                $("#loginModal").modal();
+            {% endif %}
 
             //ROLL ON HOVER
             $(function () {

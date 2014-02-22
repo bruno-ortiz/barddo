@@ -1,6 +1,7 @@
 from os import path
 import sys
 from os.path import dirname, abspath, basename
+from easy_thumbnails.conf import Settings as thumbnail_settings
 
 ########## PATH CONFIGURATION
 # Absolute filesystem path to the Django project directory:
@@ -201,6 +202,8 @@ THIRD_PARTY_APPS = (
     'widget_tweaks',
     'social_auth',
     'endless_pagination',
+    'imagekit',
+    'easy_thumbnails'
 )
 
 # Apps specific for this project go here.
@@ -305,3 +308,13 @@ LOGIN_REDIRECT_URL = '/'
 LOGIN_ERROR_URL = '/login-error'
 
 FACEBOOK_EXTENDED_PERMISSIONS = ['email', 'user_about_me', 'user_birthday', 'user_location']
+
+########## Image crop settings
+THUMBNAIL_ALIASES = {
+    '': {
+        'big_cover': { 'size': (261, 348), 'crop': True},
+        'small_cover': { 'size': (163, 236), 'crop': True},
+    },
+}
+
+########## End of image crop settings

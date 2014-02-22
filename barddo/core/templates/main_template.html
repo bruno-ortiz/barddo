@@ -4,11 +4,10 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>{% block title %} Welcome to The Barddo {% endblock %}</title>
+    <title>{% block title %} Barddo - Because we like art {% endblock %}</title>
 
     <meta name="description" content="overview &amp; stats"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
 
     {% compress css %}
         <!-- basic styles -->
@@ -72,7 +71,7 @@
             <a href="{% url "core.index" %}" class="navbar-brand">
                 <small>
                     <i class="icon-leaf"></i>
-                    Ace Admin
+                    Barddo
                 </small>
             </a><!-- /.brand -->
         </div>
@@ -82,9 +81,9 @@
             {% if user.is_authenticated %}
                 <ul class="nav ace-nav">
                     <li class="grey">
-                        <a href="{% url "collections.create" %}">
-                            <i class="icon-tasks"></i>
-                            Collections
+                        <a  href="{% url "core.dashboard" %}">
+                            <i class="icon-dashboard"></i>
+                            Dashboard
                         </a>
                     </li>
 
@@ -165,8 +164,7 @@
         </div>
         <!-- /.main-content -->
 
-    </div>
-    <!-- /.main-container-inner -->
+    </div><!-- /.main-container-inner -->
 
     <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
         <i class="icon-double-angle-up icon-only bigger-110"></i>
@@ -221,7 +219,6 @@
                 </div>
             </div>
         </div>
-
 
         <div class="row">
             <div class="col-md-12">

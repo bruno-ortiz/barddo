@@ -1,5 +1,4 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
 from django.views.generic import View
@@ -7,7 +6,8 @@ from django.views.generic.base import TemplateResponseMixin, ContextMixin
 from django.views.generic.detail import SingleObjectMixin
 
 from accounts.models import BarddoUser
-from .forms import CollectionForm
+from .forms import CollectionForm, WorkForm
+from .models import Collection, Work
 
 
 class UserNotProvided(Exception):
@@ -43,30 +43,53 @@ class ProfileAwareView(UserContextMixin, TemplateResponseMixin, View):
 class IndexView(ProfileAwareView):
     template_name = 'index.html'
 
+    def get(self, request, *args, **kwargs):
+        next_url = request.GET.get('next', '')
+
+        works = Work.objects.select_related("collection").all()
+
+        context = self.get_context_data(**{'user': request.user, "next_url": next_url, "works": works})
+        return super(IndexView, self).render_to_response(context)
 
 index = IndexView.as_view()
 
 ###
-### Collection related views
+### Artist Dashboard
 ###
 
 
-class CreateCollectionView(LoginRequiredMixin, ProfileAwareView):
-    template_name = 'collection_create.html'
+class ArtistDashboardView(LoginRequiredMixin, ProfileAwareView):
+    template_name = 'artist_dashboard.html'
 
     def get_context_data(self, **kwargs):
-        context = {'form': CollectionForm()}
+        collections = Collection.objects.filter(author_id=kwargs['user'].id)
+
+        context = {
+            'form': CollectionForm(),
+            'work_form': WorkForm(),
+            'collections': collections
+        }
         context.update(kwargs)
-        return super(CreateCollectionView, self).get_context_data(**context)
+        return super(ArtistDashboardView, self).get_context_data(**context)
+
+artist_dashboard = ArtistDashboardView.as_view()
 
 
-create_collection = CreateCollectionView.as_view()
+class CollectionDetailView(LoginRequiredMixin, ProfileAwareView):
+    template_name = 'collection_detail.html'
 
+    def get(self, request, collection_id, *args, **kwargs):
+        collection = Collection.objects.get(id=collection_id)
+        works = Work.objects.filter(collection_id=collection_id)
 
-@login_required
-def collection_list(request):
-    # TODO: implement
-    return render(request, "index.html")
+        context = {
+            'collection': collection,
+            'works': works
+        }
+
+        return super(CollectionDetailView, self).render_to_response(context)
+
+collection_detail = CollectionDetailView.as_view()
 
 
 class UserProfileMixin(SingleObjectMixin, UserContextMixin):
@@ -107,3 +130,35 @@ class UserProfileView(LoginRequiredMixin, UserProfileMixin, TemplateResponseMixi
 
 profile = UserProfileView.as_view()
 editable_profile = UserProfileView.as_view(editable=True)
+
+
+class CollectionModalView(TemplateResponseMixin, View):
+    template_name = 'modals/collection.html'
+
+    def get(self, request, collection_id, *args, **kwargs):
+        collection = Collection.objects.get(id=collection_id)
+        works = Work.objects.filter(collection_id=collection_id).order_by("-unit_count")
+
+        context = {
+            "collection": collection,
+            "works": works,
+            "current_work": works[0]
+        }
+        return super(CollectionModalView, self).render_to_response(context)
+
+render_collection_modal = CollectionModalView.as_view()
+
+
+class WorkModalView(TemplateResponseMixin, View):
+    template_name = 'modals/collection_detail.html'
+
+    def get(self, request, work_id, *args, **kwargs):
+        work = Work.objects.select_related("collection").get(id=work_id)
+
+        context = {
+            "collection": work.collection,
+            "current_work": work
+        }
+        return super(WorkModalView, self).render_to_response(context)
+
+render_work_modal = WorkModalView.as_view()

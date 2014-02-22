@@ -88,3 +88,24 @@ img {
     resize: vertical;
     height: 100px;
 }
+
+.work-information {
+    padding: 5px;
+}
+
+.work-information h1, .work-information h2 {
+    text-align: left;
+    font-size: 16px;
+    line-height: 1;
+    font-weight: bold;
+    padding: 5px 10px 5px 10px;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: "Century Gothic", "Avenir Next", Futura, "URW Gothic L", sans-serif, "Malgun Gothic";
+}
+
+.work-information h2 {
+    font-size: 12px;
+    color: #696969;
+}
+
