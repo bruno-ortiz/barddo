@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 from .views import index, profile, editable_profile
-from .views import collection_list, create_collection
+from .views import artist_dashboard, render_collection_modal, render_work_modal
 
 urlpatterns = patterns(
     '',
@@ -8,13 +8,9 @@ urlpatterns = patterns(
         index,
         name='core.index'),
 
-    url(r'^collections/create$',
-        create_collection,
-        name='collections.create'),
-
-    url(r'^collections$',
-        collection_list,
-        name='collections.list'),
+    url(r'^dashboard',
+        artist_dashboard,
+        name='core.dashboard'),
 
     url(r'^profile/(?P<pk>\d+)$',
         profile,
@@ -23,4 +19,15 @@ urlpatterns = patterns(
     url(r'^profile$',
         editable_profile,
         name='core.editable_profile'),
+
+    #################
+    # Custom Modals #
+    #################
+    url(r'^modal/collection/(?P<collection_id>\d+)',
+        render_collection_modal,
+        name='core.modal.collection'),
+
+    url(r'^modal/work/(?P<work_id>\d+)',
+        render_work_modal,
+        name='core.modal.work'),
 )

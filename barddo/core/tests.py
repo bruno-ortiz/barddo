@@ -20,7 +20,7 @@ class TestCoreViews(TestCase):
         self.assertTrue(logged, 'User should be logged')
         response = self.client.get(reverse('core.views.create_collection'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'collection_create.html')
+        self.assertTemplateUsed(response, 'artist_dashboard.html')
 
     def test_redirect_collection_create_when_user_not_logged(self):
         response = self.client.get(reverse('core.views.create_collection'))

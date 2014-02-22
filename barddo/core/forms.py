@@ -1,5 +1,5 @@
-from django.forms import ModelForm, DateTimeField, FileField
-from .models import Collection
+from django.forms import ModelForm, DateTimeField, ImageField
+from .models import Collection, Work
 
 
 class CollectionForm(ModelForm):
@@ -10,3 +10,12 @@ class CollectionForm(ModelForm):
     class Meta:
         model = Collection
         fields = ['name', 'summary', 'unit', 'start_date']
+        exclude = ['author']
+
+
+class WorkForm(ModelForm):
+    cover = ImageField(required=False)
+
+    class Meta:
+        model = Work
+        fields = ['title', 'summary', 'unit_count', 'collection', 'cover']

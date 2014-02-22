@@ -1,0 +1,56 @@
+<div class="center" style="height: 100%">
+    <input type="file" id="{{ work_form.cover.auto_id }}" name="{{ work_form.cover.name }}" />
+    <div id="upload-preview">
+        <div id="crop-container" style="position: absolute; top: 0; left: 0;"></div>
+    </div>
+
+</div>
+
+{% block bottom_page %}
+    <script type="text/javascript">
+        jQuery(function($) {
+
+            var preview = $("#upload-preview");
+
+            $('#{{ work_form.cover.auto_id }}').ace_file_input({
+                no_file:'No Cover Yey ...',
+                btn_choose:'Choose',
+                btn_change:'Change',
+                droppable:false,
+                onchange:null,
+                thumbnail:false, //| true | large
+                whitelist:'gif|png|jpg|jpeg'
+                //blacklist:'exe|php'
+                //onchange:''
+                //
+            }).on('change', function(){
+
+                        $("#form-work-next").html("<i class='icon-star'></i> Select a Cover!").prop("disabled", false);
+
+                        var input = $(event.currentTarget);
+                        var file = input[0].files[0];
+                        var reader = new FileReader();
+                        reader.onload = function(e){
+                            image_base64 = e.target.result;
+                            //preview.html('');
+                            preview.append("<img id='current-image' src='"+image_base64+"'/><br/>");
+                            window.selectedArea = $('#current-image').imgAreaSelect({
+                                x1: 0, y1: 0, x2: 60, y2: 80,
+                                handles: true,
+                                aspectRatio: '3:4',
+                                show: true,
+                                persistent: true,
+                                instance: true,
+                                //parent: "#crop-container",
+                                zIndex: 9999,
+                                minWidth: 261,
+                                minHeight: 378
+                            });
+
+                        };
+                        reader.readAsDataURL(file);
+                    });
+
+        });
+    </script>
+{% endblock %}
