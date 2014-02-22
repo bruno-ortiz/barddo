@@ -12,6 +12,7 @@ urlpatterns = patterns(
     '',
     url(r'^', include("core.urls")),
     url(r'^', include('accounts.urls')),
+    url(r'^', include('feedback.urls')),
 
     # Third Party URLs
     url(r'^admin/', include(admin.site.urls)),

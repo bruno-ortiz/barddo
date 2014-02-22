@@ -27,6 +27,7 @@
 
         <!-- ace styles -->
 
+        <link rel="stylesheet" href="{% static "css/jquery.gritter.css" %}"/>
         <link rel="stylesheet" href="{% static "css/uncompressed/ace.css" %}"/>
         <link rel="stylesheet" href="{% static "css/ace-rtl.min.css" %}"/>
         <link rel="stylesheet" href="{% static "css/uncompressed/ace-skins.css" %}"/>
@@ -148,7 +149,8 @@
                 <div class="pull-right nav-search" id="nav-search">
                     <form class="form-search">
                         <span class="input-icon">
-                            <input type="text" placeholder="Search for collections" class="nav-search-input" id="nav-search-input" autocomplete="off"/>
+                            <input type="text" placeholder="Search for collections" class="nav-search-input"
+                                   id="nav-search-input" autocomplete="off"/>
                             <i class="icon-search nav-search-icon"></i>
                         </span>
                     </form>
@@ -168,9 +170,14 @@
         <i class="icon-double-angle-up icon-only bigger-110"></i>
     </a>
 </div>
+
 {% if not user.is_authenticated %}
     {% include "login-modal.html" %}
 {% endif %}
+
+{% include "feedback-modal.html" %}
+
+<a id="feedbackButton" class="btn btn-danger feedback-button">Feedback</a>
 <!-- /.main-container -->
 
 <!-- Footer starts -->
@@ -245,6 +252,7 @@
 <script src="{% static "js/jquery-ui-1.10.3.custom.min.js" %}"></script>
 <script src="{% static "js/jquery.ui.touch-punch.min.js" %}"></script>
 <script src="{% static "js/jquery.slimscroll.min.js" %}"></script>
+<script src="{% static "js/jquery.gritter.min.js" %}"></script>
 
 <script src="{% static "js/barddo/utils.js" %}"></script>
 

@@ -1,10 +1,11 @@
 {% extends 'main_template.html' %}
 {% load staticfiles %}
+{% load dajaxice_templatetags %}
 {% load compress %}
 {% load thumbnail %}
 
 {% block header %}
-    <link rel="stylesheet" href="{% static "css/uncompressed/barddo.gallery.css" %}" />
+    <link rel="stylesheet" href="{% static "css/uncompressed/barddo.gallery.css" %}"/>
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -58,7 +59,8 @@
     {% compress js %}
         <script src="{% static "js/jquery.isotope.min.js" %}"></script>
         <script src="{% static "js/portfolio.js" %}"></script>
-
+        {% dajaxice_js_import 'nocsrf' %}
+        <script type="text/javascript" src="{% static "dajax/jquery.dajax.core.js" %}"></script>
     {% endcompress %}
 {% endblock %}
 
@@ -70,8 +72,8 @@
             {% endif %}
 
             //ROLL ON HOVER
-            $(function() {
-                $(".roll").css("opacity","0");
+            $(function () {
+                $(".roll").css("opacity", "0");
                 $(".roll").hover(function () {
                             $(this).stop().animate({
                                 opacity: 1

@@ -63,6 +63,32 @@ img {
     color: green;
 }
 
+.feedback-button {
+    float: left;
+    position: fixed;
+    top: 55%;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+
+    /* also accepts left, right, top, bottom coordinates; not required, but a good idea for styling */
+    -webkit-transform-origin: 0 0;
+    -moz-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    -o-transform-origin: 0 0;
+    transform-origin: 0 0;
+
+    /* Should be unset in IE9+ I think. */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+.modal textarea {
+    resize: vertical;
+    height: 100px;
+}
+
 .work-information {
     padding: 5px;
 }
@@ -75,7 +101,7 @@ img {
     padding: 5px 10px 5px 10px;
     margin-top: 0;
     margin-bottom: 0;
-    font-family: "Century Gothic","Avenir Next",Futura,"URW Gothic L",sans-serif,"Malgun Gothic";
+    font-family: "Century Gothic", "Avenir Next", Futura, "URW Gothic L", sans-serif, "Malgun Gothic";
 }
 
 .work-information h2 {

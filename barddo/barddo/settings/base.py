@@ -149,9 +149,9 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.eggs.Loader',
 )
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
 TEMPLATE_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'core', 'templates')),
+    path.normpath(path.join(SITE_ROOT, 'feedback', 'templates')),
 )
 ########## END TEMPLATE CONFIGURATION
 
@@ -210,6 +210,7 @@ THIRD_PARTY_APPS = (
 LOCAL_APPS = (
     'core',
     'accounts',
+    'feedback',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
