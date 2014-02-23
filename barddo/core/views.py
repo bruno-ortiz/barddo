@@ -8,7 +8,7 @@ from django.views.generic.detail import SingleObjectMixin
 from shards.decorators import register_shard
 from accounts.models import BarddoUser
 from .forms import CollectionForm, WorkForm
-from .models import Collection
+from .models import Collection, Work
 
 
 class UserNotProvided(Exception):
@@ -136,7 +136,7 @@ profile = UserProfileView.as_view()
 editable_profile = UserProfileView.as_view(editable=True)
 
 
-@register_shard(name=u"shard.view.collection")
+@register_shard(name=u"shard.collection")
 class CollectionModalView(TemplateResponseMixin, View):
     template_name = 'modals/collection.html'
 
@@ -155,6 +155,7 @@ class CollectionModalView(TemplateResponseMixin, View):
 render_collection_modal = CollectionModalView.as_view()
 
 
+@register_shard(name=u"shard.work")
 class WorkModalView(TemplateResponseMixin, View):
     template_name = 'modals/collection_detail.html'
 
@@ -169,34 +170,3 @@ class WorkModalView(TemplateResponseMixin, View):
 
 
 render_work_modal = WorkModalView.as_view()
-
-
-###
-from .models import Work
-from django.shortcuts import render
-
-
-@register_shard
-def collection_modal(request, collection_id):
-    collection = Collection.objects.get(id=collection_id)
-    works = Work.objects.filter(collection_id=collection_id).order_by("-unit_count")
-
-    context = {
-        "collection": collection,
-        "works": works,
-        "current_work": works[0]
-    }
-
-    return render(request, 'modals/collection.html', context)
-
-
-@register_shard(name=u"shard.work")
-def work_detail(request, work_id):
-    work = Work.objects.select_related("collection").get(id=work_id)
-
-    context = {
-        "collection": work.collection,
-        "current_work": work
-    }
-
-    return render(request, 'modals/collection_detail.html', context)
