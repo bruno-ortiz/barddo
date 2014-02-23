@@ -1,4 +1,5 @@
-<div id="modal-collection-{{ collection.id }}" class="modal fade full-screen-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="modal-collection-{{ collection.id }}" class="modal fade full-screen-modal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,7 +9,8 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-4">
-                        <a id="new-work-button" class="btn btn-danger btn-block" href="#new-collection-wizard" data-toggle="modal" ><i class="icon-upload-alt"></i> Upload a brand new work now!</a>
+                        <a id="new-work-button" class="btn btn-danger btn-block" href="#new-collection-wizard"
+                           data-toggle="modal"><i class="icon-upload-alt"></i> Upload a brand new work now!</a>
 
                         <div id="task-tab" class="tab-pane active">
                             <h4 class="smaller lighter green">
@@ -21,7 +23,8 @@
                                 {% for work in works %}
                                     <li class="item-orange clearfix" style="padding:0">
                                         <label class="inline" style="width: 100%;">
-                                            <a href="#" class="work-detail-load" data-id="{{ work.id }}" style="display:block; padding: 10px">
+                                            <a href="#" class="work-detail-load" data-id="{{ work.id }}"
+                                               style="display:block; padding: 10px">
                                                 <span class="badge badge-purple">#{{ work.unit_count }}</span>
                                                 <span class="lbl"> {{ work.title }}</span>
                                             </a>
@@ -41,21 +44,13 @@
     </div>
 </div>
 
-{% block bottom_page %}
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $(".work-detail-load").on("click", function() {
-
-                var id = $(this).attr("data-id");
-
-                $.ajax({
-                    url: "modal/work/" + id,
-                    success: function(data) {
-                        $("#work-detail").html(data);
-                    },
-                    dataType: 'html'
-                });
-            });
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".work-detail-load").on("click", function () {
+            var id = $(this).attr("data-id");
+            Shards.shard.work(function (shard_id, shard_data, parent) {
+                $(parent).html(shard_data);
+            }, {"work_id": id}, "#work-detail");
         });
-    </script>
-{% endblock %}
+    });
+</script>

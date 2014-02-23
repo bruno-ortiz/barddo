@@ -5,9 +5,10 @@ from django.views.generic import View
 from django.views.generic.base import TemplateResponseMixin, ContextMixin
 from django.views.generic.detail import SingleObjectMixin
 
+from shards.decorators import register_shard
 from accounts.models import BarddoUser
 from .forms import CollectionForm, WorkForm
-from .models import Collection, Work
+from .models import Collection
 
 
 class UserNotProvided(Exception):
@@ -51,6 +52,7 @@ class IndexView(ProfileAwareView):
         context = self.get_context_data(**{'user': request.user, "next_url": next_url, "works": works})
         return super(IndexView, self).render_to_response(context)
 
+
 index = IndexView.as_view()
 
 ###
@@ -72,6 +74,7 @@ class ArtistDashboardView(LoginRequiredMixin, ProfileAwareView):
         context.update(kwargs)
         return super(ArtistDashboardView, self).get_context_data(**context)
 
+
 artist_dashboard = ArtistDashboardView.as_view()
 
 
@@ -88,6 +91,7 @@ class CollectionDetailView(LoginRequiredMixin, ProfileAwareView):
         }
 
         return super(CollectionDetailView, self).render_to_response(context)
+
 
 collection_detail = CollectionDetailView.as_view()
 
@@ -132,10 +136,11 @@ profile = UserProfileView.as_view()
 editable_profile = UserProfileView.as_view(editable=True)
 
 
+@register_shard(name=u"shard.view.collection")
 class CollectionModalView(TemplateResponseMixin, View):
     template_name = 'modals/collection.html'
 
-    def get(self, request, collection_id, *args, **kwargs):
+    def post(self, request, collection_id, *args, **kwargs):
         collection = Collection.objects.get(id=collection_id)
         works = Work.objects.filter(collection_id=collection_id).order_by("-unit_count")
 
@@ -146,13 +151,14 @@ class CollectionModalView(TemplateResponseMixin, View):
         }
         return super(CollectionModalView, self).render_to_response(context)
 
+
 render_collection_modal = CollectionModalView.as_view()
 
 
 class WorkModalView(TemplateResponseMixin, View):
     template_name = 'modals/collection_detail.html'
 
-    def get(self, request, work_id, *args, **kwargs):
+    def post(self, request, work_id, *args, **kwargs):
         work = Work.objects.select_related("collection").get(id=work_id)
 
         context = {
@@ -161,4 +167,36 @@ class WorkModalView(TemplateResponseMixin, View):
         }
         return super(WorkModalView, self).render_to_response(context)
 
+
 render_work_modal = WorkModalView.as_view()
+
+
+###
+from .models import Work
+from django.shortcuts import render
+
+
+@register_shard
+def collection_modal(request, collection_id):
+    collection = Collection.objects.get(id=collection_id)
+    works = Work.objects.filter(collection_id=collection_id).order_by("-unit_count")
+
+    context = {
+        "collection": collection,
+        "works": works,
+        "current_work": works[0]
+    }
+
+    return render(request, 'modals/collection.html', context)
+
+
+@register_shard(name=u"shard.work")
+def work_detail(request, work_id):
+    work = Work.objects.select_related("collection").get(id=work_id)
+
+    context = {
+        "collection": work.collection,
+        "current_work": work
+    }
+
+    return render(request, 'modals/collection_detail.html', context)
