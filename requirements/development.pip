@@ -18,3 +18,4 @@ pillow
 easy-thumbnails
 django-imagekit
 pilkit
+fabric
