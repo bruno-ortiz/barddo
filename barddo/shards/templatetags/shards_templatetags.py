@@ -14,10 +14,10 @@ log = logging.getLogger('shards')
 
 @register.simple_tag(takes_context=True)
 def shards_js_import(context, csrf=True):
-    """ Return the js script tag for the dajaxice.core.js file
+    """ Return the js script tag for the shards.js file
     If the csrf argument is present and it's ``nocsrf`` dajaxice will not
     try to mark the request as if it need the csrf token. By default use
-    the dajaxice_js_import template tag will make django set the csrftoken
+    the shards_js_import template tag will make django set the csrftoken
     cookie on the current request."""
 
     csrf = csrf != 'nocsrf'
