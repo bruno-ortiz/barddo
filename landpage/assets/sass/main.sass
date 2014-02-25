@@ -1,0 +1,29 @@
+@import "compass/css3"
+@import "compass/utilities/general/clearfix"
+
+//Import helers 
+@import "mixins"
+@import "type"
+@import "animate"
+
+//Import partials page styles
+@import "partials/title-slide"
+@import "partials/contact"
+@import "partials/examples"
+
+//shared styles
+@import "partials/shared"
+
+//Import code affecting browsers without javascript last
+@import "no-js" 
+
+html
+    font-size: 62.5%
+
+body
+    background-color: $navy
+
+.hide
+    position: absolute
+    left: -9999px
+    top: -9999px

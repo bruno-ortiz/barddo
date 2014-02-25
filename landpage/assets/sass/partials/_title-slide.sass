@@ -1,0 +1,111 @@
+#title-slide
+    height: 120px
+    background: url(../img/title-image.jpg) left no-repeat
+    +background-size(cover)
+    border-bottom: solid 3px rgba(40, 40, 40 , 0.45)
+
+    +breakpoint(sm)
+        height: 300px
+
+    +breakpoint(md)
+        height: 350px
+
+    h1  
+        color: #000
+        margin-top: 20px
+        letter-spacing: 0.05em
+        +font-size(32)
+
+        +breakpoint(sm)
+            +font-size(42)
+            margin-top: 75px
+
+        +breakpoint(md)
+            margin-top: 175px
+
+#sub-title
+    min-height: 130px
+    padding: 40px 15px 40px 15px
+
+    p
+        +font-size(18)
+        +line-height(28)
+        letter-spacing: 0.03em
+        font-family: $oswald
+        font-style: italic
+
+        +breakpoint(sm)
+        +font-size(24)
+
+
+#story-icons
+    margin-bottom: 40px
+    min-height: 130px
+
+    a
+        display: block
+        border-bottom: solid 0px transparent
+
+    img
+        margin: 0 auto
+        margin-bottom: 20px
+        padding: 4px
+        display: block
+        width: 85px
+        background-color: #ecf0f1
+        +border-radius(100%)
+        +transition(all, 300ms)
+
+        &:hover
+            background-color: rgba(236, 240, 241, 0.85)
+
+.social
+
+    width: 100%
+    height: 50px
+    text-align: center
+
+    +breakpoint(sm)
+        width: 300px
+        height: 50px
+        position: absolute
+        top: 20px
+        right: 20px
+
+    .social-item
+        margin: 5px
+        display: inline-block
+        width: 30px
+        height: 30px
+        text-align: center
+        border: solid 2px #fff
+        color: #fff
+        +line-height(26)
+        +transition(all, 400ms)
+        +border-radius(100%)
+
+        +breakpoint(sm)
+            float: right
+        &:hover
+            background-color: rgba(255, 255, 255, 0.3)
+
+.social-footer
+    width: auto
+    text-align: center
+    position: relative
+    top: auto
+    left: auto
+    right: auto
+    .social-item
+        float: none
+
+.keep-scrolling
+    height: 30px
+    width: 30px
+    position: absolute
+    right: 20px
+    bottom: 20px
+    text-align: center
+    +border-radius(100%)
+    +line-height(26)
+    border: 2px solid #fff

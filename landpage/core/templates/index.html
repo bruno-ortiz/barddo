@@ -1,0 +1,626 @@
+{% load staticfiles %}
+{% load compress %}
+
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title> Journey | landing page</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    {% compress css %}
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+        <link rel="stylesheet" type="text/x-sass" media="screen" href="{% static 'sass/main.sass' %}">
+    {% endcompress %}
+
+    <script src="{% static 'js/vendor/modernizr-2.6.2-respond-1.1.0.min.js' %}"></script>
+</head>
+<body>
+<section id="title-slide" class="clearfix" data-stellar-background-ratio="0.5">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <h1 class="amatic animated fadeIn"> We Love telling stories </h1>
+            </div>
+            <div class="social">
+                <a href="#"><span class="social-item"><i class="entypo-facebook"></i></span></a>
+                <a href="#"><span class="social-item"><i class="entypo-twitter"></i></span></a>
+                <a href="#"><span class="social-item"><i class="entypo-gplus"></i></span></a>
+                <a href="#"><span class="social-item"><i class="entypo-pinterest"></i></span></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+
+<section id="sub-title">
+    <div class="row">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+            <p class="sub-title"> Sometimes the best stories although short are never read or shared. Keep things
+                intresting and share more stories, memories and experiences. Keep scrolling and let you imagination run
+                wild with how you could use this simple idea to display your next app release, story or quartly
+                findings.
+        </div>
+    </div>
+</section>
+
+<section id="story-icons">
+    <div class="row">
+        <div class="col-xs-6 col-sm-3 col-md-2 col-md-offset-2">
+            <a href="story/"><img src="{% static 'img/person.png' %}" alt="person icon" class="story-icon-1"></a>
+        </div>
+        <div class=" col-xs-6 col-sm-3 col-md-2">
+            <a href="app-release/"><img src="{% static 'img/mobile.png' %}" alt="person icon" class="story-icon-2"></a>
+        </div>
+        <div class=" col-xs-6 col-sm-3 col-md-2">
+            <a href="app-release/"><img
+                    src="{% static 'img/chat.png' %}" alt="person icon" class="story-icon-3"></a>
+        </div>
+        <div class="col-xs-6 col-sm-3 col-md-2">
+            <a href="story/"><img src="{% static 'img/ribbon.png' %}" alt="person icon" class="story-icon-4"></a>
+        </div>
+
+        <span class="keep-scrolling hidden-xs"><i class="entypo-down-open-big "></i></span>
+
+    </div>
+</section>
+
+<section>
+
+
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+        <div id="start" class="story-container story">
+            <p class="fittext pacifico"> Ready?</p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-xs-12 col-sm-2 col-sm-offset-5">
+        <div class="dot-container">
+            <div class='dot center' data-delay="1">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-2 col-sm-offset-5">
+        <div class="dot-container">
+            <div class='dot center' data-delay="1"></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-xs-12 col-sm-2 col-sm-offset-5">
+        <div class="dot-container">
+            <div class='dot center' data-delay="1"></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-2 col-sm-offset-3 hidden-xs">
+        <div class="dot-container">
+            <div class='dot float-right'></div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-2">
+        <div class="dot-container">
+            <div class='dot center'></div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-2 hidden-xs">
+        <div class="dot-container">
+            <div class='dot float-left'></div>
+        </div>
+    </div>
+</div>
+<div class="row hidden-xs">
+
+    <div class="col-xs-12 col-sm-2 col-sm-offset-5">
+        <div class="dot-container">
+            <div class='dot center' data-delay="1"></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-2">
+        <div class="story-image-container iphone-container">
+            <img src="{% static 'img/iphone.png' %}" alt="iphone">
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-4 ">
+        <div class="story-container story">
+            <p class="fittext amatic iphone-title" data-margin="50">Easy to edit HTML </p>
+
+        </div>
+
+        <div class="story-container story">
+            <p class="fittext amatic " data-margin="50" data-delay="3">Smooth animation </p>
+        </div>
+
+        <div class="story-container story">
+            <p class="fittext amatic " data-margin="50"> fully responsive </p>
+        </div>
+
+        <div class="story-container story">
+            <p class="fittext amatic " data-margin="50"> Wow friends </p>
+        </div>
+        <div class="story-container story">
+            <p class="fittext amatic " data-margin="50"> win fans </p>
+        </div>
+        <div class="story-container story">
+            <p class="fittext amatic " data-margin="50">Awesome</p>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div id="s4" class="story-container story">
+            <p class="fittext amatic uppercase"> Words </p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div id="s5" class="story-container">
+            <p class="fittext amatic uppercase"> fade </p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="story-container story">
+            <p class=" fittext amatic uppercase"> as </p>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="story-container story">
+            <p class=" fittext amatic "> you scroll </p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="story-container story">
+            <p class="fittext amatic "> -- </p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="story-container story">
+            <p class="fittext amatic "> You can easily</p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="story-container story">
+            <p class="fittext amatic"> Fade </p>
+        </div>
+    </div>
+</div>
+<div class="color-change" data-colorup="#34495e" data-colordown="#2980b9"></div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="story-container story">
+            <p class="fittext amatic"> the </p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="story-container story">
+            <p class="fittext amatic"> background </p>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+        <div class="hr-container ">
+            <hr data-margin="50">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="story-container">
+            <p class="fittext amatic "> Use Images </p>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="story-container story">
+            <p class="fittext amatic "> -- </p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-3 ">
+        <div class="story-container story">
+            <p class="fittext amatic ">Great UI</p>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-2 ">
+        <div class="story-image-container">
+            <div class="circle-icon " data-delay="4">
+                <img src="{% static 'img/pencil.png' %}" alt="pencil icon">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-3 ">
+        <div class="story-container story">
+            <p class="fittext amatic ">Cross browser</p>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-2 ">
+        <div class="story-image-container">
+            <div class="circle-icon " data-delay="4">
+                <img src="{% static 'img/browser.png' %}" alt="browser icon">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-3 ">
+        <div class="story-container story">
+            <p class="fittext amatic ">attractive</p>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-2 ">
+        <div class="story-image-container">
+            <div class="circle-icon " data-delay="4">
+                <img src="{% static 'img/flag.png' %}" alt="flag icon">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-3 ">
+        <div class="story-container story">
+            <p class="fittext amatic ">relevant</p>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-2 ">
+        <div class="story-image-container">
+            <div class="circle-icon " data-delay="4">
+                <img src="{% static 'img/location.png' %}" alt="pin icon">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="story-container story">
+            <p class="fittext amatic "> -- </p>
+        </div>
+    </div>
+</div>
+
+<!-- END row of images -->
+<div class="color-change" data-colorup="#2980b9" data-colordown="#8e44ad"></div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-2 col-sm-offset-1 ">
+        <div class="story-image-container">
+            <div class="circle-icon " data-delay="6">
+                <img src="{% static 'img/disc.png' %}" alt="floppy disc icon">
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-2 ">
+        <div class="dot-container">
+            <div class='dot center' data-delay="3"></div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-2 ">
+        <div class="dot-container">
+            <div class='dot center'></div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-2 col-sm-offset-1">
+        <div class="dot-container">
+            <div class='dot center' data-delay="2"></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-4 ">
+        <div class="story-container story">
+            <p class="fittext uppercase raleway"> Link items </p>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-2">
+        <div class="dot-container">
+            <div class='dot center' data-delay="2"></div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-2">
+        <div class="dot-container">
+            <div class='dot center' data-delay="4"></div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-4 ">
+        <div class="story-container story">
+            <p class="fittext uppercase raleway" data-delay="6"> with dots </p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-3 ">
+        <div class="story-image-container">
+            <div class="circle-icon " data-delay="0">
+                <img src="{% static 'img/heart.png' %}" alt="heart icon">
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-3 ">
+        <div class="story-image-container">
+            <div class="circle-icon " data-delay="1">
+                <img src="{% static 'img/robot.png' %}" alt=" robot icon">
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-3 ">
+        <div class="story-image-container">
+            <div class="circle-icon " data-delay="2">
+                <img src="{% static 'img/crown.png' %}" alt="crown-icon">
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-3 ">
+        <div class="story-image-container">
+            <div class="circle-icon " data-delay="3">
+                <img src="{% static 'img/cloud.png' %}" alt="cloud icon">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="color-change" data-colorup="#8e44ad" data-colordown="#d35400"></div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-2 col-sm-offset-1">
+        <div class="dot-container">
+            <div class='dot center' data-delay="2"></div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-2 col-sm-offset-6">
+        <div class="dot-container">
+            <div class='dot center' data-delay="2"></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-2 col-sm-offset-3">
+        <div class="dot-container">
+            <div class='dot center' data-delay="2"></div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-2 col-sm-offset-2">
+        <div class="dot-container">
+            <div class='dot center' data-delay="2"></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-2 col-sm-offset-5 ">
+        <div class="story-image-container">
+            <div class="circle-icon " data-delay="3">
+                <img src="{% static 'img/mail.png' %}" alt="mail icon">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="story-container story">
+            <p class="fittext pacifico"> share </p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="story-container story">
+            <p class="fittext pacifico"> your work </p>
+        </div>
+    </div>
+</div>
+
+<div class="color-change" data-colorup="#d35400" data-colordown="#c0392b"></div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-2 ">
+        <div class="story-container story">
+            <p class="fittext amatic iphone-title" data-margin="50">Editable scrolling</p>
+
+        </div>
+
+        <div class="story-container story">
+            <p class="fittext amatic " data-margin="50" data-delay="3">responsive text </p>
+        </div>
+
+        <div class="story-container story">
+            <p class="fittext amatic " data-margin="50"> Many fonts</p>
+        </div>
+
+        <div class="story-container story">
+            <p class="fittext amatic " data-margin="50"> Flat colours </p>
+        </div>
+        <div class="story-container story">
+            <p class="fittext amatic " data-margin="50"> great presentation </p>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-4 ">
+        <div class="story-image-container iphone-container">
+            <img src="{% static 'img/iphone.png' %}" alt="iphone">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="story-container story">
+            <p class="fittext amatic"> Fin </p>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+        <div class="hr-container ">
+            <hr data-margin="50">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="story-container story">
+            <p class="fittext amatic"> share this </p>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div class="footer-container">
+            <div class="social social-footer">
+                <a href="#"><span class="social-item"><i class="entypo-facebook"></i></span></a>
+                <a href="#"><span class="social-item"><i class="entypo-twitter"></i></span></a>
+                <a href="#"><span class="social-item"><i class="entypo-gplus"></i></span></a>
+                <a href="#"><span class="social-item"><i class="entypo-pinterest"></i></span></a>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+</div>
+<!-- /container -->
+<footer>
+    <div id="contact" class="animated fadeIn dealy-8">
+        <div class="container">
+            <div class="row">
+                <div class=" col-xs-12 col-sm-6">
+                    <div class="form-container clearfix">
+
+                        <form role="form">
+
+                            <div class="form-group clearfix">
+                                <label for="name" class="control-label">Name</label>
+
+                                <div class=" col-sm-8 col-md-9 col-lg-10 input-container">
+                                    <input type="text" class="form-control" id="name">
+                                </div>
+
+                            </div>
+
+                            <div class="form-group clearfix ">
+                                <label for="email" class="control-label">Email</label>
+
+                                <div class=" col-sm-8 col-md-9  col-lg-10 input-container">
+                                    <input type="email" class="form-control" id="email">
+                                </div>
+                            </div>
+
+                            <div class="form-group clearfix">
+
+                                <div class=" input-container col-xs-12">
+                                    <textarea class="form-control" rows="5"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearfix">
+                                <button type="submit" class="form-submit-btn"><i class="entypo-mail"></i>Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- form container -->
+                </div>
+                <!-- col -->
+
+                <div class="contact-info col-xs-12 col-sm-6">
+                    <h3 class="contact-me-title">Want to hear more about the big release? </h3>
+
+                    <p>
+                        Sign up here to find out more about the next app release or read our latest story. Perhaps just
+                        say hi.</p>
+
+                    <p>
+                        Hopefully i'll be seeing you soon.
+
+                    </p>
+
+                    <div class="row">
+                        <div class="col-xs-3 col-sm-3 ">
+                            <img src="{% static 'img/heart.png' %}" alt=" heart icon">
+                        </div>
+                        <div class="col-xs-3 col-sm-3 ">
+                            <img src="{% static 'img/papers.png' %}" alt="heart icon">
+                        </div>
+                        <div class="col-xs-3 col-sm-3 ">
+                            <img src="{% static 'img/crown.png' %}" alt="cron icon">
+                        </div>
+                        <div class="col-xs-3 col-sm-3 ">
+                            <img src="{% static 'img/cloud.png' %}" alt="cloud icon">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END row -->
+
+        </div>
+        <!-- END .container -->
+    </div>
+    <!-- END ontact -->
+</footer>
+{% compress js %}
+    <script src="{% static 'js/vendor/jquery-1.10.1.min.js' %}"></script>
+    <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/vendor/jquery.fittext.js' %}"></script>
+    <script src="{% static 'js/vendor/waypoints.min.js' %}"></script>
+    <script src="{% static 'js/vendor/jquery-ui-1.10.3.custom.js' %}"></script>
+    <script src="{% static 'js/vendor/jquery.stellar.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+{% endcompress %}
+</body>
+</html>
