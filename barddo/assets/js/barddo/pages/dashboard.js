@@ -1,18 +1,12 @@
-
-$(document).ready(function() {
-    $(".collection-view").on("click", function() {
-        var id = $(this).attr("data-collection");
-        var modalId = "#modal-collection-" + id;
-        $(modalId).remove();
-
-        $.ajax({
-            url: "modal/collection/" + id,
-            success: function(data) {
-                $("body").append(data);
-                $(modalId).modal("show");
-            },
-            dataType: 'html'
-        });
-
+$(document).ready(function () {
+    $(".collection-view").on("click", function () {
+        var id = $(this).attr("data-id");
+        Shards.modal.collection(function (shard_id, shard_data, parent) {
+            $(shard_id).remove();
+            $(parent).append(shard_data);
+            $(shard_id).modal('show');
+        }, {"collection_id": id});
     });
+
+
 });

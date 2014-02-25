@@ -104,7 +104,8 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
-    'dajaxice.finders.DajaxiceFinder'
+    'dajaxice.finders.DajaxiceFinder',
+    'shards.finders.ShardsFinder',
 )
 ########## END STATIC FILE CONFIGURATION
 
@@ -152,6 +153,7 @@ TEMPLATE_LOADERS = (
 TEMPLATE_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'core', 'templates')),
     path.normpath(path.join(SITE_ROOT, 'feedback', 'templates')),
+    path.normpath(path.join(SITE_ROOT, 'shards', 'templates')),
 )
 ########## END TEMPLATE CONFIGURATION
 
@@ -206,12 +208,14 @@ THIRD_PARTY_APPS = (
     'easy_thumbnails'
 )
 
-# Apps specific for this project go here.
 LOCAL_APPS = (
+    'shards',
     'core',
     'accounts',
     'feedback',
+
 )
+# Apps specific for this project go here.
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

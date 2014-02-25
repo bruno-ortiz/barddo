@@ -1,5 +1,6 @@
 {% load staticfiles %}
 {% load compress %}
+{% load shards_templatetags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,7 +82,7 @@
             {% if user.is_authenticated %}
                 <ul class="nav ace-nav">
                     <li class="grey">
-                        <a  href="{% url "core.dashboard" %}">
+                        <a href="{% url "core.dashboard" %}">
                             <i class="icon-dashboard"></i>
                             Dashboard
                         </a>
@@ -164,7 +165,8 @@
         </div>
         <!-- /.main-content -->
 
-    </div><!-- /.main-container-inner -->
+    </div>
+    <!-- /.main-container-inner -->
 
     <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
         <i class="icon-double-angle-up icon-only bigger-110"></i>
@@ -175,16 +177,12 @@
     {% include "login-modal.html" %}
 {% endif %}
 
-{% include "feedback-modal.html" %}
-
-<a id="feedbackButton" class="btn btn-danger feedback-button">Feedback</a>
+{% include "feedback-button.html" %}
 <!-- /.main-container -->
 
 <!-- Footer starts -->
 <footer>
     <div class="container">
-
-
         <div class="row">
             <div class="col-md-3  col-xs-6">
                 <div class="footer-link">
@@ -255,6 +253,8 @@
 <script src="{% static "js/jquery.gritter.min.js" %}"></script>
 
 <script src="{% static "js/barddo/utils.js" %}"></script>
+
+{% shards_js_import %}
 
 {% block page_specific_javascript %}
 
