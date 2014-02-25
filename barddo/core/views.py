@@ -136,7 +136,7 @@ profile = UserProfileView.as_view()
 editable_profile = UserProfileView.as_view(editable=True)
 
 
-@register_shard(name=u"shard.collection")
+@register_shard(name=u"modal.collection")
 class CollectionModalView(TemplateResponseMixin, View):
     template_name = 'modals/collection.html'
 
@@ -155,7 +155,7 @@ class CollectionModalView(TemplateResponseMixin, View):
 render_collection_modal = CollectionModalView.as_view()
 
 
-@register_shard(name=u"shard.work")
+@register_shard(name=u"modal.work")
 class WorkModalView(TemplateResponseMixin, View):
     template_name = 'modals/collection_detail.html'
 

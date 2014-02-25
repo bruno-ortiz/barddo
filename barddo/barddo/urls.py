@@ -18,7 +18,7 @@ urlpatterns = patterns(
     # Third Party URLs
     url(r'^admin/', include(admin.site.urls)),
     url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
-    url(r'^shards', include('shards.urls')),
+    url(r'^shards/', include('shards.urls')),
 )
 
 urlpatterns += staticfiles_urlpatterns()

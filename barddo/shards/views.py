@@ -1,7 +1,6 @@
 import logging
 
 from django.conf import settings
-
 from django.views.generic.base import View
 from django.http import HttpResponse, Http404
 
@@ -32,8 +31,6 @@ class ShardRequest(View):
 
         if not name:
             raise Http404
-
-        name = name.replace('/', '')
 
         # Check if the function is callable
         if shards_core.is_callable(name):

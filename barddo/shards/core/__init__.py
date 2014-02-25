@@ -5,7 +5,7 @@ from manager import Shards
 
 class ShardsConfig(object):
     """
-    Provide an easy to use way to read the dajaxice configuration and
+    Provide an easy to use way to read the shards configuration and
     return the default values if no configuration is present.
     """
 

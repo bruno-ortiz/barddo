@@ -48,7 +48,7 @@
     $(document).ready(function () {
         $(".work-detail-load").on("click", function () {
             var id = $(this).attr("data-id");
-            Shards.shard.work(function (shard_id, shard_data, parent) {
+            Shards.modal.work(function (shard_id, shard_data, parent) {
                 $(parent).html(shard_data);
             }, {"work_id": id}, "#work-detail");
         });
