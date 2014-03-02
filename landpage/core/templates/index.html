@@ -1,12 +1,13 @@
 {% load staticfiles %}
 {% load compress %}
+{% load i18n %}
 
 <!DOCTYPE html>
 <html class="no-js">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title> Journey | landing page</title>
+    <title>{% trans "Barddo - Where talent gets attention" %}</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
@@ -22,17 +23,37 @@
 <section id="title-slide" class="clearfix" data-stellar-background-ratio="0.5">
 
     <div class="container">
+
         <div class="row">
             <div class="col-xs-12 col-sm-12">
-                <h1 class="amatic animated fadeIn"> We Love telling stories </h1>
+                <h1 class="amatic animated fadeIn">{% trans "We believe that all forms of talent are noteworthy" %}</h1>
             </div>
             <div class="social">
-                <a href="#"><span class="social-item"><i class="entypo-facebook"></i></span></a>
-                <a href="#"><span class="social-item"><i class="entypo-twitter"></i></span></a>
-                <a href="#"><span class="social-item"><i class="entypo-gplus"></i></span></a>
-                <a href="#"><span class="social-item"><i class="entypo-pinterest"></i></span></a>
+                <a href="http://facebook.com/barddo" target="_blank">
+                    <span class="social-item">
+                        <i class="entypo-facebook"></i>
+                    </span>
+                </a>
+                <a href="http://twitter.com/barddo" target="_blank">
+                    <span class="social-item">
+                        <i class="entypo-twitter"></i>
+                    </span>
+                </a>
+                <a href="http://plus.google.com/barddo" target="_blank">
+                    <span class="social-item">
+                        <i class="entypo-gplus"></i>
+                    </span>
+                </a>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+                <iframe id="video" width="100%" src="//www.youtube.com/embed/qzPcMzy4WI8" frameborder="0"
+                        allowfullscreen></iframe>
+            </div>
+        </div>
+
     </div>
 </section>
 
@@ -41,21 +62,23 @@
 <section id="sub-title">
     <div class="row">
         <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-            <p class="sub-title"> Sometimes the best stories although short are never read or shared. Keep things
-                intresting and share more stories, memories and experiences. Keep scrolling and let you imagination run
-                wild with how you could use this simple idea to display your next app release, story or quartly
-                findings.
+            <p class="sub-title">
+                {% trans "Have you ever stopped to think about how many talented artists there are in the world?" %}
+                {% trans "How many exceptional art pieces were created  and we did not ever know?" %}
+                <br/> <br/>
+                {% trans "If you like comics, you'll love the Barddo Project just because it allows these pieces of work to receive the atention it deserves!" %}
+            </p>
         </div>
     </div>
 </section>
 
-<section id="story-icons">
+<section id="story-icons" class="story-icons">
     <div class="row">
         <div class="col-xs-6 col-sm-3 col-md-2 col-md-offset-2">
             <a href="story/"><img src="{% static 'img/person.png' %}" alt="person icon" class="story-icon-1"></a>
         </div>
         <div class=" col-xs-6 col-sm-3 col-md-2">
-            <a href="app-release/"><img src="{% static 'img/mobile.png' %}" alt="person icon" class="story-icon-2"></a>
+            <a href="app-release/"><img src="{% static 'img/heart.png' %}" alt="heart icon" class="story-icon-2"></a>
         </div>
         <div class=" col-xs-6 col-sm-3 col-md-2">
             <a href="app-release/"><img
@@ -66,73 +89,164 @@
         </div>
 
         <span class="keep-scrolling hidden-xs"><i class="entypo-down-open-big "></i></span>
-
     </div>
 </section>
 
 <section>
 
-
 <div class="row">
     <div class="col-xs-12 col-sm-8 col-sm-offset-2">
         <div id="start" class="story-container story">
-            <p class="fittext pacifico"> Ready?</p>
+            <p class="fittext pacifico"> {% trans "Barddo?" %}</p>
         </div>
     </div>
 </div>
 
 <div class="row">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-4">
+        <div id="start" class="story-container story">
+            <p class="littext pacifico"> {% trans "Why whould I care?" %}</p>
+        </div>
+    </div>
+</div>
 
-    <div class="col-xs-12 col-sm-2 col-sm-offset-5">
-        <div class="dot-container">
-            <div class='dot center' data-delay="1">
+<div class="color-change" data-colorup="#34495e" data-colordown="#2980b9"></div>
+
+
+<div class="row">
+    <div class="col-xs-12" style="height:150px;">
+    </div>
+</div>
+
+
+<div class="row ">
+    <div class="col-xs-12 col-sm-2 col-sm-offset-2 hidden-xs">
+        <div class="story-image-container">
+            <div class="circle-icon " data-delay="1">
+                <img src="{% static 'img/person.png' %}" alt="user icon">
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-2 col-sm-offset-4 hidden-xs">
+        <div class="story-image-container">
+            <div class="circle-icon " data-delay="1">
+                <img src="{% static 'img/robot.png' %}" alt="user icon">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row ">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-1 hidden-xs">
+        <div class="story-container story">
+            <p class="fittext amatic delay-0 animated fadeInDown"> {% trans "Users" %} </p>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-4 col-sm-offset-2 hidden-xs">
+        <div class="story-container story">
+            <p class="fittext amatic delay-0 animated fadeInDown"> {% trans "Artists" %} </p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-1 hidden-xs">
+        <div class="story-container story">
+            <p class="fittext amatic delay-0 animated fadeInDown"> {% trans "Wants To" %} </p>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-4 col-sm-offset-2 hidden-xs">
+        <div class="story-container story">
+            <p class="fittext amatic delay-0 animated fadeInDown"> {% trans "Wants" %} </p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-1 hidden-xs">
+        <div class="story-container story">
+            <p class="fittext amatic delay-0 animated fadeInDown"> {% trans "Read" %} </p>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-4 col-sm-offset-2 hidden-xs">
+        <div class="story-container story">
+            <p class="fittext amatic delay-0 animated fadeInDown"> {% trans "Visibility" %} </p>
+        </div>
+    </div>
+</div>
+
+<div class="row ">
+    <div class="col-xs-12 col-sm-2 col-sm-offset-5 hidden-xs">
+        <div class="story-image-container">
+            <div class="circle-icon " data-delay="1">
+                <img src="{% static 'img/heart.png' %}" alt="user icon">
             </div>
         </div>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-xs-12 col-sm-2 col-sm-offset-5">
-        <div class="dot-container">
-            <div class='dot center' data-delay="1"></div>
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div id="s4" class="story-container story">
+            <p class="fittext amatic uppercase"> {% trans "We Put" %}</p>
+        </div>
+    </div>
+</div>
+
+<div class="color-change" data-colorup="#34495e" data-colordown="#2980b9"></div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div id="s4" class="story-container story">
+            <p class="fittext amatic uppercase"> {% trans "Hungry Readers" %} </p>
         </div>
     </div>
 </div>
 
 <div class="row">
-
-    <div class="col-xs-12 col-sm-2 col-sm-offset-5">
-        <div class="dot-container">
-            <div class='dot center' data-delay="1"></div>
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div id="s4" class="story-container story">
+            <p class="fittext amatic uppercase"> & </p>
         </div>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-xs-12 col-sm-2 col-sm-offset-3 hidden-xs">
-        <div class="dot-container">
-            <div class='dot float-right'></div>
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-2">
-        <div class="dot-container">
-            <div class='dot center'></div>
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-2 hidden-xs">
-        <div class="dot-container">
-            <div class='dot float-left'></div>
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div id="s4" class="story-container story">
+            <p class="fittext amatic uppercase"> {% trans "Talented Artists" %} </p>
         </div>
     </div>
 </div>
-<div class="row hidden-xs">
 
-    <div class="col-xs-12 col-sm-2 col-sm-offset-5">
-        <div class="dot-container">
-            <div class='dot center' data-delay="1"></div>
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div id="s4" class="story-container story">
+            <p class="fittext amatic uppercase"> {% trans "In Touch" %} </p>
         </div>
     </div>
 </div>
+
+
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2" style="padding-top: 200px">
+        <div class="story-container">
+            <p class="fittext amatic "> {% trans "What a reader want?" %} </p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+        <div class="hr-container ">
+            <hr data-margin="50">
+        </div>
+    </div>
+</div>
+
+<div class="color-change" data-colordown="#34495e" data-colorup="#2980b9"></div>
 
 <div class="row">
     <div class="col-xs-12 col-sm-4 col-sm-offset-2">
@@ -142,102 +256,33 @@
     </div>
     <div class="col-xs-12 col-sm-4 ">
         <div class="story-container story">
-            <p class="fittext amatic iphone-title" data-margin="50">Easy to edit HTML </p>
-
+            <p class="littext amatic " data-margin="50"> {% trans "A lot of content to read" %} </p>
         </div>
 
         <div class="story-container story">
-            <p class="fittext amatic " data-margin="50" data-delay="3">Smooth animation </p>
-        </div>
-
-        <div class="story-container story">
-            <p class="fittext amatic " data-margin="50"> fully responsive </p>
-        </div>
-
-        <div class="story-container story">
-            <p class="fittext amatic " data-margin="50"> Wow friends </p>
+            <p class="littext amatic " data-margin="50"> {% trans "Read anywhere" %} </p>
         </div>
         <div class="story-container story">
-            <p class="fittext amatic " data-margin="50"> win fans </p>
+            <p class="littext amatic " data-margin="50"> {% trans "Share, comment, vote" %} </p>
         </div>
         <div class="story-container story">
-            <p class="fittext amatic " data-margin="50">Awesome</p>
+            <p class="littext amatic "
+               data-margin="50"> {% trans "Discover awesome works made by awesome people" %}</p>
         </div>
     </div>
 </div>
 
 
 <div class="row">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-        <div id="s4" class="story-container story">
-            <p class="fittext amatic uppercase"> Words </p>
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2" style="padding-top: 200px">
+        <div class="story-container">
+            <p class="fittext amatic uppercase">{% trans "Great for artists!" %}</p>
         </div>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-        <div id="s5" class="story-container">
-            <p class="fittext amatic uppercase"> fade </p>
-        </div>
-    </div>
-</div>
+<div class="color-change" data-colorup="#2980b9" data-colordown="#8e44ad"></div>
 
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-        <div class="story-container story">
-            <p class=" fittext amatic uppercase"> as </p>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-        <div class="story-container story">
-            <p class=" fittext amatic "> you scroll </p>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-        <div class="story-container story">
-            <p class="fittext amatic "> -- </p>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-        <div class="story-container story">
-            <p class="fittext amatic "> You can easily</p>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-        <div class="story-container story">
-            <p class="fittext amatic"> Fade </p>
-        </div>
-    </div>
-</div>
-<div class="color-change" data-colorup="#34495e" data-colordown="#2980b9"></div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-        <div class="story-container story">
-            <p class="fittext amatic"> the </p>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-        <div class="story-container story">
-            <p class="fittext amatic"> background </p>
-        </div>
-    </div>
-</div>
 <div class="row">
     <div class="col-xs-12 col-sm-8 col-sm-offset-2">
         <div class="hr-container ">
@@ -247,24 +292,9 @@
 </div>
 
 <div class="row">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-        <div class="story-container">
-            <p class="fittext amatic "> Use Images </p>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-        <div class="story-container story">
-            <p class="fittext amatic "> -- </p>
-        </div>
-    </div>
-</div>
-
-<div class="row">
     <div class="col-xs-12 col-sm-4 col-sm-offset-3 ">
         <div class="story-container story">
-            <p class="fittext amatic ">Great UI</p>
+            <p class="fittext amatic ">{% trans "Easily publish your work" %}</p>
         </div>
     </div>
     <div class="col-xs-12 col-sm-2 ">
@@ -279,13 +309,13 @@
 <div class="row">
     <div class="col-xs-12 col-sm-4 col-sm-offset-3 ">
         <div class="story-container story">
-            <p class="fittext amatic ">Cross browser</p>
+            <p class="fittext amatic ">{% trans "You tell the price" %}</p>
         </div>
     </div>
     <div class="col-xs-12 col-sm-2 ">
         <div class="story-image-container">
             <div class="circle-icon " data-delay="4">
-                <img src="{% static 'img/browser.png' %}" alt="browser icon">
+                <img src="{% static 'img/crown.png' %}" alt="pencil icon">
             </div>
         </div>
     </div>
@@ -294,13 +324,13 @@
 <div class="row">
     <div class="col-xs-12 col-sm-4 col-sm-offset-3 ">
         <div class="story-container story">
-            <p class="fittext amatic ">attractive</p>
+            <p class="fittext amatic ">{% trans "Users will rate it" %}</p>
         </div>
     </div>
     <div class="col-xs-12 col-sm-2 ">
         <div class="story-image-container">
             <div class="circle-icon " data-delay="4">
-                <img src="{% static 'img/flag.png' %}" alt="flag icon">
+                <img src="{% static 'img/flag.png' %}" alt="pencil icon">
             </div>
         </div>
     </div>
@@ -309,7 +339,7 @@
 <div class="row">
     <div class="col-xs-12 col-sm-4 col-sm-offset-3 ">
         <div class="story-container story">
-            <p class="fittext amatic ">relevant</p>
+            <p class="fittext amatic ">{% trans "relevant statistics" %}</p>
         </div>
     </div>
     <div class="col-xs-12 col-sm-2 ">
@@ -321,132 +351,15 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-        <div class="story-container story">
-            <p class="fittext amatic "> -- </p>
-        </div>
-    </div>
-</div>
-
 <!-- END row of images -->
-<div class="color-change" data-colorup="#2980b9" data-colordown="#8e44ad"></div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-2 col-sm-offset-1 ">
-        <div class="story-image-container">
-            <div class="circle-icon " data-delay="6">
-                <img src="{% static 'img/disc.png' %}" alt="floppy disc icon">
-            </div>
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-2 ">
-        <div class="dot-container">
-            <div class='dot center' data-delay="3"></div>
-        </div>
-    </div>
-
-    <div class="col-xs-12 col-sm-2 ">
-        <div class="dot-container">
-            <div class='dot center'></div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-12 col-sm-2 col-sm-offset-1">
-        <div class="dot-container">
-            <div class='dot center' data-delay="2"></div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-4 ">
-        <div class="story-container story">
-            <p class="fittext uppercase raleway"> Link items </p>
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-2">
-        <div class="dot-container">
-            <div class='dot center' data-delay="2"></div>
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-2">
-        <div class="dot-container">
-            <div class='dot center' data-delay="4"></div>
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-4 ">
-        <div class="story-container story">
-            <p class="fittext uppercase raleway" data-delay="6"> with dots </p>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-3 ">
-        <div class="story-image-container">
-            <div class="circle-icon " data-delay="0">
-                <img src="{% static 'img/heart.png' %}" alt="heart icon">
-            </div>
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-3 ">
-        <div class="story-image-container">
-            <div class="circle-icon " data-delay="1">
-                <img src="{% static 'img/robot.png' %}" alt=" robot icon">
-            </div>
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-3 ">
-        <div class="story-image-container">
-            <div class="circle-icon " data-delay="2">
-                <img src="{% static 'img/crown.png' %}" alt="crown-icon">
-            </div>
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-3 ">
-        <div class="story-image-container">
-            <div class="circle-icon " data-delay="3">
-                <img src="{% static 'img/cloud.png' %}" alt="cloud icon">
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="color-change" data-colorup="#8e44ad" data-colordown="#d35400"></div>
 
 <div class="row">
-    <div class="col-xs-12 col-sm-2 col-sm-offset-1">
-        <div class="dot-container">
-            <div class='dot center' data-delay="2"></div>
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-2 col-sm-offset-6">
-        <div class="dot-container">
-            <div class='dot center' data-delay="2"></div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-2 col-sm-offset-3">
-        <div class="dot-container">
-            <div class='dot center' data-delay="2"></div>
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-2 col-sm-offset-2">
-        <div class="dot-container">
-            <div class='dot center' data-delay="2"></div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-2 col-sm-offset-5 ">
+    <div class="col-xs-12 col-sm-2 col-sm-offset-5 " style="padding-top: 200px;">
         <div class="story-image-container">
             <div class="circle-icon " data-delay="3">
-                <img src="{% static 'img/mail.png' %}" alt="mail icon">
+                <img src="{% static 'img/heart.png' %}" alt="heart icon">
             </div>
         </div>
     </div>
@@ -455,7 +368,7 @@
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-sm-offset-3">
         <div class="story-container story">
-            <p class="fittext pacifico"> share </p>
+            <p class="fittext pacifico"> {% trans "Help us to" %} </p>
         </div>
     </div>
 </div>
@@ -463,49 +376,13 @@
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-sm-offset-3">
         <div class="story-container story">
-            <p class="fittext pacifico"> your work </p>
+            <p class="fittext pacifico"> {% trans "make this real" %} </p>
         </div>
     </div>
 </div>
 
 <div class="color-change" data-colorup="#d35400" data-colordown="#c0392b"></div>
 
-<div class="row">
-    <div class="col-xs-12 col-sm-4 col-sm-offset-2 ">
-        <div class="story-container story">
-            <p class="fittext amatic iphone-title" data-margin="50">Editable scrolling</p>
-
-        </div>
-
-        <div class="story-container story">
-            <p class="fittext amatic " data-margin="50" data-delay="3">responsive text </p>
-        </div>
-
-        <div class="story-container story">
-            <p class="fittext amatic " data-margin="50"> Many fonts</p>
-        </div>
-
-        <div class="story-container story">
-            <p class="fittext amatic " data-margin="50"> Flat colours </p>
-        </div>
-        <div class="story-container story">
-            <p class="fittext amatic " data-margin="50"> great presentation </p>
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-4 ">
-        <div class="story-image-container iphone-container">
-            <img src="{% static 'img/iphone.png' %}" alt="iphone">
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-        <div class="story-container story">
-            <p class="fittext amatic"> Fin </p>
-        </div>
-    </div>
-</div>
 <div class="row">
     <div class="col-xs-12 col-sm-8 col-sm-offset-2">
         <div class="hr-container ">
@@ -516,7 +393,7 @@
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-sm-offset-3">
         <div class="story-container story">
-            <p class="fittext amatic"> share this </p>
+            <p class="fittext amatic"> {% trans "Subscribe & share this" %} </p>
         </div>
     </div>
 </div>
@@ -546,31 +423,36 @@
                         <form role="form">
 
                             <div class="form-group clearfix">
-                                <label for="name" class="control-label">Name</label>
+                                <label for="name" class="control-label">{% trans "Name" %}</label>
 
                                 <div class=" col-sm-8 col-md-9 col-lg-10 input-container">
-                                    <input type="text" class="form-control" id="name">
+                                    <input type="text" class="form-control" id="name"
+                                           placeholder="{% trans "Please tell us your name" %}"/>
                                 </div>
 
                             </div>
 
-                            <div class="form-group clearfix ">
-                                <label for="email" class="control-label">Email</label>
+                            <div class=" form-group clearfix ">
+                                <label for="email" class="control-label">{% trans "Email" %}</label>
 
                                 <div class=" col-sm-8 col-md-9  col-lg-10 input-container">
-                                    <input type="email" class="form-control" id="email">
+                                    <input type="email" class="form-control" id="email"
+                                           placeholder="{% trans "So we can stay in touch" %}">
                                 </div>
                             </div>
 
                             <div class="form-group clearfix">
 
                                 <div class=" input-container col-xs-12">
-                                    <textarea class="form-control" rows="5"></textarea>
+                                    <textarea class="form-control" rows="5"
+                                              placeholder="{% trans "Thoughts about the project? Are you an artist or a reader? Maybe both?" %}"></textarea>
                                 </div>
                             </div>
 
                             <div class="form-group clearfix">
-                                <button type="submit" class="form-submit-btn"><i class="entypo-mail"></i>Submit</button>
+                                <button type="submit" class="form-submit-btn"><i class="entypo-mail"></i>
+                                    {% trans "Submit" %}
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -579,15 +461,12 @@
                 <!-- col -->
 
                 <div class="contact-info col-xs-12 col-sm-6">
-                    <h3 class="contact-me-title">Want to hear more about the big release? </h3>
+                    <h3 class="contact-me-title">{% trans "Want to hear more about the big release?" %} </h3>
+
+                    <p>{% trans "Sign up here and we will get in touch when we are launching. What about just saying hi and let us know that you liked the idea?" %}</p>
 
                     <p>
-                        Sign up here to find out more about the next app release or read our latest story. Perhaps just
-                        say hi.</p>
-
-                    <p>
-                        Hopefully i'll be seeing you soon.
-
+                        {% trans "Hopefully we'll be seeing you soon." %}
                     </p>
 
                     <div class="row">
