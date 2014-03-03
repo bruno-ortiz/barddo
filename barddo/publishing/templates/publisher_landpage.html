@@ -1,0 +1,75 @@
+{% extends 'main_template.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+
+{% block header %}
+
+{% endblock %}
+
+{% block breadcrumbs %}
+    <!-- TODO: extract this logic to a template tag, so the breadcrumbs are calculated by the system -->
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="{% url "core.index" %}">Home</a>
+        </li>
+        <li class="active">Publisher</li>
+    </ul><!-- .breadcrumb -->
+{% endblock %}
+
+{% block content %}
+    <div class="page-content">
+        <div id="carousel-publisher" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-publisher" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-publisher" data-slide-to="1"></li>
+                <li data-target="#carousel-publisher" data-slide-to="2"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img class="img-responsive" src="{% static "img/01-editor.png" %}">
+                </div>
+                <div class="item">
+                    <img class="img-responsive" src="{% static "img/02-editor.png" %}">
+                </div>
+                <div class="item">
+                    <img class="img-responsive" src="{% static "img/03-editor.png" %}">
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-publisher" data-slide="prev">
+                <span class="icon-chevron-left center-chevron"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel-publisher" data-slide="next">
+                <span class="icon-chevron-right center-chevron"></span>
+            </a>
+        </div>
+        <h1 class="red text-center">{% trans "Join us!" %}</h1>
+
+        <h3 class="text-center">{% trans "Create your own publishing group or Join the Barddo publisher!" %}</h3>
+
+        <div class="row">
+            <div class="col-sm-6 col-lg-6">
+                <button class="btn btn-danger btn-lg btn-block pull-down50" data-toggle="modal"
+                        data-target="#joinBarddo">{% trans "Join the Barddo publisher" %}</button>
+            </div>
+            <div class="col-sm-6 col-lg-6">
+                <button class="btn btn-primary btn-lg btn-block pull-down50">{% trans "Create a publishing group" %}</button>
+            </div>
+        </div>
+    </div>
+    {% include "join_barddo_modal.html" %}
+{% endblock %}
+
+{% block page_specific_javascript %}
+
+{% endblock %}
+
+{% block bottom_page %}
+
+{% endblock %}

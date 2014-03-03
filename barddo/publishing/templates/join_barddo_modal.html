@@ -1,0 +1,28 @@
+{% load i18n %}
+<!-- Modal -->
+<div class="modal fade" id="joinBarddo" tabindex="-1" role="dialog" aria-labelledby="joinBarddoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="joinBarddoLabel">{% trans "Join the barddo team!" %}</h4>
+            </div>
+            <div class="modal-body">
+                <h3>Please read our <a href="#">Terms of use</a>!</h3>
+
+                <form class="form-horizontal" role="form">
+                    <div class="checkbox">
+                        <label>
+                            <input name="form-field-checkbox" type="checkbox" class="ace">
+                            <span class="lbl"> I agree with the terms of use!</span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Close" %}</button>
+                <button type="button" class="btn btn-primary">{% trans "Join" %}</button>
+            </div>
+        </div>
+    </div>
+</div>

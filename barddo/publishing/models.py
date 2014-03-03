@@ -1,6 +1,8 @@
 from django.db import models
+
 from accounts.models import BarddoUser
 from core.models import Collection
+
 
 __author__ = 'bruno'
 

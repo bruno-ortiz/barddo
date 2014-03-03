@@ -81,7 +81,7 @@
             {% if user.is_authenticated %}
                 <ul class="nav ace-nav">
                     <li class="grey">
-                        <a  href="{% url "core.dashboard" %}">
+                        <a href="{% url "core.dashboard" %}">
                             <i class="icon-dashboard"></i>
                             Dashboard
                         </a>
@@ -110,6 +110,13 @@
                                 <a href="{% url 'core.editable_profile' %}">
                                     <i class="icon-user"></i>
                                     Profile
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{% url 'publishing.landpage' %}">
+                                    <i class="icon-book"></i>
+                                    Publisher Area
                                 </a>
                             </li>
 
@@ -164,7 +171,8 @@
         </div>
         <!-- /.main-content -->
 
-    </div><!-- /.main-container-inner -->
+    </div>
+    <!-- /.main-container-inner -->
 
     <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
         <i class="icon-double-angle-up icon-only bigger-110"></i>

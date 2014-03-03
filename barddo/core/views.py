@@ -51,6 +51,7 @@ class IndexView(ProfileAwareView):
         context = self.get_context_data(**{'user': request.user, "next_url": next_url, "works": works})
         return super(IndexView, self).render_to_response(context)
 
+
 index = IndexView.as_view()
 
 ###
@@ -72,6 +73,7 @@ class ArtistDashboardView(LoginRequiredMixin, ProfileAwareView):
         context.update(kwargs)
         return super(ArtistDashboardView, self).get_context_data(**context)
 
+
 artist_dashboard = ArtistDashboardView.as_view()
 
 
@@ -88,6 +90,7 @@ class CollectionDetailView(LoginRequiredMixin, ProfileAwareView):
         }
 
         return super(CollectionDetailView, self).render_to_response(context)
+
 
 collection_detail = CollectionDetailView.as_view()
 
@@ -146,6 +149,7 @@ class CollectionModalView(TemplateResponseMixin, View):
         }
         return super(CollectionModalView, self).render_to_response(context)
 
+
 render_collection_modal = CollectionModalView.as_view()
 
 
@@ -160,5 +164,6 @@ class WorkModalView(TemplateResponseMixin, View):
             "current_work": work
         }
         return super(WorkModalView, self).render_to_response(context)
+
 
 render_work_modal = WorkModalView.as_view()

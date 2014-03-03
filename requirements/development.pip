@@ -1,7 +1,7 @@
 ##
 # barddo box development requirements
 ##
-django==1.6.1
+django==1.6.2
 South==0.8.4
 django-social-auth==0.7.28
 psycopg2==2.4.5

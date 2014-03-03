@@ -151,6 +151,7 @@ TEMPLATE_LOADERS = (
 TEMPLATE_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'core', 'templates')),
     path.normpath(path.join(SITE_ROOT, 'feedback', 'templates')),
+    path.normpath(path.join(SITE_ROOT, 'publishing', 'templates'))
 )
 ########## END TEMPLATE CONFIGURATION
 
