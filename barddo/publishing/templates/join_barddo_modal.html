@@ -1,7 +1,7 @@
 {% load i18n %}
 <!-- Modal -->
 <div class="modal fade" id="joinBarddo" tabindex="-1" role="dialog" aria-labelledby="joinBarddoLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -21,7 +21,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Close" %}</button>
-                <button type="button" class="btn btn-primary">{% trans "Join" %}</button>
+                <button id="joinButton" type="button" class="btn disabled btn-primary">{% trans "Join" %}</button>
             </div>
         </div>
     </div>

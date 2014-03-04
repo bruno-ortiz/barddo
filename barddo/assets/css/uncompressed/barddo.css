@@ -119,3 +119,7 @@ img {
 .pull-down50 {
     margin-top: 50px;
 }
+
+.modal-sm {
+    width: 400px;
+}
