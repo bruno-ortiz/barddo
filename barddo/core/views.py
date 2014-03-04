@@ -5,6 +5,7 @@ from django.views.generic import View
 from django.views.generic.base import TemplateResponseMixin, ContextMixin
 from django.views.generic.detail import SingleObjectMixin
 
+from shards.decorators import register_shard
 from accounts.models import BarddoUser
 from .forms import CollectionForm, WorkForm
 from .models import Collection, Work
@@ -135,10 +136,11 @@ profile = UserProfileView.as_view()
 editable_profile = UserProfileView.as_view(editable=True)
 
 
+@register_shard(name=u"modal.collection")
 class CollectionModalView(TemplateResponseMixin, View):
     template_name = 'modals/collection.html'
 
-    def get(self, request, collection_id, *args, **kwargs):
+    def post(self, request, collection_id, *args, **kwargs):
         collection = Collection.objects.get(id=collection_id)
         works = Work.objects.filter(collection_id=collection_id).order_by("-unit_count")
 
@@ -153,10 +155,11 @@ class CollectionModalView(TemplateResponseMixin, View):
 render_collection_modal = CollectionModalView.as_view()
 
 
+@register_shard(name=u"modal.work")
 class WorkModalView(TemplateResponseMixin, View):
     template_name = 'modals/collection_detail.html'
 
-    def get(self, request, work_id, *args, **kwargs):
+    def post(self, request, work_id, *args, **kwargs):
         work = Work.objects.select_related("collection").get(id=work_id)
 
         context = {

@@ -1,5 +1,6 @@
 {% load staticfiles %}
 {% load compress %}
+{% load shards_templatetags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -183,16 +184,12 @@
     {% include "login-modal.html" %}
 {% endif %}
 
-{% include "feedback-modal.html" %}
-
-<a id="feedbackButton" class="btn btn-danger feedback-button">Feedback</a>
+{% include "feedback-button.html" %}
 <!-- /.main-container -->
 
 <!-- Footer starts -->
 <footer>
     <div class="container">
-
-
         <div class="row">
             <div class="col-md-3  col-xs-6">
                 <div class="footer-link">
@@ -263,6 +260,8 @@
 <script src="{% static "js/jquery.gritter.min.js" %}"></script>
 
 <script src="{% static "js/barddo/utils.js" %}"></script>
+
+{% shards_js_import %}
 
 {% block page_specific_javascript %}
 

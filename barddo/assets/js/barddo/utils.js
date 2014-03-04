@@ -67,3 +67,19 @@ function gritterError(title, message) {
         class_name: 'gritter-error'
     });
 }
+
+function gritterCenter(title, message, sticky) {
+    sticky = sticky ||false;
+
+    $.gritter.add({
+        title: title,
+        text: message,
+        time: '2000',
+        sticky: sticky,
+        class_name: 'gritter-info gritter-center'
+    });
+}
+
+function gritterClear() {
+    $.gritter.removeAll();
+}

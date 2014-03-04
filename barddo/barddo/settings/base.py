@@ -1,6 +1,7 @@
 from os import path
 import sys
 from os.path import dirname, abspath, basename
+from easy_thumbnails.conf import Settings as thumbnail_settings
 
 ########## PATH CONFIGURATION
 # Absolute filesystem path to the Django project directory:
@@ -103,7 +104,8 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
-    'dajaxice.finders.DajaxiceFinder'
+    'dajaxice.finders.DajaxiceFinder',
+    'shards.finders.ShardsFinder',
 )
 ########## END STATIC FILE CONFIGURATION
 
@@ -151,7 +153,8 @@ TEMPLATE_LOADERS = (
 TEMPLATE_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'core', 'templates')),
     path.normpath(path.join(SITE_ROOT, 'feedback', 'templates')),
-    path.normpath(path.join(SITE_ROOT, 'publishing', 'templates'))
+    path.normpath(path.join(SITE_ROOT, 'shards', 'templates')),
+    path.normpath(path.join(SITE_ROOT, 'publishing', 'templates')),
 )
 ########## END TEMPLATE CONFIGURATION
 
@@ -208,10 +211,12 @@ THIRD_PARTY_APPS = (
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
+    'shards',
     'core',
     'accounts',
     'feedback',
     'publishing',
+
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
