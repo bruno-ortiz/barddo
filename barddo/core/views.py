@@ -170,3 +170,95 @@ class WorkModalView(TemplateResponseMixin, View):
 
 
 render_work_modal = WorkModalView.as_view()
+
+import json
+
+from django.conf import settings
+import os
+from django.http import HttpResponse
+
+
+def list_work_files(work_path):
+    # TODO: need to load only images? maybe...
+    img_list = os.listdir(work_path)
+    allowed_extenstions = ['jpg', 'bmp', 'png', 'gif']
+    return sorted([i for i in img_list if any([i.endswith(ext) for ext in allowed_extenstions])])
+
+
+def handle_uploaded_file(path, file):
+    with open(path, 'wb+') as destination:
+        for chunk in file.chunks():
+            destination.write(chunk)
+
+
+class UploadWorkPageView(LoginRequiredMixin, View):
+    def post(self, request, work_id, *args, **kwargs):
+        # Validate the presence of file
+        file_name, file_extension = os.path.splitext(request.FILES['file'].name)
+
+        # TODO: Check the file against a black list
+
+        # Check if the user owns the work
+        work = Work.objects.select_related("collection").get(id=work_id)
+
+
+        #
+        work_path = os.path.join(settings.MEDIA_ROOT, "work_data", "%04d" % work.id)
+        if not os.path.exists(work_path):
+            os.makedirs(work_path)
+
+        work_content = list_work_files(work_path)
+        file_name = ("%03d" % len(work_content)) + file_extension
+        new_file_name = os.path.join(work_path, file_name)
+        handle_uploaded_file(new_file_name, request.FILES['file'])
+
+
+        # TODO: more than one user editing the same work?
+        context = {
+            "success": "true",
+            "work_id": work.id,
+            "work_page": len(work_content)
+        }
+        return HttpResponse(json.dumps(context), content_type="application/json")
+
+
+upload_work_page = UploadWorkPageView.as_view()
+
+
+class MoveWorkPageView(LoginRequiredMixin, View):
+    def post(self, request, work_id, *args, **kwargs):
+        # Check if the user owns the work
+        work = Work.objects.select_related("collection").get(id=work_id)
+
+        work_path = os.path.join(settings.MEDIA_ROOT, "work_data", "%04d" % work.id)
+        work_content = list_work_files(work_path)
+
+        pos_from = int(request.REQUEST['position_from'])
+        pos_to = int(request.REQUEST['position_to'])
+
+        start = min(pos_from, pos_to)
+
+        for x in xrange(start, len(work_content)):
+            os.rename(os.path.join(work_path, work_content[x]), os.path.join(work_path, "MOVING_" + work_content[x]))
+
+        if pos_from > pos_to:
+            work_content.insert(pos_to, work_content[pos_from])
+            del work_content[pos_from + 1]
+        else:
+            work_content.insert(pos_to + 1, work_content[pos_from])
+            del work_content[pos_from]
+
+        for x in xrange(start, len(work_content)):
+            _, extension = os.path.splitext(work_content[x])
+            os.rename(os.path.join(work_path, "MOVING_" + work_content[x]),
+                      os.path.join(work_path, "%03d" % x + extension))
+
+        # TODO: more than one user editing the same work?
+        context = {
+            "success": "true",
+            "work_id": work.id
+        }
+        return HttpResponse(json.dumps(context), content_type="application/json")
+
+
+move_work_page = MoveWorkPageView.as_view()

@@ -1,0 +1,16 @@
+<div class="center" style="height: 100%">
+    <div id="dropzone">
+        <form id="new_work_upload" action="/work/page/upload" class="dropzone">
+            {% csrf_token %}
+            <div class="fallback">
+                <input name="file" type="file" multiple=""/>
+            </div>
+            <div id="files-preview"></div>
+        </form>
+    </div>
+
+</div>
+
+{% block bottom_page %}
+
+{% endblock %}
