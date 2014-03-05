@@ -6,8 +6,7 @@
 
 {% block header %}
     {% compress css %}
-        <link rel="stylesheet" href="{% static "css/uncompressed/tagit.ui-zendesk.css" %}"/>
-        <link rel="stylesheet" href="{% static "css/uncompressed/jquery.tagit.css" %}"/>
+        <link rel="stylesheet" href="{% static "css/uncompressed/bootstrap-tagsinput.css" %}"/>
     {% endcompress %}
 {% endblock %}
 
@@ -59,11 +58,10 @@
 
         <div class="row">
             <div class="col-sm-6 col-lg-6">
-                <button class="btn btn-danger btn-lg btn-block pull-down50" data-toggle="modal"
-                        data-target="#joinBarddo">{% trans "Join the Barddo publisher" %}</button>
+                <button id="joinBarddoButton" class="btn btn-danger btn-lg btn-block pull-down50">{% trans "Join the Barddo publisher" %}</button>
             </div>
             <div class="col-sm-6 col-lg-6">
-                <button class="btn btn-primary btn-lg btn-block pull-down50">{% trans "Create a publishing group" %}</button>
+                <button id="createGroupButton" class="btn btn-primary btn-lg btn-block pull-down50">{% trans "Create a publishing group" %}</button>
             </div>
         </div>
     </div>
@@ -71,23 +69,29 @@
 {% endblock %}
 
 {% block page_specific_javascript %}
-    {% compress js %}
-        <script src="{% static "js/uncompressed/jquery-ui.js" %}"></script>
-        <script src="{% static "js/uncompressed/tag-it.js" %}"></script>
-    {% endcompress %}
+    {#    {% compress js %}#}
+    <script src="{% static "js/uncompressed/bootstrap-tagsinput.js" %}"></script>
+    {#    {% endcompress %}#}
 {% endblock %}
 
 {% block bottom_page %}
-    {% include "join_barddo_modal.html" %}
     <script type="text/javascript">
-        $("input[type=checkbox]").on("click", function () {
-            var $joinButton = $("#joinButton");
-            if ($joinButton.hasClass("disabled")) {
-                $joinButton.removeClass("disabled");
-            } else {
-                $joinButton.addClass("disabled");
-            }
-        });
+        $(document).ready(function () {
+            $("#joinBarddoButton").on("click", function () {
+                Shards.join.barddo(function (shard_id, shard_data, parent) {
+                    $(shard_id).remove();
+                    $(parent).append(shard_data);
+                    $(shard_id).modal('show');
+                });
+            });
 
+            $("#createGroupButton").on("click", function () {
+                Shards.create.group(function (shard_id, shard_data, parent) {
+                    $(shard_id).remove();
+                    $(parent).append(shard_data);
+                    $(shard_id).modal('show');
+                });
+            });
+        });
     </script>
 {% endblock %}

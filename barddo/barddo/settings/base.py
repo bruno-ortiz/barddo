@@ -1,7 +1,6 @@
 from os import path
 import sys
 from os.path import dirname, abspath, basename
-from easy_thumbnails.conf import Settings as thumbnail_settings
 
 ########## PATH CONFIGURATION
 # Absolute filesystem path to the Django project directory:
@@ -126,6 +125,7 @@ ALLOWED_HOSTS = []
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-FIXTURE_DIRS
 FIXTURE_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'core', 'fixtures')),
+    path.normpath(path.join(SITE_ROOT, 'publishing', 'fixtures')),
 )
 ########## END FIXTURE CONFIGURATION
 

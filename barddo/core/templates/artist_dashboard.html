@@ -241,7 +241,9 @@
 
                                                 <div class="roll">
                                                     <div class="wrapcaption">
-                                                        <a href="#new-work-wizard" data-toggle="modal" data-id="{{ collection.id }}" onclick="$('#{{ work_form.collection.auto_id }}').val($(this).attr('data-id'));"><i class="icon-plus-sign green" ></i></a>
+                                                        <a href="#new-work-wizard" data-toggle="modal" data-id="{{ collection.id }}"
+                                                           onclick="$('#'+'{{ work_form.collection.auto_id }}').val($(this).attr('data-id'));"><i
+                                                                class="icon-plus-sign green"></i></a>
                                                         <a href="#" class="collection-view" data-id="{{ collection.id }}"><i class="icon-cog red"></i></a>
                                                     </div>
                                                 </div>

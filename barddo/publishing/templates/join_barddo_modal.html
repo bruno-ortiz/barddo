@@ -1,6 +1,6 @@
 {% load i18n %}
-<!-- Modal -->
-<div class="modal fade" id="joinBarddo" tabindex="-1" role="dialog" aria-labelledby="joinBarddoLabel" aria-hidden="true">
+
+<div class="modal fade" id="joinBarddoModal" tabindex="-1" role="dialog" aria-labelledby="joinBarddoLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
@@ -26,3 +26,13 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $("input[type=checkbox]").on("click", function () {
+        var $joinButton = $("#joinButton");
+        if ($joinButton.hasClass("disabled")) {
+            $joinButton.removeClass("disabled");
+        } else {
+            $joinButton.addClass("disabled");
+        }
+    });
+</script>

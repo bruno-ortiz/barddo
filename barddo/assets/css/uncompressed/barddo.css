@@ -123,3 +123,8 @@ img {
 .modal-sm {
     width: 400px;
 }
+
+.bootstrap-tagsinput {
+    width: 100%;
+    border-radius: 0 !important;
+}
