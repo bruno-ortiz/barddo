@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 import os
+from hashlib import md5
 
 from django.db import models
+
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
-from hashlib import md5
+from django.conf import settings
+from django.core.files.images import ImageFile
 
 from accounts.models import BarddoUser
 
@@ -116,9 +119,29 @@ class Work(models.Model):
     unit_count = models.IntegerField(_('Item Number'))
     total_pages = models.SmallIntegerField(_('Total Pages'))
 
+    def list_work_files(self, work_path):
+        img_list = os.listdir(work_path)
+        allowed_extensions = ['jpg', 'bmp', 'png', 'gif']
+        return sorted([i for i in img_list if any([i.endswith(ext) for ext in allowed_extensions])])
+
+    def load_work_pages(self):
+        work_path = os.path.join(settings.MEDIA_ROOT, "work_data", "%04d" % self.id)
+        files = self.list_work_files(work_path)
+
+        image_files = []
+        for file in files:
+            img = ImageFile(open(os.path.join(work_path, file), "rb"))
+            image_files.append({
+                "size": img.size,
+                "url": settings.MEDIA_URL + img.name.replace(settings.MEDIA_ROOT + "/", ""),
+                "name": file
+            })
+
+        return image_files
+
     class Meta:
         unique_together = (("collection", "unit_count"), ("collection", "title"))
 
-    # TODO: work tags
-    # TODO: work categories
-    # TODO: store files by convention
+        # TODO: work tags
+        # TODO: work categories
+        # TODO: store files by convention

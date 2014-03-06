@@ -1,19 +1,13 @@
 Dropzone.autoDiscover = false;
 
-$(document).ready(function () {
-    $(".collection-view").on("click", function () {
-        var id = $(this).attr("data-id");
-        Shards.modal.collection(function (shard_id, shard_data, parent) {
-            $(shard_id).remove();
-            $(parent).append(shard_data);
-            $(shard_id).modal('show');
-        }, {"collection_id": id});
-    });
+function sortable_image_upload(target, preview_container, existing_data) {
+
+    existing_data = existing_data || null;
 
     /**
      * Work pages dropzone
      */
-    $(".dropzone").dropzone({
+    var dropzoned = $(target).dropzone({
         paramName: "file", // The name that will be used to transfer the file
         maxFilesize: 0.5, // MB
 
@@ -22,21 +16,46 @@ $(document).ready(function () {
 
         //change the previewTemplate to use Bootstrap progress bars
         previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-details\">\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n    <div class=\"dz-size\" data-dz-size></div>\n    <img data-dz-thumbnail />\n  </div>\n  <div class=\"progress progress-small progress-striped active\"><div class=\"progress-bar progress-bar-success\" data-dz-uploadprogress></div></div>\n  <div class=\"dz-success-mark\"><span></span></div>\n  <div class=\"dz-error-mark\"><span></span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n</div>",
-        previewsContainer: "#files-preview",
+        previewsContainer: preview_container,
         init: function () {
             this.on("addedfile", function (file) {
                 $('.dz-message').hide();
             });
 
             this.on("processing", function (file) {
-                this.options.url = "/work/page/upload/" + $('#new_work_upload').attr('data-id');
+                this.options.url = "/work/page/upload/" + $(target).attr('data-id');
             });
+
+
+            if (existing_data != null) {
+                var drop = this;
+
+                $(existing_data).each(function () {
+                    var file_name = $(this).text();
+                    var file_size = $(this).attr("data-size");
+                    var file_url = $(this).attr("data-url");
+
+                    // Create the mock file:
+                    var mockFile = { name: file_name, size: file_size };
+
+                    // Call the default addedfile event handler
+                    drop.emit("addedfile", mockFile);
+
+                    // And optionally show the thumbnail of the file:
+                    drop.emit("thumbnail", mockFile, file_url);
+
+                    // If you use the maxFiles option, make sure you adjust it to the
+                    // correct amount:
+                    var existingFileCount = 1; // The number of files already uploaded
+                    drop.options.maxFiles = drop.options.maxFiles - existingFileCount;
+                });
+            }
         }
     });
 
     var sort_from_index = -1;
 
-    $("#files-preview").sortable({
+    $(preview_container).sortable({
         placeholder: "placeholder",
         forcePlaceholderSize: true,
         start: function (event, ui) {
@@ -47,7 +66,7 @@ $(document).ready(function () {
             var to_index = ui.item.index()
 
             if (sort_from_index != to_index) {
-                var work_id = $("#new_work_upload").attr('data-id');
+                var work_id = $(target).attr('data-id');
                 //alert("from index " + sort_from_index + " to " + to_index);
 
                 $.ajax({
@@ -78,5 +97,19 @@ $(document).ready(function () {
         }
     });
 
-    $("#files-preview").disableSelection();
+    $(preview_container).disableSelection();
+    return dropzoned;
+}
+
+$(document).ready(function () {
+    $(".collection-view").on("click", function () {
+        var id = $(this).attr("data-id");
+        Shards.modal.collection(function (shard_id, shard_data, parent) {
+            $(shard_id).remove();
+            $(parent).append(shard_data);
+            $(shard_id).modal('show');
+        }, {"collection_id": id});
+    });
+
+    sortable_image_upload('#new_work_upload', "#files-preview");
 });

@@ -1,140 +1,127 @@
 {% load thumbnail %}
 {% csrf_token %}
-<div class="col-sm-8">
-    <div class="page-header">
-        <h1>
-            {{ collection.name }} # {{ current_work.unit_count }}
-            <small>
-                <i class="icon-double-angle-right"></i>
-                {{ current_work.title }}
-            </small>
-        </h1>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-header">
+            <h1>
+                {{ collection.name }} # {{ current_work.unit_count }}
+                <small>
+                    <i class="icon-double-angle-right"></i>
+                    {{ current_work.title }}
+                </small>
+            </h1>
+        </div>
     </div>
 </div>
-<div class="col-sm-8">
-    <div id="work-data">
-        <div class="tabbable">
-            <ul class="nav nav-tabs padding-18">
-                <li class="active">
-                    <a data-toggle="tab" href="#general-{{ collection.id }}">
-                        <i class="blue icon-info-sign bigger-120"></i>
-                        General
-                    </a>
-                </li>
+<div class="row">
+    <div class="col-sm-12">
+        <div id="work-data">
+            <div class="tabbable">
+                <ul class="nav nav-tabs padding-18">
+                    <li class="active">
+                        <a data-toggle="tab" href="#general-{{ collection.id }}">
+                            <i class="blue icon-info-sign bigger-120"></i>
+                            General
+                        </a>
+                    </li>
 
-                <li>
-                    <a data-toggle="tab" href="#files-{{ collection.id }}">
-                        <i class="green icon-picture bigger-120"></i>
-                        Files
-                    </a>
-                </li>
+                    <li>
+                        <a data-toggle="tab" href="#files-{{ collection.id }}">
+                            <i class="green icon-picture bigger-120"></i>
+                            Files
+                        </a>
+                    </li>
 
-                <li>
-                    <a data-toggle="tab" href="#stats-{{ collection.id }}">
-                        <i class="pink icon-bar-chart bigger-120"></i>
-                        Statistics
-                    </a>
-                </li>
-            </ul>
+                    <li>
+                        <a data-toggle="tab" href="#stats-{{ collection.id }}">
+                            <i class="pink icon-bar-chart bigger-120"></i>
+                            Statistics
+                        </a>
+                    </li>
+                </ul>
 
-            <div class="tab-content no-border padding-24">
-                <div id="general-{{ collection.id }}" class="tab-pane in active">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-4 center">
-                                        <span class="profile-picture">
-                                            <img class="editable img-responsive" alt="Alex's Avatar" id="avatar2"
-                                                 src="{{ current_work.cover|thumbnail_url:"small_cover" }}"/>
-                                        </span>
-                        </div>
-                        <!-- /span -->
-
-                        <div class="col-xs-12 col-sm-8">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="form-field-email">Volume
-                                    N*:</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" id="form-field-email" value="{{ current_work.unit_count }}">
-                                </div>
+                <div class="tab-content no-border padding-24">
+                    <div id="general-{{ collection.id }}" class="tab-pane in active">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4 center">
+                            <span class="profile-picture">
+                                <img class="editable img-responsive" alt="Alex's Avatar" id="avatar2"
+                                     src="{{ current_work.cover|thumbnail_url:"small_cover" }}"/>
+                            </span>
                             </div>
+                            <!-- /span -->
 
-                            <br/>
+                            <div class="col-xs-12 col-sm-8">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-email">Volume
+                                        N*:</label>
 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right"
-                                       for="form-field-email">Title</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" id="form-field-email" value="{{ current_work.unit_count }}">
+                                    </div>
+                                </div>
 
-                                <div class="col-sm-9">
+                                <br/>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right"
+                                           for="form-field-email">Title</label>
+
+                                    <div class="col-sm-9">
                                                 <span class="input-icon input-icon-right">
                                                     <input type="email" id="form-field-email"
                                                            value="{{ current_work.title }}">
                                                     <i class="icon-envelope"></i>
                                                 </span>
+                                    </div>
+                                </div>
+
+                                <br/>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right"
+                                           for="form-field-email">Summary</label>
+
+                                    <div class="col-sm-9">
+                                        <textarea class="col-sm-12">
+                                            {{ current_work.summary }}
+                                        </textarea>
+                                    </div>
                                 </div>
                             </div>
+                            <!-- /span -->
+                        </div>
+                        <!-- /row-fluid -->
 
-                            <br/>
+                    </div>
+                    <!-- #home -->
 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right"
-                                       for="form-field-email">Summary</label>
+                    <div id="stats-{{ collection.id }}" class="tab-pane">
+                        <div class="profile-feed row-fluid">
+                            <div id="work-sales-charts"></div>
+                        </div>
+                    </div>
+                    <!-- /#feed -->
 
-                                <div class="col-sm-9">
-                                    <textarea class="col-sm-12">
-                                        {{ current_work.summary }}
-                                    </textarea>
+                    <div id="files-{{ collection.id }}" class="tab-pane">
+                        <div class="profile-feed row-fluid">
+                            <form id="edit-work-upload" action="/work/page/upload" data-id="{{ current_work.id }}"
+                                  class="dropzone">
+                                {% csrf_token %}
+                                <div class="fallback">
+                                    <input name="file" type="file" multiple=""/>
                                 </div>
-                            </div>
-                        </div>
-                        <!-- /span -->
-                    </div>
-                    <!-- /row-fluid -->
-
-                </div>
-                <!-- #home -->
-
-                <div id="stats-{{ collection.id }}" class="tab-pane">
-                    <div class="profile-feed row-fluid">
-                        <div id="work-sales-charts"></div>
-                    </div>
-                </div>
-                <!-- /#feed -->
-
-                <div id="files-{{ collection.id }}" class="tab-pane">
-                    <div class="profile-feed row-fluid">
-                        <div class="dd dd-draghandle">
-                            <ol class="dd-list">
-                                <li class="dd-item dd2-item" data-id="13">
-                                    <div class="dd-handle dd2-handle">
-                                        <i class="normal-icon icon-move blue bigger-130"></i>
-
-                                        <i class="drag-icon icon-move bigger-125"></i>
-                                    </div>
-                                    <div class="dd2-content">Click on an icon to start dragging</div>
-                                </li>
-
-                                <li class="dd-item dd2-item" data-id="14">
-                                    <div class="dd-handle dd2-handle">
-                                        <i class="normal-icon icon-move bigger-130"></i>
-
-                                        <i class="drag-icon icon-move bigger-125"></i>
-                                    </div>
-                                    <div class="dd2-content">Recent Posts</div>
-                                </li>
-
-                                <li class="dd-item dd2-item" data-id="19">
-                                    <div class="dd-handle dd2-handle">
-                                        <i class="normal-icon icon-move blue bigger-130"></i>
-
-                                        <i class="drag-icon icon-move bigger-125"></i>
-                                    </div>
-                                    <div class="dd2-content">Menu</div>
-                                </li>
-                            </ol>
+                                <div id="edit-work-files-preview"></div>
+                                <ul style="display: none" id="work-file-list">
+                                    {% for image in current_work.load_work_pages %}
+                                        <li data-size="{{ image.size }}" url="{{ image.url }}">{{ image.name }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </form>
                         </div>
                     </div>
+                    <!-- /#feed -->
                 </div>
-                <!-- /#feed -->
             </div>
         </div>
     </div>
