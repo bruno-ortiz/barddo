@@ -9,8 +9,7 @@ from .forms import UserContactForm
 @dajaxice_register
 def register_a_collection(request, form):
     """
-    Called asynchronously to validate/save a new collection.
-    Right now we only do a simple model validation.
+    Called asynchronously to register a user feecback
     """
     ajax = Dajax()
     form = UserContactForm(deserialize_form(form))
