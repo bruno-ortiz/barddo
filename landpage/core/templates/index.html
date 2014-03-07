@@ -1,6 +1,8 @@
 {% load staticfiles %}
 {% load compress %}
 {% load i18n %}
+{% load widget_tweaks %}
+{% load dajaxice_templatetags %}
 
 <!DOCTYPE html>
 <html class="no-js">
@@ -14,6 +16,13 @@
     {% compress css %}
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+
+        <link rel="stylesheet" href="{% static "css/font-awesome.min.css" %}"/>
+
+        <!--[if IE 7]>
+		  <link rel="stylesheet" href="{% static "css/font-awesome-ie7.min.css" %}" />
+		<![endif]-->
+
         <link rel="stylesheet" type="text/x-sass" media="screen" href="{% static 'sass/main.sass' %}">
     {% endcompress %}
 
@@ -23,6 +32,13 @@
 <section id="title-slide" class="clearfix" data-stellar-background-ratio="0.5">
 
     <div class="container">
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 start">
+                <iframe id="video" width="100%" src="//www.youtube.com/embed/qzPcMzy4WI8" frameborder="0"
+                        allowfullscreen></iframe>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-xs-12 col-sm-12">
@@ -47,12 +63,6 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-                <iframe id="video" width="100%" src="//www.youtube.com/embed/qzPcMzy4WI8" frameborder="0"
-                        allowfullscreen></iframe>
-            </div>
-        </div>
 
     </div>
 </section>
@@ -105,7 +115,7 @@
 <div class="row">
     <div class="col-xs-12 col-sm-4 col-sm-offset-4">
         <div id="start" class="story-container story">
-            <p class="littext pacifico"> {% trans "Why whould I care?" %}</p>
+            <p class="littext pacifico"> {% trans "Why should I care?" %}</p>
         </div>
     </div>
 </div>
@@ -368,7 +378,7 @@
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-sm-offset-3">
         <div class="story-container story">
-            <p class="fittext pacifico"> {% trans "Help us to" %} </p>
+            <p class="fittext pacifico"> {% trans "Help us" %} </p>
         </div>
     </div>
 </div>
@@ -416,90 +426,172 @@
 <footer>
     <div id="contact" class="animated fadeIn dealy-8">
         <div class="container">
-            <div class="row">
-                <div class=" col-xs-12 col-sm-6">
-                    <div class="form-container clearfix">
+            {% if form %}
+                <div class="row feedback">
+                    <div class=" col-xs-12 col-sm-6">
+                        <div class="form-container clearfix">
 
-                        <form role="form">
 
-                            <div class="form-group clearfix">
-                                <label for="name" class="control-label">{% trans "Name" %}</label>
+                            <form id="feedback-form" role="form" method="post" target="_self">
+                                {% csrf_token %}
 
-                                <div class=" col-sm-8 col-md-9 col-lg-10 input-container">
-                                    <input type="text" class="form-control" id="name"
-                                           placeholder="{% trans "Please tell us your name" %}"/>
+                                <div class="form-group clearfix">
+                                    <label for="{{ form.name.auto_id }}"
+                                           class="control-label">{{ form.name.label }}</label>
+
+                                    <div class=" col-sm-8 col-md-9 col-lg-10 input-container">
+                                        {% render_field form.name class="form-control" placeholder="Please tell us your name" %}
+                                    </div>
+
                                 </div>
 
-                            </div>
+                                <div class=" form-group clearfix ">
+                                    <label for="{{ form.email.auto_id }}"
+                                           class="control-label">{{ form.email.label }}</label>
 
-                            <div class=" form-group clearfix ">
-                                <label for="email" class="control-label">{% trans "Email" %}</label>
-
-                                <div class=" col-sm-8 col-md-9  col-lg-10 input-container">
-                                    <input type="email" class="form-control" id="email"
-                                           placeholder="{% trans "So we can stay in touch" %}">
+                                    <div class=" col-sm-8 col-md-9  col-lg-10 input-container">
+                                        {% render_field form.email class="form-control" placeholder="So we can stay in touch" %}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group clearfix">
+                                <div class="form-group clearfix">
 
-                                <div class=" input-container col-xs-12">
-                                    <textarea class="form-control" rows="5"
-                                              placeholder="{% trans "Thoughts about the project? Are you an artist or a reader? Maybe both?" %}"></textarea>
+                                    <div class=" input-container col-xs-12">
+                                        {% render_field form.message class="form-control" rows="5" placeholder="Thoughts about the project? Are you an artist or a reader? Maybe both?" %}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group clearfix">
-                                <button type="submit" class="form-submit-btn"><i class="entypo-mail"></i>
-                                    {% trans "Submit" %}
-                                </button>
-                            </div>
-                        </form>
+                                <div class="form-group clearfix">
+                                    <button type="submit" class="form-submit-btn"><i class="entypo-mail"></i>
+                                        {% trans "Submit" %}
+                                    </button>
+                                </div>
+                            </form>
+
+                        </div>
+                        <!-- form container -->
                     </div>
-                    <!-- form container -->
-                </div>
-                <!-- col -->
+                    <!-- col -->
 
-                <div class="contact-info col-xs-12 col-sm-6">
-                    <h3 class="contact-me-title">{% trans "Want to hear more about the big release?" %} </h3>
+                    <div class="contact-info col-xs-12 col-sm-6">
+                        <h3 class="contact-me-title">{% trans "Want to hear more about the big release?" %} </h3>
 
-                    <p>{% trans "Sign up here and we will get in touch when we are launching. What about just saying hi and let us know that you liked the idea?" %}</p>
+                        <p>{% trans "Sign up here and we will get in touch when we are launching. What about just saying hi and let us know that you liked the idea?" %}</p>
 
-                    <p>
-                        {% trans "Hopefully we'll be seeing you soon." %}
-                    </p>
+                        <p>
+                            {% trans "Hopefully we'll be seeing you soon." %}
+                        </p>
 
-                    <div class="row">
-                        <div class="col-xs-3 col-sm-3 ">
-                            <img src="{% static 'img/heart.png' %}" alt=" heart icon">
-                        </div>
-                        <div class="col-xs-3 col-sm-3 ">
-                            <img src="{% static 'img/papers.png' %}" alt="heart icon">
-                        </div>
-                        <div class="col-xs-3 col-sm-3 ">
-                            <img src="{% static 'img/crown.png' %}" alt="cron icon">
-                        </div>
-                        <div class="col-xs-3 col-sm-3 ">
-                            <img src="{% static 'img/cloud.png' %}" alt="cloud icon">
+                        <div class="row">
+                            <div class="col-xs-3 col-sm-3 ">
+                                <img src="{% static 'img/heart.png' %}" alt=" heart icon">
+                            </div>
+                            <div class="col-xs-3 col-sm-3 ">
+                                <img src="{% static 'img/papers.png' %}" alt="heart icon">
+                            </div>
+                            <div class="col-xs-3 col-sm-3 ">
+                                <img src="{% static 'img/crown.png' %}" alt="cron icon">
+                            </div>
+                            <div class="col-xs-3 col-sm-3 ">
+                                <img src="{% static 'img/cloud.png' %}" alt="cloud icon">
+                            </div>
                         </div>
                     </div>
+
                 </div>
+                <!-- END row -->
+                <div class="row feedback-sent" style="display: none;">
+            {% else %}
+                <div class="row feedback-sent">
+            {% endif %}
+
+            <div class=" col-xs-12 ">
+                <h1>Thanks for your feedback!</h1>
+                <img src="{% static 'img/mail.png' %}" alt="mail icon">
+            </div>
             </div>
             <!-- END row -->
 
+            </div>
+            <!-- END .container -->
         </div>
-        <!-- END .container -->
-    </div>
-    <!-- END ontact -->
+        <!-- END ontact -->
 </footer>
+
 {% compress js %}
     <script src="{% static 'js/vendor/jquery-1.10.1.min.js' %}"></script>
     <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/vendor/jquery.fittext.js' %}"></script>
+    <script src="{% static 'js/vendor/jquery.cookie.js' %}"></script>
     <script src="{% static 'js/vendor/waypoints.min.js' %}"></script>
     <script src="{% static 'js/vendor/jquery-ui-1.10.3.custom.js' %}"></script>
     <script src="{% static 'js/vendor/jquery.stellar.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+
+    {% dajaxice_js_import 'nocsrf' %}
+    <script type="text/javascript" src="{% static "dajax/jquery.dajax.core.js" %}"></script>
+
+    <script type="text/javascript">
+        /**
+         * Easy way to create a delayed action, just pass your function callback
+         */
+        var delay = (function () {
+            var timer = 0;
+
+            return function (callback, ms) {
+                clearTimeout(timer);
+                timer = setTimeout(callback, ms);
+            };
+        })();
+
+        /**
+         * Display a temporary tooltip with given message over element
+         * @param id of the element target to the tooltip
+         * @param message to be displayed
+         * @param delay to show the message
+         * @param placement of the tooltip
+         */
+        function error_tooltip(id, message, delay, placement) {
+
+            delay = delay || 3000;
+            placement = placement || "right";
+
+            $(id).tooltip('destroy').tooltip({
+                title: message,
+                trigger: "manual",
+                placement: placement,
+                html: true
+            }).tooltip('show');
+
+            setTimeout(function () {
+                $(id).tooltip('hide');
+            }, delay);
+        }
+
+        function callback_feedback_sent() {
+            $.cookie("{{ cookie_name }}", 1);
+
+            $(".feedback").hide();
+            $(".feedback-sent").show();
+
+            $("#feedback-form button").html('<i class="entypo-mail"></i> Submit');
+        }
+
+        function callback_feedback_error() {
+            $("#feedback-form button").html('<i class="entypo-mail"></i> Try Again!');
+        }
+
+        $(document).ready(function () {
+            $("#feedback-form button").on("click", function (e) {
+                $(this).html('<i class="icon-spinner icon-spin"></i> Sending...');
+
+                Dajaxice.core.register_a_collection(Dajax.process, {
+                    'form': $('#feedback-form').serialize()
+                });
+                e.preventDefault();
+            });
+        });
+    </script>
 {% endcompress %}
 </body>
 </html>
