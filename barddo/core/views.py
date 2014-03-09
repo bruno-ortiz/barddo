@@ -1,18 +1,19 @@
+import json
+import os
+
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
 from django.views.generic import View
 from django.views.generic.base import TemplateResponseMixin, ContextMixin
 from django.views.generic.detail import SingleObjectMixin
+from django.http import HttpResponse
 
 from shards.decorators import register_shard
 from accounts.models import BarddoUser
 from .forms import CollectionForm, WorkForm
 from .models import Collection, Work
-
-
-class UserNotProvided(Exception):
-    pass
+from .exceptions import InvalidFileUploadError, ChangeOnObjectNotOwnedError, UserNotProvided
 
 
 class LoginRequiredMixin(object):
@@ -136,8 +137,17 @@ profile = UserProfileView.as_view()
 editable_profile = UserProfileView.as_view(editable=True)
 
 
+###
+### Artist Dashboard Shards
+###
+
+
+# TODO: move it to a shards.py module
 @register_shard(name=u"modal.collection")
 class CollectionModalView(TemplateResponseMixin, View):
+    """
+        Render a simple collection modal. This is incomplete, another shard will be used to render a work detail.
+    """
     template_name = 'modals/collection.html'
 
     def post(self, request, collection_id, *args, **kwargs):
@@ -155,8 +165,12 @@ class CollectionModalView(TemplateResponseMixin, View):
 render_collection_modal = CollectionModalView.as_view()
 
 
+# TODO: move it to a shards.py module
 @register_shard(name=u"modal.work")
 class WorkModalView(TemplateResponseMixin, View):
+    """
+        Render a work detail modal shard.
+    """
     template_name = 'modals/collection_detail.html'
 
     def post(self, request, work_id, *args, **kwargs):
@@ -171,76 +185,79 @@ class WorkModalView(TemplateResponseMixin, View):
 
 render_work_modal = WorkModalView.as_view()
 
-import json
 
-from django.conf import settings
-import os
-from django.http import HttpResponse
-
-
-def list_work_files(work_path):
-    # TODO: need to load only images? maybe...
-    img_list = os.listdir(work_path)
-    allowed_extenstions = ['jpg', 'bmp', 'png', 'gif']
-    return sorted([i for i in img_list if any([i.endswith(ext) for ext in allowed_extenstions])])
-
-
-def handle_uploaded_file(path, file):
-    with open(path, 'wb+') as destination:
-        for chunk in file.chunks():
-            destination.write(chunk)
+###
+### Work sorted upload
+###
 
 
 class UploadWorkPageView(LoginRequiredMixin, View):
     def post(self, request, work_id, *args, **kwargs):
-        # Validate the presence of file
+        """
+            This view will handle a work image upload, one per time, always.
+            By convention, the file will be named by it's position on media folder.
+        """
         file_name, file_extension = os.path.splitext(request.FILES['file'].name)
 
-        # TODO: Check the file against a black list
+        # Black list sanity check
+        if file_extension.lower()[1:] not in Work.ALLOWED_EXTENSIONS:
+            raise InvalidFileUploadError()
 
         # Check if the user owns the work
         work = Work.objects.select_related("collection").get(id=work_id)
+        if work.is_owner(request.user):
+            raise ChangeOnObjectNotOwnedError()
 
-
-        #
-        work_path = os.path.join(settings.MEDIA_ROOT, "work_data", "%04d" % work.id)
+        # Create the collection work folder if needed
+        work_path = work.media_path()
         if not os.path.exists(work_path):
             os.makedirs(work_path)
 
-        work_content = list_work_files(work_path)
-        file_name = ("%03d" % len(work_content)) + file_extension
-        new_file_name = os.path.join(work_path, file_name)
-        handle_uploaded_file(new_file_name, request.FILES['file'])
+        # Handle uploaded file to the server media folder
+        work_content = work.image_files()
+        file_name = ("%03d" % len(work_content)) + file_extension  # TODO: shadow file names?
+        work.handle_uploaded_file(file_name, request.FILES['file'])
 
-
-        # TODO: more than one user editing the same work?
+        # TODO: create somekind of lock, to handle more than one user editing the same work?
         context = {
             "success": "true",
             "work_id": work.id,
             "work_page": len(work_content)
         }
+
         return HttpResponse(json.dumps(context), content_type="application/json")
 
 
 upload_work_page = UploadWorkPageView.as_view()
 
 
+# TODO: thin views, fat models
 class MoveWorkPageView(LoginRequiredMixin, View):
     def post(self, request, work_id, *args, **kwargs):
+        """
+            Handle sortable images widget. This work by convention, the image shown to the user is in the exact position
+            as the file on the server folder.
+
+            Then the user drag and sort the thumbnail, the files will be sorted exactly the same way.
+        """
         # Check if the user owns the work
         work = Work.objects.select_related("collection").get(id=work_id)
+        if work.is_owner(request.user):
+            raise ChangeOnObjectNotOwnedError()
 
-        work_path = os.path.join(settings.MEDIA_ROOT, "work_data", "%04d" % work.id)
-        work_content = list_work_files(work_path)
+        work_path = work.media_path()
+        work_content = work.image_files()
 
         pos_from = int(request.REQUEST['position_from'])
         pos_to = int(request.REQUEST['position_to'])
 
         start = min(pos_from, pos_to)
 
+        # Rename affected files to avoid name collisions
         for x in xrange(start, len(work_content)):
             os.rename(os.path.join(work_path, work_content[x]), os.path.join(work_path, "MOVING_" + work_content[x]))
 
+        # Switch given file position
         if pos_from > pos_to:
             work_content.insert(pos_to, work_content[pos_from])
             del work_content[pos_from + 1]
@@ -248,12 +265,13 @@ class MoveWorkPageView(LoginRequiredMixin, View):
             work_content.insert(pos_to + 1, work_content[pos_from])
             del work_content[pos_from]
 
+        # Adjust subsequent file names
         for x in xrange(start, len(work_content)):
             _, extension = os.path.splitext(work_content[x])
             os.rename(os.path.join(work_path, "MOVING_" + work_content[x]),
                       os.path.join(work_path, "%03d" % x + extension))
 
-        # TODO: more than one user editing the same work?
+        # TODO: create somekind of lock, to handle more than one user editing the same work?
         context = {
             "success": "true",
             "work_id": work.id
@@ -262,3 +280,47 @@ class MoveWorkPageView(LoginRequiredMixin, View):
 
 
 move_work_page = MoveWorkPageView.as_view()
+
+
+# TODO: thin views, fat models
+class RemoveWorkPageView(LoginRequiredMixin, View):
+    """
+    Remove a page and rename subsequent ones
+    """
+
+    def post(self, request, work_id, page_index, *args, **kwargs):
+        # Check if the user owns the work
+        page_index = int(page_index)
+        work = Work.objects.select_related("collection").get(id=work_id)
+        if work.is_owner(request.user):
+            raise ChangeOnObjectNotOwnedError()
+
+        # Handle uploaded file to the server media folder
+        work_content = work.image_files()
+        work_path = work.media_path()
+
+        # Rename affected files to avoid name collisions
+        for x in xrange(page_index + 1, len(work_content)):
+            os.rename(os.path.join(work_path, work_content[x]), os.path.join(work_path, "MOVING_" + work_content[x]))
+
+        # Remove entry
+        os.remove(os.path.join(work.media_path(), work_content[page_index]))
+        del work_content[page_index]
+
+        # Adjust subsequent file names
+        for x in xrange(page_index, len(work_content)):
+            _, extension = os.path.splitext(work_content[x])
+            os.rename(os.path.join(work_path, "MOVING_" + work_content[x]),
+                      os.path.join(work_path, "%03d" % x + extension))
+
+        # TODO: create somekind of lock, to handle more than one user editing the same work?
+        context = {
+            "success": "true",
+            "work_id": work.id,
+            "work_page": len(work_content)
+        }
+
+        return HttpResponse(json.dumps(context), content_type="application/json")
+
+
+remove_work_page = RemoveWorkPageView.as_view()

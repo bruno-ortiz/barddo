@@ -10,10 +10,11 @@ function sortable_image_upload(target, preview_container, existing_data) {
     var dropzoned = $(target).dropzone({
         paramName: "file", // The name that will be used to transfer the file
         maxFilesize: 1.5, // MB,
+        maxFiles: 100, // TODO: need this limit
         parallelUploads: 1,
         uploadMultiple: false,
 
-        addRemoveLinks: true,
+        addRemoveLinks: false,
         dictResponseError: 'Error while uploading file!',
 
         //change the previewTemplate to use Bootstrap progress bars
@@ -22,12 +23,52 @@ function sortable_image_upload(target, preview_container, existing_data) {
         init: function () {
             this.on("addedfile", function (file) {
                 $('.dz-message').hide();
+
+                var removeButton = Dropzone.createElement('<a class="dz-remove">Remove Page</a>');
+
+                // Capture the Dropzone instance as closure.
+                var _this = this;
+
+                // Listen to the click event
+                removeButton.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    var selectedIndex = $(this).closest("div.dz-preview").index();
+                    var work_id = $(target).attr('data-id');
+
+                    $(".work-action-overlay").fadeIn('fast');
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/work/" + work_id + "/page/" + selectedIndex + "/remove",
+
+                        headers: {
+                            "X-CSRFToken": $('input[name="csrfmiddlewaretoken"]').val()
+                        },
+
+                        success: function (data) {
+                            _this.removeFile(file);
+                            $(".work-action-overlay").fadeOut('fast');
+                        },
+
+                        error: function (data) {
+                            alert('error ;(');
+                        },
+
+                        timeout: function (data) {
+                            alert('no response ;(');
+                        }
+                    });
+                });
+
+                // Add the button to the file preview element.
+                file.previewElement.appendChild(removeButton);
             });
 
             this.on("processing", function (file) {
                 this.options.url = "/work/page/upload/" + $(target).attr('data-id');
             });
-
 
             if (existing_data != null) {
                 var drop = this;
@@ -51,6 +92,8 @@ function sortable_image_upload(target, preview_container, existing_data) {
                     var existingFileCount = 1; // The number of files already uploaded
                     drop.options.maxFiles = drop.options.maxFiles - existingFileCount;
                 });
+
+                $(".progress").hide();
             }
         }
     });
