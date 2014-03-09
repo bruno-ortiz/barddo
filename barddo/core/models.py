@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import os
 from hashlib import md5
+import time
 
 from django.db import models
-
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
@@ -126,14 +126,18 @@ class Work(models.Model):
 
     def load_work_pages(self):
         work_path = os.path.join(settings.MEDIA_ROOT, "work_data", "%04d" % self.id)
+        if not os.path.exists(work_path):
+            return []
+
         files = self.list_work_files(work_path)
 
         image_files = []
+        timestamp = "%d" % time.time()
         for file in files:
             img = ImageFile(open(os.path.join(work_path, file), "rb"))
             image_files.append({
                 "size": img.size,
-                "url": settings.MEDIA_URL + img.name.replace(settings.MEDIA_ROOT + "/", ""),
+                "url": settings.MEDIA_URL + img.name.replace(settings.MEDIA_ROOT + "/", "") + "?t=" + timestamp,
                 "name": file
             })
 

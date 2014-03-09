@@ -9,7 +9,9 @@ function sortable_image_upload(target, preview_container, existing_data) {
      */
     var dropzoned = $(target).dropzone({
         paramName: "file", // The name that will be used to transfer the file
-        maxFilesize: 0.5, // MB
+        maxFilesize: 1.5, // MB,
+        parallelUploads: 1,
+        uploadMultiple: false,
 
         addRemoveLinks: true,
         dictResponseError: 'Error while uploading file!',
@@ -68,6 +70,7 @@ function sortable_image_upload(target, preview_container, existing_data) {
             if (sort_from_index != to_index) {
                 var work_id = $(target).attr('data-id');
                 //alert("from index " + sort_from_index + " to " + to_index);
+                $(".work-action-overlay").fadeIn('fast');
 
                 $.ajax({
                     type: "POST",
@@ -82,7 +85,7 @@ function sortable_image_upload(target, preview_container, existing_data) {
                     },
 
                     success: function (data) {
-                        //alert('done');
+                        $(".work-action-overlay").fadeOut('fast');
                     },
 
                     error: function (data) {

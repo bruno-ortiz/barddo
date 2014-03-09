@@ -48,6 +48,8 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        sortable_image_upload('#edit-work-upload', "#edit-work-files-preview", "#work-file-list li");
+
         $(".work-detail-load").on("click", function () {
             var id = $(this).attr("data-id");
             Shards.modal.work(function (shard_id, shard_data, parent) {

@@ -107,6 +107,12 @@
                         <div class="profile-feed row-fluid">
                             <form id="edit-work-upload" action="/work/page/upload" data-id="{{ current_work.id }}"
                                   class="dropzone">
+                                <div class="work-action-overlay center"><i
+                                        class="icon-spinner icon-spin white icon-2x"></i>
+                                    <span>Please Wait</span>
+                                    <span class="subtitle">Sending changes to the server</span>
+                                </div>
+
                                 {% csrf_token %}
                                 <div class="fallback">
                                     <input name="file" type="file" multiple=""/>
@@ -114,7 +120,8 @@
                                 <div id="edit-work-files-preview"></div>
                                 <ul style="display: none" id="work-file-list">
                                     {% for image in current_work.load_work_pages %}
-                                        <li data-size="{{ image.size }}" url="{{ image.url }}">{{ image.name }}</li>
+                                        <li data-size="{{ image.size }}"
+                                            data-url="{{ image.url }}">{{ image.name }}</li>
                                     {% endfor %}
                                 </ul>
                             </form>
