@@ -38,6 +38,6 @@ class CreateGroupModal(LoginRequiredMixin, TemplateResponseMixin, View):
 class CountriesAjaxView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
         countries = Country.objects.all()
-        countries = map(lambda x: {'id': x.id, 'country_name': x.country_name}, countries)
+        countries = map(lambda x: {'id': x.id, 'text': x.country_name}, countries)
         data = json.dumps(countries)
         return StreamingHttpResponse(data, content_type='application/json')

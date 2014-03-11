@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<div class="modal fade" id="createGroupModal" tabindex="-1" role="dialog" aria-labelledby="createGroupLabel" aria-hidden="true">
+<div class="modal fade" id="createGroupModal" role="dialog" aria-labelledby="createGroupLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -14,16 +14,16 @@
                         <input type="file" name="avatar"/>
                     </div>
                     <div class="margin-bottom-10">
-                        <input class="full-width about_publisher" type="text" name="name" id="groupNameInput" placeholder="{% trans "Group name" %}"/>
+                        <input class="about_publisher" type="text" name="name" id="groupNameInput" placeholder="{% trans "Group name" %}"/>
                     </div>
 
                     <div class="margin-bottom-10">
                         <textarea class="form-control about_publisher" name="info" id="detail" placeholder="{% trans "We are awesome!" %}"></textarea>
                     </div>
 
-                    <label>{% trans "Countries" %}: </label>
+                    <label>{% trans "Country" %}:</label>
+                    <input id="countryTags" class="full-width select2-offscreen" name="countries" type="hidden" tabindex="-1">
 
-                    <input id="countryTags" type="text" name="countries" placeholder="{% trans "Select a country" %}" data-role="tagsinput"/>
                     <label>{% trans "Publishers" %}:</label>
                     <input id="publisherTags" type="text" name="publishers" placeholder="{% trans "Who are the publishers?" %}" data-role="tagsinput"/>
 
@@ -54,15 +54,14 @@
         }
     });
 
-    var countries = $.getJSON("{% url "publisher.countries" %}");
-    $('#countryTags').tagsinput({
-        itemValue: 'id',
-        itemText: 'country_name',
-        freeInput: false,
-        typeahead: {
-            source: countries
-        }
+    $.getJSON("{% url "publisher.countries" %}", function (countries) {
+        $('#countryTags').select2({
+            allowClear: true,
+            placeholder: "{% trans "Select a country" %}",
+            data: countries
+        });
     });
+
 
     $('#publisherTags').tagsinput({
         itemValue: 'id',
