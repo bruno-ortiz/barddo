@@ -1,7 +1,6 @@
 import json
 
-from django.http.response import HttpResponse
-
+from django.http.response import StreamingHttpResponse
 from django.views.generic import View
 from django.views.generic.base import TemplateResponseMixin
 
@@ -37,11 +36,8 @@ class CreateGroupModal(LoginRequiredMixin, TemplateResponseMixin, View):
 
 
 class CountriesAjaxView(LoginRequiredMixin, View):
-    def get(self, request, *args, **kwargs):
-        countries = []
-        query_parameter = request.GET['q'].lower()
-        for country in Country.objects.all():
-            if country.country_name.lower().startswith(query_parameter):
-                countries.append(country.country_name)
+    def get(self, *args, **kwargs):
+        countries = Country.objects.all()
+        countries = map(lambda x: {'id': x.id, 'country_name': x.country_name}, countries)
         data = json.dumps(countries)
-        return HttpResponse(data, mimetype='application/json')
+        return StreamingHttpResponse(data, content_type='application/json')

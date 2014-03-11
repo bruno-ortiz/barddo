@@ -8,17 +8,25 @@
                 <h4 class="modal-title" id="createGroupLabel">{% trans "Create your own group!" %}</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" role="form">
-
-                    <div class="form-group">
-                        <input type="text" id="groupNameInput" placeholder="Group name" class="col-sm-12">
+                <form id="publishingGroupForm" class="form-horizontal" enctype="multipart/form-data" role="form">
+                    {% csrf_token %}
+                    <div class="profile-picture pull-left" style="height: auto">
+                        <input type="file" name="avatar"/>
+                    </div>
+                    <div class="margin-bottom-10">
+                        <input class="full-width about_publisher" type="text" name="name" id="groupNameInput" placeholder="{% trans "Group name" %}"/>
                     </div>
 
-                    <div class="form-group">
-                        <textarea class="form-control" name="feedback" id="feedback" placeholder="{% trans "We are awesome!" %}"></textarea>
+                    <div class="margin-bottom-10">
+                        <textarea class="form-control about_publisher" name="info" id="detail" placeholder="{% trans "We are awesome!" %}"></textarea>
                     </div>
-                    <label>Countries:</label>
-                    <input id="countryTags" type="text" placeholder="Select a country" data-role="tagsinput"/>
+
+                    <label>{% trans "Countries" %}: </label>
+
+                    <input id="countryTags" type="text" name="countries" placeholder="{% trans "Select a country" %}" data-role="tagsinput"/>
+                    <label>{% trans "Publishers" %}:</label>
+                    <input id="publisherTags" type="text" name="publishers" placeholder="{% trans "Who are the publishers?" %}" data-role="tagsinput"/>
+
 
                     <div class="checkbox">
                         <label>
@@ -37,25 +45,68 @@
 </div>
 <script type="text/javascript">
 
+    var $createBtn = $("#createBtn");
     $("input[type=checkbox]").on("click", function () {
-        var $joinButton = $("#createBtn");
-        if ($joinButton.hasClass("disabled")) {
-            $joinButton.removeClass("disabled");
+        if ($createBtn.hasClass("disabled")) {
+            $createBtn.removeClass("disabled");
         } else {
-            $joinButton.addClass("disabled");
+            $createBtn.addClass("disabled");
         }
     });
 
+    var countries = $.getJSON("{% url "publisher.countries" %}");
     $('#countryTags').tagsinput({
+        itemValue: 'id',
+        itemText: 'country_name',
+        freeInput: false,
+        typeahead: {
+            source: countries
+        }
+    });
+
+    $('#publisherTags').tagsinput({
+        itemValue: 'id',
+        itemText: 'username',
+        freeInput: false,
         typeahead: {
             source: function (search) {
-                return $.getJSON("{% url "publisher.countries" %}", {q: search},
-                        function (data) {
-                            return data;
-                        });
-            }, freeInput: false
+                return $.getJSON("{% url "user.usernames" %}", {'q': search});
+            }
         }
     });
 
+    var $form = $('#publishingGroupForm');
+    var $file_input = $form.find('input[type=file]');
+
+    $file_input.ace_file_input({
+        style: 'well',
+        btn_choose: '{% trans "Choose an Avatar" %}',
+        btn_change: null,
+        droppable: false,
+        thumbnail: 'large',
+        before_change: function (files) {
+            var file = files[0];
+            var type = $.trim(file.type);
+            if ((type.length > 0 && !(/^image\/(jpe?g|png|gif)$/i).test(type)) || (type.length == 0 && !(/\.(jpe?g|png|gif)$/i).test(file.name))) {
+                alert('Please select an image file!');
+                return false;
+            }
+            if (file.size > 512000) {
+                alert('File size should not exceed 500Kb!');
+                return false;
+            }
+            return true;
+        }
+    });
+
+    $createBtn.on("click", function () {
+        var options = {
+            success: Dajax.process,  // post-submit callback
+            url: "/dajaxice/publishing.register_publishing_group/",         // override for form's 'action' attribute
+            type: "post"
+        };
+
+        $('#publishingGroupForm').ajaxSubmit(options);
+    });
 
 </script>

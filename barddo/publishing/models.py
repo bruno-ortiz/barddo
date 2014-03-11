@@ -18,5 +18,5 @@ class PublishingHouse(models.Model):
     avatar = models.ImageField(upload_to='publisher_avatar/')
     info = models.TextField()
     countries = models.ForeignKey(Country)
-    collections = models.ForeignKey(Collection)
+    collections = models.ForeignKey(Collection, blank=True, null=True)
     publishers = models.ManyToManyField(BarddoUser)

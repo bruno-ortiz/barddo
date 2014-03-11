@@ -1,5 +1,6 @@
 {% extends 'main_template.html' %}
 {% load staticfiles %}
+{% load dajaxice_templatetags %}
 {% load i18n %}
 {% load compress %}
 
@@ -7,6 +8,7 @@
 {% block header %}
     {% compress css %}
         <link rel="stylesheet" href="{% static "css/uncompressed/bootstrap-tagsinput.css" %}"/>
+        <link rel="stylesheet" href="{% static "css/uncompressed/barddo.publisher.css" %}"/>
     {% endcompress %}
 {% endblock %}
 
@@ -69,9 +71,13 @@
 {% endblock %}
 
 {% block page_specific_javascript %}
-    {#    {% compress js %}#}
-    <script src="{% static "js/uncompressed/bootstrap-tagsinput.js" %}"></script>
-    {#    {% endcompress %}#}
+    {% compress js %}
+        <script src="{% static "js/uncompressed/bootstrap-tagsinput.js" %}"></script>
+        <script src="{% static "js/uncompressed/ace-elements.js" %}"></script>
+        <script src="{% static "js/jquery.form.min.js" %}"></script>
+        {% dajaxice_js_import 'nocsrf' %}
+    {% endcompress %}
+    <script type="text/javascript" src="{% static "dajax/jquery.dajax.core.js" %}"></script>
 {% endblock %}
 
 {% block bottom_page %}
