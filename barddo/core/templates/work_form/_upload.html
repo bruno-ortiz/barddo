@@ -1,0 +1,22 @@
+<div class="center" style="height: 100%">
+    <div id="dropzone">
+        <form id="new_work_upload" action="/work/page/upload" class="dropzone">
+            <div class="work-action-overlay center">
+                <i class="icon-spinner icon-spin white icon-2x"></i>
+                <span>Please Wait</span>
+                <span class="subtitle">Sending changes to the server</span>
+            </div>
+
+            {% csrf_token %}
+            <div class="fallback">
+                <input name="file" type="file" multiple=""/>
+            </div>
+            <div id="files-preview"></div>
+        </form>
+    </div>
+
+</div>
+
+{% block bottom_page %}
+
+{% endblock %}
