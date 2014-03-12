@@ -11,10 +11,13 @@
 {% block breadcrumbs %}
     <div id="options">
         <ul id="filters" class="option-set clearfix" data-option-key="filter">
-            <li><a href="#filter" data-option-value="*" class="selected"><i class="icon icon icon-th-large"></i> All Items</a></li>
+            <li><a href="#filter" data-option-value="*" class="selected"><i class="icon icon icon-th-large"></i> All
+                Items</a></li>
             <li><a href="#filter" data-option-value=".collection-great"><i class="icon icon-star"></i> New</a></li>
-            <li><a href="#filter" data-option-value=".collection-good"><i class="icon icon-comments"></i> Trending</a></li>
-            <li><a href="#filter" data-option-value=".collection-common"><i class="icon icon-circle-arrow-up"></i> Rising</a></li>
+            <li><a href="#filter" data-option-value=".collection-good"><i class="icon icon-comments"></i> Trending</a>
+            </li>
+            <li><a href="#filter" data-option-value=".collection-common"><i class="icon icon-circle-arrow-up"></i>
+                Rising</a></li>
         </ul>
     </div>
 {% endblock %}
@@ -29,19 +32,31 @@
                     <div class="portfolio">
                         {% for work in works %}
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 item collection-great">
-                                <div class="boxcontainer">
+                                <div class="boxcontainer" id="work-container-{{ work.id }}">
                                     <div class="cover-wrap">
                                         <img src="{{ work.cover|thumbnail_url:"big_cover" }}" alt="">
                                     </div>
 
                                     <div class="roll">
                                         <div class="wrapcaption">
-                                            <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
+                                            <a id="work-vote-{{ work.id }}" class="vote" href="projectdetail.html">
+                                                <i class="icon-heart-empty captionicons"></i>
+                                            </a>
+                                        </div>
+
+                                        <div class="work-detail-popup">
+
+                                            <div class="arrow"></div>
+                                            ahsuhashuauhs
                                         </div>
                                     </div>
+
+
                                     <div class="work-information">
-                                        <span class="badge badge-grey pull-right work-number">#{{ work.unit_count }}</span>
+                                        <span class="badge badge-danger pull-right work-number">#{{ work.unit_count }}</span>
+
                                         <h1>{{ work.title }}</h1>
+
                                         <h2>{{ work.collection.name }}</h2>
                                     </div>
                                 </div>
@@ -61,12 +76,13 @@
         <script src="{% static "js/portfolio.js" %}"></script>
         {% dajaxice_js_import 'nocsrf' %}
         <script type="text/javascript" src="{% static "dajax/jquery.dajax.core.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/barddo/pages/gallery.js" %}"></script>
     {% endcompress %}
 {% endblock %}
 
 {% block bottom_page %}
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(document).ready(function () {
             {% if next_url %}
                 $("#loginModal").modal();
             {% endif %}
@@ -86,6 +102,16 @@
                         });
             });
 
+            $(".vote").popover({
+                trigger: "manual",
+                placement: "bottom",
+                html: true,
+                animation: false,
+                container: "body",
+                content: function () {
+                    return $(this).find(".popover-data").html();
+                }
+            });
         });
     </script>
 {% endblock %}

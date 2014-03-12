@@ -126,7 +126,7 @@
 }
 
 .boxcontainer {
-    border: 1px solid #ededed;
+    border: 1px solid rgba(30, 102, 136, 0.52);
     background: #fff;
     font-size: 13px;
     text-align: center;
