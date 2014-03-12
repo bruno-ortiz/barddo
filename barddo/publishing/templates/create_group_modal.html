@@ -1,4 +1,6 @@
 {% load i18n %}
+{% load staticfiles %}
+
 
 <div class="modal fade" id="createGroupModal" role="dialog" aria-labelledby="createGroupLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -13,16 +15,21 @@
                     <div class="profile-picture pull-left" style="height: auto">
                         <input type="file" name="avatar"/>
                     </div>
-                    <div class="margin-bottom-10">
-                        <input class="about_publisher" type="text" name="name" id="groupNameInput" placeholder="{% trans "Group name" %}"/>
+                    <div id="group-name-validation" class="margin-bottom-10 pull-left width-60">
+                        <span class="block input-icon input-icon-right">
+                            <input class="about_publisher" type="text" name="name" id="groupNameInput" placeholder="{% trans "Group name" %}"/>
+                            <i class="icon-info-sign"></i>
+                        </span>
                     </div>
 
-                    <div class="margin-bottom-10">
+                    <div class="margin-bottom-10 pull-left width-60">
                         <textarea class="form-control about_publisher" name="info" id="detail" placeholder="{% trans "We are awesome!" %}"></textarea>
                     </div>
 
+                    <div class="clearfix"></div>
+
                     <label>{% trans "Country" %}:</label>
-                    <input id="countryTags" class="full-width select2-offscreen" name="countries" type="hidden" tabindex="-1">
+                    <input id="countryTags" class="width-100 select2-offscreen" name="countries" type="hidden" tabindex="-1">
 
                     <label>{% trans "Publishers" %}:</label>
                     <input id="publisherTags" type="text" name="publishers" placeholder="{% trans "Who are the publishers?" %}" data-role="tagsinput"/>
@@ -43,6 +50,7 @@
         </div>
     </div>
 </div>
+<script src="{% static "js/barddo/pages/publishing.group.create.js" %}"></script>
 <script type="text/javascript">
 
     var $createBtn = $("#createBtn");

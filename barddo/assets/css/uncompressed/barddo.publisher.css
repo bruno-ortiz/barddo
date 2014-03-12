@@ -2,17 +2,13 @@
     margin-bottom: 10px;
 }
 
-.full-width {
-    width: 100%;
-}
-
 .bootstrap-tagsinput {
     width: 100%;
     border-radius: 0 !important;
 }
 
 .about_publisher {
-    width: 60%;
+    width: 100%;
     margin-left: 10px;
 }
 
