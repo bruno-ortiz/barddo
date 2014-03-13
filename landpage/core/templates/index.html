@@ -34,7 +34,13 @@
     <div class="container">
 
         <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 start">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-4 start">
+                <img src="{% static "img/brand.png" %}"/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2">
                 <iframe id="video" width="100%" src="//www.youtube.com/embed/qzPcMzy4WI8" frameborder="0"
                         allowfullscreen></iframe>
             </div>
@@ -45,12 +51,12 @@
                 <h1 class="amatic animated fadeIn">{% trans "We believe that all forms of talent are noteworthy" %}</h1>
             </div>
             <div class="social">
-                <a href="http://facebook.com/barddo" target="_blank">
+                <a href="https://www.facebook.com/pages/Barddo-Community/239220572927718" target="_blank">
                     <span class="social-item">
                         <i class="entypo-facebook"></i>
                     </span>
                 </a>
-                <a href="http://twitter.com/barddo" target="_blank">
+                <a href="http://twitter.com/the_barddo" target="_blank">
                     <span class="social-item">
                         <i class="entypo-twitter"></i>
                     </span>
@@ -85,17 +91,17 @@
 <section id="story-icons" class="story-icons">
     <div class="row">
         <div class="col-xs-6 col-sm-3 col-md-2 col-md-offset-2">
-            <a href="story/"><img src="{% static 'img/person.png' %}" alt="person icon" class="story-icon-1"></a>
+            <a href="story/"><img src="{% static 'img/iconelogoapp.png' %}" alt="person icon" class="story-icon-1"></a>
         </div>
         <div class=" col-xs-6 col-sm-3 col-md-2">
-            <a href="app-release/"><img src="{% static 'img/heart.png' %}" alt="heart icon" class="story-icon-2"></a>
+            <a href="app-release/"><img src="{% static 'img/iconeleitor.png' %}" alt="heart icon" class="story-icon-2"></a>
         </div>
         <div class=" col-xs-6 col-sm-3 col-md-2">
             <a href="app-release/"><img
-                    src="{% static 'img/chat.png' %}" alt="person icon" class="story-icon-3"></a>
+                    src="{% static 'img/iconeartista.png' %}" alt="person icon" class="story-icon-3"></a>
         </div>
         <div class="col-xs-6 col-sm-3 col-md-2">
-            <a href="story/"><img src="{% static 'img/ribbon.png' %}" alt="person icon" class="story-icon-4"></a>
+            <a href="story/"><img src="{% static 'img/mail.png' %}" alt="person icon" class="story-icon-4"></a>
         </div>
 
         <span class="keep-scrolling hidden-xs"><i class="entypo-down-open-big "></i></span>
@@ -112,6 +118,14 @@
     </div>
 </div>
 
+<div class="row ">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-5 hidden-xs">
+        <div class="story-image-container" style="padding-top: 80px;">
+            <img data-delay="1" src="{% static 'img/art/why.png' %}" alt="user icon">
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-xs-12 col-sm-4 col-sm-offset-4">
         <div id="start" class="story-container story">
@@ -119,6 +133,7 @@
         </div>
     </div>
 </div>
+
 
 <div class="color-change" data-colorup="#34495e" data-colordown="#2980b9"></div>
 
@@ -133,14 +148,14 @@
     <div class="col-xs-12 col-sm-2 col-sm-offset-2 hidden-xs">
         <div class="story-image-container">
             <div class="circle-icon " data-delay="1">
-                <img src="{% static 'img/person.png' %}" alt="user icon">
+                <img src="{% static 'img/iconeleitor.png' %}" alt="user icon">
             </div>
         </div>
     </div>
     <div class="col-xs-12 col-sm-2 col-sm-offset-4 hidden-xs">
         <div class="story-image-container">
             <div class="circle-icon " data-delay="1">
-                <img src="{% static 'img/robot.png' %}" alt="user icon">
+                <img src="{% static 'img/iconeartista.png' %}" alt="user icon">
             </div>
         </div>
     </div>
@@ -189,10 +204,8 @@
 
 <div class="row ">
     <div class="col-xs-12 col-sm-2 col-sm-offset-5 hidden-xs">
-        <div class="story-image-container">
-            <div class="circle-icon " data-delay="1">
-                <img src="{% static 'img/heart.png' %}" alt="user icon">
-            </div>
+        <div class="story-image-container" data-delay="3" style="padding-top: 80px;">
+            <img src="{% static 'img/art/halfhalf.png' %}" alt="user icon">
         </div>
     </div>
 </div>
@@ -256,12 +269,11 @@
     </div>
 </div>
 
-<div class="color-change" data-colordown="#34495e" data-colorup="#2980b9"></div>
 
 <div class="row">
     <div class="col-xs-12 col-sm-4 col-sm-offset-2">
         <div class="story-image-container iphone-container">
-            <img src="{% static 'img/iphone.png' %}" alt="iphone">
+            <img src="{% static 'img/art/reader.png' %}" alt="iphone">
         </div>
     </div>
     <div class="col-xs-12 col-sm-4 ">
@@ -291,7 +303,6 @@
     </div>
 </div>
 
-<div class="color-change" data-colorup="#2980b9" data-colordown="#8e44ad"></div>
 
 <div class="row">
     <div class="col-xs-12 col-sm-8 col-sm-offset-2">
@@ -302,74 +313,85 @@
 </div>
 
 <div class="row">
-    <div class="col-xs-12 col-sm-4 col-sm-offset-3 ">
-        <div class="story-container story">
-            <p class="fittext amatic ">{% trans "Easily publish your work" %}</p>
+    <div class="col-xs-12 col-sm-6 col-sm-offset-1">
+        <div class="row">
+            <div class="col-xs-12 col-sm-2">
+                <div class="story-image-container">
+                    <div class="circle-icon " data-delay="4">
+                        <img src="{% static 'img/iconepublicartrabalho.png' %}" alt="pencil icon">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-10">
+                <div class="story-container story">
+                    <p class="fittext amatic ">{% trans "Easily publish your work" %}</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-2 ">
+                <div class="story-image-container">
+                    <div class="circle-icon " data-delay="4">
+                        <img src="{% static 'img/iconepreço.png' %}" alt="pencil icon">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-10">
+                <div class="story-container story">
+                    <p class="fittext amatic ">{% trans "You tell the price" %}</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-2 ">
+                <div class="story-image-container">
+                    <div class="circle-icon " data-delay="4">
+                        <img src="{% static 'img/iconeavaliação.png' %}" alt="pencil icon">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-10">
+                <div class="story-container story">
+                    <p class="fittext amatic ">{% trans "Users will rate it" %}</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-2 ">
+                <div class="story-image-container">
+                    <div class="circle-icon " data-delay="4">
+                        <img src="{% static 'img/iconeestatisticas.png' %}" alt="pin icon">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-10">
+                <div class="story-container story">
+                    <p class="fittext amatic ">{% trans "relevant statistics" %}</p>
+                </div>
+            </div>
+
         </div>
     </div>
-    <div class="col-xs-12 col-sm-2 ">
+    <div class="col-xs-12 col-sm-4 ">
         <div class="story-image-container">
-            <div class="circle-icon " data-delay="4">
-                <img src="{% static 'img/pencil.png' %}" alt="pencil icon">
-            </div>
+            <img src="{% static 'img/art/artist.png' %}" alt="iphone">
         </div>
     </div>
 </div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-4 col-sm-offset-3 ">
-        <div class="story-container story">
-            <p class="fittext amatic ">{% trans "You tell the price" %}</p>
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-2 ">
-        <div class="story-image-container">
-            <div class="circle-icon " data-delay="4">
-                <img src="{% static 'img/crown.png' %}" alt="pencil icon">
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-4 col-sm-offset-3 ">
-        <div class="story-container story">
-            <p class="fittext amatic ">{% trans "Users will rate it" %}</p>
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-2 ">
-        <div class="story-image-container">
-            <div class="circle-icon " data-delay="4">
-                <img src="{% static 'img/flag.png' %}" alt="pencil icon">
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-4 col-sm-offset-3 ">
-        <div class="story-container story">
-            <p class="fittext amatic ">{% trans "relevant statistics" %}</p>
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-2 ">
-        <div class="story-image-container">
-            <div class="circle-icon " data-delay="4">
-                <img src="{% static 'img/location.png' %}" alt="pin icon">
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- END row of images -->
 
-<div class="color-change" data-colorup="#8e44ad" data-colordown="#d35400"></div>
 
 <div class="row">
     <div class="col-xs-12 col-sm-2 col-sm-offset-5 " style="padding-top: 200px;">
         <div class="story-image-container">
             <div class="circle-icon " data-delay="3">
-                <img src="{% static 'img/heart.png' %}" alt="heart icon">
+                <img src="{% static 'img/iconelike.png' %}" alt="heart icon">
             </div>
         </div>
     </div>
@@ -462,7 +484,7 @@
                                 </div>
 
                                 <div class="form-group clearfix">
-                                    <button type="submit" class="form-submit-btn"><i class="entypo-mail"></i>
+                                    <button type="submit" class="form-submit-btn"><i class="entypo-mail  pull-left"></i>
                                         {% trans "Submit" %}
                                     </button>
                                 </div>
@@ -474,6 +496,7 @@
                     <!-- col -->
 
                     <div class="contact-info col-xs-12 col-sm-6">
+
                         <h3 class="contact-me-title">{% trans "Want to hear more about the big release?" %} </h3>
 
                         <p>{% trans "Sign up here and we will get in touch when we are launching. What about just saying hi and let us know that you liked the idea?" %}</p>
@@ -484,16 +507,16 @@
 
                         <div class="row">
                             <div class="col-xs-3 col-sm-3 ">
-                                <img src="{% static 'img/heart.png' %}" alt=" heart icon">
+                                <img class="alt-icon" src="{% static 'img/iconelogoapp.png' %}" alt="Barddo icon">
                             </div>
                             <div class="col-xs-3 col-sm-3 ">
-                                <img src="{% static 'img/papers.png' %}" alt="heart icon">
+                                <img class="alt-icon" src="{% static 'img/iconeleitor2.png' %}" alt="Reader icon">
                             </div>
                             <div class="col-xs-3 col-sm-3 ">
-                                <img src="{% static 'img/crown.png' %}" alt="cron icon">
+                                <img class="alt-icon" src="{% static 'img/iconelike.png' %}" alt="Heart icon">
                             </div>
                             <div class="col-xs-3 col-sm-3 ">
-                                <img src="{% static 'img/cloud.png' %}" alt="cloud icon">
+                                <img class="alt-icon" src="{% static 'img/iconeartista2.png' %}" alt="Artist icon">
                             </div>
                         </div>
                     </div>
@@ -574,11 +597,11 @@
             $(".feedback").hide();
             $(".feedback-sent").show();
 
-            $("#feedback-form button").html('<i class="entypo-mail"></i> Submit');
+            $("#feedback-form button").html('<i class="entypo-mail pull-left"></i> Submit');
         }
 
         function callback_feedback_error() {
-            $("#feedback-form button").html('<i class="entypo-mail"></i> Try Again!');
+            $("#feedback-form button").html('<i class="entypo-mail  pull-left"></i> Try Again!');
         }
 
         $(document).ready(function () {
