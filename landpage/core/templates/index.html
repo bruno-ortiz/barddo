@@ -608,7 +608,7 @@
             $("#feedback-form button").on("click", function (e) {
                 $(this).html('<i class="icon-spinner icon-spin"></i> Sending...');
 
-                Dajaxice.core.register_a_collection(Dajax.process, {
+                Dajaxice.core.register_feedback(Dajax.process, {
                     'form': $('#feedback-form').serialize()
                 });
                 e.preventDefault();

@@ -7,7 +7,7 @@ from .forms import UserContactForm
 
 
 @dajaxice_register
-def register_a_collection(request, form):
+def register_feedback(request, form):
     """
     Called asynchronously to register a user feecback
     """
