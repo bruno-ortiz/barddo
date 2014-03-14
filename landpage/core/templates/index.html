@@ -91,17 +91,17 @@
 <section id="story-icons" class="story-icons">
     <div class="row">
         <div class="col-xs-6 col-sm-3 col-md-2 col-md-offset-2">
-            <a href="story/"><img src="{% static 'img/iconelogoapp.png' %}" alt="person icon" class="story-icon-1"></a>
+            <a href="#barddo"><img src="{% static 'img/iconelogoapp.png' %}" alt="person icon" class="story-icon-1"></a>
         </div>
         <div class=" col-xs-6 col-sm-3 col-md-2">
-            <a href="app-release/"><img src="{% static 'img/iconeleitor.png' %}" alt="heart icon" class="story-icon-2"></a>
+            <a href="#reader"><img src="{% static 'img/iconeleitor.png' %}" alt="heart icon" class="story-icon-2"></a>
         </div>
         <div class=" col-xs-6 col-sm-3 col-md-2">
-            <a href="app-release/"><img
+            <a href="#artist"><img
                     src="{% static 'img/iconeartista.png' %}" alt="person icon" class="story-icon-3"></a>
         </div>
         <div class="col-xs-6 col-sm-3 col-md-2">
-            <a href="story/"><img src="{% static 'img/mail.png' %}" alt="person icon" class="story-icon-4"></a>
+            <a href="#contact"><img src="{% static 'img/mail.png' %}" alt="person icon" class="story-icon-4"></a>
         </div>
 
         <span class="keep-scrolling hidden-xs"><i class="entypo-down-open-big "></i></span>
@@ -110,7 +110,7 @@
 
 <section>
 
-<div class="row">
+<div id="barddo" class="row">
     <div class="col-xs-12 col-sm-8 col-sm-offset-2">
         <div id="start" class="story-container story">
             <p class="fittext pacifico"> {% trans "Barddo?" %}</p>
@@ -251,7 +251,7 @@
 </div>
 
 
-<div class="color-change" data-colorup="#2980b9" data-colordown="#34495e"></div>
+<div class="color-change" data-colorup="#2980b9" data-colordown="#009933"></div>
 
 
 <div class="row">
@@ -295,9 +295,9 @@
     </div>
 </div>
 
-<div class="color-change" data-colorup="#34495e" data-colordown="#d35400"></div>
+<div class="color-change" data-colorup="#009933" data-colordown="#d35400"></div>
 
-<div class="row">
+<div id="reader" class="row">
     <div class="col-xs-12 col-sm-8 col-sm-offset-2" style="padding-top: 200px">
         <div class="story-container">
             <p class="fittext amatic uppercase">{% trans "Great for artists!" %}</p>
@@ -389,7 +389,7 @@
 <!-- END row of images -->
 
 
-<div class="row">
+<div id="artist" class="row">
     <div class="col-xs-12 col-sm-2 col-sm-offset-5 " style="padding-top: 200px;">
         <div class="story-image-container">
             <div class="circle-icon " data-delay="3">
@@ -507,7 +507,7 @@
                             {% trans "Hopefully we'll be seeing you soon." %}
                         </p>
 
-                        <div class="row">
+                        <div class="row" id="contact">
                             <div class="col-xs-3 col-sm-3 ">
                                 <img class="alt-icon" src="{% static 'img/iconelogoapp.png' %}" alt="Barddo icon">
                             </div>
