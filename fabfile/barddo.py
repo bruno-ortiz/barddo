@@ -106,6 +106,7 @@ def update_only_repository():
     print(_green("Updating repository"))
     with cd(env.app):
         run('hg pull')
+        run('hg up')
 
 
 def update_repository():
