@@ -553,68 +553,68 @@
 
     {% dajaxice_js_import 'nocsrf' %}
     <script type="text/javascript" src="{% static "dajax/jquery.dajax.core.js" %}"></script>
-
-    <script type="text/javascript">
-        /**
-         * Easy way to create a delayed action, just pass your function callback
-         */
-        var delay = (function () {
-            var timer = 0;
-
-            return function (callback, ms) {
-                clearTimeout(timer);
-                timer = setTimeout(callback, ms);
-            };
-        })();
-
-        /**
-         * Display a temporary tooltip with given message over element
-         * @param id of the element target to the tooltip
-         * @param message to be displayed
-         * @param delay to show the message
-         * @param placement of the tooltip
-         */
-        function error_tooltip(id, message, delay, placement) {
-
-            delay = delay || 3000;
-            placement = placement || "right";
-
-            $(id).tooltip('destroy').tooltip({
-                title: message,
-                trigger: "manual",
-                placement: placement,
-                html: true
-            }).tooltip('show');
-
-            setTimeout(function () {
-                $(id).tooltip('hide');
-            }, delay);
-        }
-
-        function callback_feedback_sent() {
-            $.cookie("{{ cookie_name }}", 1);
-
-            $(".feedback").hide();
-            $(".feedback-sent").show();
-
-            $("#feedback-form button").html('<i class="entypo-mail pull-left"></i> Submit');
-        }
-
-        function callback_feedback_error() {
-            $("#feedback-form button").html('<i class="entypo-mail  pull-left"></i> Try Again!');
-        }
-
-        $(document).ready(function () {
-            $("#feedback-form button").on("click", function (e) {
-                $(this).html('<i class="icon-spinner icon-spin"></i> Sending...');
-
-                Dajaxice.core.register_feedback(Dajax.process, {
-                    'form': $('#feedback-form').serialize()
-                });
-                e.preventDefault();
-            });
-        });
-    </script>
 {% endcompress %}
+<script type="text/javascript">
+    /**
+     * Easy way to create a delayed action, just pass your function callback
+     */
+    var delay = (function () {
+        var timer = 0;
+
+        return function (callback, ms) {
+            clearTimeout(timer);
+            timer = setTimeout(callback, ms);
+        };
+    })();
+
+    /**
+     * Display a temporary tooltip with given message over element
+     * @param id of the element target to the tooltip
+     * @param message to be displayed
+     * @param delay to show the message
+     * @param placement of the tooltip
+     */
+    function error_tooltip(id, message, delay, placement) {
+
+        delay = delay || 3000;
+        placement = placement || "right";
+
+        $(id).tooltip('destroy').tooltip({
+            title: message,
+            trigger: "manual",
+            placement: placement,
+            html: true
+        }).tooltip('show');
+
+        setTimeout(function () {
+            $(id).tooltip('hide');
+        }, delay);
+    }
+
+    function callback_feedback_sent() {
+        $.cookie("{{ cookie_name }}", 1);
+
+        $(".feedback").hide();
+        $(".feedback-sent").show();
+
+        $("#feedback-form button").html('<i class="entypo-mail pull-left"></i> Submit');
+    }
+
+    function callback_feedback_error() {
+        $("#feedback-form button").html('<i class="entypo-mail  pull-left"></i> Try Again!');
+    }
+
+    $(document).ready(function () {
+        $("#feedback-form button").on("click", function (e) {
+            $(this).html('<i class="icon-spinner icon-spin"></i> Sending...');
+
+            Dajaxice.core.register_feedback(Dajax.process, {
+                'form': $('#feedback-form').serialize()
+            });
+            e.preventDefault();
+        });
+    });
+</script>
+
 </body>
 </html>
