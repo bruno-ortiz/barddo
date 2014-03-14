@@ -19,6 +19,11 @@ fabconf['APP_PATH.BETA'] = '/opt/barddo/source/barddo'
 fabconf['PYTHON_PATH.BETA'] = '/opt/barddo/venv/bin/python'
 fabconf['PIP_PATH.BETA'] = '/opt/barddo/venv/bin/pip'
 
+fabconf['PROJECT_PATH.LANDPAGE'] = '/opt/barddo/source'
+fabconf['APP_PATH.LANDPAGE'] = '/opt/barddo/source/landpage'
+fabconf['PYTHON_PATH.LANDPAGE'] = '/opt/barddo/venv/bin/python'
+fabconf['PIP_PATH.LANDPAGE'] = '/opt/barddo/venv/bin/pip'
+
 # Full local path for .ssh
 fabconf['SSH_PATH'] = "~/.ssh"
 

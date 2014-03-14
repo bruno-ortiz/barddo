@@ -1,14 +1,17 @@
+import time
+
 from fabric.api import sudo, env, run, task, cd
 from fabric.colors import green as _green
 from fabric.operations import require
+
 from config import *
-import time
 
 
 env.user = fabconf['SERVER_USERNAME']
 env.port = fabconf['SSH_PORT']
 env.key_filename = fabconf['SSH_PRIVATE_KEY_PATH']
 env.host_string = fabconf['SSH_HOST']
+
 
 @task
 def main():
@@ -21,6 +24,7 @@ def main():
     env.pip = fabconf['PIP_PATH']
     env.branch = fabconf['BRANCH']
 
+
 @task
 def beta():
     env.service = "barddo"
@@ -30,6 +34,40 @@ def beta():
     env.python = fabconf['PYTHON_PATH.BETA']
     env.pip = fabconf['PIP_PATH.BETA']
     env.branch = fabconf['BRANCH']
+
+
+@task
+def landpage():
+    env.service = "barddo.landpage"
+    env.settings = "landpage.settings.production"
+    env.project = fabconf['PROJECT_PATH.LANDPAGE']
+    env.app = fabconf['APP_PATH.LANDPAGE']
+    env.python = fabconf['PYTHON_PATH.LANDPAGE']
+    env.pip = fabconf['PIP_PATH.LANDPAGE']
+    env.branch = fabconf['BRANCH']
+
+
+@task
+def deploy():
+    """
+    Restart the server applying new migrations
+    """
+    require("service")
+    start_time = time.time()
+    print(_green("Starting deploy..."))
+
+    stop_services()
+    update_only_repository()
+    update_pip()
+    cleanup()
+    apply_static()
+    apply_compress()
+    start_services()
+
+    end_time = time.time()
+    print(_green("Runtime: %f minutes" % ((end_time - start_time) / 60)))
+    print(_green(env.host_string))
+
 
 @task
 def full_deploy():
@@ -62,6 +100,13 @@ def stop_services():
 def start_services():
     print(_green("Starting Supervidor..."))
     sudo("supervisorctl start " + env.service)
+
+
+def update_only_repository():
+    print(_green("Updating repository"))
+    with cd(env.app):
+        run('hg pull')
+        run('hg up')
 
 
 def update_repository():
