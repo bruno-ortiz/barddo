@@ -18,24 +18,26 @@
                                 Select a work bellow
                             </h4>
 
-                            <ul id="tasks" class="item-list ui-sortable">
+                            <div class="work-list-wrapper">
+                                <ul id="work-list" class="item-list ui-sortable">
 
-                                {% for work in works %}
-                                    <li class="item-orange clearfix" style="padding:0">
-                                        <label class="inline" style="width: 100%;">
-                                            <a href="#" class="work-detail-load" data-id="{{ work.id }}"
-                                               style="display:block; padding: 10px">
-                                                <span class="badge badge-purple">#{{ work.unit_count }}</span>
-                                                <span class="lbl"> {{ work.title }}</span>
-                                            </a>
-                                        </label>
-                                    </li>
-                                {% endfor %}
-                            </ul>
+                                    {% for work in works %}
+                                        <li class="item-orange clearfix" style="padding:0">
+                                            <label class="inline" style="width: 100%;">
+                                                <a href="#" class="work-detail-load" data-id="{{ work.id }}"
+                                                   style="display:block; padding: 10px">
+                                                    <span class="badge badge-purple">#{{ work.unit_count }}</span>
+                                                    <span class="lbl"> {{ work.title }}</span>
+                                                </a>
+                                            </label>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
                         </div>
 
                     </div>
-                    <div id="work-detail">
+                    <div id="work-detail" class="col-sm-8">
                         {% include "modals/collection_detail.html" %}
                     </div>
                 </div>
@@ -46,10 +48,14 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        sortable_image_upload('#edit-work-upload', "#edit-work-files-preview", "#work-file-list li");
+
         $(".work-detail-load").on("click", function () {
             var id = $(this).attr("data-id");
             Shards.modal.work(function (shard_id, shard_data, parent) {
                 $(parent).html(shard_data);
+                sortable_image_upload('#edit-work-upload', "#edit-work-files-preview", "#work-file-list li");
+
             }, {"work_id": id}, "#work-detail");
         });
     });

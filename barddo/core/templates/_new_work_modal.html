@@ -18,6 +18,11 @@
                         <span class="step">3</span>
                         <span class="title">Confirmation</span>
                     </li>
+
+                    <li data-target="#work-upload">
+                        <span class="step">4</span>
+                        <span class="title">Upload Files</span>
+                    </li>
                 </ul>
             </div>
 
@@ -37,6 +42,11 @@
                         {% include "work_form/_confirmation.html" %}
                     </div>
                 </form>
+
+                <div class="step-pane" id="work-upload">
+                    {% include "work_form/_upload.html" %}
+                </div>
+
             </div>
 
             <!-- NAVIGATION -->
