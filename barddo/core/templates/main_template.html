@@ -178,10 +178,6 @@
     <a href="#" class="scrollup">&nbsp;</a>
 </div>
 
-{% if not user.is_authenticated %}
-    {% include "login-modal.html" %}
-{% endif %}
-
 {% include "feedback-button.html" %}
 <!-- /.main-container -->
 
@@ -237,6 +233,10 @@
     </div>
 </footer>
 <!-- Footer Ends -->
+
+{% if not user.is_authenticated %}
+    {% include "login-modal.html" %}
+{% endif %}
 
 <!-- basic scripts -->
 

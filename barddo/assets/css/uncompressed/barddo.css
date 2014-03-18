@@ -155,3 +155,7 @@ footer {
     z-index: 9999;
     background: url('../../images/icon_top.png') no-repeat;
 }
+
+#loginModal .modal-dialog {
+    width: 30%;
+}
