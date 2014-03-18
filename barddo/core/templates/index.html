@@ -74,8 +74,6 @@
     {% compress js %}
         <script src="{% static "js/jquery.isotope.min.js" %}"></script>
         <script src="{% static "js/portfolio.js" %}"></script>
-        {% dajaxice_js_import 'nocsrf' %}
-        <script type="text/javascript" src="{% static "dajax/jquery.dajax.core.js" %}"></script>
         <script type="text/javascript" src="{% static "js/barddo/pages/gallery.js" %}"></script>
     {% endcompress %}
 {% endblock %}

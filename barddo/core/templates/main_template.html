@@ -1,6 +1,7 @@
 {% load staticfiles %}
 {% load compress %}
 {% load shards_templatetags %}
+{% load dajaxice_templatetags %}
 {% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
@@ -59,6 +60,9 @@
 		<script src="{% static "js/html5shiv.js" %}"></script>
 		<script src="{% static "js/respond.min.js" %}"></script>
 		<![endif]-->
+
+        {% dajaxice_js_import 'nocsrf' %}
+        <script type="text/javascript" src="{% static "dajax/jquery.dajax.core.js" %}"></script>
     {% endcompress %}
 
     {% block header %}
