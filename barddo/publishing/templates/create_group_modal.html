@@ -1,7 +1,6 @@
 {% load i18n %}
 {% load staticfiles %}
 
-
 <div class="modal fade" id="createGroupModal" role="dialog" aria-labelledby="createGroupLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -12,27 +11,28 @@
             <div class="modal-body">
                 <form id="publishingGroupForm" class="form-horizontal" enctype="multipart/form-data" role="form">
                     {% csrf_token %}
-                    <div class="profile-picture pull-left" style="height: auto">
+                    <div class="profile-picture pull-left height-auto">
                         <input type="file" name="avatar"/>
                     </div>
-                    <div id="group-name-validation" class="margin-bottom-10 pull-left width-60">
+                    <div id="group-name-validation" class="margin-bottom-10 pull-left width-60 form-group has-info no-margin-left no-margin-right">
                         <span class="block input-icon input-icon-right">
-                            <input class="about_publisher" type="text" name="name" id="groupNameInput" placeholder="{% trans "Group name" %}"/>
+                            <input class="form-control about_publisher" type="text" name="name" id="id_name" placeholder="{% trans "Group name" %}"/>
                             <i class="icon-info-sign"></i>
                         </span>
                     </div>
 
-                    <div class="margin-bottom-10 pull-left width-60">
-                        <textarea class="form-control about_publisher" name="info" id="detail" placeholder="{% trans "We are awesome!" %}"></textarea>
+                    <div class="margin-bottom-10 pull-left width-60 form-group no-margin-right no-margin-left">
+                        <textarea class="form-control about_publisher" name="info" id="id_info" placeholder="{% trans "We are awesome!" %}"></textarea>
                     </div>
 
                     <div class="clearfix"></div>
 
-                    <label>{% trans "Country" %}:</label>
-                    <input id="countryTags" class="width-100 select2-offscreen" name="countries" type="hidden" tabindex="-1">
-
-                    <label>{% trans "Publishers" %}:</label>
-                    <input id="publisherTags" type="text" name="publishers" placeholder="{% trans "Who are the publishers?" %}" data-role="tagsinput"/>
+                    <div class="form-group no-margin-right no-margin-left">
+                        <label for="id_country">{% trans "Country" %}:</label>
+                        <input id="id_country" class="width-100 select2-offscreen" name="country" type="hidden" tabindex="-1">
+                    </div>
+                    <label for="id_publishers">{% trans "Publishers" %}:</label>
+                    <select multiple id="id_publishers" name="publishers" data-role="tagsinput"></select>
 
 
                     <div class="checkbox">
@@ -63,7 +63,7 @@
     });
 
     $.getJSON("{% url "publisher.countries" %}", function (countries) {
-        $('#countryTags').select2({
+        $('#id_country').select2({
             allowClear: true,
             placeholder: "{% trans "Select a country" %}",
             data: countries
@@ -71,7 +71,7 @@
     });
 
 
-    $('#publisherTags').tagsinput({
+    $('#id_publishers').tagsinput({
         itemValue: 'id',
         itemText: 'username',
         freeInput: false,
@@ -115,5 +115,15 @@
 
         $('#publishingGroupForm').ajaxSubmit(options);
     });
+
+    function callback_create_group_error(id, error) {
+        if (id == '#id_name') {
+            $('#group-name-validation').addClass('has-error');
+        } else if (id == '#id_country') {
+            id = '#' + $(id).prev().attr('id');
+        }
+        $(id).parent().addClass('has-error');
+        error_tooltip(id, error, 3000, 'bottom');
+    }
 
 </script>

@@ -22,5 +22,12 @@
             "country_name": "Japan",
             "country_language": "???"
         }
+    },
+    {
+        "model": "publishing.PublishingHouse",
+        "pk": 1,
+        "fields": {
+            "name": "Barddo"
+        }
     }
 ]

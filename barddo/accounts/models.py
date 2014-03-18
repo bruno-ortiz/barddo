@@ -1,16 +1,40 @@
 import datetime
+
 from django.contrib.auth.backends import ModelBackend
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.db.models import Q
+from django.db.models.query import QuerySet
 from django.utils.translation import ugettext as _
 
 
 __author__ = 'bruno'
 
 
+class BarddoUserManager(UserManager):
+    def get_queryset(self):
+        return UserQuerySet(self.model, using=self._db)
+
+    def username_startswith(self, param):
+        return self.get_queryset().username_startswith(param)
+
+    def differs_from(self, user_id):
+        return self.get_queryset().differs_from(user_id)
+
+
+class UserQuerySet(QuerySet):
+    def username_startswith(self, param):
+        return self.filter(username__istartswith=param)
+
+    def differs_from(self, user_id):
+        return self.filter(~Q(id=user_id))
+
+
 class BarddoUser(AbstractUser):
     is_publisher = models.BooleanField(default=False)
+
+    objects = BarddoUserManager()
 
     def user_url(self):
         return reverse('core.profile', args=(self.id,))

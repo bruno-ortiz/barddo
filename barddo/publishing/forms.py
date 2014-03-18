@@ -9,4 +9,4 @@ __author__ = 'bruno'
 class PublishingGroupForm(ModelForm):
     class Meta:
         model = PublishingHouse
-        exclude = ['collections']
+        exclude = ['collections', 'owner']

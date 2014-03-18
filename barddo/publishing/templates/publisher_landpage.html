@@ -101,6 +101,10 @@
                 });
             });
         });
+        function call_back_create_group_ok() {
+            $('#createGroupModal').modal('hide');
+            gritterSuccess("{% trans "Success" %}", "{% trans "Publishig group created!" %}");
+        }
 
     </script>
 {% endblock %}

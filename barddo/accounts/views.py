@@ -20,7 +20,7 @@ def logout_user(request):
 class UsernamesAjaxView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         query_paramter = request.GET['q']
-        users = BarddoUser.objects.filter(username__istartswith=query_paramter)[:6]
+        users = BarddoUser.objects.username_startswith(query_paramter).differs_from(request.user.id)[:6]
         user_data = map(lambda x: {'id': x.id, 'username': x.username}, users)
         json_data = json.dumps(user_data)
         return StreamingHttpResponse(json_data, content_type='application/json')

@@ -14,9 +14,10 @@ class Country(models.Model):
 
 
 class PublishingHouse(models.Model):
-    name = models.CharField(max_length=40)
+    name = models.CharField(max_length=40, unique=True)
     avatar = models.ImageField(upload_to='publisher_avatar/')
     info = models.TextField()
-    countries = models.ForeignKey(Country)
+    country = models.ForeignKey(Country)
     collections = models.ForeignKey(Collection, blank=True, null=True)
-    publishers = models.ManyToManyField(BarddoUser)
+    owner = models.ForeignKey(BarddoUser, related_name='publishing_group_owner')
+    publishers = models.ManyToManyField(BarddoUser, blank=True, null=True, related_name='publishing_group_publishers')
