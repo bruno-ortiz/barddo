@@ -1,6 +1,5 @@
 {% extends 'main_template.html' %}
 {% load staticfiles %}
-{% load dajaxice_templatetags %}
 {% load compress %}
 {% load thumbnail %}
 
@@ -32,25 +31,18 @@
                     <div class="portfolio">
                         {% for work in works %}
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 item collection-great">
-                                <div class="boxcontainer" id="work-container-{{ work.id }}">
+                                <div class="boxcontainer">
                                     <div class="cover-wrap">
                                         <img src="{{ work.cover|thumbnail_url:"big_cover" }}" alt="">
                                     </div>
 
                                     <div class="roll">
                                         <div class="wrapcaption">
-                                            <a id="work-vote-{{ work.id }}" class="vote" href="projectdetail.html">
+                                            <a class="vote" data-id="{{ work.id }}" href="projectdetail.html">
                                                 <i class="icon-heart-empty captionicons"></i>
                                             </a>
                                         </div>
-
-                                        <div class="work-detail-popup">
-
-                                            <div class="arrow"></div>
-                                            ahsuhashuauhs
-                                        </div>
                                     </div>
-
 
                                     <div class="work-information">
                                         <span class="badge badge-danger pull-right work-number">#{{ work.unit_count }}</span>
@@ -58,6 +50,44 @@
                                         <h1>{{ work.title }}</h1>
 
                                         <h2>{{ work.collection.name }}</h2>
+                                    </div>
+                                </div>
+                                <div id="work-popup-{{ work.id }}" class="popover-data">
+                                    <div class="work-detail-popup">
+                                        <div class="popover-details">
+                                            <div class="row pull-left">
+                                                <div class="col-sm-2 center">
+                                                    <img class="artist"
+                                                         src="{{ MEDIA_URL }}user_avatar/falleco-social.jpg"
+                                                         alt="Artist Photo"/>
+                                                    <span>Israel</span>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    This is some neat description This is some neat description This is
+                                                    some
+                                                    neat description This is some neat description This is some neat
+                                                    description
+                                                    This is some neat description
+                                                </div>
+
+                                                <div class="col-sm-1">
+                                                    <div class="popup-likes pull-right center">
+                                                        <i class="icon-heart"></i><br/>
+                                                        0
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="clearfix"></div>
+                                        <div class="pull-right popup-buttons">
+                                            <a href="#" class="btn btn-minier btn-success">
+                                                <i class="icon-zoom-in"></i> Read Now!
+                                            </a>
+                                            <a href="#" class="btn btn-minier btn-info">
+                                                <i class="icon-share"></i> Share
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -85,30 +115,64 @@
                 $("#loginModal").modal();
             {% endif %}
 
+            var onPopupHover = false;
+
             //ROLL ON HOVER
             $(function () {
                 $(".roll").css("opacity", "0");
                 $(".roll").hover(function () {
-                            $(this).stop().animate({
-                                opacity: 1
-                            }, "slow");
+                            $(this).css("opacity", 1);
                         },
                         function () {
-                            $(this).stop().animate({
-                                opacity: 0
-                            }, "slow");
+                            if (!onPopupHover) {
+                                $(this).css("opacity", 0);
+                            }
                         });
             });
 
             $(".vote").popover({
                 trigger: "manual",
-                placement: "bottom",
                 html: true,
                 animation: false,
+                placement: "bottom",
                 container: "body",
                 content: function () {
-                    return $(this).find(".popover-data").html();
+                    var id = $(this).attr("data-id");
+                    return $("#work-popup-" + id).html();
+                },
+
+                template: '<div class="popover work-popover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
+            });
+
+            $(".boxcontainer").on("mouseenter",function () {
+                var _this = this;
+
+                if (!$(".popover").length) {
+                    $(".vote").popover("show");
+
+                    $(".popover").on("mouseleave", function () {
+                        setTimeout(function () {
+                            if (!$(".boxcontainer:hover").length) {
+                                $(".vote").popover('hide');
+                                $(".roll").css("opacity", 0);
+                            }
+                        }, 100);
+
+                        onPopupHover = false;
+                    });
                 }
+
+                onPopupHover = true;
+
+            }).on("mouseleave", function () {
+                var _this = this;
+                setTimeout(function () {
+                    if (!$(".popover:hover").length) {
+                        onPopupHover = false;
+                        $(".vote").popover("hide");
+                        $(".roll").css("opacity", 0);
+                    }
+                }, 100);
             });
         });
     </script>

@@ -247,13 +247,46 @@
 }
 
 .work-detail-popup {
-    width: 300px;
+    width: 100%;
     z-index: 9999;
     background-color: white;
+    position: relative;
+}
 
-    position: fixed;
-    top: 60%;
-    width: 500px;
-    left: -50%;
-    border: 1px solid black;
+.popup-buttons {
+    padding-bottom: 10px;
+}
+
+.work-popover {
+    max-width: 350px;
+    width: 350px;
+    min-width: 350px;
+    opacity: 0.9;
+}
+
+.popup-likes {
+
+}
+
+.popup-likes i {
+    color: red;
+}
+
+.popover-details {
+    padding-bottom: 10px;
+}
+
+.popover-details .artist {
+    border-radius: 0;
+    border: 1px solid #FFF;
+    margin: 2px 8px 0 0;
+    max-width: 40px;
+}
+
+.center {
+    text-align: center;
+}
+
+.nice-text {
+    text-align: justify;
 }
