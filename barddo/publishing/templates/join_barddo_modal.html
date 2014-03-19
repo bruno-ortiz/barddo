@@ -35,4 +35,13 @@
             $joinButton.addClass("disabled");
         }
     });
+
+    $("#joinButton").on("click", function () {
+        Dajaxice.publishing.register_user_in_barddo(Dajax.process, {})
+    });
+
+
+    function join_barddo_callback(message) {
+        gritterError("", message, true);
+    }
 </script>

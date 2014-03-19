@@ -126,6 +126,7 @@ ALLOWED_HOSTS = []
 FIXTURE_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'core', 'fixtures')),
     path.normpath(path.join(SITE_ROOT, 'publishing', 'fixtures')),
+    path.normpath(path.join(SITE_ROOT, 'accounts', 'fixtures')),
 )
 ########## END FIXTURE CONFIGURATION
 

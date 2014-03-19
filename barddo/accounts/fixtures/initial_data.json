@@ -1,0 +1,23 @@
+[
+    {
+        "model": "accounts.BarddoUser",
+        "pk": 1,
+        "fields": {
+            "username": "Barddo",
+            "password": "pbkdf2_sha256$12000$Y1TGT0FHlZVs$nRO6ocTFsP2LmhLuUoyYvX49WLzCLK8ZIrTnyJmspVo=",
+            "is_active": true,
+            "is_superuser": true,
+            "is_staff": true
+        }
+    },
+    {
+        "model": "accounts.BarddoUserProfile",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "gender": "M",
+            "country": "Brazil",
+            "birth_date": "2014-02-15"
+        }
+    }
+]

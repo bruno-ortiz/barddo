@@ -1,6 +1,7 @@
 from dajax.core import Dajax
 from dajaxice.decorators import dajaxice_register
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 from django.utils.html import escape
 
 from publishing.forms import PublishingGroupForm
@@ -28,6 +29,20 @@ def register_publishing_group(request):
         for field, errors in form.errors.items():
             ajax.script("callback_create_group_error('#id_{}','{}')".format(field, '<br/>'.join(errors)))
 
+    return ajax.json()
+
+
+@login_required
+@dajaxice_register
+def register_user_in_barddo(request):
+    ajax = Dajax()
+    publishing_group = PublishingHouse.objects.get(name='Barddo')
+    num_users = publishing_group.publishers.filter(pk=request.user.pk).count()
+    if not num_users:
+        publishing_group.publishers.add(request.user)
+        ajax.redirect(reverse('core.dashboard'))
+    else:
+        ajax.script("join_barddo_callback('{}')".format('WTH?!?! Please don\\\'t break the system!'))
     return ajax.json()
 
 

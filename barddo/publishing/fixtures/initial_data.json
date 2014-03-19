@@ -27,7 +27,11 @@
         "model": "publishing.PublishingHouse",
         "pk": 1,
         "fields": {
-            "name": "Barddo"
+            "name": "Barddo",
+            "info": "We are awesome!",
+            "avatar": "/media/barddo_avatar/barddo-avatar.jpg",
+            "country": 1,
+            "owner": 1
         }
     }
 ]
