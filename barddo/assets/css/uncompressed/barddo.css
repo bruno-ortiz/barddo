@@ -159,3 +159,7 @@ footer {
 #loginModal .modal-dialog {
     width: 30%;
 }
+
+.profile-user-col {
+    padding-top: 23px;
+}
