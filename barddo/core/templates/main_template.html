@@ -81,13 +81,14 @@
         <div class="navbar-header pull-right" role="navigation">
             {% if user.is_authenticated %}
                 <ul class="nav ace-nav">
-                    <li class="grey">
-                        <a href="{% url "core.dashboard" %}">
-                            <i class="icon-dashboard"></i>
-                            Dashboard
-                        </a>
-                    </li>
-
+                    {% if user.is_publisher %}
+                        <li class="grey">
+                            <a href="{% url "core.dashboard" %}">
+                                <i class="icon-dashboard"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                    {% endif %}
                     <li class="light-blue">
                         <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                             <img class="nav-user-photo" src="{{ MEDIA_URL }}{{ avatar }}" alt="Jason's Photo"/>

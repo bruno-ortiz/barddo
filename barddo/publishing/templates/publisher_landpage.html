@@ -61,7 +61,10 @@
 
         <div class="row">
             <div class="col-sm-6 col-lg-6">
-                <button id="joinBarddoButton" class="btn btn-danger btn-lg btn-block pull-down50">{% trans "Join the Barddo publisher" %}</button>
+                <button id="joinBarddoButton"
+                        class="{% if barddo_publisher %} disabled {% endif %}btn btn-danger btn-lg btn-block pull-down50">
+                    {% if not barddo_publisher %}{% trans "Join the Barddo publisher" %}{% else %}{% trans "You are a Barddo editor!" %}{% endif %}
+                </button>
             </div>
             <div class="col-sm-6 col-lg-6">
                 <button id="createGroupButton" class="btn btn-primary btn-lg btn-block pull-down50">{% trans "Create a publishing group" %}</button>
@@ -101,10 +104,6 @@
                 });
             });
         });
-        function call_back_create_group_ok() {
-            $('#createGroupModal').modal('hide');
-            gritterSuccess("{% trans "Success" %}", "{% trans "Publishig group created!" %}");
-        }
 
     </script>
 {% endblock %}

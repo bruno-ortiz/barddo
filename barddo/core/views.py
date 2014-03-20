@@ -38,6 +38,7 @@ class UserContextMixin(ContextMixin):
 class ProfileAwareView(UserContextMixin, TemplateResponseMixin, View):
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**{'user': request.user})
+        context.update(kwargs)
         return super(ProfileAwareView, self).render_to_response(context)
 
 

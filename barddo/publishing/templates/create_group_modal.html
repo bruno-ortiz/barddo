@@ -12,7 +12,7 @@
                 <form id="publishingGroupForm" class="form-horizontal" enctype="multipart/form-data" role="form">
                     {% csrf_token %}
                     <div class="profile-picture pull-left height-auto">
-                        <input type="file" name="avatar"/>
+                        <input id="id_avatar" type="file" name="avatar"/>
                     </div>
                     <div id="group-name-validation" class="margin-bottom-10 pull-left width-60 form-group has-info no-margin-left no-margin-right">
                         <span class="block input-icon input-icon-right">
@@ -117,12 +117,10 @@
     });
 
     function callback_create_group_error(id, error) {
-        if (id == '#id_name') {
-            $('#group-name-validation').addClass('has-error');
-        } else if (id == '#id_country') {
+        if (id == '#id_country') {
             id = '#' + $(id).prev().attr('id');
         }
-        $(id).parent().addClass('has-error');
+        $(id).closest('.form-group').addClass('has-error');
         error_tooltip(id, error, 3000, 'bottom');
     }
 

@@ -24,7 +24,7 @@ def register_publishing_group(request):
         publishing_group.owner = request.user
         publishing_group.save()
         form.save_m2m()
-        ajax.script('call_back_create_group_ok()')
+        ajax.redirect(reverse('core.dashboard'))
     else:
         for field, errors in form.errors.items():
             ajax.script("callback_create_group_error('#id_{}','{}')".format(field, '<br/>'.join(errors)))

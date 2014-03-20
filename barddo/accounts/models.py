@@ -32,9 +32,15 @@ class UserQuerySet(QuerySet):
 
 
 class BarddoUser(AbstractUser):
-    is_publisher = models.BooleanField(default=False)
-
     objects = BarddoUserManager()
+
+    def is_publisher(self):
+        owned_publishers = self.publishing_group_owner.all().count()
+        num_publishers = self.publishing_group.all().count()
+        return (owned_publishers + num_publishers) > 0
+
+    def is_barddo_publisher(self):
+        return self.publishing_group.filter(name='Barddo').count() > 0
 
     def user_url(self):
         return reverse('core.profile', args=(self.id,))

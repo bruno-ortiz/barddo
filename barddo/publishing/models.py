@@ -20,4 +20,4 @@ class PublishingHouse(models.Model):
     country = models.ForeignKey(Country)
     collections = models.ForeignKey(Collection, blank=True, null=True)
     owner = models.ForeignKey(BarddoUser, related_name='publishing_group_owner')
-    publishers = models.ManyToManyField(BarddoUser, blank=True, null=True, related_name='publishing_group_publishers')
+    publishers = models.ManyToManyField(BarddoUser, blank=True, null=True, related_name='publishing_group')

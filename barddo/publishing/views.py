@@ -15,6 +15,12 @@ __author__ = 'bruno'
 class PublisherLandpage(LoginRequiredMixin, ProfileAwareView):
     template_name = 'publisher_landpage.html'
 
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        is_barddo_publisher = user.is_barddo_publisher()
+        context = {'barddo_publisher': is_barddo_publisher}
+        return super(PublisherLandpage, self).get(request, **context)
+
 
 publisher_landpage = PublisherLandpage.as_view()
 
