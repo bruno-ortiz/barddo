@@ -64,6 +64,9 @@ class Collection(models.Model):
     author = models.ForeignKey(BarddoUser, null=False)
     cover = models.ImageField(_('Cover Art'), upload_to=get_collection_cover_path, blank=True, null=True)
 
+    def get_total_works(self):
+        return Work.objects.filter(collection__id=self.id).count()
+
     # TODO: collection tags
     # TODO: collection categories
 

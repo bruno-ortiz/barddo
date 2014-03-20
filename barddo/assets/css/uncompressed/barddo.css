@@ -163,3 +163,12 @@ footer {
 .profile-user-col {
     padding-top: 23px;
 }
+
+.side-bar {
+    padding-top: 41px;
+}
+
+.dashboard-caption {
+    padding: 10px;
+    top: 20% !important;
+}
