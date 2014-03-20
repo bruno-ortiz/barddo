@@ -5,9 +5,9 @@
         "fields": {
             "username": "Barddo",
             "password": "pbkdf2_sha256$12000$Y1TGT0FHlZVs$nRO6ocTFsP2LmhLuUoyYvX49WLzCLK8ZIrTnyJmspVo=",
-            "is_active": true,
-            "is_superuser": true,
-            "is_staff": true
+            "is_active": false,
+            "is_superuser": false,
+            "is_staff": false
         }
     },
     {
