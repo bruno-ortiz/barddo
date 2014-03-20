@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 import os
+from hashlib import md5
+import time
 
 from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
-from hashlib import md5
+from django.conf import settings
+from django.core.files.images import ImageFile
 
 from accounts.models import BarddoUser
 
@@ -107,6 +110,8 @@ class Work(models.Model):
         ...
     """
 
+    ALLOWED_EXTENSIONS = ['jpg', 'bmp', 'png', 'gif']
+
     collection = models.ForeignKey(Collection)
 
     title = models.CharField(_('Title'), max_length=250, db_index=True)
@@ -116,9 +121,69 @@ class Work(models.Model):
     unit_count = models.IntegerField(_('Item Number'))
     total_pages = models.SmallIntegerField(_('Total Pages'))
 
+    def is_owner(self, user):
+        """
+        Return true if the given user is the owner of the current work
+        """
+        return self.collection.author.id != user.id
+
+    def media_path(self):
+        """
+        Return the work directory path on media files
+        """
+        return os.path.join(settings.MEDIA_ROOT, "work_data", "%04d" % self.id)
+
+    def image_files(self):
+        """
+        List of image files uploaded for this work
+        """
+        img_list = os.listdir(self.media_path())
+
+        return sorted([i for i in img_list if any([i.endswith(ext) for ext in self.ALLOWED_EXTENSIONS])])
+
+    def handle_uploaded_file(self, file_name, file):
+        """
+            Upload a given file to the work media folder
+            TODO: object manager?
+        """
+        full_path = os.path.join(self.media_path(), file_name)
+        with open(full_path, 'wb+') as destination:
+            for chunk in file.chunks():
+                destination.write(chunk)
+
+    def load_work_pages(self):
+        """
+        Return a dict with loaded images data to be rendered
+        Example dict: {
+            "size": 123,
+            "url": /media/all/black_flag.png,
+            "name": black_flag.png
+        }
+        """
+        work_path = self.media_path()
+
+        # Sanity directory check
+        if not os.path.exists(work_path):
+            return []
+
+        files = self.image_files()
+
+        timestamp = "%d" % time.time()  # a little hack to avoid browser caching issues
+        image_files = []
+
+        for image_file in files:
+            img = ImageFile(open(os.path.join(work_path, image_file), "rb"))
+            image_files.append({
+                "size": img.size,
+                "url": settings.MEDIA_URL + img.name.replace(settings.MEDIA_ROOT + "/", "") + "?t=" + timestamp,
+                "name": image_file
+            })
+
+        return image_files
+
     class Meta:
         unique_together = (("collection", "unit_count"), ("collection", "title"))
 
-    # TODO: work tags
-    # TODO: work categories
-    # TODO: store files by convention
+        # TODO: work tags
+        # TODO: work categories
+        # TODO: store files by convention

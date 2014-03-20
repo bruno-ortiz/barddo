@@ -3,4 +3,6 @@
 .db
 static/
 .DS_Store
-media/
+user_avatar/
+.sass-cache/
+/media

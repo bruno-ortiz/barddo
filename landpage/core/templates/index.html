@@ -1,0 +1,624 @@
+{% load staticfiles %}
+{% load compress %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load dajaxice_templatetags %}
+
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>{% trans "Barddo - Where talent gets attention" %}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    {% compress css %}
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+
+        <link rel="stylesheet" href="{% static "css/font-awesome.min.css" %}"/>
+
+        <!--[if IE 7]>
+		  <link rel="stylesheet" href="{% static "css/font-awesome-ie7.min.css" %}" />
+		<![endif]-->
+
+        <link rel="stylesheet" type="text/x-sass" media="screen" href="{% static 'sass/main.sass' %}">
+    {% endcompress %}
+
+    <script src="{% static 'js/vendor/modernizr-2.6.2-respond-1.1.0.min.js' %}"></script>
+
+
+    {% compress js %}
+        <script src="{% static 'js/vendor/jquery-1.10.1.min.js' %}"></script>
+        <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery.fittext.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery.cookie.js' %}"></script>
+        <script src="{% static 'js/vendor/waypoints.min.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery-ui-1.10.3.custom.js' %}"></script>
+        <script src="{% static 'js/vendor/jquery.stellar.min.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+
+        {% dajaxice_js_import 'nocsrf' %}
+        <script type="text/javascript" src="{% static "dajax/jquery.dajax.core.js" %}"></script>
+    {% endcompress %}
+    <script type="text/javascript">
+        /**
+         * Easy way to create a delayed action, just pass your function callback
+         */
+        var delay = (function () {
+            var timer = 0;
+
+            return function (callback, ms) {
+                clearTimeout(timer);
+                timer = setTimeout(callback, ms);
+            };
+        })();
+
+        /**
+         * Display a temporary tooltip with given message over element
+         * @param id of the element target to the tooltip
+         * @param message to be displayed
+         * @param delay to show the message
+         * @param placement of the tooltip
+         */
+        function error_tooltip(id, message, delay, placement) {
+
+            delay = delay || 3000;
+            placement = placement || "right";
+
+            $(id).tooltip('destroy').tooltip({
+                title: message,
+                trigger: "manual",
+                placement: placement,
+                html: true
+            }).tooltip('show');
+
+            setTimeout(function () {
+                $(id).tooltip('hide');
+            }, delay);
+        }
+
+        function callback_feedback_sent() {
+            $.cookie("{{ cookie_name }}", 1);
+
+            $(".feedback").hide();
+            $(".feedback-sent").show();
+
+            $("#feedback-form button").html('<i class="entypo-mail pull-left"></i> Submit');
+        }
+
+        function callback_feedback_error() {
+            $("#feedback-form button").html('<i class="entypo-mail  pull-left"></i> Try Again!');
+        }
+
+        $(document).ready(function () {
+            $("#feedback-form button").on("click", function (e) {
+                $(this).html('<i class="icon-spinner icon-spin"></i> Sending...');
+
+                Dajaxice.core.register_feedback(Dajax.process, {
+                    'form': $('#feedback-form').serialize()
+                });
+                e.preventDefault();
+            });
+        });
+    </script>
+
+</head>
+<body>
+<section id="title-slide" class="clearfix" data-stellar-background-ratio="0.5">
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-4 start">
+                <img src="{% static "img/brand.png" %}"/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+                <iframe id="video" width="100%" src="//www.youtube.com/embed/qzPcMzy4WI8" frameborder="0"
+                        allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <h1 class="amatic animated fadeIn">{% trans "We believe that all forms of talent are noteworthy" %}</h1>
+            </div>
+            <div class="social">
+                <a href="https://www.facebook.com/pages/Barddo-Community/239220572927718" target="_blank">
+                    <span class="social-item">
+                        <i class="entypo-facebook"></i>
+                    </span>
+                </a>
+                <a href="http://twitter.com/the_barddo" target="_blank">
+                    <span class="social-item">
+                        <i class="entypo-twitter"></i>
+                    </span>
+                </a>
+                <a href="http://plus.google.com/barddo" target="_blank">
+                    <span class="social-item">
+                        <i class="entypo-gplus"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+
+<div class="container">
+
+<section id="sub-title">
+    <div class="row">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+            <p class="sub-title">
+                {% trans "Have you ever stopped to think about how many talented artists there are in the world?" %}
+                {% trans "How many exceptional art pieces were created  and we did not ever know?" %}
+                <br/> <br/>
+                {% trans "If you like comics, you'll love the Barddo Project just because it allows these pieces of work to receive the atention it deserves!" %}
+            </p>
+        </div>
+    </div>
+</section>
+
+<section id="story-icons" class="story-icons">
+    <div class="row">
+        <div class="col-xs-6 col-sm-3 col-md-2 col-md-offset-2">
+            <a href="#barddo"><img src="{% static 'img/iconelogoapp.png' %}" alt="person icon" class="story-icon-1"></a>
+        </div>
+        <div class=" col-xs-6 col-sm-3 col-md-2">
+            <a href="#reader"><img src="{% static 'img/iconeleitor.png' %}" alt="heart icon" class="story-icon-2"></a>
+        </div>
+        <div class=" col-xs-6 col-sm-3 col-md-2">
+            <a href="#artist"><img
+                    src="{% static 'img/iconeartista.png' %}" alt="person icon" class="story-icon-3"></a>
+        </div>
+        <div class="col-xs-6 col-sm-3 col-md-2">
+            <a href="#contact"><img src="{% static 'img/mail.png' %}" alt="person icon" class="story-icon-4"></a>
+        </div>
+
+        <span class="keep-scrolling hidden-xs"><i class="entypo-down-open-big "></i></span>
+    </div>
+</section>
+
+<section>
+
+<div id="barddo" class="row">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+        <div id="start" class="story-container story">
+            <p class="fittext pacifico"> {% trans "Barddo?" %}</p>
+        </div>
+    </div>
+</div>
+
+<div class="row ">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-5 hidden-xs">
+        <div class="story-image-container" style="padding-top: 80px;">
+            <img data-delay="1" src="{% static 'img/art/why.png' %}" alt="user icon">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-4">
+        <div id="start" class="story-container story">
+            <p class="littext pacifico"> {% trans "Why should I care?" %}</p>
+        </div>
+    </div>
+</div>
+
+
+<div class="color-change" data-colorup="#34495e" data-colordown="#2980b9"></div>
+
+
+<div class="row">
+    <div class="col-xs-12" style="height:150px;">
+    </div>
+</div>
+
+
+<div class="row ">
+    <div class="col-xs-12 col-sm-2 col-sm-offset-2 hidden-xs">
+        <div class="story-image-container">
+            <div class="circle-icon " data-delay="1">
+                <img src="{% static 'img/iconeleitor.png' %}" alt="user icon">
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-2 col-sm-offset-4 hidden-xs">
+        <div class="story-image-container">
+            <div class="circle-icon " data-delay="1">
+                <img src="{% static 'img/iconeartista.png' %}" alt="user icon">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row ">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-1 hidden-xs">
+        <div class="story-container story">
+            <p class="fittext amatic delay-0 animated fadeInDown"> {% trans "Users" %} </p>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-4 col-sm-offset-2 hidden-xs">
+        <div class="story-container story">
+            <p class="fittext amatic delay-0 animated fadeInDown"> {% trans "Artists" %} </p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-1 hidden-xs">
+        <div class="story-container story">
+            <p class="fittext amatic delay-0 animated fadeInDown"> {% trans "Wants To" %} </p>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-4 col-sm-offset-2 hidden-xs">
+        <div class="story-container story">
+            <p class="fittext amatic delay-0 animated fadeInDown"> {% trans "Wants" %} </p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-1 hidden-xs">
+        <div class="story-container story">
+            <p class="fittext amatic delay-0 animated fadeInDown"> {% trans "Read" %} </p>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-4 col-sm-offset-2 hidden-xs">
+        <div class="story-container story">
+            <p class="fittext amatic delay-0 animated fadeInDown"> {% trans "Visibility" %} </p>
+        </div>
+    </div>
+</div>
+
+<div class="row ">
+    <div class="col-xs-12 col-sm-2 col-sm-offset-5 hidden-xs">
+        <div class="story-image-container" data-delay="3" style="padding-top: 80px;">
+            <img src="{% static 'img/art/halfhalf.png' %}" alt="user icon">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div id="s4" class="story-container story">
+            <p class="fittext amatic uppercase"> {% trans "We Put" %}</p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div id="s4" class="story-container story">
+            <p class="fittext amatic uppercase"> {% trans "Hungry Readers" %} </p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div id="s4" class="story-container story">
+            <p class="fittext amatic uppercase"> & </p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div id="s4" class="story-container story">
+            <p class="fittext amatic uppercase"> {% trans "Talented Artists" %} </p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div id="s4" class="story-container story">
+            <p class="fittext amatic uppercase"> {% trans "In Touch" %} </p>
+        </div>
+    </div>
+</div>
+
+
+<div class="color-change" data-colorup="#2980b9" data-colordown="#009933"></div>
+
+
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2" style="padding-top: 200px">
+        <div class="story-container">
+            <p class="fittext amatic "> {% trans "What does the reader want?" %} </p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+        <div class="hr-container ">
+            <hr data-margin="50">
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-2">
+        <div class="story-image-container iphone-container">
+            <img src="{% static 'img/art/reader.png' %}" alt="iphone">
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-4 ">
+        <div class="story-container story">
+            <p class="littext amatic " data-margin="50"> {% trans "A lot of content to read" %} </p>
+        </div>
+
+        <div class="story-container story">
+            <p class="littext amatic " data-margin="50"> {% trans "Read anywhere" %} </p>
+        </div>
+        <div class="story-container story">
+            <p class="littext amatic " data-margin="50"> {% trans "Share, comment, vote" %} </p>
+        </div>
+        <div class="story-container story">
+            <p class="littext amatic "
+               data-margin="50"> {% trans "Discover awesome works made by awesome people" %}</p>
+        </div>
+    </div>
+</div>
+
+<div class="color-change" data-colorup="#009933" data-colordown="#d35400"></div>
+
+<div id="reader" class="row">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2" style="padding-top: 200px">
+        <div class="story-container">
+            <p class="fittext amatic uppercase">{% trans "Great for artists!" %}</p>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+        <div class="hr-container ">
+            <hr data-margin="50">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-1">
+        <div class="row">
+            <div class="col-xs-12 col-sm-2">
+                <div class="story-image-container">
+                    <div class="circle-icon " data-delay="4">
+                        <img src="{% static 'img/iconepublicartrabalho.png' %}" alt="pencil icon">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-10">
+                <div class="story-container story">
+                    <p class="fittext amatic ">{% trans "Easily publish your work" %}</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-2 ">
+                <div class="story-image-container">
+                    <div class="circle-icon " data-delay="4">
+                        <img src="{% static 'img/iconepreco.png' %}" alt="pencil icon">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-10">
+                <div class="story-container story">
+                    <p class="fittext amatic ">{% trans "You tell the price" %}</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-2 ">
+                <div class="story-image-container">
+                    <div class="circle-icon " data-delay="4">
+                        <img src="{% static 'img/iconeavaliacao.png' %}" alt="pencil icon">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-10">
+                <div class="story-container story">
+                    <p class="fittext amatic ">{% trans "Users will rate it" %}</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-2 ">
+                <div class="story-image-container">
+                    <div class="circle-icon " data-delay="4">
+                        <img src="{% static 'img/iconeestatisticas.png' %}" alt="pin icon">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-10">
+                <div class="story-container story">
+                    <p class="fittext amatic ">{% trans "relevant statistics" %}</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-4 ">
+        <div class="story-image-container">
+            <img src="{% static 'img/art/artist.png' %}" alt="iphone">
+        </div>
+    </div>
+</div>
+<!-- END row of images -->
+
+
+<div id="artist" class="row">
+    <div class="col-xs-12 col-sm-2 col-sm-offset-5 " style="padding-top: 200px;">
+        <div class="story-image-container">
+            <div class="circle-icon " data-delay="3">
+                <img src="{% static 'img/iconelike.png' %}" alt="heart icon">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="story-container story">
+            <p class="fittext pacifico"> {% trans "Help us" %} </p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="story-container story">
+            <p class="fittext pacifico"> {% trans "make this real" %} </p>
+        </div>
+    </div>
+</div>
+
+<div class="color-change" data-colorup="#d35400" data-colordown="#c0392b"></div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+        <div class="hr-container ">
+            <hr data-margin="50">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="story-container story">
+            <p class="fittext amatic"> {% trans "Subscribe & share this" %} </p>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div class="footer-container">
+            <div class="social social-footer">
+                <a href="#"><span class="social-item"><i class="entypo-facebook"></i></span></a>
+                <a href="#"><span class="social-item"><i class="entypo-twitter"></i></span></a>
+                <a href="#"><span class="social-item"><i class="entypo-gplus"></i></span></a>
+                <a href="#"><span class="social-item"><i class="entypo-pinterest"></i></span></a>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+</div>
+<!-- /container -->
+<footer>
+    <div id="contact" class="animated fadeIn dealy-8">
+        <div class="container">
+            {% if form %}
+                <div class="row feedback">
+                    <div class=" col-xs-12 col-sm-6">
+                        <div class="form-container clearfix">
+
+
+                            <form id="feedback-form" role="form" method="post" target="_self">
+                                {% csrf_token %}
+
+                                <div class="form-group clearfix">
+                                    <label for="{{ form.name.auto_id }}"
+                                           class="control-label">{{ form.name.label }}</label>
+
+                                    <div class=" col-sm-8 col-md-9 col-lg-10 input-container">
+                                        {% render_field form.name class="form-control" placeholder="Please tell us your name" %}
+                                    </div>
+
+                                </div>
+
+                                <div class=" form-group clearfix ">
+                                    <label for="{{ form.email.auto_id }}"
+                                           class="control-label">{{ form.email.label }}</label>
+
+                                    <div class=" col-sm-8 col-md-9  col-lg-10 input-container">
+                                        {% render_field form.email class="form-control" placeholder="So we can stay in touch" %}
+                                    </div>
+                                </div>
+
+                                <div class="form-group clearfix">
+
+                                    <div class=" input-container col-xs-12">
+                                        {% render_field form.message class="form-control" rows="5" placeholder="Thoughts about the project? Are you an artist or a reader? Maybe both?" %}
+                                    </div>
+                                </div>
+
+                                <div class="form-group clearfix">
+                                    <button type="submit" class="form-submit-btn"><i class="entypo-mail  pull-left"></i>
+                                        {% trans "Submit" %}
+                                    </button>
+                                </div>
+                            </form>
+
+                        </div>
+                        <!-- form container -->
+                    </div>
+                    <!-- col -->
+
+                    <div class="contact-info col-xs-12 col-sm-6">
+
+                        <h3 class="contact-me-title">{% trans "Want to hear more about the big release?" %} </h3>
+
+                        <p>{% trans "Sign up here and we will get in touch when we are launching. What about just saying hi and let us know that you liked the idea?" %}</p>
+
+                        <p>
+                            {% trans "Hopefully we'll be seeing you soon." %}
+                        </p>
+
+                        <div class="row" id="contact">
+                            <div class="col-xs-3 col-sm-3 ">
+                                <img class="alt-icon" src="{% static 'img/iconelogoapp.png' %}" alt="Barddo icon">
+                            </div>
+                            <div class="col-xs-3 col-sm-3 ">
+                                <img class="alt-icon" src="{% static 'img/iconeleitor2.png' %}" alt="Reader icon">
+                            </div>
+                            <div class="col-xs-3 col-sm-3 ">
+                                <img class="alt-icon" src="{% static 'img/iconelike.png' %}" alt="Heart icon">
+                            </div>
+                            <div class="col-xs-3 col-sm-3 ">
+                                <img class="alt-icon" src="{% static 'img/iconeartista2.png' %}" alt="Artist icon">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- END row -->
+                <div class="row feedback-sent" style="display: none;">
+            {% else %}
+                <div class="row feedback-sent">
+            {% endif %}
+
+            <div class=" col-xs-12 ">
+                <h1>Thanks for your feedback!</h1>
+                <img src="{% static 'img/mail.png' %}" alt="mail icon">
+            </div>
+            </div>
+            <!-- END row -->
+
+            </div>
+            <!-- END .container -->
+        </div>
+        <!-- END ontact -->
+</footer>
+
+</body>
+</html>

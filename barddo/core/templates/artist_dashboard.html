@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{% static "css/datepicker.css" %}"/>
     <link rel="stylesheet" href="{% static "css/uncompressed/barddo.dashboard.css" %}"/>
     <link rel="stylesheet" href="{% static "css/crop/imgareaselect-animated.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/dropzone.css" %}"/>
+
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -36,8 +38,9 @@
         </div>
         <div class="row" style="padding-top: 50px;">
             <div class="col-sm-6 col-sm-offset-3">
-                <a id="collection-wizard-link" href="#new-collection-wizard" data-toggle="modal" class="btn btn-success btn-block"><i
-                        class="icon-plus-sign-alt"></i> Create a new collection (and awesome), now! </a>
+                <a id="collection-wizard-link" href="#new-collection-wizard" data-toggle="modal"
+                   class="btn btn-success btn-block"><i class="icon-plus-sign-alt"></i> Create a new collection (and
+                    awesome), now! </a>
             </div>
         </div>
     {% else %}
@@ -137,9 +140,9 @@
                                     </td>
 
                                     <td class="hidden-480">
-                                        <span class="label arrowed">
-                                            <s>out of stock</s>
-                                        </span>
+																	<span class="label arrowed">
+																		<s>out of stock</s>
+																	</span>
                                     </td>
                                 </tr>
 
@@ -233,7 +236,8 @@
                                             <div class="boxcontainer">
                                                 <div class="cover-wrap">
                                                     {% if collection.cover %}
-                                                        <img src="{{ collection.cover|thumbnail_url:"small_cover" }}" alt="">
+                                                        <img src="{{ collection.cover|thumbnail_url:"small_cover" }}"
+                                                             alt="">
                                                     {% else %}
 
                                                     {% endif %}
@@ -241,10 +245,13 @@
 
                                                 <div class="roll">
                                                     <div class="wrapcaption">
-                                                        <a href="#new-work-wizard" data-toggle="modal" data-id="{{ collection.id }}"
-                                                           onclick="$('#'+'{{ work_form.collection.auto_id }}').val($(this).attr('data-id'));"><i
+                                                        <a href="#new-work-wizard" data-toggle="modal"
+                                                           data-id="{{ collection.id }}"
+                                                           onclick="$('#{{ work_form.collection.auto_id }}').val($(this).attr('data-id'));"><i
                                                                 class="icon-plus-sign green"></i></a>
-                                                        <a href="#" class="collection-view" data-id="{{ collection.id }}"><i class="icon-cog red"></i></a>
+                                                        <a href="#" class="collection-view"
+                                                           data-id="{{ collection.id }}"><i
+                                                                class="icon-cog red"></i></a>
                                                     </div>
                                                 </div>
                                                 <h1><a href="projectdetail.html">{{ collection.name }}</a></h1>
@@ -278,6 +285,8 @@
         {% dajaxice_js_import 'nocsrf' %}
 
         <script type="text/javascript" src="{% static "js/barddo/pages/collection.create.js" %}"></script>
+
+        <script src="{% static "js/uncompressed/dropzone.js" %}"></script>
     {% endcompress %}
     <script type="text/javascript" src="{% static "dajax/jquery.dajax.core.js" %}"></script>
     <script src="{% static "js/jquery.sparkline.min.js" %}"></script>
@@ -316,9 +325,8 @@
 
         function init_wizard() {
             $("#collection-name-group").removeClass("has-error has-success").addClass("has-info");
-            var $collection = $("#collection-next");
-            $collection.html('Next <i class="icon-arrow-right icon-on-right"></i>');
-            $collection.prop("disabled", true);
+            $("#collection-next").html('Next <i class="icon-arrow-right icon-on-right"></i>');
+            $("#collection-next").prop("disabled", true);
             $("#collection-name-validation").val('');
             $("#collection-name-group i").removeClass().addClass('icon-info-sign');
             setTimeout(function () {
@@ -448,9 +456,8 @@
              */
             //ROLL ON HOVER
             $(function () {
-                var $roll = $(".roll");
-                $roll.css("opacity", "0");
-                $roll.hover(function () {
+                $(".roll").css("opacity", "0");
+                $(".roll").hover(function () {
                             $(this).stop().animate({
                                 opacity: 1
                             }, "slow");
@@ -500,7 +507,10 @@
             workFormCreate = false;
         }
 
-        function callback_create_work_ok() {
+        function callback_create_work_ok(id) {
+
+            $('#new_work_upload').attr('data-id', id);
+            
             if (!workFormCreate) {
                 workFormCreate = true;
                 $("#form-work-next").trigger("click");
@@ -524,11 +534,18 @@
                     })
 
                     .on('change', function (e, info) {
+
+                        if (info.step == 3) {
+                            if (info.direction == "next") {
+                                $("#form-work-next").html("<i class='icon-heart'></i> I'm done!");
+                            }
+                        }
+
                         if (info.step == 2) {
                             if (info.direction == "next") {
                                 if (workFormCreate) {
                                     window.selectedArea.cancelSelection();
-                                    $("#form-work-next").html("<i class='icon-heart'></i> Thank you!");
+                                    $("#form-work-next").html("<i class='icon-upload'></i> Upload My Files!");
                                     $("#form-work-prev").hide();
                                 } else {
                                     var crop = window.selectedArea.getSelection();
@@ -593,5 +610,7 @@
                 window.selectedArea.cancelSelection();
             }
         });
+
+
     </script>
 {% endblock %}

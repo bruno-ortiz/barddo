@@ -2,13 +2,13 @@
 from dajax.core import Dajax
 from dajaxice.decorators import dajaxice_register
 from django.utils.html import escape
-
 from dajaxice.utils import deserialize_form
 from django.contrib.auth.decorators import login_required
-from core.models import Collection
-from .forms import CollectionForm, WorkForm
 from pilkit.processors import Crop
 from PIL import Image
+
+from core.models import Collection
+from .forms import CollectionForm, WorkForm
 
 
 @login_required
@@ -105,7 +105,7 @@ def register_a_work(request):
         new_work.collection.cover = new_work.cover
         new_work.collection.save()
 
-        ajax.script('callback_create_work_ok()')
+        ajax.script('callback_create_work_ok(' + str(new_work.id) + ')')
     else:
         ajax.script('callback_create_work_error()')
         for field, errors in form.errors.items():
