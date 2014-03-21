@@ -59,17 +59,17 @@ function gritterSuccess(title, message) {
 }
 
 
-function gritterError(title, message) {
+function gritterError(title, message, center) {
     $.gritter.add({
         title: title,
         text: message,
         time: '2000',
-        class_name: 'gritter-error'
+        class_name: center ? 'gritter-error gritter-center' : 'gritter-error'
     });
 }
 
 function gritterCenter(title, message, sticky) {
-    sticky = sticky ||false;
+    sticky = sticky || false;
 
     $.gritter.add({
         title: title,

@@ -109,3 +109,17 @@ img {
     color: #696969;
 }
 
+.center-chevron {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+}
+
+.pull-down50 {
+    margin-top: 50px;
+}
+
+.modal-sm {
+    width: 400px;
+}

@@ -1,0 +1,37 @@
+[
+    {
+        "model": "publishing.Country",
+        "pk": 1,
+        "fields": {
+            "country_name": "Brazil",
+            "country_language": "PT-BR"
+        }
+    },
+    {
+        "model": "publishing.Country",
+        "pk": 2,
+        "fields": {
+            "country_name": "United States of America",
+            "country_language": "EN-US"
+        }
+    },
+    {
+        "model": "publishing.Country",
+        "pk": 3,
+        "fields": {
+            "country_name": "Japan",
+            "country_language": "???"
+        }
+    },
+    {
+        "model": "publishing.PublishingHouse",
+        "pk": 1,
+        "fields": {
+            "name": "Barddo",
+            "info": "We are awesome!",
+            "avatar": "/media/barddo_avatar/barddo-avatar.jpg",
+            "country": 1,
+            "owner": 1
+        }
+    }
+]

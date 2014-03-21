@@ -26,10 +26,10 @@ function callback_collection_name_is_avaliable() {
  * Method that check on the server if the collection provided is unique and give
  * the feedback to the user
  */
-$('#collection-name-validation').keyup(function() {
-    delay(function(){
+$('#collection-name-validation').keyup(function () {
+    delay(function () {
         var name = $('#collection-name-validation').val();
-        if(name.length > 2) {
+        if (name.length > 2) {
             Dajaxice.core.validate_unique_collection(Dajax.process, {
                 'collection_name': $('#collection-name-validation').val()
             });

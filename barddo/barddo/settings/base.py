@@ -125,6 +125,8 @@ ALLOWED_HOSTS = []
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-FIXTURE_DIRS
 FIXTURE_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'core', 'fixtures')),
+    path.normpath(path.join(SITE_ROOT, 'publishing', 'fixtures')),
+    path.normpath(path.join(SITE_ROOT, 'accounts', 'fixtures')),
 )
 ########## END FIXTURE CONFIGURATION
 
@@ -153,6 +155,7 @@ TEMPLATE_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'core', 'templates')),
     path.normpath(path.join(SITE_ROOT, 'feedback', 'templates')),
     path.normpath(path.join(SITE_ROOT, 'shards', 'templates')),
+    path.normpath(path.join(SITE_ROOT, 'publishing', 'templates')),
 )
 ########## END TEMPLATE CONFIGURATION
 
@@ -207,14 +210,15 @@ THIRD_PARTY_APPS = (
     'easy_thumbnails'
 )
 
+# Apps specific for this project go here.
 LOCAL_APPS = (
     'shards',
     'core',
     'accounts',
     'feedback',
+    'publishing',
 
 )
-# Apps specific for this project go here.
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

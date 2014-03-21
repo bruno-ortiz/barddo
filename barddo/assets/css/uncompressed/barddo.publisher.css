@@ -1,0 +1,17 @@
+.margin-bottom-10 {
+    margin-bottom: 10px;
+}
+
+.bootstrap-tagsinput {
+    width: 100%;
+    border-radius: 0 !important;
+}
+
+.about_publisher {
+    width: 100%;
+    margin-left: 10px;
+}
+
+textarea.about_publisher {
+    display: inline-block;
+}
