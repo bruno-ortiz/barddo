@@ -1,6 +1,6 @@
 import json
 
-from django.http.response import StreamingHttpResponse
+from django.http.response import HttpResponse
 from django.views.generic import View
 from django.views.generic.base import TemplateResponseMixin
 
@@ -46,4 +46,4 @@ class CountriesAjaxView(LoginRequiredMixin, View):
         countries = Country.objects.all()
         countries = map(lambda x: {'id': x.id, 'text': x.country_name}, countries)
         data = json.dumps(countries)
-        return StreamingHttpResponse(data, content_type='application/json')
+        return HttpResponse(data, content_type='application/json')

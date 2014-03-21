@@ -36,7 +36,7 @@ def register_publishing_group(request):
 @dajaxice_register
 def register_user_in_barddo(request):
     ajax = Dajax()
-    publishing_group = PublishingHouse.objects.get(name='Barddo')
+    publishing_group = PublishingHouse.objects.get(pk=1)
     num_users = publishing_group.publishers.filter(pk=request.user.pk).count()
     if not num_users:
         publishing_group.publishers.add(request.user)

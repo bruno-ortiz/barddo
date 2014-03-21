@@ -77,7 +77,7 @@
         freeInput: false,
         typeahead: {
             source: function (search) {
-                return $.getJSON("{% url "user.usernames" %}", {'q': search});
+                return $.getJSON("{% url "accounts.usernames" %}", {'q': search});
             }
         }
     });
@@ -95,11 +95,11 @@
             var file = files[0];
             var type = $.trim(file.type);
             if ((type.length > 0 && !(/^image\/(jpe?g|png|gif)$/i).test(type)) || (type.length == 0 && !(/\.(jpe?g|png|gif)$/i).test(file.name))) {
-                alert('Please select an image file!');
+                gritterError('{% trans 'Error'%}', '{% trans 'Please select an image file!' %}', true);
                 return false;
             }
             if (file.size > 512000) {
-                alert('File size should not exceed 500Kb!');
+                gritterError('{% trans 'error' %}', '{% trans 'File size should not exceed 500Kb!' %}');
                 return false;
             }
             return true;

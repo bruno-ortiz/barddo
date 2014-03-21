@@ -9,8 +9,8 @@ __author__ = 'bruno'
 
 
 class Country(models.Model):
-    country_name = CharField(max_length=50)
-    country_language = CharField(max_length=50)
+    country_name = CharField(max_length=50, unique=True)
+    country_language = CharField(max_length=50, unique=True)
 
 
 class PublishingHouse(models.Model):

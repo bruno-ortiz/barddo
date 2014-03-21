@@ -40,7 +40,7 @@ class BarddoUser(AbstractUser):
         return (owned_publishers + num_publishers) > 0
 
     def is_barddo_publisher(self):
-        return self.publishing_group.filter(name='Barddo').count() > 0
+        return self.publishing_group.filter(pk=1).count() > 0
 
     def user_url(self):
         return reverse('core.profile', args=(self.id,))
