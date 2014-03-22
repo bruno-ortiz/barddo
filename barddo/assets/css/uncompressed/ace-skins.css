@@ -9,6 +9,7 @@ body {
     background: #393939;
 }
 
+/*
 .sidebar, .sidebar:before {
     background-color: #222A2D;
     border-right: none;
@@ -182,7 +183,7 @@ body {
     border: none;
     top: 0;
 }
-
+*/
 .breadcrumbs {
     border: none;
     background-color: #F0F0F0;
