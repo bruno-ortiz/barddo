@@ -28,13 +28,13 @@ var Shards = {
         // TODO: this should be generic
         timeout: function () {
             //gritterClear();
-            gritterError("Request Error", "Unfortunately, your request timed out!");
+            gritterError("Request Error", "Unfortunately, your request timed out!", false);
         },
 
         error: function () {
             // TODO: log these errors
             //gritterClear();
-            gritterError("Request Error", "Unfortunately, your request has finished with errors!");
+            gritterError("Request Error", "Unfortunately, your request has finished with errors!", false);
         },
 
         beforeSend: function () {

@@ -1,0 +1,109 @@
+{% extends 'main_template.html' %}
+{% load staticfiles %}
+{% load dajaxice_templatetags %}
+{% load i18n %}
+{% load compress %}
+
+
+{% block header %}
+    {% compress css %}
+        <link rel="stylesheet" href="{% static "css/uncompressed/bootstrap-tagsinput.css" %}"/>
+        <link rel="stylesheet" href="{% static "css/select2.css" %}"/>
+        <link rel="stylesheet" href="{% static "css/uncompressed/barddo.publisher.css" %}"/>
+    {% endcompress %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <!-- TODO: extract this logic to a template tag, so the breadcrumbs are calculated by the system -->
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="{% url "core.index" %}">Home</a>
+        </li>
+        <li class="active">Publisher</li>
+    </ul><!-- .breadcrumb -->
+{% endblock %}
+
+{% block content %}
+    <div class="page-content">
+        <div id="carousel-publisher" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-publisher" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-publisher" data-slide-to="1"></li>
+                <li data-target="#carousel-publisher" data-slide-to="2"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img class="img-responsive" src="{% static "img/01-editor.png" %}">
+                </div>
+                <div class="item">
+                    <img class="img-responsive" src="{% static "img/02-editor.png" %}">
+                </div>
+                <div class="item">
+                    <img class="img-responsive" src="{% static "img/03-editor.png" %}">
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-publisher" data-slide="prev">
+                <span class="icon-chevron-left center-chevron"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel-publisher" data-slide="next">
+                <span class="icon-chevron-right center-chevron"></span>
+            </a>
+        </div>
+        <h1 class="red text-center">{% trans "Join us!" %}</h1>
+
+        <h3 class="text-center">{% trans "Create your own publishing group or Join the Barddo publisher!" %}</h3>
+
+        <div class="row">
+            <div class="col-sm-6 col-lg-6">
+                <button id="joinBarddoButton"
+                        class="{% if barddo_publisher %} disabled {% endif %}btn btn-danger btn-lg btn-block pull-down50">
+                    {% if not barddo_publisher %}{% trans "Join the Barddo publisher" %}{% else %}{% trans "You are a Barddo editor!" %}{% endif %}
+                </button>
+            </div>
+            <div class="col-sm-6 col-lg-6">
+                <button id="createGroupButton" class="btn btn-primary btn-lg btn-block pull-down50">{% trans "Create a publishing group" %}</button>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block page_specific_javascript %}
+    {% compress js %}
+        <script src="{% static "js/uncompressed/bootstrap-tagsinput.js" %}"></script>
+        <script src="{% static "js/uncompressed/ace-elements.js" %}"></script>
+        <script src="{% static "js/jquery.form.min.js" %}"></script>
+        <script src="{% static "js/uncompressed/select2.js" %}"></script>
+        {% dajaxice_js_import 'nocsrf' %}
+    {% endcompress %}
+    <script type="text/javascript" src="{% static "dajax/jquery.dajax.core.js" %}"></script>
+{% endblock %}
+
+{% block bottom_page %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#joinBarddoButton").on("click", function () {
+                Shards.join.barddo(function (shard_id, shard_data, parent) {
+                    $(shard_id).remove();
+                    $(parent).append(shard_data);
+                    $(shard_id).modal('show');
+                });
+            });
+
+            $("#createGroupButton").on("click", function () {
+                Shards.create.group(function (shard_id, shard_data, parent) {
+                    $(shard_id).remove();
+                    $(parent).append(shard_data);
+                    $(shard_id).modal('show');
+                });
+            });
+        });
+
+    </script>
+{% endblock %}

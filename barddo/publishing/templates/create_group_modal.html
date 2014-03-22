@@ -1,0 +1,127 @@
+{% load i18n %}
+{% load staticfiles %}
+
+<div class="modal fade" id="createGroupModal" role="dialog" aria-labelledby="createGroupLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="createGroupLabel">{% trans "Create your own group!" %}</h4>
+            </div>
+            <div class="modal-body">
+                <form id="publishingGroupForm" class="form-horizontal" enctype="multipart/form-data" role="form">
+                    {% csrf_token %}
+                    <div class="profile-picture pull-left height-auto">
+                        <input id="id_avatar" type="file" name="avatar"/>
+                    </div>
+                    <div id="group-name-validation" class="margin-bottom-10 pull-left width-60 form-group has-info no-margin-left no-margin-right">
+                        <span class="block input-icon input-icon-right">
+                            <input class="form-control about_publisher" type="text" name="name" id="id_name" placeholder="{% trans "Group name" %}"/>
+                            <i class="icon-info-sign"></i>
+                        </span>
+                    </div>
+
+                    <div class="margin-bottom-10 pull-left width-60 form-group no-margin-right no-margin-left">
+                        <textarea class="form-control about_publisher" name="info" id="id_info" placeholder="{% trans "We are awesome!" %}"></textarea>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div class="form-group no-margin-right no-margin-left">
+                        <label for="id_country">{% trans "Country" %}:</label>
+                        <input id="id_country" class="width-100 select2-offscreen" name="country" type="hidden" tabindex="-1">
+                    </div>
+                    <label for="id_publishers">{% trans "Publishers" %}:</label>
+                    <select multiple id="id_publishers" name="publishers" data-role="tagsinput"></select>
+
+
+                    <div class="checkbox">
+                        <label>
+                            <input name="form-field-checkbox" type="checkbox" class="ace">
+                            <span class="lbl"> I agree with the <a href="#">Terms of use</a>!</span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Close" %}</button>
+                <button id="createBtn" type="button" class="btn disabled btn-primary">{% trans "Create group" %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static "js/barddo/pages/publishing.group.create.js" %}"></script>
+<script type="text/javascript">
+
+    var $createBtn = $("#createBtn");
+    $("input[type=checkbox]").on("click", function () {
+        if ($createBtn.hasClass("disabled")) {
+            $createBtn.removeClass("disabled");
+        } else {
+            $createBtn.addClass("disabled");
+        }
+    });
+
+    $.getJSON("{% url "publisher.countries" %}", function (countries) {
+        $('#id_country').select2({
+            allowClear: true,
+            placeholder: "{% trans "Select a country" %}",
+            data: countries
+        });
+    });
+
+
+    $('#id_publishers').tagsinput({
+        itemValue: 'id',
+        itemText: 'username',
+        freeInput: false,
+        typeahead: {
+            source: function (search) {
+                return $.getJSON("{% url "accounts.usernames" %}", {'q': search});
+            }
+        }
+    });
+
+    var $form = $('#publishingGroupForm');
+    var $file_input = $form.find('input[type=file]');
+
+    $file_input.ace_file_input({
+        style: 'well',
+        btn_choose: '{% trans "Choose an Avatar" %}',
+        btn_change: null,
+        droppable: false,
+        thumbnail: 'large',
+        before_change: function (files) {
+            var file = files[0];
+            var type = $.trim(file.type);
+            if ((type.length > 0 && !(/^image\/(jpe?g|png|gif)$/i).test(type)) || (type.length == 0 && !(/\.(jpe?g|png|gif)$/i).test(file.name))) {
+                gritterError('{% trans 'Error'%}', '{% trans 'Please select an image file!' %}', true);
+                return false;
+            }
+            if (file.size > 512000) {
+                gritterError('{% trans 'error' %}', '{% trans 'File size should not exceed 500Kb!' %}');
+                return false;
+            }
+            return true;
+        }
+    });
+
+    $createBtn.on("click", function () {
+        var options = {
+            success: Dajax.process,  // post-submit callback
+            url: "/dajaxice/publishing.register_publishing_group/",         // override for form's 'action' attribute
+            type: "post"
+        };
+
+        $('#publishingGroupForm').ajaxSubmit(options);
+    });
+
+    function callback_create_group_error(id, error) {
+        if (id == '#id_country') {
+            id = '#' + $(id).prev().attr('id');
+        }
+        $(id).closest('.form-group').addClass('has-error');
+        error_tooltip(id, error, 3000, 'bottom');
+    }
+
+</script>

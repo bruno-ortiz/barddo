@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 
-from accounts.views import logout_user, profile, editable_profile
+from accounts.views import logout_user, UsernamesAjaxView, profile, editable_profile
 
 
 __author__ = 'bruno'
@@ -8,6 +8,11 @@ __author__ = 'bruno'
 urlpatterns = patterns(
     '',
     url(r'', include('social_auth.urls')),
+
+    url(r'^user/usernames$',
+        UsernamesAjaxView.as_view(),
+        name='accounts.usernames'),
+
     url(r'logout$',
         logout_user,
         name='logout'),

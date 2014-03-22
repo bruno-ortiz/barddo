@@ -1,15 +1,21 @@
+import json
+
 from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
-from django.views.generic import View
 from django.views.generic.base import TemplateResponseMixin, ContextMixin
 from django.views.generic.detail import SingleObjectMixin
+from django.http import HttpResponseRedirect, HttpResponse
+from django.utils.html import escape
+from django.views.generic import View
 
 from .exceptions import UserNotProvided
-from core.models import BarddoUser
+from accounts.models import BarddoUser
+
+
+__author__ = 'bruno'
 
 
 def logout_user(request):
@@ -40,6 +46,7 @@ class UserContextMixin(ContextMixin):
 class ProfileAwareView(UserContextMixin, TemplateResponseMixin, View):
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**{'user': request.user})
+        context.update(kwargs)
         return super(ProfileAwareView, self).render_to_response(context)
 
 
@@ -81,3 +88,12 @@ class UserProfileView(LoginRequiredMixin, UserProfileMixin, TemplateResponseMixi
 
 profile = UserProfileView.as_view()
 editable_profile = UserProfileView.as_view(editable=True)
+
+
+class UsernamesAjaxView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        query_paramter = escape(request.GET['q'])
+        users = BarddoUser.objects.username_startswith(query_paramter).differs_from(request.user.id)[:6]
+        user_data = map(lambda x: {'id': x.id, 'username': x.username}, users)
+        json_data = json.dumps(user_data)
+        return HttpResponse(json_data, content_type='application/json')

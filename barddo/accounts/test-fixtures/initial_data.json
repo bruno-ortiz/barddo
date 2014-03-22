@@ -1,6 +1,6 @@
 [
     {
-        "model": "barddo_auth.BarddoUser",
+        "model": "accounts.BarddoUser",
         "pk": 100000,
         "fields": {
             "username": "test",
@@ -10,7 +10,7 @@
         }
     },
     {
-        "model": "barddo_auth.BarddoUserProfile",
+        "model": "accounts.BarddoUserProfile",
         "pk": 100000,
         "fields": {
             "user": 100000,
