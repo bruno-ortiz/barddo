@@ -279,3 +279,7 @@
 .dropzone a.dz-remove:hover {
     color: #000 !important;
 }
+
+.select2-container .select2-choice {
+    overflow: visible !important;
+}

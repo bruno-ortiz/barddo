@@ -94,6 +94,23 @@ class CollectionModalView(TemplateResponseMixin, View):
 
 render_collection_modal = CollectionModalView.as_view()
 
+# TODO: move it to a shards.py module
+@register_shard(name=u"modal.new.collection")
+class NewCollectionModalView(TemplateResponseMixin, View):
+    """
+        Render a simple collection modal. This is incomplete, another shard will be used to render a work detail.
+    """
+    template_name = '_new_collection_modal.html'
+
+    def post(self, request, *args, **kwargs):
+        context = {
+            'form': CollectionForm(),
+        }
+        return super(NewCollectionModalView, self).render_to_response(context)
+
+
+render_new_collection_modal = NewCollectionModalView.as_view()
+
 
 # TODO: move it to a shards.py module
 @register_shard(name=u"modal.work")

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{% static "css/uncompressed/barddo.dashboard.css" %}"/>
     <link rel="stylesheet" href="{% static "css/crop/imgareaselect-animated.css" %}"/>
     <link rel="stylesheet" href="{% static "css/dropzone.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/select2.css" %}"/>
 
 {% endblock %}
 
@@ -69,22 +70,24 @@
 {% block content %}
     <div class="page-content">
         {% if not collections %}
-            <div class="row" style="padding-top: 125px;">
+            <div class="row" style="padding-top: 25px;">
                 <div class="col-sm-12">
                     <div class="center">
-                        <h3 class="red"><i class="icon-frown icon-5x"></i></h3>
-
-                        <h3 class="red">Oh noes!</h3>
-                        Looks like you have not created any collections yet! But do not fear, this is something easy to
+                        <h3 class="red">Uh Oh!</h3>
+                        Looks like you don't have any <span class="red">collections</span> yet! But do not fear, this
+                        is something easy to
                         fix!
+                        <br/><br/>
+                        <img src="{% static "images/art/empty-face.png" %}"/>
                     </div>
                 </div>
             </div>
             <div class="row" style="padding-top: 50px;">
                 <div class="col-sm-6 col-sm-offset-3">
                     <a id="collection-wizard-link" href="#new-collection-wizard" data-toggle="modal"
-                       class="btn btn-success btn-block"><i class="icon-plus-sign-alt"></i> Create a new collection (and
-                        awesome), now! </a>
+                       class="btn btn-danger btn-block btn-lg"><i class="icon-plus"></i> Create an awesome new
+                        collection, now!
+                    </a>
                 </div>
             </div>
         {% else %}
@@ -171,9 +174,8 @@
         <script type="text/javascript" src="{% static "js/barddo/pages/collection.create.js" %}"></script>
 
         <script src="{% static "js/uncompressed/dropzone.js" %}"></script>
+        <script src="{% static "js/uncompressed/select2.js" %}"></script>
     {% endcompress %}
-    <script type="text/javascript" src="{% static "dajax/jquery.dajax.core.js" %}"></script>
-
     <script src="{% static "js/jquery.Jcrop.min.js" %}"></script>
     <script src="{% static "js/jquery.imgareaselect.min.js" %}"></script>
 
@@ -220,6 +222,7 @@
             $('#new-collection-wizard .modal-header').ace_wizard()
                     .on('finished', function (e) {
                         $('#new-collection-wizard').modal('hide');
+                        location.reload();
                     })
 
                     .on('stepclick', function (e) {

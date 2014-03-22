@@ -56,7 +56,7 @@ class Collection(models.Model):
 
     slug = models.SlugField(_('Slug'), max_length=250, db_index=True)
     status = models.SmallIntegerField(_('Status'), choices=STATUS_CHOICES, default=STATUS_ONGOING, db_index=True)
-    unit = models.ForeignKey(CollectionUnit)
+    unit = models.ForeignKey(CollectionUnit, null=False, blank=False)
 
     start_date = models.DateField(_('Start Date'), blank=False, null=False)
     end_date = models.DateField(_('End Date'), blank=True, null=True)

@@ -50,8 +50,8 @@ def register_a_collection(request, form):
         ajax.remove_css_class("#collection-form div.form-group", "has-error")
 
         for field, errors in form.errors.items():
-            ajax.script("error_tooltip('#id_%s', '%s');" % (field, "<br />".join(errors)))
-            ajax.script('$("#id_%s").closest("div.form-group").addClass("has-error")' % field)
+            ajax.script("error_tooltip('#collection-form #id_%s', '%s');" % (field, "<br />".join(errors)))
+            ajax.script('$("#collection-form #id_%s").closest("div.form-group").addClass("has-error")' % field)
 
     return ajax.json()
 

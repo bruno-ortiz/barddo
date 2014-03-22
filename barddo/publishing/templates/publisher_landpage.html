@@ -63,11 +63,13 @@
             <div class="col-sm-6 col-lg-6">
                 <button id="joinBarddoButton"
                         class="{% if barddo_publisher %} disabled {% endif %}btn btn-danger btn-lg btn-block pull-down50">
-                    {% if not barddo_publisher %}{% trans "Join the Barddo publisher" %}{% else %}{% trans "You are a Barddo editor!" %}{% endif %}
+                    {% if not barddo_publisher %}{% trans "Join the Barddo publisher" %}{% else %}
+                        {% trans "You are a Barddo editor!" %}{% endif %}
                 </button>
             </div>
             <div class="col-sm-6 col-lg-6">
-                <button id="createGroupButton" class="btn btn-primary btn-lg btn-block pull-down50">{% trans "Create a publishing group" %}</button>
+                <button id="createGroupButton"
+                        class="btn btn-primary btn-lg btn-block pull-down50">{% trans "Create a publishing group" %}</button>
             </div>
         </div>
     </div>
@@ -80,9 +82,7 @@
         <script src="{% static "js/uncompressed/ace-elements.js" %}"></script>
         <script src="{% static "js/jquery.form.min.js" %}"></script>
         <script src="{% static "js/uncompressed/select2.js" %}"></script>
-        {% dajaxice_js_import 'nocsrf' %}
     {% endcompress %}
-    <script type="text/javascript" src="{% static "dajax/jquery.dajax.core.js" %}"></script>
 {% endblock %}
 
 {% block bottom_page %}
