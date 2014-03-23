@@ -26,15 +26,17 @@ function callback_collection_name_is_avaliable() {
  * Method that check on the server if the collection provided is unique and give
  * the feedback to the user
  */
-$('#collection-name-validation').keyup(function () {
-    delay(function () {
-        var name = $('#collection-name-validation').val();
-        if (name.length > 2) {
-            Dajaxice.core.validate_unique_collection(Dajax.process, {
-                'collection_name': $('#collection-name-validation').val()
-            });
+function callback_collection_name_event() {
+    $('#collection-name-validation').on("keyup", function () {
+        delay(function () {
+            var name = $('#collection-name-validation').val();
+            if (name.length > 2) {
+                Dajaxice.core.validate_unique_collection(Dajax.process, {
+                    'collection_name': $('#collection-name-validation').val()
+                });
 
-            $('#collection-name-group i').removeClass('icon-info-sign').addClass('icon-spinner icon-spin');
-        }
-    }, 1000);
-});
+                $('#collection-name-group i').removeClass('icon-info-sign').addClass('icon-spinner icon-spin');
+            }
+        }, 1000);
+    });
+}

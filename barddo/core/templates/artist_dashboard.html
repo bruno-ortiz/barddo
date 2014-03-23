@@ -36,7 +36,7 @@
             </li>
 
             <li>
-                <a href="#new-collection-wizard" data-toggle="modal">
+                <a href="#new-collection-wizard">
                     <i class="icon-book"></i>
                     <span class="menu-text"> Create a Collection</span>
                 </a>
@@ -206,11 +206,7 @@
         }
 
         function init_wizard() {
-            $("#collection-name-group").removeClass("has-error has-success").addClass("has-info");
-            $("#collection-next").html('Next <i class="icon-arrow-right icon-on-right"></i>');
             $("#collection-next").prop("disabled", true);
-            $("#collection-name-validation").val('');
-            $("#collection-name-group i").removeClass().addClass('icon-info-sign');
             setTimeout(function () {
                 $("#collection-name-validation").focus();
             }, 500);
@@ -218,52 +214,61 @@
         }
 
         jQuery(function ($) {
-            // TODO: change text to internationalized
-            $('#new-collection-wizard .modal-header').ace_wizard()
-                    .on('finished', function (e) {
-                        $('#new-collection-wizard').modal('hide');
-                        location.reload();
-                    })
+            $("a[href='#new-collection-wizard']").on("click", function () {
 
-                    .on('stepclick', function (e) {
-                        return false; //prevent clicking on steps
-                    })
+                Shards.modal.new.collection(function (shard_id, shard_data, parent) {
+                    $(shard_id).remove();
+                    $(parent).append(shard_data);
 
-                    .on('change', function (e, info) {
-                        if (info.step == 1) {
-                            $("#collection-next").html("<i class='icon-star'></i> Create Now!");
-                        }
+                    $(shard_id + ' .modal-header').ace_wizard()
+                            .on('finished', function (e) {
+                                $('#new-collection-wizard').modal('hide');
+                                location.reload();
+                            })
 
-                        if (info.step == 2) {
-                            if (info.direction == "next") {
-                                if (formValid) {
-                                    $("#collection-next").html("<i class='icon-heart'></i> Thank you!");
-                                    $("#collection-prev").hide();
-                                } else {
-                                    Dajaxice.core.register_a_collection(Dajax.process, {
-                                        'form': $('#collection-form').serialize(true)
-                                    });
+                            .on('stepclick', function (e) {
+                                return false; //prevent clicking on steps
+                            })
+
+                            .on('change', function (e, info) {
+                                if (info.step == 1) {
+                                    $("#collection-next").html("<i class='icon-star'></i> Create Now!");
                                 }
 
-                                return formValid;
-                            } else {
-                                init_wizard();
-                            }
-                        }
-                    });
+                                if (info.step == 2) {
+                                    if (info.direction == "next") {
+                                        if (formValid) {
+                                            $("#collection-next").html("<i class='icon-heart'></i> Thank you!");
+                                            $("#collection-prev").hide();
+                                        } else {
+                                            Dajaxice.core.register_a_collection(Dajax.process, {
+                                                'form': $('#collection-form').serialize(true)
+                                            });
+                                        }
+
+                                        return formValid;
+                                    } else {
+                                        init_wizard();
+                                    }
+                                }
+                            });
+
+                    $(shard_id).modal("show");
+
+                    callback_collection_name_event();
+
+                    init_wizard();
+                });
+            });
+
+            // TODO: change text to internationalized
 
 
             $('#new-work-button').on('click', function () {
                 $('#new-collection-wizard').modal('hide');
             });
 
-            $('#collection-wizard-link').on('click', function () {
-                wizardMoveFirst($('#new-collection-wizard .modal-header'));
-            });
 
-            $('#new-collection-wizard .wizard-actions .btn[data-dismiss=modal]').removeAttr('disabled');
-
-            init_wizard();
             //ROLL ON HOVER
             $(function () {
                 $(".roll").css("opacity", "0");
@@ -277,18 +282,6 @@
                                 opacity: 0
                             }, "slow");
                         });
-            });
-
-            $('.sparkline').each(function () {
-                var $box = $(this).closest('.infobox');
-                var barColor = !$box.hasClass('infobox-dark') ? $box.css('color') : '#FFF';
-                $(this).sparkline('html', {tagValuesAttribute: 'data-values', type: 'bar', barColor: barColor, chartRangeMin: $(this).data('min') || 0});
-            });
-
-            $('.dd').nestable();
-
-            $('.dd-handle a').on('mousedown', function (e) {
-                e.stopPropagation();
             });
 
             $('[data-rel="tooltip"]').tooltip();
@@ -333,7 +326,6 @@
         }
 
         jQuery(function ($) {
-
             $('#new-work-wizard .modal-header').ace_wizard()
                     .on('finished', function (e) {
                         $('#new-work-wizard').modal('hide');

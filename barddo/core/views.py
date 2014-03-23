@@ -4,12 +4,14 @@ import os
 from django.views.generic import View
 from django.views.generic.base import TemplateResponseMixin
 from django.http import HttpResponse
+from django.shortcuts import redirect
 
 from shards.decorators import register_shard
 from .forms import CollectionForm, WorkForm
 from .models import Collection, Work
 from .exceptions import InvalidFileUploadError, ChangeOnObjectNotOwnedError
 from accounts.views import ProfileAwareView, LoginRequiredMixin
+from publishing.views import publisher_landpage
 
 
 class IndexView(ProfileAwareView):
@@ -44,6 +46,15 @@ class ArtistDashboardView(LoginRequiredMixin, ProfileAwareView):
         }
         context.update(kwargs)
         return super(ArtistDashboardView, self).get_context_data(**context)
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_publisher():
+            return redirect(publisher_landpage)
+
+        context = self.get_context_data(**{'user': request.user})
+        context.update(kwargs)
+
+        return super(ArtistDashboardView, self).render_to_response(context)
 
 
 artist_dashboard = ArtistDashboardView.as_view()
