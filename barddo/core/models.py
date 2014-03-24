@@ -30,7 +30,8 @@ def get_collection_cover_path(instance, filename):
     """
         Default work cover path
     """
-    return os.path.join('covers', 'collection', md5(filename).hexdigest())
+    _, ext = os.path.splitext(filename)
+    return os.path.join('covers', 'collection', "{0}{1}".format(md5(filename).hexdigest(), ext))
 
 
 class Collection(models.Model):
@@ -88,7 +89,9 @@ def get_work_cover_path(instance, filename):
     """
         Default work cover path
     """
-    return os.path.join('covers', 'works', md5(filename).hexdigest())
+    _, ext = os.path.splitext(filename)
+    return os.path.join('covers', 'works',
+                        "{0}{1}".format(md5(filename).hexdigest(), ext))
 
 
 class Work(models.Model):
@@ -185,7 +188,7 @@ class Work(models.Model):
         return image_files
 
     class Meta:
-        unique_together = (("collection", "unit_count"), ("collection", "title"))
+        unique_together = (("collection", "unit_count"))
 
         # TODO: work tags
         # TODO: work categories

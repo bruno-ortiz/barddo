@@ -1,5 +1,6 @@
 from django.forms import ModelForm, DateTimeField, ImageField, ModelChoiceField
 from django.conf import settings
+from django.utils.html import escape
 
 from .models import Collection, Work, CollectionUnit
 
@@ -22,6 +23,20 @@ class WorkForm(ModelForm):
     Simple work form that don't require the image. That will be validated by an AJAX callback in the application.
     """
     cover = ImageField(required=False)
+
+    def clean(self):
+        cleaned_data = super(WorkForm, self).clean()
+        collection = cleaned_data.get("collection")
+        unit_count = cleaned_data.get("unit_count")
+
+        try:
+            Work.objects.get(collection_id=collection.id, unit_count=unit_count)
+            # TODO: Change this to a proper validation to a specific field on django 1.7
+            self._errors["unit_count"] = [escape("Already exists"), ]
+        except Work.DoesNotExist:
+            pass
+
+        return cleaned_data
 
     class Meta:
         model = Work

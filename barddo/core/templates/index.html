@@ -148,13 +148,13 @@
                 var _this = this;
 
                 if (!$(".popover").length) {
-                    $(".vote").popover("show");
+                    $(".vote", _this).popover("show");
 
                     $(".popover").on("mouseleave", function () {
                         setTimeout(function () {
                             if (!$(".boxcontainer:hover").length) {
-                                $(".vote").popover('hide');
-                                $(".roll").css("opacity", 0);
+                                $(".vote", _this).popover('hide');
+                                $(".roll", _this).css("opacity", 0);
                             }
                         }, 100);
 
@@ -169,8 +169,8 @@
                 setTimeout(function () {
                     if (!$(".popover:hover").length) {
                         onPopupHover = false;
-                        $(".vote").popover("hide");
-                        $(".roll").css("opacity", 0);
+                        $(".vote", _this).popover("hide");
+                        $(".roll", _this).css("opacity", 0);
                     }
                 }, 100);
             });

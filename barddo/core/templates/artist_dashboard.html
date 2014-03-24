@@ -122,10 +122,9 @@
 
                                                     <div class="roll">
                                                         <div class="wrapcaption dashboard-caption">
-                                                            <a href="#new-work-wizard" data-toggle="modal"
+                                                            <a href="#new-work-wizard"
                                                                data-id="{{ collection.id }}"
-                                                               class="btn btn-block btn-info"
-                                                               onclick="$('#{{ work_form.collection.auto_id }}').val($(this).attr('data-id'));"><i
+                                                               class="btn btn-block btn-info"><i
                                                                     class="icon-plus-sign"></i> Add a Work</a>
 
 
@@ -156,16 +155,12 @@
             </div>
         {% endif %}
     </div>
-
-    {% include "_new_work_modal.html" %}
-
-    {% include "_new_collection_modal.html" %}
-
 {% endblock %}
 
 {% block page_specific_javascript %}
     {% compress js %}
         <script src="{% static "js/fuelux/fuelux.wizard.min.js" %}"></script>
+        <script src="{% static "js/fuelux/fuelux.spinner.min.js" %}"></script>
         <script src="{% static "js/jquery.validate.min.js" %}"></script>
         <script src="{% static "js/date-time/bootstrap-datepicker.min.js" %}"></script>
         <script src="{% static "js/bootstrap-tag.min.js" %}"></script>
@@ -326,85 +321,105 @@
         }
 
         jQuery(function ($) {
-            $('#new-work-wizard .modal-header').ace_wizard()
-                    .on('finished', function (e) {
-                        $('#new-work-wizard').modal('hide');
-                    })
+            $('a[href="#new-work-wizard"][data-id]').on("click", function () {
+                var collection_id = $(this).attr("data-id");
 
-                    .on('stepclick', function (e) {
-                        return false; //prevent clicking on steps
-                    })
+                Shards.modal.new.work(function (shard_id, shard_data, parent) {
+                    $(shard_id).remove();
+                    $(parent).append(shard_data);
 
-                    .on('change', function (e, info) {
 
-                        if (info.step == 3) {
-                            if (info.direction == "next") {
-                                $("#form-work-next").html("<i class='icon-heart'></i> I'm done!");
-                            }
-                        }
+                    $(shard_id + " #id_collection").val(collection_id);
 
-                        if (info.step == 2) {
-                            if (info.direction == "next") {
-                                if (workFormCreate) {
-                                    window.selectedArea.cancelSelection();
-                                    $("#form-work-next").html("<i class='icon-upload'></i> Upload My Files!");
-                                    $("#form-work-prev").hide();
-                                } else {
-                                    var crop = window.selectedArea.getSelection();
+                    $(shard_id + ' .modal-header').ace_wizard()
+                            .on('finished', function (e) {
+                                $('#new-work-wizard').modal('hide');
+                            })
 
-                                    var options = {
-                                        //target:        '#output2',   // target element(s) to be updated with server response
-                                        //beforeSubmit:  showRequest,  // pre-submit callback
-                                        success: Dajax.process,  // post-submit callback
+                            .on('stepclick', function (e) {
+                                return false; //prevent clicking on steps
+                            })
 
-                                        // other available options:
-                                        url: "/dajaxice/core.register_a_work/",         // override for form's 'action' attribute
-                                        type: "post",        // 'get' or 'post', override for form's 'method' attribute
-                                        data: { 'crop_x': crop.x1,
-                                            'crop_y': crop.y1,
-                                            'crop_w': crop.x2,
-                                            'crop_h': crop.y2
+                            .on('change', function (e, info) {
+
+                                if (info.step == 3) {
+                                    if (info.direction == "next") {
+                                        $("#form-work-next").html("<i class='icon-heart'></i> I'm done!");
+                                    }
+                                }
+
+                                if (info.step == 2) {
+                                    if (info.direction == "next") {
+                                        if (workFormCreate) {
+                                            window.selectedArea.cancelSelection();
+                                            $("#form-work-next").html("<i class='icon-upload'></i> Upload My Files!");
+                                            $("#form-work-prev").hide();
+                                        } else {
+                                            var crop = window.selectedArea.getSelection(true);
+
+                                            var options = {
+                                                //target:        '#output2',   // target element(s) to be updated with server response
+                                                //beforeSubmit:  showRequest,  // pre-submit callback
+                                                success: Dajax.process,  // post-submit callback
+
+                                                // other available options:
+                                                url: "/dajaxice/core.register_a_work/",         // override for form's 'action' attribute
+                                                type: "post",        // 'get' or 'post', override for form's 'method' attribute
+                                                data: {
+                                                    'crop_x': crop.x1,
+                                                    'crop_y': crop.y1,
+                                                    'crop_w': crop.x2,
+                                                    'crop_h': crop.y2,
+                                                    'width': $('#current-image').width(),
+                                                    'height': $('#current-image').height()
+                                                }
+
+                                                //dataType:  null        // 'xml', 'script', or 'json' (expected server response type)
+                                                //clearForm: true        // clear all form fields after successful submit
+                                                //resetForm: true        // reset the form after successful submit
+
+                                                // $.ajax options can be used here too, for example:
+                                                //timeout:   3000
+                                            };
+
+
+                                            $('#work-form').ajaxSubmit(options);
+                                        }
+                                        return workFormCreate;
+                                    } else {
+                                        $("#form-work-next").html('Next <i class="icon-arrow-right icon-on-right"></i>').prop("disabled", false);
+                                    }
+
+                                    if (window.selectedArea) {
+                                        window.selectedArea.cancelSelection();
+                                    }
+                                }
+
+                                if (info.step == 1) {
+                                    if (info.direction == "next") {
+                                        if (workFormValid) {
+                                            $("#form-work-next").html("<i class='icon-star'></i> Select a Cover!").prop("disabled", true);
+                                        } else {
+                                            Dajaxice.core.validate_work_information(Dajax.process, {
+                                                'form': $('#work-form').serialize(true)
+                                            });
                                         }
 
-                                        //dataType:  null        // 'xml', 'script', or 'json' (expected server response type)
-                                        //clearForm: true        // clear all form fields after successful submit
-                                        //resetForm: true        // reset the form after successful submit
-
-                                        // $.ajax options can be used here too, for example:
-                                        //timeout:   3000
-                                    };
-
-
-                                    $('#work-form').ajaxSubmit(options);
+                                        return workFormValid;
+                                    } else {
+                                        init_work_wizard();
+                                    }
                                 }
-                                return workFormCreate;
-                            } else {
-                                $("#form-work-next").html('Next <i class="icon-arrow-right icon-on-right"></i>').prop("disabled", false);
-                            }
+                            });
 
-                            if (window.selectedArea) {
-                                window.selectedArea.cancelSelection();
-                            }
-                        }
+                    $(shard_id).modal({backdrop: "static", show: true});
 
-                        if (info.step == 1) {
-                            if (info.direction == "next") {
-                                if (workFormValid) {
-                                    $("#form-work-next").html("<i class='icon-star'></i> Select a Cover!").prop("disabled", true);
-                                } else {
-                                    Dajaxice.core.validate_work_information(Dajax.process, {
-                                        'form': $('#work-form').serialize(true)
-                                    });
-                                }
+                    init_work_wizard();
+                }, {"collection_id": collection_id});
 
-                                return workFormValid;
-                            } else {
-                                init_work_wizard();
-                            }
-                        }
-                    });
 
-            init_work_wizard();
+            });
+
         });
 
         $('#new-work-wizard').on('hidden.bs.modal', function (e) {

@@ -5,6 +5,7 @@ from django.views.generic import View
 from django.views.generic.base import TemplateResponseMixin
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from django.db.models import Max
 
 from shards.decorators import register_shard
 from .forms import CollectionForm, WorkForm
@@ -40,8 +41,6 @@ class ArtistDashboardView(LoginRequiredMixin, ProfileAwareView):
         collections = Collection.objects.filter(author_id=kwargs['user'].id)
 
         context = {
-            'form': CollectionForm(),
-            'work_form': WorkForm(),
             'collections': collections
         }
         context.update(kwargs)
@@ -121,6 +120,31 @@ class NewCollectionModalView(TemplateResponseMixin, View):
 
 
 render_new_collection_modal = NewCollectionModalView.as_view()
+
+
+@register_shard(name=u"modal.new.work")
+class NewWorkModalView(TemplateResponseMixin, View):
+    """
+        Render a simple collection modal. This is incomplete, another shard will be used to render a work detail.
+    """
+    template_name = '_new_work_modal.html'
+
+    def post(self, request, collection_id, *args, **kwargs):
+        max_unit = Work.objects.filter(collection_id=collection_id).aggregate(Max("unit_count"))['unit_count__max']
+
+        if max_unit == None:
+            max_unit = 1
+        else:
+            max_unit += 1
+
+        context = {
+            'next_unit': max_unit,
+            'work_form': WorkForm(),
+        }
+        return super(NewWorkModalView, self).render_to_response(context)
+
+
+render_new_work_modal = NewWorkModalView.as_view()
 
 
 # TODO: move it to a shards.py module

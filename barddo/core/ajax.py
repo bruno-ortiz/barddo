@@ -98,8 +98,17 @@ def register_a_work(request):
         new_work.total_pages = 0
         new_work.save()
 
-        crop_image(new_work, -int(request.POST["crop_x"]), -int(request.POST["crop_y"]),
-                   int(request.POST["crop_w"]), int(request.POST["crop_h"]))
+        x_ratio = new_work.cover.width / float(request.POST["width"])
+        y_ratio = new_work.cover.height / float(request.POST["height"])
+
+        print x_ratio, y_ratio
+
+        cx, cy = -float(request.POST["crop_x"]) * x_ratio, -float(request.POST["crop_y"]) * y_ratio
+        cw, ch = float(request.POST["crop_w"]) * x_ratio, float(request.POST["crop_h"]) * y_ratio
+
+        print cx, cy, cw, ch
+
+        crop_image(new_work, int(cx), int(cy), int(cw), int(ch))
 
         # TODO: only set as collection cover when user opted for it
         new_work.collection.cover = new_work.cover
