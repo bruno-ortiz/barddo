@@ -219,6 +219,7 @@ LOCAL_APPS = (
     'accounts',
     'feedback',
     'publishing',
+    'rating',
 
 )
 
