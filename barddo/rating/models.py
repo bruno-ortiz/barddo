@@ -6,48 +6,46 @@ from django.db import models
 from django.db.models.manager import Manager
 
 from accounts.models import BarddoUser
-from core.models import Work
+from core.models import Collection
 
 
 __author__ = 'jovial'
 
 
 class RatingManager(Manager):
-    def like_count(self, work):
-        return self.filter(work=work, like=True).count()
+    def like_count(self, collection):
+        return self.filter(collection=collection, like=True).count()
 
 
 class Rating(models.Model):
     class Meta:
-        unique_together = ('user', 'work')
+        unique_together = ('user', 'collection')
 
     user = models.ForeignKey(BarddoUser, null=False)
-    work = models.ForeignKey(Work, null=False, related_name='like')
+    collection = models.ForeignKey(Collection, null=False, related_name='like')
     date = models.DateTimeField(null=False)
     like = models.BooleanField(null=False)
 
     objects = RatingManager()
 
 
-def user_likes(user, work):
-    rating = Rating.objects.filter(user=user, work=work)
-    if rating:
+def user_likes(user, collection):
+    try:
+        rating = Rating.objects.get(user=user, collection=collection)
         return rating.like
-    else:
+    except Rating.DoesNotExist:
         return False
 
 
-def add_like(user, work):
-    rating = Rating.objects.filter(user=user, work=work)
-    if rating:
+def add_like(user, collection):
+    try:
+        rating = Rating.objects.get(user=user, collection=collection)
         rating.like = True
-    else:
-        rating = Rating(user=user, work=work,
+    except Rating.DoesNotExist:
+        rating = Rating(user=user, collection=collection,
                         date=datetime.datetime.now(), like=True)
     rating.save()
 
 
-def remove_like(user, work):
-    rating = Rating.objects.filter(user=user, work=work)
-    if rating:
-        rating.delete()
+def remove_like(user, collection):
+    Rating.objects.filter(user=user, collection=collection).delete()
