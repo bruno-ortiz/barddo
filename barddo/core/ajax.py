@@ -106,7 +106,7 @@ def register_a_work(request):
         cx, cy = -float(request.POST["crop_x"]) * x_ratio, -float(request.POST["crop_y"]) * y_ratio
         cw, ch = float(request.POST["crop_w"]) * x_ratio, float(request.POST["crop_h"]) * y_ratio
 
-        print cx, cy, cw, ch
+        print cx, cy, cw, ch, request.POST["crop_w"], request.POST["crop_h"]
 
         crop_image(new_work, int(cx), int(cy), int(cw), int(ch))
 
