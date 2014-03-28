@@ -7,6 +7,7 @@ from django.views.generic.base import TemplateResponseMixin
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.db.models import Max, Count
+from rating.models import Rating
 
 from shards.decorators import register_shard
 from .forms import CollectionForm, WorkForm
@@ -42,6 +43,10 @@ class IndexView(ProfileAwareView):
     def get_rising_works(self, user):
         limit = datetime.datetime.now() + datetime.timedelta(days=-7)
 
+        Work.objects.select_related("collection").annotate(total_likes=Count("like__like")).extra(select={
+                "liked": Rating.objects.filter(user=1000, like=True).annotate(Count('like')).values('like__count').query})\
+            .filter(like__date__gte=limit).order_by("-total_likes")  # EXAMPLE
+
         if user.is_authenticated():
             return Work.objects.select_related("collection").annotate(total_likes=Count("like__like")).extra(select={
                 "liked": "select count(*) = 1 from rating_rating where rating_rating.work_id = core_work.id and rating_rating.user_id = {}".format(
@@ -49,7 +54,7 @@ class IndexView(ProfileAwareView):
             }).filter(like__date__gte=limit).order_by("-total_likes")
         else:
             return Work.objects.select_related("collection").annotate(total_likes=Count("like__like")).extra(select={
-                "liked": "select 0=1"
+                "liked": False
             }).filter(like__date__gte=limit).order_by("-total_likes")
 
 
