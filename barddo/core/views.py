@@ -1,5 +1,6 @@
 import json
 import os
+import datetime
 
 from django.views.generic import View
 from django.views.generic.base import TemplateResponseMixin
@@ -21,12 +22,35 @@ class IndexView(ProfileAwareView):
     def get(self, request, *args, **kwargs):
         next_url = request.GET.get('next', '')
 
-        works = Work.objects.select_related("collection").annotate(total_likes=Count("like__like")).extra(select={
-            "liked": "select count(*) = 1 from rating_rating where rating_rating.work_id = core_work.id and rating_rating.user_id = 100001"
-        }).order_by("-total_likes")
+        new_works = self.get_new_works(request.user)
+        rising_works = self.get_rising_works(request.user)
 
-        context = self.get_context_data(**{'user': request.user, "next_url": next_url, "works": works})
+        context = self.get_context_data(**{'user': request.user, "next_url": next_url, "new_works": new_works, "rising_works": rising_works})
         return super(IndexView, self).render_to_response(context)
+
+    def get_new_works(self, user):
+        if user.is_authenticated():
+            return Work.objects.select_related("collection").annotate(total_likes=Count("like__like")).extra(select={
+                "liked": "select count(*) = 1 from rating_rating where rating_rating.work_id = core_work.id and rating_rating.user_id = {}".format(
+                    user.id)
+            }).order_by("-total_likes")
+        else:
+            return Work.objects.select_related("collection").annotate(total_likes=Count("like__like")).extra(select={
+                "liked": "select 0=1"
+            }).order_by("-total_likes")
+
+    def get_rising_works(self, user):
+        limit = datetime.datetime.now() + datetime.timedelta(days=-7)
+
+        if user.is_authenticated():
+            return Work.objects.select_related("collection").annotate(total_likes=Count("like__like")).extra(select={
+                "liked": "select count(*) = 1 from rating_rating where rating_rating.work_id = core_work.id and rating_rating.user_id = {}".format(
+                    user.id)
+            }).filter(like__date__gte=limit).order_by("-total_likes")
+        else:
+            return Work.objects.select_related("collection").annotate(total_likes=Count("like__like")).extra(select={
+                "liked": "select 0=1"
+            }).filter(like__date__gte=limit).order_by("-total_likes")
 
 
 index = IndexView.as_view()
