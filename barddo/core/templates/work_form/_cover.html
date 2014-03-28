@@ -14,9 +14,10 @@
             var preview = $("#upload-preview");
 
             $('#' + '{{ work_form.cover.auto_id }}').ace_file_input({
-                no_file: 'No Cover Yey ...',
+                no_file: 'Select your work cover...',
                 btn_choose: 'Choose',
                 btn_change: 'Change',
+                icon_remove: "",
                 droppable: false,
                 onchange: null,
                 thumbnail: false, //| true | large
@@ -32,23 +33,34 @@
                 var file = input[0].files[0];
                 var reader = new FileReader();
                 reader.onload = function (e) {
+                    if (window.selectedArea) {
+                        window.selectedArea.cancelSelection();
+                    }
+
                     $("#current-image").remove();
                     image_base64 = e.target.result;
                     preview.append("<img id='current-image' src='" + image_base64 + "'/><br/>");
-                    setTimeout(function () {
-                        window.selectedArea = $('#current-image').imgAreaSelect({
-                            x1: 0, y1: 0, x2: 261, y2: 300,
-                            handles: true,
-                            aspectRatio: '261:300',
-                            show: true,
-                            persistent: true,
-                            instance: true,
-                            parent: "#crop-container",
-                            zIndex: 9999,
-                            minWidth: 261,
-                            minHeight: 300
-                        });
-                    }, 500);
+                    var selected_image = $("#current-image");
+                    if (selected_image.width() < 261 || selected_image.height() < 300) {
+                        $("#form-work-next").html("<i class='icon-star'></i> Select a Cover!").prop("disabled", true);
+                        $("#current-image").remove()
+                        alert("Sorry, but the minimal size accepted is 261x300! Please, select another image!");
+                    } else {
+                        setTimeout(function () {
+                            window.selectedArea = $('#current-image').imgAreaSelect({
+                                x1: 0, y1: 0, x2: 261, y2: 300,
+                                handles: true,
+                                aspectRatio: '261:300',
+                                show: true,
+                                persistent: true,
+                                instance: true,
+                                parent: "#crop-container",
+                                zIndex: 9999,
+                                minWidth: 261,
+                                minHeight: 300
+                            });
+                        }, 500);
+                    }
                 };
                 reader.readAsDataURL(file);
             });

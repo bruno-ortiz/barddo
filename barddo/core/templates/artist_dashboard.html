@@ -334,6 +334,7 @@
                     $(shard_id + ' .modal-header').ace_wizard()
                             .on('finished', function (e) {
                                 $('#new-work-wizard').modal('hide');
+                                location.reload();
                             })
 
                             .on('stepclick', function (e) {
@@ -412,22 +413,13 @@
                                 }
                             });
 
-                    $(shard_id).modal({backdrop: "static", show: true});
 
+                    sortable_image_upload('#new_work_upload', "#files-preview");
+                    $(shard_id).modal({backdrop: "static", show: true});
                     init_work_wizard();
                 }, {"collection_id": collection_id});
-
-
             });
-
         });
-
-        $('#new-work-wizard').on('hidden.bs.modal', function (e) {
-            if (window.selectedArea) {
-                window.selectedArea.cancelSelection();
-            }
-        });
-
 
     </script>
 {% endblock %}
