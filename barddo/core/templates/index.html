@@ -38,9 +38,16 @@
 
                                     <div class="roll">
                                         <div class="wrapcaption">
-                                            <a class="vote" data-id="{{ work.id }}" href="projectdetail.html">
-                                                <i class="icon-heart-empty captionicons"></i>
-                                            </a>
+                                            {% if work.liked %}
+                                                <a class="vote liked" data-id="{{ work.id }}" href="projectdetail.html">
+
+                                                    <i class="icon-heart captionicons"></i>
+                                                </a>
+                                            {% else %}
+                                                <a class="vote" data-id="{{ work.id }}" href="projectdetail.html">
+                                                    <i class="icon-heart-empty captionicons"></i>
+                                                </a>
+                                            {% endif %}
                                         </div>
                                     </div>
 
@@ -73,7 +80,7 @@
                                                 <div class="col-sm-1">
                                                     <div class="popup-likes pull-right center">
                                                         <i class="icon-heart"></i><br/>
-                                                        0
+                                                        {{ work.total_likes }}
                                                     </div>
                                                 </div>
                                             </div>

@@ -5,7 +5,7 @@ from django.views.generic import View
 from django.views.generic.base import TemplateResponseMixin
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from django.db.models import Max
+from django.db.models import Max, Count
 
 from shards.decorators import register_shard
 from .forms import CollectionForm, WorkForm
@@ -21,7 +21,9 @@ class IndexView(ProfileAwareView):
     def get(self, request, *args, **kwargs):
         next_url = request.GET.get('next', '')
 
-        works = Work.objects.select_related("collection").all()
+        works = Work.objects.select_related("collection").annotate(total_likes=Count("like__like")).extra(select={
+            "liked": "select count(*) = 1 from rating_rating where rating_rating.work_id = core_work.id and rating_rating.user_id = 100001"
+        }).order_by("-total_likes")
 
         context = self.get_context_data(**{'user': request.user, "next_url": next_url, "works": works})
         return super(IndexView, self).render_to_response(context)
