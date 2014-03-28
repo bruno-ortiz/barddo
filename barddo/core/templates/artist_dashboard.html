@@ -368,8 +368,8 @@
                                                 data: {
                                                     'crop_x': crop.x1,
                                                     'crop_y': crop.y1,
-                                                    'crop_w': crop.x2,
-                                                    'crop_h': crop.y2,
+                                                    'crop_w': crop.x2 - crop.x1,
+                                                    'crop_h': crop.y2 - crop.y1,
                                                     'width': $('#current-image').width(),
                                                     'height': $('#current-image').height()
                                                 }

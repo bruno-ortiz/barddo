@@ -34,21 +34,21 @@
                 reader.onload = function (e) {
                     $("#current-image").remove();
                     image_base64 = e.target.result;
-                    //preview.html('');
                     preview.append("<img id='current-image' src='" + image_base64 + "'/><br/>");
-                    window.selectedArea = $('#current-image').imgAreaSelect({
-                        x1: 0, y1: 0, x2: 261, y2: 300,
-                        handles: true,
-                        aspectRatio: '261:300',
-                        show: true,
-                        persistent: true,
-                        instance: true,
-                        parent: "#crop-container",
-                        zIndex: 9999,
-                        minWidth: 261,
-                        minHeight: 300
-                    });
-
+                    setTimeout(function () {
+                        window.selectedArea = $('#current-image').imgAreaSelect({
+                            x1: 0, y1: 0, x2: 261, y2: 300,
+                            handles: true,
+                            aspectRatio: '261:300',
+                            show: true,
+                            persistent: true,
+                            instance: true,
+                            parent: "#crop-container",
+                            zIndex: 9999,
+                            minWidth: 261,
+                            minHeight: 300
+                        });
+                    }, 500);
                 };
                 reader.readAsDataURL(file);
             });
