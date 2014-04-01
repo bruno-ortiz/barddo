@@ -4,12 +4,46 @@ from hashlib import md5
 import time
 
 from django.db import models
+from django.db.models import Manager, Count
+from django.db.models.query import QuerySet
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
+
 from django.conf import settings
 from django.core.files.images import ImageFile
 
 from accounts.models import BarddoUser
+from rating.models import Rating
+
+
+class RatingManager(Manager):
+    def get_queryset(self):
+        return RatingQuerySet(self.model, using=self._db)
+
+    def total_likes(self):
+        return self.get_queryset().total_likes()
+
+    def liked_by(self, user):
+        return self.get_queryset().liked_by(user)
+
+    def liked_after(self, date):
+        return self.liked_after(date)
+
+
+class RatingQuerySet(QuerySet):
+    def total_likes(self):
+        return self.annotate(total_likes=Count("like__like")).filter(like=True)
+
+    def liked_by(self, user=None):
+        if user:
+            sub_query = Rating.objects.filter(user=user.id, like=True).annotate(Count('like')).values('like__count').query
+        else:
+            sub_query = False
+
+        return self.extra(select={"liked": sub_query})
+
+    def liked_after(self, date):
+        return self.filter(like__date__gte=date)
 
 
 class CollectionUnit(models.Model):
@@ -64,6 +98,8 @@ class Collection(models.Model):
 
     author = models.ForeignKey(BarddoUser, null=False)
     cover = models.ImageField(_('Cover Art'), upload_to=get_collection_cover_path, blank=True, null=True)
+
+    objects = RatingManager()
 
     def get_total_works(self):
         return Work.objects.filter(collection__id=self.id).count()
@@ -126,6 +162,9 @@ class Work(models.Model):
 
     unit_count = models.IntegerField(_('Item Number'))
     total_pages = models.SmallIntegerField(_('Total Pages'))
+    publish_date = models.DateTimeField(_('Publish Date'))
+
+    objects = RatingManager()
 
     def is_owner(self, user):
         """
@@ -193,3 +232,4 @@ class Work(models.Model):
         # TODO: work tags
         # TODO: work categories
         # TODO: store files by convention
+

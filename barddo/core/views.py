@@ -6,8 +6,7 @@ from django.views.generic import View
 from django.views.generic.base import TemplateResponseMixin
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from django.db.models import Max, Count
-from rating.models import Rating
+from django.db.models import Max
 
 from shards.decorators import register_shard
 from .forms import CollectionForm, WorkForm
@@ -18,44 +17,38 @@ from publishing.views import publisher_landpage
 
 
 class IndexView(ProfileAwareView):
+    LAST_WEEK = -7
+
     template_name = 'index.html'
 
     def get(self, request, *args, **kwargs):
         next_url = request.GET.get('next', '')
 
-        new_works = self.get_new_works(request.user)
-        rising_works = self.get_rising_works(request.user)
+        barddo_user = self.get_barddo_user(request.user)
+
+        new_works = self.get_new_works(barddo_user)
+        rising_works = self.get_rising_works(barddo_user)
 
         context = self.get_context_data(**{'user': request.user, "next_url": next_url, "new_works": new_works, "rising_works": rising_works})
         return super(IndexView, self).render_to_response(context)
 
     def get_new_works(self, user):
-        if user.is_authenticated():
-            return Work.objects.select_related("collection").annotate(total_likes=Count("like__like")).extra(select={
-                "liked": "select count(*) = 1 from rating_rating where rating_rating.work_id = core_work.id and rating_rating.user_id = {}".format(
-                    user.id)
-            }).order_by("-total_likes")
-        else:
-            return Work.objects.select_related("collection").annotate(total_likes=Count("like__like")).extra(select={
-                "liked": "select 0=1"
-            }).order_by("-total_likes")
+        limit = self.get_relative_date(self.LAST_WEEK)
+
+        return Work.objects.select_related("collection").total_likes(). \
+            liked_by(user).filter(publish_date__lte=limit)
 
     def get_rising_works(self, user):
-        limit = datetime.datetime.now() + datetime.timedelta(days=-7)
+        limit = self.get_relative_date(self.LAST_WEEK)
 
-        Work.objects.select_related("collection").annotate(total_likes=Count("like__like")).extra(select={
-                "liked": Rating.objects.filter(user=1000, like=True).annotate(Count('like')).values('like__count').query})\
-            .filter(like__date__gte=limit).order_by("-total_likes")  # EXAMPLE
+        return Work.objects.select_related("collection").total_likes(). \
+            liked_by(user).liked_after(limit).order_by("-total_likes")
 
-        if user.is_authenticated():
-            return Work.objects.select_related("collection").annotate(total_likes=Count("like__like")).extra(select={
-                "liked": "select count(*) = 1 from rating_rating where rating_rating.work_id = core_work.id and rating_rating.user_id = {}".format(
-                    user.id)
-            }).filter(like__date__gte=limit).order_by("-total_likes")
-        else:
-            return Work.objects.select_related("collection").annotate(total_likes=Count("like__like")).extra(select={
-                "liked": False
-            }).filter(like__date__gte=limit).order_by("-total_likes")
+    def get_barddo_user(self, user):
+        return user if user.is_authenticated() else None
+
+    def get_relative_date(self, delta):
+        return datetime.datetime.now() + datetime.timedelta(days=delta)
 
 
 index = IndexView.as_view()
