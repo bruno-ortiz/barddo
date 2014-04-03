@@ -12,4 +12,19 @@ $(document).ready(function () {
         e.stopPropagation();
         return false;
     });
+
+    function set_rating(work, liked){
+        var icon_element = $("#{}").closest("i.captionicons"); //XXX: Isso está certo?
+
+        if (liked){
+            icon_element.html('<i class="icon-heart captionicons"></i>');
+        } else {
+            icon_element.html('<i class="icon-heart-empty captionicons"></i>');
+        }
+    }
+
+    function notify_not_logged(){
+        //TODO
+    }
+
 });
