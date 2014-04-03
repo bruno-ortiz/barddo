@@ -1,30 +1,26 @@
 $(document).ready(function () {
     $('.vote').click(function (e) {
-        if ($(this).hasClass("liked")) {
-            $(this).html('<i class="icon-heart-empty captionicons"></i>');
-            $(this).removeClass("liked");
-        } else {
-            $(this).html('<i class="icon-heart captionicons"></i>');
-            $(this).addClass("liked");
-        }
+
+        Dajaxice.rating.toggle_rating(Dajaxice.process, { 'html_id': $(this).id });
+        $(this).html('<i class="icon-heart-empty captionicons"></i>');
+        $(this).removeClass("liked");
+
+        $(this).addClass("waiting");
+        $(this).html('<i class="icon-heart-?? captionicons"></i>');
 
         e.preventDefault();
         e.stopPropagation();
         return false;
     });
 
-    function set_rating(work, liked){
-        var icon_element = $("#{}").closest("i.captionicons"); //XXX: Isso está certo?
-
-        if (liked){
-            icon_element.html('<i class="icon-heart captionicons"></i>');
+    function set_rating(html_id, liked) {
+        $(html_id).removeClass("waiting");
+        if (liked) {
+            $(html_id).addClass("liked");
+            $(html_id).html('<i class="icon-heart captionicons"></i>');
         } else {
-            icon_element.html('<i class="icon-heart-empty captionicons"></i>');
+            $(html_id).html('<i class="icon-heart-empty captionicons"></i>');
         }
-    }
-
-    function notify_not_logged(){
-        //TODO
     }
 
 });

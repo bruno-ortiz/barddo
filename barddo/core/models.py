@@ -8,7 +8,6 @@ from django.db.models import Manager, Count
 from django.db.models.query import QuerySet
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
-
 from django.conf import settings
 from django.core.files.images import ImageFile
 

@@ -36,7 +36,7 @@ class IndexView(ProfileAwareView):
         limit = self.get_relative_date(self.LAST_WEEK)
 
         return Work.objects.select_related("collection").total_likes(). \
-            liked_by(user).filter(publish_date__lte=limit)
+            liked_by(user).filter(publish_date__gte=limit)
 
     def get_rising_works(self, user):
         limit = self.get_relative_date(self.LAST_WEEK)

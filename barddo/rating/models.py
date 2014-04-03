@@ -19,23 +19,23 @@ class Rating(models.Model):
     like = models.BooleanField()
 
 
-def user_likes(user, work):
+def user_likes(user, work_id):
     try:
-        rating = Rating.objects.get(user=user, work=work)
+        rating = Rating.objects.get(user=user, work_id=work_id)
         return rating.like
     except Rating.DoesNotExist:
         return False
 
 
-def add_like(user, work):
+def add_like(user, work_id):
     try:
-        rating = Rating.objects.get(user=user, work=work)
+        rating = Rating.objects.get(user=user, work_id=work_id)
         rating.like = True
     except Rating.DoesNotExist:
-        rating = Rating(user=user, work=work,
+        rating = Rating(user=user, work_id=work_id,
                         date=datetime.datetime.now(), like=True)
     rating.save()
 
 
-def remove_like(user, work):
-    Rating.objects.filter(user=user, work=work).delete()
+def remove_like(user, work_id):
+    Rating.objects.filter(user=user, work_id=work_id).delete()
