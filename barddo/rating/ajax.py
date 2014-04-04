@@ -23,6 +23,6 @@ def toggle_rating(request, work_id):
 
         ajax.script('set_rating({}, {});'.format(work_id, 'true' if liked else 'false'))
     else:
-        ajax.script('$("#loginModal").modal(show);')
+        ajax.script('$("#loginModal").modal("show");')
 
     return ajax.json()
