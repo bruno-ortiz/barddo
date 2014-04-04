@@ -1,11 +1,11 @@
 $(document).ready(function () {
     $('.vote').click(function (e) {
         Dajaxice.rating.toggle_rating(Dajax.process, { 'work_id': $(this).attr("data-work-id") });
-        $(this).html('<i class="icon-heart-empty captionicons"></i>');
+        $(this).html('<i class="icon-heart-empty"></i>');
         $(this).removeClass("liked");
 
         $(this).addClass("waiting");
-        $(this).html('<i class="icon-spinner icon-spin white captionicons"></i>');
+        $(this).html('<i class="icon-spinner icon-spin white"></i>');
 
         e.preventDefault();
         e.stopPropagation();
@@ -20,8 +20,8 @@ function set_rating(work_id, liked) {
     icon_element.removeClass("waiting");
     if (liked) {
         icon_element.addClass("liked");
-        icon_element.html('<i class="icon-heart captionicons"></i>');
+        icon_element.html('<i class="icon-heart"></i>');
     } else {
-        icon_element.html('<i class="icon-heart-empty captionicons"></i>');
+        icon_element.html('<i class="icon-heart-empty"></i>');
     }
 }
