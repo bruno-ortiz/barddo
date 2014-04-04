@@ -8,21 +8,21 @@ __author__ = 'jovial'
 
 
 @dajaxice_register
-def toggle_rating(request, html_id, work_id):
+def toggle_rating(request, work_id):
     user = request.user
     ajax = Dajax()
 
     if user.is_authenticated():
         liked = False
 
-        if user_likes(user, work_id):
+        if not user_likes(user, work_id):
             add_like(user, work_id)
             liked = True
         else:
             remove_like(user, work_id)
 
-        ajax.script('set_rating("{}", "{}")'.format(html_id, liked))
+        ajax.script('set_rating({}, {});'.format(work_id, 'true' if liked else 'false'))
     else:
-        ajax.script("$('#loginModal').modal('show')()")
+        ajax.script('$("#loginModal").modal(show);')
 
     return ajax.json()

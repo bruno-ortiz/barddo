@@ -9,11 +9,11 @@
         <div class="roll">
             <div class="wrapcaption">
                 {% if work.liked %}
-                    <a class="vote liked" data-id="{{ work.id }}" href="projectdetail.html">
+                    <a class="vote liked" data-work-id="{{ work.id }}" href="projectdetail.html">
                         <i class="icon-heart captionicons"></i>
                     </a>
                 {% else %}
-                    <a class="vote" data-id="{{ work.id }}" href="projectdetail.html">
+                    <a class="vote" data-work-id="{{ work.id }}" href="projectdetail.html">
                         <i class="icon-heart-empty captionicons"></i>
                     </a>
                 {% endif %}

@@ -31,7 +31,8 @@ class RatingManager(Manager):
 
 class RatingQuerySet(QuerySet):
     def total_likes(self):
-        return self.annotate(total_likes=Count("like__like")).filter(like=True)
+        #return self.annotate(total_likes=Count("like__like")).filter(like=True)
+        return self.extra(select={"total_likes": 0})
 
     def liked_by(self, user=None):
         if user:
