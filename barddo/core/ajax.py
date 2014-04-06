@@ -6,8 +6,9 @@ from dajaxice.utils import deserialize_form
 from django.contrib.auth.decorators import login_required
 from pilkit.processors import Crop
 from PIL import Image
+from django.forms.models import model_to_dict
 
-from core.models import Collection
+from core.models import Collection, Work
 from .forms import CollectionForm, WorkForm
 
 
@@ -130,3 +131,25 @@ def crop_image(work, x, y, width, height):
     image = Image.open(work.cover.path)
     crop = Crop(width=width, height=height, x=x, y=y)
     crop.process(image).save(work.cover.path, 'JPEG', quality=75)
+
+
+@login_required
+@dajaxice_register
+def edit_work_field(request, _id, field, value):
+    dajax = Dajax()
+
+    instance = Work.objects.get(id=_id)
+    data = model_to_dict(instance)
+    data[field] = value
+
+    form = WorkForm(instance=instance, data=data)
+    if form.is_valid():
+        form.save()
+        dajax.remove_css_class('#id_{0}'.format(field), 'field-error')
+        dajax.add_css_class('#id_{0}'.format(field), 'field-success')
+    else:
+        dajax.remove_css_class('#id_{0}'.format(field), 'field-success')
+        dajax.add_css_class('#id_{0}'.format(field), 'field-error')
+        errors = form.errors[field]
+        dajax.script("error_tooltip('#id_%s', '%s');" % (field, "<br />".join(errors)))
+    return dajax.json()

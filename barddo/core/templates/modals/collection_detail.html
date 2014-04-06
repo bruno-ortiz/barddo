@@ -57,7 +57,7 @@
 
                                         <div class="profile-info-value">
                                         <span class="editable"
-                                              id="title">{{ current_work.title }}</span>
+                                              id="id_title">{{ current_work.title }}</span>
                                         </div>
                                     </div>
 
@@ -66,7 +66,7 @@
 
                                         <div class="profile-info-value">
                                         <span class="editable"
-                                              id="unit_count">{{ current_work.unit_count }}</span>
+                                              id="id_unit_count">{{ current_work.unit_count }}</span>
                                         </div>
                                     </div>
 
@@ -75,7 +75,7 @@
 
                                         <div class="profile-info-value">
                                         <span class="editable"
-                                              id="summary">{{ current_work.summary }}</span>
+                                              id="id_summary">{{ current_work.summary }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -120,39 +120,55 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        var $unit_count = $('#collection-editable #unit_count');
-        var current_unit_count = $unit_count.text();
-        $unit_count.editable({
-            type: 'text',
-            name: 'unit_count',
-            success: function (response, newValue) {
-                if (current_unit_count != newValue) {
-                    current_unit_count = newValue;
-                }
-            }
-        });
+        //editables on first profile page
+        $.fn.editable.defaults.mode = 'inline';
+        $.fn.editableform.loading = "<div class='editableform-loading'><i class='light-blue icon-2x icon-spinner icon-spin'></i></div>";
+        $.fn.editableform.buttons = '<button type="submit" class="btn btn-info editable-submit"><i class="icon-ok icon-white"></i></button>' +
+                '<button type="button" class="btn editable-cancel"><i class="icon-remove"></i></button>';
+
+        {#        var $unit_count = $('#collection-editable #id_unit_count');#}
+        {#        var current_unit_count = $unit_count.text();#}
+        {#        $unit_count.editable({#}
+        {#            type: 'text',#}
+        {#            name: 'id_unit_count',#}
+        {#            success: function (response, newValue) {#}
+        {#                if (current_unit_count != newValue) {#}
+        {#                    current_unit_count = newValue;#}
+        {#                }#}
+        {#            }#}
+        {#        });#}
 
 
-        var $title = $('#collection-editable #title');
+        var $title = $('#collection-editable #id_title');
         var current_title = $title.text();
         $title.editable({
             type: 'text',
-            name: 'title',
+            name: 'id_title',
             success: function (response, newValue) {
                 if (current_title != newValue) {
                     current_title = newValue;
+
+                    Dajaxice.core.edit_work_field(Dajax.process, {
+                        '_id':{{ current_work.id }},
+                        'field': 'title',
+                        'value': newValue});
                 }
             }
         });
 
-        var $summary = $('#collection-editable #summary');
+        var $summary = $('#collection-editable #id_summary');
         var current_summary = $summary.text();
         $summary.editable({
             type: 'text',
-            name: 'summary',
+            name: 'id_summary',
             success: function (response, newValue) {
                 if (current_summary != newValue) {
                     current_summary = newValue;
+
+                    Dajaxice.core.edit_work_field(Dajax.process, {
+                        '_id':{{ current_work.id }},
+                        'field': 'summary',
+                        'value': newValue});
                 }
             }
         });

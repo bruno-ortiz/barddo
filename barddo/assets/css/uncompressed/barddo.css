@@ -122,7 +122,9 @@ img {
 
 .modal-sm {
     width: 400px;
-}/**
+}
+
+/**
  ** Index Theme
  **/
 .dashboard-link {
@@ -184,4 +186,20 @@ footer {
 .dashboard-caption {
     padding: 10px;
     top: 20% !important;
+}
+
+/** Fix for bootstrap modal displacement **/
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    body {
+        overflow-y: scroll;
+    }
+
+    body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
+        overflow-y: scroll;
+        margin: 0;
+    }
+
+    .modal {
+        overflow: auto;
+    }
 }
