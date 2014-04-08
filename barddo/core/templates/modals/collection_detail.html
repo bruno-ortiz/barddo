@@ -17,7 +17,7 @@
     <div class="col-sm-12">
         <div id="work-data">
             <div class="tabbable">
-                <ul class="nav nav-tabs padding-18">
+                <ul class="nav nav-tabs padding-18 tab-color-blue background-blue">
                     <li class="active">
                         <a data-toggle="tab" href="#general-{{ collection.id }}">
                             <i class="blue icon-info-sign bigger-120"></i>
@@ -28,64 +28,55 @@
                     <li>
                         <a data-toggle="tab" href="#files-{{ collection.id }}">
                             <i class="green icon-picture bigger-120"></i>
-                            Files
+                            Pages
                         </a>
                     </li>
 
-                    <li>
-                        <a data-toggle="tab" href="#stats-{{ collection.id }}">
-                            <i class="pink icon-bar-chart bigger-120"></i>
-                            Statistics
-                        </a>
-                    </li>
                 </ul>
 
                 <div class="tab-content no-border padding-24">
                     <div id="general-{{ collection.id }}" class="tab-pane in active">
                         <div class="row">
-                            <div class="col-xs-12 col-sm-4 center">
+                            <div class="col-xs-12 col-sm-5 center">
                             <span class="profile-picture">
-                                <img class="editable img-responsive" alt="Alex's Avatar" id="avatar2"
-                                     src="{{ current_work.cover|thumbnail_url:"small_cover" }}"/>
+                                <img class="editable img-responsive" alt="Work Cover"
+                                     src="{{ current_work.cover|thumbnail_url:"big_cover" }}"/>
                             </span>
+                                <span class="cover-subtitle"><i
+                                        class="icon-pencil"></i> Click to change</span>
                             </div>
                             <!-- /span -->
 
-                            <div class="col-xs-12 col-sm-8">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-email">Volume
-                                        N*:</label>
-
-                                    <div class="col-sm-9">
-                                        <input type="text" id="form-field-email" value="{{ current_work.unit_count }}">
+                            <div class="col-xs-12 col-sm-7">
+                                <div id="collection-editable" class="profile-user-info profile-user-info-striped">
+                                    <div class="table-header center">
+                                        <i class="icon-edit"></i> Work Information
                                     </div>
-                                </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> Title:</div>
 
-                                <br/>
-
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right"
-                                           for="form-field-email">Title</label>
-
-                                    <div class="col-sm-9">
-                                                <span class="input-icon input-icon-right">
-                                                    <input type="email" id="form-field-email"
-                                                           value="{{ current_work.title }}">
-                                                    <i class="icon-envelope"></i>
-                                                </span>
+                                        <div class="profile-info-value">
+                                        <span class="editable"
+                                              id="id_title">{{ current_work.title }}</span>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <br/>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> Number:</div>
 
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right"
-                                           for="form-field-email">Summary</label>
+                                        <div class="profile-info-value">
+                                        <span class="editable"
+                                              id="id_unit_count">{{ current_work.unit_count }}</span>
+                                        </div>
+                                    </div>
 
-                                    <div class="col-sm-9">
-                                        <textarea class="col-sm-12">
-                                            {{ current_work.summary }}
-                                        </textarea>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> Summary:</div>
+
+                                        <div class="profile-info-value">
+                                        <span class="editable"
+                                              id="id_summary">{{ current_work.summary }}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -94,14 +85,6 @@
                         <!-- /row-fluid -->
 
                     </div>
-                    <!-- #home -->
-
-                    <div id="stats-{{ collection.id }}" class="tab-pane">
-                        <div class="profile-feed row-fluid">
-                            <div id="work-sales-charts"></div>
-                        </div>
-                    </div>
-                    <!-- /#feed -->
 
                     <div id="files-{{ collection.id }}" class="tab-pane">
                         <div class="profile-feed row-fluid">
@@ -133,3 +116,62 @@
         </div>
     </div>
 </div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //editables on first profile page
+        $.fn.editable.defaults.mode = 'inline';
+        $.fn.editableform.loading = "<div class='editableform-loading'><i class='light-blue icon-2x icon-spinner icon-spin'></i></div>";
+        $.fn.editableform.buttons = '<button type="submit" class="btn btn-info editable-submit"><i class="icon-ok icon-white"></i></button>' +
+                '<button type="button" class="btn editable-cancel"><i class="icon-remove"></i></button>';
+
+        {#        var $unit_count = $('#collection-editable #id_unit_count');#}
+        {#        var current_unit_count = $unit_count.text();#}
+        {#        $unit_count.editable({#}
+        {#            type: 'text',#}
+        {#            name: 'id_unit_count',#}
+        {#            success: function (response, newValue) {#}
+        {#                if (current_unit_count != newValue) {#}
+        {#                    current_unit_count = newValue;#}
+        {#                }#}
+        {#            }#}
+        {#        });#}
+
+
+        var $title = $('#collection-editable #id_title');
+        var current_title = $title.text();
+        $title.editable({
+            type: 'text',
+            name: 'id_title',
+            success: function (response, newValue) {
+                if (current_title != newValue) {
+                    current_title = newValue;
+
+                    Dajaxice.core.edit_work_field(Dajax.process, {
+                        '_id':{{ current_work.id }},
+                        'field': 'title',
+                        'value': newValue});
+                }
+            }
+        });
+
+        var $summary = $('#collection-editable #id_summary');
+        var current_summary = $summary.text();
+        $summary.editable({
+            type: 'text',
+            name: 'id_summary',
+            success: function (response, newValue) {
+                if (current_summary != newValue) {
+                    current_summary = newValue;
+
+                    Dajaxice.core.edit_work_field(Dajax.process, {
+                        '_id':{{ current_work.id }},
+                        'field': 'summary',
+                        'value': newValue});
+                }
+            }
+        });
+
+    });
+</script>

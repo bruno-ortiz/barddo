@@ -29,12 +29,13 @@ class WorkForm(ModelForm):
         collection = cleaned_data.get("collection")
         unit_count = cleaned_data.get("unit_count")
 
-        try:
-            Work.objects.get(collection_id=collection.id, unit_count=unit_count)
-            # TODO: Change this to a proper validation to a specific field on django 1.7
-            self._errors["unit_count"] = [escape("Already exists"), ]
-        except Work.DoesNotExist:
-            pass
+        if self.instance.pk is None:  # parsing existing work will allow unit conflict
+            try:
+                Work.objects.get(collection_id=collection.id, unit_count=unit_count)
+                # TODO: Change this to a proper validation to a specific field on django 1.7
+                self._errors["unit_count"] = [escape("Already exists"), ]
+            except Work.DoesNotExist:
+                pass
 
         return cleaned_data
 

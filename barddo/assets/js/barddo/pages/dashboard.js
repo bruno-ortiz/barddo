@@ -161,6 +161,10 @@ $(document).ready(function () {
             $(shard_id).remove();
             $(parent).append(shard_data);
             $(shard_id).modal('show');
+
+            $(shard_id).on("shown.bs.modal", function (e) {
+                $(".work-list-wrapper").trigger('scroll');
+            });
         }, {"collection_id": id});
     });
 
