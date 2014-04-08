@@ -37,18 +37,35 @@
                         window.selectedArea.cancelSelection();
                     }
 
-                    $("#current-image").remove();
+                    $("#upload-preview").html("");
                     image_base64 = e.target.result;
                     preview.append("<img id='current-image' src='" + image_base64 + "'/><br/>");
+
+                    var tmpImg = new Image();
+                    tmpImg.src = image_base64
+
                     var selected_image = $("#current-image");
-                    if (selected_image.width() < 261 || selected_image.height() < 300) {
+
+                    var pw = selected_image.width();
+                    var ph = selected_image.height();
+
+                    var ow = tmpImg.width;
+                    var oh = tmpImg.height;
+
+                    var wr = pw / ow;
+                    var hr = ph / oh;
+
+                    alert(wr + " " + hr);
+
+
+                    if (ow < 261 || oh < 300) {
                         $("#form-work-next").html("<i class='icon-star'></i> Select a Cover!").prop("disabled", true);
-                        $("#current-image").remove()
-                        alert("Sorry, but the minimal size accepted is 261x300! Please, select another image!");
+                        //$("#current-image").remove()
+                        alert("Sorry, but the minimal size accepted is 261x300! Please, select another image! your was " + tmpImg.width + "px width and " + tmpImg.height + "px height;");
                     } else {
                         setTimeout(function () {
                             window.selectedArea = $('#current-image').imgAreaSelect({
-                                x1: 0, y1: 0, x2: 261, y2: 300,
+                                x1: 0, y1: 0, x2: 261 * wr, y2: 300 * hr,
                                 handles: true,
                                 aspectRatio: '261:300',
                                 show: true,
@@ -56,8 +73,8 @@
                                 instance: true,
                                 parent: "#crop-container",
                                 zIndex: 9999,
-                                minWidth: 261,
-                                minHeight: 300
+                                minWidth: 261 * wr,
+                                minHeight: 300 * hr
                             });
                         }, 500);
                     }
