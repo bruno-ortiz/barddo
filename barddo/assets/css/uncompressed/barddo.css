@@ -189,17 +189,17 @@ footer {
 }
 
 /** Fix for bootstrap modal displacement **/
-/*@media screen and (-webkit-min-device-pixel-ratio: 0) {*/
-/*body {*/
-/*overflow-y: scroll;*/
-/*}*/
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    body {
+        overflow-y: scroll;
+    }
 
-/*body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {*/
-/*overflow-y: scroll;*/
-/*margin: 0;*/
-/*}*/
+    body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
+        overflow-y: scroll;
+        margin: 0;
+    }
 
-/*.modal {*/
-/*overflow: auto;*/
-/*}*/
-/*}*/
+    .modal {
+        overflow: auto;
+    }
+}

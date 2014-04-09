@@ -15,3 +15,21 @@
 textarea.about_publisher {
     display: inline-block;
 }
+
+.publishing-avatar-preview {
+    min-width: 215px;
+    min-height: 145px;
+}
+
+/**
+ * Fix for publishing avatar preview resize
+ * TODO: should we use image crop here?
+ */
+.file-label {
+    min-height: 126px;
+    min-width: 205px;
+}
+
+.selected .file-name.large {
+    min-height: 125px;
+}
