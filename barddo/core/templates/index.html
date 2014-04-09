@@ -30,7 +30,7 @@
                 <div class="row">
                     <div class="portfolio">
                         {% for work in works %}
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 item collection-great">
+                            <div data-work-id="{{ work.id }}" class="col-lg-3 col-md-3 col-sm-3 col-xs-12 item collection-great">
                                 <div class="boxcontainer">
                                     <div class="cover-wrap">
                                         <img src="{{ work.cover|thumbnail_url:"big_cover" }}" alt="">
@@ -38,7 +38,7 @@
 
                                     <div class="roll">
                                         <div class="wrapcaption">
-                                            <a class="vote" data-id="{{ work.id }}" href="projectdetail.html">
+                                            <a class="vote" href="projectdetail.html">
                                                 <i class="icon-heart-empty captionicons"></i>
                                             </a>
                                         </div>
@@ -58,7 +58,7 @@
                                             <div class="row pull-left">
                                                 <div class="col-sm-2 center">
                                                     <img class="artist"
-                                                         src="{{ MEDIA_URL }}user_avatar/falleco-social.jpg"
+                                                         src="{{ MEDIA_URL }}user_avatar/brunortiz11-social.jpg"
                                                          alt="Artist Photo"/>
                                                     <span>Israel</span>
                                                 </div>
@@ -81,9 +81,9 @@
 
                                         <div class="clearfix"></div>
                                         <div class="pull-right popup-buttons">
-                                            <a href="#" class="btn btn-minier btn-success">
+                                            <button data-work-id="{{ work.id }}" type="button" class="btn-reader btn btn-minier btn-success">
                                                 <i class="icon-zoom-in"></i> Read Now!
-                                            </a>
+                                            </button>
                                             <a href="#" class="btn btn-minier btn-info">
                                                 <i class="icon-share"></i> Share
                                             </a>
@@ -119,8 +119,9 @@
 
             //ROLL ON HOVER
             $(function () {
-                $(".roll").css("opacity", "0");
-                $(".roll").hover(function () {
+                var $roll = $(".roll");
+                $roll.css("opacity", "0");
+                $roll.hover(function () {
                             $(this).css("opacity", 1);
                         },
                         function () {
@@ -137,7 +138,7 @@
                 placement: "bottom",
                 container: "body",
                 content: function () {
-                    var id = $(this).attr("data-id");
+                    var id = $(this).closest("div[data-work-id]").attr("data-work-id");
                     return $("#work-popup-" + id).html();
                 },
 
@@ -147,10 +148,11 @@
             $(".boxcontainer").on("mouseenter",function () {
                 var _this = this;
 
-                if (!$(".popover").length) {
+                var $popover = $(".popover");
+                if (!$popover.length) {
                     $(".vote", _this).popover("show");
 
-                    $(".popover").on("mouseleave", function () {
+                    $popover.on("mouseleave", function () {
                         setTimeout(function () {
                             if (!$(".boxcontainer:hover").length) {
                                 $(".vote", _this).popover('hide');
@@ -173,6 +175,15 @@
                         $(".roll", _this).css("opacity", 0);
                     }
                 }, 100);
+            });
+
+            $(document).on("click", ".popover-content button.btn-reader", function () {
+                var work_id = $(this).attr("data-work-id");
+                Shards.reader(function (shard_id, shard_data, parent) {
+                    $(shard_id).remove();
+                    $(parent).append(shard_data);
+                    $(shard_id).modal('show');
+                }, {"work_id": work_id});
             });
         });
     </script>

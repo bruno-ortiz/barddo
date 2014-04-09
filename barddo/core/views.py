@@ -77,9 +77,20 @@ class CollectionDetailView(LoginRequiredMixin, ProfileAwareView):
 collection_detail = CollectionDetailView.as_view()
 
 
-###
-### Artist Dashboard Shards
-###
+@register_shard(name=u"reader")
+class ReaderShard(TemplateResponseMixin, View):
+    """
+        Render a simple reader.
+    """
+    template_name = 'reader/reader-modal.html'
+
+    def post(self, request, work_id, *args, **kwargs):
+        work = Work.objects.get(pk=work_id)
+
+        context = {
+            "work": work
+        }
+        return super(ReaderShard, self).render_to_response(context)
 
 
 # TODO: move it to a shards.py module

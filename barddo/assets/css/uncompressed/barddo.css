@@ -124,6 +124,10 @@ img {
     width: 400px;
 }
 
+.modal-lg {
+    width: 800px;
+}
+
 /**
  ** Index Theme
  **/
