@@ -6,8 +6,9 @@ from dajaxice.utils import deserialize_form
 from django.contrib.auth.decorators import login_required
 from pilkit.processors import Crop
 from PIL import Image
+from django.forms.models import model_to_dict
 
-from core.models import Collection
+from core.models import Collection, Work
 from .forms import CollectionForm, WorkForm
 
 
@@ -50,8 +51,8 @@ def register_a_collection(request, form):
         ajax.remove_css_class("#collection-form div.form-group", "has-error")
 
         for field, errors in form.errors.items():
-            ajax.script("error_tooltip('#id_%s', '%s');" % (field, "<br />".join(errors)))
-            ajax.script('$("#id_%s").closest("div.form-group").addClass("has-error")' % field)
+            ajax.script("error_tooltip('#collection-form #id_%s', '%s');" % (field, "<br />".join(errors)))
+            ajax.script('$("#collection-form #id_%s").closest("div.form-group").addClass("has-error")' % field)
 
     return ajax.json()
 
@@ -98,8 +99,17 @@ def register_a_work(request):
         new_work.total_pages = 0
         new_work.save()
 
-        crop_image(new_work, -int(request.POST["crop_x"]), -int(request.POST["crop_y"]),
-                   int(request.POST["crop_w"]), int(request.POST["crop_h"]))
+        x_ratio = new_work.cover.width / float(request.POST["width"])
+        y_ratio = new_work.cover.height / float(request.POST["height"])
+
+        print x_ratio, y_ratio
+
+        cx, cy = -float(request.POST["crop_x"]) * x_ratio, -float(request.POST["crop_y"]) * y_ratio
+        cw, ch = float(request.POST["crop_w"]) * x_ratio, float(request.POST["crop_h"]) * y_ratio
+
+        print cx, cy, cw, ch, request.POST["crop_w"], request.POST["crop_h"]
+
+        crop_image(new_work, int(cx), int(cy), int(cw), int(ch))
 
         # TODO: only set as collection cover when user opted for it
         new_work.collection.cover = new_work.cover
@@ -121,3 +131,25 @@ def crop_image(work, x, y, width, height):
     image = Image.open(work.cover.path)
     crop = Crop(width=width, height=height, x=x, y=y)
     crop.process(image).save(work.cover.path, 'JPEG', quality=75)
+
+
+@login_required
+@dajaxice_register
+def edit_work_field(request, _id, field, value):
+    dajax = Dajax()
+
+    instance = Work.objects.get(id=_id)
+    data = model_to_dict(instance)
+    data[field] = value
+
+    form = WorkForm(instance=instance, data=data)
+    if form.is_valid():
+        form.save()
+        dajax.remove_css_class('#id_{0}'.format(field), 'field-error')
+        dajax.add_css_class('#id_{0}'.format(field), 'field-success')
+    else:
+        dajax.remove_css_class('#id_{0}'.format(field), 'field-success')
+        dajax.add_css_class('#id_{0}'.format(field), 'field-error')
+        errors = form.errors[field]
+        dajax.script("error_tooltip('#id_%s', '%s');" % (field, "<br />".join(errors)))
+    return dajax.json()

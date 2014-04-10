@@ -1,10 +1,12 @@
 {% load widget_tweaks %}
+{% load i18n %}
 
 <form class="form-horizontal" id="collection-form" enctype="multipart/form-data">
     {% csrf_token %}
 
     <div class="form-group">
-        <label for="{{ form.name.auto_id }}" class="col-xs-12 col-sm-3 control-label no-padding-right">{{ form.name.label }}</label>
+        <label for="{{ form.name.auto_id }}"
+               class="col-xs-12 col-sm-3 control-label no-padding-right">{{ form.name.label }}</label>
 
         <div class="col-xs-12 col-sm-9">
             <span class="block">
@@ -14,27 +16,30 @@
     </div>
 
     <div class="form-group">
-        <label for="{{ form.summary.auto_id }}" class="col-xs-12 col-sm-3 control-label no-padding-right">{{ form.summary.label }}</label>
+        <label for="{{ form.summary.auto_id }}"
+               class="col-xs-12 col-sm-3 control-label no-padding-right">{{ form.summary.label }}</label>
 
         <div class="col-xs-12 col-sm-9">
             <span class="block">
-                {% render_field form.summary class="form-control" %}
+                {% render_field form.summary class="form-control" placeholder="Write some meaningful description about this work here..." %}
             </span>
         </div>
     </div>
 
     <div class="form-group">
-        <label for="{{ form.unit.auto_id }}" class="col-xs-12 col-sm-3 control-label no-padding-right">{{ form.unit.label }}</label>
+        <label for="{{ form.unit.auto_id }}"
+               class="col-xs-12 col-sm-3 control-label no-padding-right">{{ form.unit.label }}</label>
 
         <div class="col-xs-12 col-sm-9">
             <span class="block">
-                {% render_field form.unit class="width-100" %}
+                {% render_field form.unit class="width-100 select2-offscreen" type="hidden" %}
             </span>
         </div>
     </div>
 
     <div class="form-group">
-        <label for="{{ form.start_date.auto_id }}" class="col-xs-12 col-sm-3 control-label no-padding-right">{{ form.start_date.label }}</label>
+        <label for="{{ form.start_date.auto_id }}"
+               class="col-xs-12 col-sm-3 control-label no-padding-right">{{ form.start_date.label }}</label>
 
         <div class="col-xs-12 col-sm-5">
             <span class="block">
@@ -51,9 +56,9 @@
 
 {% block bottom_page %}
     <script type="text/javascript">
-        jQuery(function($) {
+        jQuery(function ($) {
             // A new collection start date may be today
-            $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
+            $('.date-picker').datepicker({autoclose: true}).next().on(ace.click_event, function () {
                 $(this).prev().focus();
             });
 
@@ -61,12 +66,17 @@
 
             // Use a beauty drop file widget
             $('#new-collection-wizard input[type=file]').ace_file_input({
-                style:'well',
-                btn_choose:'Drop your collection cover here or click to choose',
-                btn_change:null,
-                no_icon:'icon-cloud-upload',
-                droppable:true,
-                thumbnail:'large'
+                style: 'well',
+                btn_choose: 'Drop your collection cover here or click to choose',
+                btn_change: null,
+                no_icon: 'icon-cloud-upload',
+                droppable: true,
+                thumbnail: 'large'
+            });
+
+            $('#{{ form.unit.auto_id }}').select2({
+                allowClear: true,
+                placeholder: "{% trans "Select a count unit to use" %}"
             });
         });
     </script>

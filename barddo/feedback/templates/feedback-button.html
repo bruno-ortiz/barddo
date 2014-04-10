@@ -1,13 +1,7 @@
-<a id="feedbackButton" class="btn btn-danger feedback-button">Feedback</a>
+{% load staticfiles %}
+{% load compress %}
+<a id="feedbackButton" class="btn btn-danger feedback-button"><i class="icon-envelope-alt"></i>Feedback</a>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#feedbackButton").on("click", function () {
-            Shards.feedback(function (shard_id, shard_data, parent) {
-                $(shard_id).remove();
-                $(parent).append(shard_data);
-                $(shard_id).modal('show');
-            });
-        });
-    });
-</script>
+{% compress js %}
+    <script src="{% static "js/barddo.feedback.button.js" %}"></script>
+{% endcompress %}

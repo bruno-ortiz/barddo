@@ -16,6 +16,7 @@ function sortable_image_upload(target, preview_container, existing_data) {
 
         addRemoveLinks: false,
         dictResponseError: 'Error while uploading file!',
+        dictDefaultMessage: "Drop your work pages here to upload! (Or Click)",
 
         //change the previewTemplate to use Bootstrap progress bars
         previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-details\">\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n    <div class=\"dz-size\" data-dz-size></div>\n    <img data-dz-thumbnail />\n  </div>\n  <div class=\"progress progress-small progress-striped active\"><div class=\"progress-bar progress-bar-success\" data-dz-uploadprogress></div></div>\n  <div class=\"dz-success-mark\"><span></span></div>\n  <div class=\"dz-error-mark\"><span></span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n</div>",
@@ -64,6 +65,12 @@ function sortable_image_upload(target, preview_container, existing_data) {
 
                 // Add the button to the file preview element.
                 file.previewElement.appendChild(removeButton);
+            });
+
+            this.on("removedfile", function (file) {
+                if (!$(".dz-preview").length) {
+                    $('.dz-message').show();
+                }
             });
 
             this.on("processing", function (file) {
@@ -154,6 +161,10 @@ $(document).ready(function () {
             $(shard_id).remove();
             $(parent).append(shard_data);
             $(shard_id).modal('show');
+
+            $(shard_id).on("shown.bs.modal", function (e) {
+                $(".work-list-wrapper").trigger('scroll');
+            });
         }, {"collection_id": id});
     });
 

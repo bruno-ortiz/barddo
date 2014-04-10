@@ -9,9 +9,6 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-4">
-                        <a id="new-work-button" class="btn btn-danger btn-block" href="#new-collection-wizard"
-                           data-toggle="modal"><i class="icon-upload-alt"></i> Upload a brand new work now!</a>
-
                         <div id="task-tab" class="tab-pane active">
                             <h4 class="smaller lighter green">
                                 <i class="icon-list"></i>
@@ -19,10 +16,11 @@
                             </h4>
 
                             <div class="work-list-wrapper">
+                                <div class="scroll-up scroll-indicator"><i class="icon-chevron-up"></i></div>
                                 <ul id="work-list" class="item-list ui-sortable">
 
                                     {% for work in works %}
-                                        <li class="item-orange clearfix" style="padding:0">
+                                        <li class="item clearfix" style="padding:0">
                                             <label class="inline" style="width: 100%;">
                                                 <a href="#" class="work-detail-load" data-id="{{ work.id }}"
                                                    style="display:block; padding: 10px">
@@ -33,9 +31,9 @@
                                         </li>
                                     {% endfor %}
                                 </ul>
+                                <div class="scroll-down scroll-indicator"><i class="icon-chevron-down"></i></div>
                             </div>
                         </div>
-
                     </div>
                     <div id="work-detail" class="col-sm-8">
                         {% include "modals/collection_detail.html" %}
@@ -58,5 +56,32 @@
 
             }, {"work_id": id}, "#work-detail");
         });
+
+
+        $(".scroll-up").hide();
+        $(".scroll-down").hide();
+
+        // Scrollable work list visual tip
+        $(".work-list-wrapper").scroll(function () {
+
+            var threshold = 10;
+
+            // there's something to up
+            var topWindow = $(this).scrollTop();
+            if (topWindow > threshold) {
+                $(".scroll-up").fadeIn('slow');
+            } else {
+                $(".scroll-up").fadeOut('slow');
+            }
+
+            var hasScrollDown = $(this).get(0).scrollHeight - $(this).scrollTop() >= $(this).outerHeight() + threshold;
+            if (hasScrollDown) {
+                $(".scroll-down").fadeIn('slow');
+            } else {
+                $(".scroll-down").fadeOut('slow');
+            }
+        });
+
+
     });
 </script>

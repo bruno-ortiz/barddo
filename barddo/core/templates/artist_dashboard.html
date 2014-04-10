@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="{% static "css/uncompressed/barddo.dashboard.css" %}"/>
     <link rel="stylesheet" href="{% static "css/crop/imgareaselect-animated.css" %}"/>
     <link rel="stylesheet" href="{% static "css/dropzone.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/select2.css" %}"/>
+
+    <link rel="stylesheet" href="{% static "css/jquery-ui-1.10.3.custom.min.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/bootstrap-editable.css" %}"/>
 
 {% endblock %}
 
@@ -23,262 +27,143 @@
     </ul><!-- .breadcrumb -->
 {% endblock %}
 
+{% block sidebar %}
+    <div class="sidebar menu-min" id="sidebar">
+
+        <ul class="side-bar nav nav-list">
+            <li class="active">
+                <a href="#">
+                    <i class="icon-dashboard"></i>
+                    <span class="menu-text"> Dashboard </span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#new-collection-wizard">
+                    <i class="icon-book"></i>
+                    <span class="menu-text"> Create a Collection</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    <i class="icon-bar-chart"></i>
+                    <span class="menu-text"> Statistics</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    <i class="icon-bookmark"></i>
+                    <span class="menu-text"> Bookmarks</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    <i class="icon-archive"></i>
+                    <span class="menu-text"> Archived Items</span>
+                </a>
+            </li>
+        </ul>
+        <!-- /.nav-list -->
+    </div>
+{% endblock %}
+
 {% block content %}
     <div class="page-content">
-    {% if not collections %}
-        <div class="row" style="padding-top: 125px;">
-            <div class="col-sm-12">
-                <div class="center">
-                    <h3 class="red"><i class="icon-frown icon-5x"></i></h3>
-
-                    <h3 class="red">Oh noes!</h3>
-                    Looks like you have not created any collections yet! But do not fear, this is something easy to fix!
+        {% if not collections %}
+            <div class="row" style="padding-top: 25px;">
+                <div class="col-sm-12">
+                    <div class="center">
+                        <h3 class="red">Uh Oh!</h3>
+                        Looks like you don't have any <span class="red">collections</span> yet! But do not fear, this
+                        is something easy to
+                        fix!
+                        <br/><br/>
+                        <img src="{% static "images/art/empty-face.png" %}"/>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row" style="padding-top: 50px;">
-            <div class="col-sm-6 col-sm-offset-3">
-                <a id="collection-wizard-link" href="#new-collection-wizard" data-toggle="modal"
-                   class="btn btn-success btn-block"><i class="icon-plus-sign-alt"></i> Create a new collection (and
-                    awesome), now! </a>
-            </div>
-        </div>
-    {% else %}
-
-        <div class="row">
-            <div class="col-sm-5">
-                <div class="widget-box transparent">
-                    <div class="widget-header widget-header-flat">
-                        <h4 class="lighter">
-                            <i class="icon-star orange"></i>
-                            Popular Collections
-                        </h4>
-
-                        <div class="widget-toolbar">
-                            <a href="#" data-action="collapse">
-                                <i class="icon-chevron-up"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="widget-body">
-                        <div class="widget-main no-padding">
-                            <table class="table table-bordered table-striped">
-                                <thead class="thin-border-bottom">
-                                <tr>
-                                    <th>
-                                        <i class="icon-caret-right blue"></i>
-                                        name
-                                    </th>
-
-                                    <th>
-                                        <i class="icon-caret-right blue"></i>
-                                        price
-                                    </th>
-
-                                    <th class="hidden-480">
-                                        <i class="icon-caret-right blue"></i>
-                                        status
-                                    </th>
-                                </tr>
-                                </thead>
-
-                                <tbody>
-                                <tr>
-                                    <td>internet.com</td>
-
-                                    <td>
-                                        <small>
-                                            <s class="red">$29.99</s>
-                                        </small>
-                                        <b class="green">$19.99</b>
-                                    </td>
-
-                                    <td class="hidden-480">
-                                        <span class="label label-info arrowed-right arrowed-in">on sale</span>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>online.com</td>
-
-                                    <td>
-                                        <small>
-                                            <s class="red"></s>
-                                        </small>
-                                        <b class="green">$16.45</b>
-                                    </td>
-
-                                    <td class="hidden-480">
-                                        <span class="label label-success arrowed-in arrowed-in-right">approved</span>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>newnet.com</td>
-
-                                    <td>
-                                        <small>
-                                            <s class="red"></s>
-                                        </small>
-                                        <b class="green">$15.00</b>
-                                    </td>
-
-                                    <td class="hidden-480">
-                                        <span class="label label-danger arrowed">pending</span>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>web.com</td>
-
-                                    <td>
-                                        <small>
-                                            <s class="red">$24.99</s>
-                                        </small>
-                                        <b class="green">$19.95</b>
-                                    </td>
-
-                                    <td class="hidden-480">
-																	<span class="label arrowed">
-																		<s>out of stock</s>
-																	</span>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>domain.com</td>
-
-                                    <td>
-                                        <small>
-                                            <s class="red"></s>
-                                        </small>
-                                        <b class="green">$12.00</b>
-                                    </td>
-
-                                    <td class="hidden-480">
-                                        <span class="label label-warning arrowed arrowed-right">SOLD</span>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /widget-main -->
-                    </div>
-                    <!-- /widget-body -->
+            <div class="row" style="padding-top: 50px;">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <a id="collection-wizard-link" href="#new-collection-wizard"
+                       class="btn btn-danger btn-block btn-lg"><i class="icon-plus"></i> Create an awesome new
+                        collection, now!
+                    </a>
                 </div>
             </div>
+        {% else %}
 
-            <div class="col-sm-7">
-                <div class="widget-box transparent">
-                    <div class="widget-header widget-header-flat">
-                        <h4 class="lighter">
-                            <i class="icon-signal"></i>
-                            Overall Stats
-                        </h4>
-
-                        <div class="widget-toolbar">
-
-                            <a href="#" data-action="collapse">
-                                <i class="icon-chevron-up"></i>
-                            </a>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="widget-box transparent">
+                        <div class="widget-header widget-header-flat">
+                            <h4 class="lighter">
+                                <i class="icon-star orange"></i>
+                                My Collections ({{ collections|length }})
+                            </h4>
 
                         </div>
-                    </div>
 
-                    <div class="widget-body">
-                        <div class="widget-main padding-4">
-                            <div id="sales-charts"></div>
-                        </div>
-                        <!-- /widget-main -->
-                    </div>
-                    <!-- /widget-body -->
-                </div>
-                <!-- /widget-box -->
-            </div>
-        </div>
+                        <div class="widget-body">
+                            <div class="widget-main padding-6">
+                                <div class="row">
+                                    <div class="portfolio">
+                                        {% for collection in collections %}
+                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 item collection-great">
+                                                <div class="boxcontainer">
+                                                    <div class="cover-wrap">
+                                                        {% if collection.cover %}
+                                                            <img src="{{ collection.cover|thumbnail_url:"small_cover" }}"
+                                                                 alt="">
+                                                        {% else %}
+                                                            <img src="{% static "images/default-cover.jpg" %}"
+                                                                 alt="Create a work for this collection!">
+                                                        {% endif %}
+                                                    </div>
 
-        <div class="row" style="margin-top: 25px;">
-            <div class="col-sm-12">
-                <div class="widget-box light-border">
-                    <div class="widget-header header-color-dark">
-                        <h5 class="smaller">
-                            <i class="icon-inbox"></i>
-                            My Collections ({{ collections|length }})
-                        </h5>
+                                                    <div class="roll">
+                                                        <div class="wrapcaption dashboard-caption">
+                                                            <a href="#new-work-wizard"
+                                                               data-id="{{ collection.id }}"
+                                                               class="btn btn-block btn-info"><i
+                                                                    class="icon-plus-sign"></i> Add a Work</a>
 
-                        <div class="widget-toolbar">
-                            <a href="#" class="blue">
-                                <i class="icon-search"></i>
-                            </a>
-                            <a href="#" data-action="reload">
-                                <i class="icon-refresh"></i>
-                            </a>
-                            <a href="#" data-action="collapse">
-                                <i class="icon-chevron-down"></i>
-                            </a>
-                        </div>
 
-                        <div class="widget-toolbar no-border">
-                            <a href="#new-collection-wizard" data-toggle="modal" class="btn btn-xs btn-danger bigger">
-                                <i class="icon-plus"></i>
-                                New Collection
-                            </a>
-                        </div>
-                    </div>
+                                                            {% if collection.get_total_works != 0 %}
+                                                                <a href="#"
+                                                                   class="collection-view btn btn-block btn-danger"
+                                                                   data-id="{{ collection.id }}"><i
+                                                                        class="icon-edit"></i> Edit Collection</a>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
 
-                    <div class="widget-body">
-                        <div class="widget-main padding-6">
-                            <div class="row">
-                                <div class="portfolio">
-                                    {% for collection in collections %}
-                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 item collection-great">
-                                            <div class="boxcontainer">
-                                                <div class="cover-wrap">
-                                                    {% if collection.cover %}
-                                                        <img src="{{ collection.cover|thumbnail_url:"small_cover" }}"
-                                                             alt="">
-                                                    {% else %}
+                                                    <div class="work-information">
+                                                        <span class="badge badge-danger pull-right work-number">{{ collection.get_total_works }}</span>
 
-                                                    {% endif %}
-                                                </div>
-
-                                                <div class="roll">
-                                                    <div class="wrapcaption">
-                                                        <a href="#new-work-wizard" data-toggle="modal"
-                                                           data-id="{{ collection.id }}"
-                                                           onclick="$('#{{ work_form.collection.auto_id }}').val($(this).attr('data-id'));"><i
-                                                                class="icon-plus-sign green"></i></a>
-                                                        <a href="#" class="collection-view"
-                                                           data-id="{{ collection.id }}"><i
-                                                                class="icon-cog red"></i></a>
+                                                        <h1>{{ collection.name }}</h1>
                                                     </div>
                                                 </div>
-                                                <h1><a href="projectdetail.html">{{ collection.name }}</a></h1>
                                             </div>
-                                        </div>
-                                    {% endfor %}
+                                        {% endfor %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- /widget-main -->
                     </div>
                 </div>
-
             </div>
-        </div>
-
-    {% endif %}
+        {% endif %}
     </div>
-
-    {% include "_new_work_modal.html" %}
-
-    {% include "_new_collection_modal.html" %}
-
 {% endblock %}
 
 {% block page_specific_javascript %}
     {% compress js %}
         <script src="{% static "js/fuelux/fuelux.wizard.min.js" %}"></script>
+        <script src="{% static "js/fuelux/fuelux.spinner.min.js" %}"></script>
         <script src="{% static "js/jquery.validate.min.js" %}"></script>
         <script src="{% static "js/date-time/bootstrap-datepicker.min.js" %}"></script>
         <script src="{% static "js/bootstrap-tag.min.js" %}"></script>
@@ -287,13 +172,10 @@
         <script type="text/javascript" src="{% static "js/barddo/pages/collection.create.js" %}"></script>
 
         <script src="{% static "js/uncompressed/dropzone.js" %}"></script>
+        <script src="{% static "js/uncompressed/select2.js" %}"></script>
+        <script src="{% static "js/uncompressed/x-editable/bootstrap-editable.js" %}"></script>
+        <script src="{% static "js/uncompressed/x-editable/ace-editable.js" %}"></script>
     {% endcompress %}
-    <script type="text/javascript" src="{% static "dajax/jquery.dajax.core.js" %}"></script>
-    <script src="{% static "js/jquery.sparkline.min.js" %}"></script>
-    <script src="{% static "js/flot/jquery.flot.min.js" %}"></script>
-    <script src="{% static "js/flot/jquery.flot.pie.min.js" %}"></script>
-    <script src="{% static "js/flot/jquery.flot.resize.min.js" %}"></script>
-
     <script src="{% static "js/jquery.Jcrop.min.js" %}"></script>
     <script src="{% static "js/jquery.imgareaselect.min.js" %}"></script>
 
@@ -324,11 +206,7 @@
         }
 
         function init_wizard() {
-            $("#collection-name-group").removeClass("has-error has-success").addClass("has-info");
-            $("#collection-next").html('Next <i class="icon-arrow-right icon-on-right"></i>');
             $("#collection-next").prop("disabled", true);
-            $("#collection-name-validation").val('');
-            $("#collection-name-group i").removeClass().addClass('icon-info-sign');
             setTimeout(function () {
                 $("#collection-name-validation").focus();
             }, 500);
@@ -336,124 +214,61 @@
         }
 
         jQuery(function ($) {
-            // TODO: change text to internationalized
-            $('#new-collection-wizard .modal-header').ace_wizard()
-                    .on('finished', function (e) {
-                        $('#new-collection-wizard').modal('hide');
-                    })
+            $("a[href='#new-collection-wizard']").on("click", function () {
 
-                    .on('stepclick', function (e) {
-                        return false; //prevent clicking on steps
-                    })
+                Shards.modal.new.collection(function (shard_id, shard_data, parent) {
+                    $(shard_id).remove();
+                    $(parent).append(shard_data);
 
-                    .on('change', function (e, info) {
-                        if (info.step == 1) {
-                            $("#collection-next").html("<i class='icon-star'></i> Create Now!");
-                        }
+                    $(shard_id + ' .modal-header').ace_wizard()
+                            .on('finished', function (e) {
+                                $('#new-collection-wizard').modal('hide');
+                                location.reload();
+                            })
 
-                        if (info.step == 2) {
-                            if (info.direction == "next") {
-                                if (formValid) {
-                                    $("#collection-next").html("<i class='icon-heart'></i> Thank you!");
-                                    $("#collection-prev").hide();
-                                } else {
-                                    Dajaxice.core.register_a_collection(Dajax.process, {
-                                        'form': $('#collection-form').serialize(true)
-                                    });
+                            .on('stepclick', function (e) {
+                                return false; //prevent clicking on steps
+                            })
+
+                            .on('change', function (e, info) {
+                                if (info.step == 1) {
+                                    $("#collection-next").html("<i class='icon-star'></i> Create Now!");
                                 }
 
-                                return formValid;
-                            } else {
-                                init_wizard();
-                            }
-                        }
-                    });
+                                if (info.step == 2) {
+                                    if (info.direction == "next") {
+                                        if (formValid) {
+                                            $("#collection-next").html("<i class='icon-heart'></i> Thank you!");
+                                            $("#collection-prev").hide();
+                                        } else {
+                                            Dajaxice.core.register_a_collection(Dajax.process, {
+                                                'form': $('#collection-form').serialize(true)
+                                            });
+                                        }
+
+                                        return formValid;
+                                    } else {
+                                        init_wizard();
+                                    }
+                                }
+                            });
+
+                    $(shard_id).modal("show");
+
+                    callback_collection_name_event();
+
+                    init_wizard();
+                });
+            });
+
+            // TODO: change text to internationalized
 
 
             $('#new-work-button').on('click', function () {
                 $('#new-collection-wizard').modal('hide');
             });
 
-            $('#collection-wizard-link').on('click', function () {
-                wizardMoveFirst($('#new-collection-wizard .modal-header'));
-            });
 
-            $('#new-collection-wizard .wizard-actions .btn[data-dismiss=modal]').removeAttr('disabled');
-
-            init_wizard();
-
-            // SALES
-            var d1 = [];
-            for (var i = 0; i < Math.PI * 2; i += 0.5) {
-                d1.push([i, Math.sin(i)]);
-            }
-
-            var d2 = [];
-            for (var i = 0; i < Math.PI * 2; i += 0.5) {
-                d2.push([i, Math.cos(i)]);
-            }
-
-            var d3 = [];
-            for (var i = 0; i < Math.PI * 2; i += 0.2) {
-                d3.push([i, Math.tan(i)]);
-            }
-
-            var sales_charts = $('#sales-charts').css({'width': '100%', 'height': '220px'});
-            $.plot("#sales-charts", [
-                { label: "Domains", data: d1 },
-                { label: "Hosting", data: d2 },
-                { label: "Services", data: d3 }
-            ], {
-                hoverable: true,
-                shadowSize: 0,
-                series: {
-                    lines: { show: true },
-                    points: { show: true }
-                },
-                xaxis: {
-                    tickLength: 0
-                },
-                yaxis: {
-                    ticks: 10,
-                    min: -2,
-                    max: 2,
-                    tickDecimals: 3
-                },
-                grid: {
-                    backgroundColor: { colors: [ "#fff", "#fff" ] },
-                    borderWidth: 1,
-                    borderColor: '#555'
-                }
-            });
-
-            /*var work_charts = $('#work-sales-charts').css({'width':'100%' , 'height':'220px'});
-             $.plot("#work-sales-charts", [
-             { label: "Domains", data: d1 },
-             { label: "Hosting", data: d2 },
-             { label: "Services", data: d3 }
-             ], {
-             hoverable: true,
-             shadowSize: 0,
-             series: {
-             lines: { show: true },
-             points: { show: true }
-             },
-             xaxis: {
-             tickLength: 0
-             },
-             yaxis: {
-             ticks: 10,
-             min: -2,
-             max: 2,
-             tickDecimals: 3
-             },
-             grid: {
-             backgroundColor: { colors: [ "#fff", "#fff" ] },
-             borderWidth: 1,
-             borderColor:'#555'
-             }
-             });
-             */
             //ROLL ON HOVER
             $(function () {
                 $(".roll").css("opacity", "0");
@@ -467,18 +282,6 @@
                                 opacity: 0
                             }, "slow");
                         });
-            });
-
-            $('.sparkline').each(function () {
-                var $box = $(this).closest('.infobox');
-                var barColor = !$box.hasClass('infobox-dark') ? $box.css('color') : '#FFF';
-                $(this).sparkline('html', {tagValuesAttribute: 'data-values', type: 'bar', barColor: barColor, chartRangeMin: $(this).data('min') || 0});
-            });
-
-            $('.dd').nestable();
-
-            $('.dd-handle a').on('mousedown', function (e) {
-                e.stopPropagation();
             });
 
             $('[data-rel="tooltip"]').tooltip();
@@ -510,7 +313,7 @@
         function callback_create_work_ok(id) {
 
             $('#new_work_upload').attr('data-id', id);
-            
+
             if (!workFormCreate) {
                 workFormCreate = true;
                 $("#form-work-next").trigger("click");
@@ -523,94 +326,105 @@
         }
 
         jQuery(function ($) {
+            $('a[href="#new-work-wizard"][data-id]').on("click", function () {
+                var collection_id = $(this).attr("data-id");
 
-            $('#new-work-wizard .modal-header').ace_wizard()
-                    .on('finished', function (e) {
-                        $('#new-work-wizard').modal('hide');
-                    })
+                Shards.modal.new.work(function (shard_id, shard_data, parent) {
+                    $(shard_id).remove();
+                    $(parent).append(shard_data);
 
-                    .on('stepclick', function (e) {
-                        return false; //prevent clicking on steps
-                    })
 
-                    .on('change', function (e, info) {
+                    $(shard_id + " #id_collection").val(collection_id);
 
-                        if (info.step == 3) {
-                            if (info.direction == "next") {
-                                $("#form-work-next").html("<i class='icon-heart'></i> I'm done!");
-                            }
-                        }
+                    $(shard_id + ' .modal-header').ace_wizard()
+                            .on('finished', function (e) {
+                                $('#new-work-wizard').modal('hide');
+                                location.reload();
+                            })
 
-                        if (info.step == 2) {
-                            if (info.direction == "next") {
-                                if (workFormCreate) {
-                                    window.selectedArea.cancelSelection();
-                                    $("#form-work-next").html("<i class='icon-upload'></i> Upload My Files!");
-                                    $("#form-work-prev").hide();
-                                } else {
-                                    var crop = window.selectedArea.getSelection();
+                            .on('stepclick', function (e) {
+                                return false; //prevent clicking on steps
+                            })
 
-                                    var options = {
-                                        //target:        '#output2',   // target element(s) to be updated with server response
-                                        //beforeSubmit:  showRequest,  // pre-submit callback
-                                        success: Dajax.process,  // post-submit callback
+                            .on('change', function (e, info) {
 
-                                        // other available options:
-                                        url: "/dajaxice/core.register_a_work/",         // override for form's 'action' attribute
-                                        type: "post",        // 'get' or 'post', override for form's 'method' attribute
-                                        data: { 'crop_x': crop.x1,
-                                            'crop_y': crop.y1,
-                                            'crop_w': crop.x2,
-                                            'crop_h': crop.y2
+                                if (info.step == 3) {
+                                    if (info.direction == "next") {
+                                        $("#form-work-next").html("<i class='icon-heart'></i> I'm done!");
+                                    }
+                                }
+
+                                if (info.step == 2) {
+                                    if (info.direction == "next") {
+                                        if (workFormCreate) {
+                                            window.selectedArea.cancelSelection();
+                                            $("#form-work-next").html("<i class='icon-upload'></i> Upload My Files!");
+                                            $("#form-work-prev").hide();
+                                        } else {
+                                            var crop = window.selectedArea.getSelection(true);
+
+                                            var options = {
+                                                //target:        '#output2',   // target element(s) to be updated with server response
+                                                //beforeSubmit:  showRequest,  // pre-submit callback
+                                                success: Dajax.process,  // post-submit callback
+
+                                                // other available options:
+                                                url: "/dajaxice/core.register_a_work/",         // override for form's 'action' attribute
+                                                type: "post",        // 'get' or 'post', override for form's 'method' attribute
+                                                data: {
+                                                    'crop_x': crop.x1,
+                                                    'crop_y': crop.y1,
+                                                    'crop_w': crop.x2 - crop.x1,
+                                                    'crop_h': crop.y2 - crop.y1,
+                                                    'width': $('#current-image').width(),
+                                                    'height': $('#current-image').height()
+                                                }
+
+                                                //dataType:  null        // 'xml', 'script', or 'json' (expected server response type)
+                                                //clearForm: true        // clear all form fields after successful submit
+                                                //resetForm: true        // reset the form after successful submit
+
+                                                // $.ajax options can be used here too, for example:
+                                                //timeout:   3000
+                                            };
+
+
+                                            $('#work-form').ajaxSubmit(options);
+                                        }
+                                        return workFormCreate;
+                                    } else {
+                                        $("#form-work-next").html('Next <i class="icon-arrow-right icon-on-right"></i>').prop("disabled", false);
+                                    }
+
+                                    if (window.selectedArea) {
+                                        window.selectedArea.cancelSelection();
+                                    }
+                                }
+
+                                if (info.step == 1) {
+                                    if (info.direction == "next") {
+                                        if (workFormValid) {
+                                            $("#form-work-next").html("<i class='icon-star'></i> Select a Cover!").prop("disabled", true);
+                                        } else {
+                                            Dajaxice.core.validate_work_information(Dajax.process, {
+                                                'form': $('#work-form').serialize(true)
+                                            });
                                         }
 
-                                        //dataType:  null        // 'xml', 'script', or 'json' (expected server response type)
-                                        //clearForm: true        // clear all form fields after successful submit
-                                        //resetForm: true        // reset the form after successful submit
-
-                                        // $.ajax options can be used here too, for example:
-                                        //timeout:   3000
-                                    };
-
-
-                                    $('#work-form').ajaxSubmit(options);
+                                        return workFormValid;
+                                    } else {
+                                        init_work_wizard();
+                                    }
                                 }
-                                return workFormCreate;
-                            } else {
-                                $("#form-work-next").html('Next <i class="icon-arrow-right icon-on-right"></i>').prop("disabled", false);
-                            }
+                            });
 
-                            if (window.selectedArea) {
-                                window.selectedArea.cancelSelection();
-                            }
-                        }
 
-                        if (info.step == 1) {
-                            if (info.direction == "next") {
-                                if (workFormValid) {
-                                    $("#form-work-next").html("<i class='icon-star'></i> Select a Cover!").prop("disabled", true);
-                                } else {
-                                    Dajaxice.core.validate_work_information(Dajax.process, {
-                                        'form': $('#work-form').serialize(true)
-                                    });
-                                }
-
-                                return workFormValid;
-                            } else {
-                                init_work_wizard();
-                            }
-                        }
-                    });
-
-            init_work_wizard();
+                    sortable_image_upload('#new_work_upload', "#files-preview");
+                    $(shard_id).modal({backdrop: "static", show: true});
+                    init_work_wizard();
+                }, {"collection_id": collection_id});
+            });
         });
-
-        $('#new-work-wizard').on('hidden.bs.modal', function (e) {
-            if (window.selectedArea) {
-                window.selectedArea.cancelSelection();
-            }
-        });
-
 
     </script>
 {% endblock %}

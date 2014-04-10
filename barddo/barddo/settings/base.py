@@ -96,6 +96,7 @@ STATIC_URL = '/static/'
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'assets')),
+    path.normpath(path.join(SITE_ROOT, 'feedback', 'assets')),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
@@ -156,6 +157,7 @@ TEMPLATE_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'feedback', 'templates')),
     path.normpath(path.join(SITE_ROOT, 'shards', 'templates')),
     path.normpath(path.join(SITE_ROOT, 'publishing', 'templates')),
+    path.normpath(path.join(SITE_ROOT, 'accounts', 'templates')),
 )
 ########## END TEMPLATE CONFIGURATION
 
@@ -319,8 +321,8 @@ FACEBOOK_EXTENDED_PERMISSIONS = ['email', 'user_about_me', 'user_birthday', 'use
 ########## Image crop settings
 THUMBNAIL_ALIASES = {
     '': {
-        'big_cover': {'size': (261, 348), 'crop': True},
-        'small_cover': {'size': (163, 236), 'crop': True},
+        'big_cover': {'size': (261, 300), 'crop': False},
+        'small_cover': {'size': (163, 236), 'crop': False},
     },
 }
 

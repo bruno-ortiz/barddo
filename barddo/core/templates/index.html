@@ -1,6 +1,5 @@
 {% extends 'main_template.html' %}
 {% load staticfiles %}
-{% load dajaxice_templatetags %}
 {% load compress %}
 {% load thumbnail %}
 
@@ -11,10 +10,13 @@
 {% block breadcrumbs %}
     <div id="options">
         <ul id="filters" class="option-set clearfix" data-option-key="filter">
-            <li><a href="#filter" data-option-value="*" class="selected"><i class="icon icon icon-th-large"></i> All Items</a></li>
+            <li><a href="#filter" data-option-value="*" class="selected"><i class="icon icon icon-th-large"></i> All
+                Items</a></li>
             <li><a href="#filter" data-option-value=".collection-great"><i class="icon icon-star"></i> New</a></li>
-            <li><a href="#filter" data-option-value=".collection-good"><i class="icon icon-comments"></i> Trending</a></li>
-            <li><a href="#filter" data-option-value=".collection-common"><i class="icon icon-circle-arrow-up"></i> Rising</a></li>
+            <li><a href="#filter" data-option-value=".collection-good"><i class="icon icon-comments"></i> Trending</a>
+            </li>
+            <li><a href="#filter" data-option-value=".collection-common"><i class="icon icon-circle-arrow-up"></i>
+                Rising</a></li>
         </ul>
     </div>
 {% endblock %}
@@ -36,13 +38,56 @@
 
                                     <div class="roll">
                                         <div class="wrapcaption">
-                                            <a href="projectdetail.html"><i class="icon-star captionicons"></i></a>
+                                            <a class="vote" data-id="{{ work.id }}" href="projectdetail.html">
+                                                <i class="icon-heart-empty captionicons"></i>
+                                            </a>
                                         </div>
                                     </div>
+
                                     <div class="work-information">
-                                        <span class="badge badge-grey pull-right work-number">#{{ work.unit_count }}</span>
+                                        <span class="badge badge-danger pull-right work-number">#{{ work.unit_count }}</span>
+
                                         <h1>{{ work.title }}</h1>
+
                                         <h2>{{ work.collection.name }}</h2>
+                                    </div>
+                                </div>
+                                <div id="work-popup-{{ work.id }}" class="popover-data">
+                                    <div class="work-detail-popup">
+                                        <div class="popover-details">
+                                            <div class="row pull-left">
+                                                <div class="col-sm-2 center">
+                                                    <img class="artist"
+                                                         src="{{ MEDIA_URL }}user_avatar/falleco-social.jpg"
+                                                         alt="Artist Photo"/>
+                                                    <span>Israel</span>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    This is some neat description This is some neat description This is
+                                                    some
+                                                    neat description This is some neat description This is some neat
+                                                    description
+                                                    This is some neat description
+                                                </div>
+
+                                                <div class="col-sm-1">
+                                                    <div class="popup-likes pull-right center">
+                                                        <i class="icon-heart"></i><br/>
+                                                        0
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="clearfix"></div>
+                                        <div class="pull-right popup-buttons">
+                                            <a href="#" class="btn btn-minier btn-success">
+                                                <i class="icon-zoom-in"></i> Read Now!
+                                            </a>
+                                            <a href="#" class="btn btn-minier btn-info">
+                                                <i class="icon-share"></i> Share
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -59,33 +104,76 @@
     {% compress js %}
         <script src="{% static "js/jquery.isotope.min.js" %}"></script>
         <script src="{% static "js/portfolio.js" %}"></script>
-        {% dajaxice_js_import 'nocsrf' %}
-        <script type="text/javascript" src="{% static "dajax/jquery.dajax.core.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/barddo/pages/gallery.js" %}"></script>
     {% endcompress %}
 {% endblock %}
 
 {% block bottom_page %}
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(document).ready(function () {
             {% if next_url %}
                 $("#loginModal").modal();
             {% endif %}
+
+            var onPopupHover = false;
 
             //ROLL ON HOVER
             $(function () {
                 $(".roll").css("opacity", "0");
                 $(".roll").hover(function () {
-                            $(this).stop().animate({
-                                opacity: 1
-                            }, "slow");
+                            $(this).css("opacity", 1);
                         },
                         function () {
-                            $(this).stop().animate({
-                                opacity: 0
-                            }, "slow");
+                            if (!onPopupHover) {
+                                $(this).css("opacity", 0);
+                            }
                         });
             });
 
+            $(".vote").popover({
+                trigger: "manual",
+                html: true,
+                animation: false,
+                placement: "bottom",
+                container: "body",
+                content: function () {
+                    var id = $(this).attr("data-id");
+                    return $("#work-popup-" + id).html();
+                },
+
+                template: '<div class="popover work-popover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
+            });
+
+            $(".boxcontainer").on("mouseenter",function () {
+                var _this = this;
+
+                if (!$(".popover").length) {
+                    $(".vote", _this).popover("show");
+
+                    $(".popover").on("mouseleave", function () {
+                        setTimeout(function () {
+                            if (!$(".boxcontainer:hover").length) {
+                                $(".vote", _this).popover('hide');
+                                $(".roll", _this).css("opacity", 0);
+                            }
+                        }, 100);
+
+                        onPopupHover = false;
+                    });
+                }
+
+                onPopupHover = true;
+
+            }).on("mouseleave", function () {
+                var _this = this;
+                setTimeout(function () {
+                    if (!$(".popover:hover").length) {
+                        onPopupHover = false;
+                        $(".vote", _this).popover("hide");
+                        $(".roll", _this).css("opacity", 0);
+                    }
+                }, 100);
+            });
         });
     </script>
 {% endblock %}

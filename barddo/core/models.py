@@ -30,7 +30,8 @@ def get_collection_cover_path(instance, filename):
     """
         Default work cover path
     """
-    return os.path.join('covers', 'collection', md5(filename).hexdigest())
+    _, ext = os.path.splitext(filename)
+    return os.path.join('covers', 'collection', "{0}{1}".format(md5(filename).hexdigest(), ext))
 
 
 class Collection(models.Model):
@@ -56,13 +57,16 @@ class Collection(models.Model):
 
     slug = models.SlugField(_('Slug'), max_length=250, db_index=True)
     status = models.SmallIntegerField(_('Status'), choices=STATUS_CHOICES, default=STATUS_ONGOING, db_index=True)
-    unit = models.ForeignKey(CollectionUnit)
+    unit = models.ForeignKey(CollectionUnit, null=False, blank=False)
 
     start_date = models.DateField(_('Start Date'), blank=False, null=False)
     end_date = models.DateField(_('End Date'), blank=True, null=True)
 
     author = models.ForeignKey(BarddoUser, null=False)
     cover = models.ImageField(_('Cover Art'), upload_to=get_collection_cover_path, blank=True, null=True)
+
+    def get_total_works(self):
+        return Work.objects.filter(collection__id=self.id).count()
 
     # TODO: collection tags
     # TODO: collection categories
@@ -85,7 +89,9 @@ def get_work_cover_path(instance, filename):
     """
         Default work cover path
     """
-    return os.path.join('covers', 'works', md5(filename).hexdigest())
+    _, ext = os.path.splitext(filename)
+    return os.path.join('covers', 'works',
+                        "{0}{1}".format(md5(filename).hexdigest(), ext))
 
 
 class Work(models.Model):
@@ -182,7 +188,7 @@ class Work(models.Model):
         return image_files
 
     class Meta:
-        unique_together = (("collection", "unit_count"), ("collection", "title"))
+        unique_together = (("collection", "unit_count"))
 
         # TODO: work tags
         # TODO: work categories

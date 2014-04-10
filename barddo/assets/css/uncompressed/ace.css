@@ -5,8 +5,8 @@ html {
 
 body {
     padding-bottom: 0;
-    background-color: #e4e6e9;
-    background-image: url('../img/background-pattern.png');
+    background-color: rgb(209, 221, 238) !important;
+    /*background-image: url('../img/background-pattern.png');*/
     min-height: 100%;
     font-family: 'Open Sans';
     font-size: 13px;
@@ -25,8 +25,8 @@ body.breadcrumbs-fixed {
 /* ace default theme layout sections */
 .main-container {
     position: static;
-    padding: 0;
     min-height: 500px;
+    padding: 0 0 223px;
 }
 
 .main-container:after {
@@ -66,10 +66,9 @@ body.breadcrumbs-fixed {
 }
 
 .page-content {
-    background: rgba(255, 255, 255, 1) url('../img/background-pattern-stripes.png');
+    background: rgba(255, 255, 255, 1);
     margin: 0;
     padding: 8px 20px 70px;
-    min-height: 630px;
 }
 
 .page-header {
@@ -1397,8 +1396,8 @@ blockquote.pull-right {
     color: #ffffff;
     font-size: 24px;
     text-shadow: none;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .navbar .navbar-brand:hover,
@@ -2042,10 +2041,8 @@ blockquote.pull-right {
 
 /* searchbox */
 .nav-search {
-    position: absolute;
-    top: 6px;
-    right: 22px;
-    line-height: 24px;
+    margin-top: 8px;
+    margin-left: 80px;
 }
 
 .nav-search .form-search {
@@ -2054,7 +2051,7 @@ blockquote.pull-right {
 
 .nav-search .nav-search-input {
     border: 1px solid #6fb3e0;
-    width: 300px;
+    width: 630px;
     height: 28px !important;
     border-radius: 4px !important;
     font-size: 13px;

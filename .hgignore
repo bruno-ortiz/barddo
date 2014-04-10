@@ -1,8 +1,8 @@
 .pyc$
-.idea/
-.db
+\.idea/
+\.db$
 static/
-.DS_Store
+\.DS_Store$
 user_avatar/
-.sass-cache/
+\.sass-cache/
 /media

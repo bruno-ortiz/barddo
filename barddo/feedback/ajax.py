@@ -24,9 +24,9 @@ def send_feedback(request, form_data):
         feedback = form.save(commit=False)
         feedback.date = datetime.datetime.now()
         feedback.save()
-        ajax.script('gritterSuccess("{}", "{}")'.format(_('Success'), _('Feedback sent!')))
-        ajax.script('$("#feedbackModal").modal("hide")')
+        ajax.script('callback_feedback_ok("{}", "{}")'.format(_('Success'), _('Feedback sent!')))
     else:
+        ajax.script('callback_feedback_error()')
         for field, errors in form.errors.items():
             ajax.script('error_tooltip("#{}", "{}", null, null)'.format(field, errors[0]))
             ajax.script('$("#{}").closest("div.form-group").addClass("has-error")'.format(field))

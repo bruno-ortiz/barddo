@@ -44,7 +44,7 @@
 }
 
 .navbar {
-    background: #393939;
+    background: #03354c;
 }
 
 img {
@@ -122,4 +122,84 @@ img {
 
 .modal-sm {
     width: 400px;
+}
+
+/**
+ ** Index Theme
+ **/
+.dashboard-link {
+    background-color: #04425f
+}
+
+footer {
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+}
+
+@media (min-width: 1600px) {
+    /*.container {
+        max-width: 1664px;
+    }*/
+}
+
+.work-information h1 {
+    font-size: 14px !important;
+}
+
+.work-information h1, .work-information h2 {
+    padding-left: 0 !important;
+}
+
+.work-number {
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+/**
+ ** Page Scrolling
+ **/
+.scrollup {
+    width: 40px;
+    height: 40px;
+    opacity: 0.3;
+    position: fixed;
+    bottom: 50px;
+    right: 100px;
+    display: none;
+    z-index: 9999;
+    background: url('../../images/icon_top.png') no-repeat;
+}
+
+#loginModal .modal-dialog {
+    width: 30%;
+}
+
+.profile-user-col {
+    padding-top: 23px;
+}
+
+.side-bar {
+    padding-top: 41px;
+}
+
+.dashboard-caption {
+    padding: 10px;
+    top: 20% !important;
+}
+
+/** Fix for bootstrap modal displacement **/
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    body {
+        overflow-y: scroll;
+    }
+
+    body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
+        overflow-y: scroll;
+        margin: 0;
+    }
+
+    .modal {
+        overflow: auto;
+    }
 }
