@@ -22,6 +22,7 @@ class WorkForm(ModelForm):
     """
     Simple work form that don't require the image. That will be validated by an AJAX callback in the application.
     """
+    publish_date = DateTimeField(input_formats=settings.DATE_INPUT_FORMATS)
     cover = ImageField(required=False)
 
     def clean(self):
@@ -41,4 +42,4 @@ class WorkForm(ModelForm):
 
     class Meta:
         model = Work
-        fields = ['title', 'summary', 'unit_count', 'collection', 'cover']
+        fields = ['title', 'summary', 'unit_count', 'collection', 'cover', 'publish_date']

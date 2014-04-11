@@ -1,7 +1,7 @@
 {% extends 'main_template.html' %}
 {% load staticfiles %}
 {% load compress %}
-{% load thumbnail %}
+{% load work_element %}
 
 {% block header %}
     <link rel="stylesheet" href="{% static "css/uncompressed/barddo.gallery.css" %}"/>
@@ -12,10 +12,10 @@
         <ul id="filters" class="option-set clearfix" data-option-key="filter">
             <li><a href="#filter" data-option-value="*" class="selected"><i class="icon icon icon-th-large"></i> All
                 Items</a></li>
-            <li><a href="#filter" data-option-value=".collection-great"><i class="icon icon-star"></i> New</a></li>
-            <li><a href="#filter" data-option-value=".collection-good"><i class="icon icon-comments"></i> Trending</a>
+            <li><a href="#filter" data-option-value=".collection-new"><i class="icon icon-star"></i> New</a></li>
+            <li><a href="#filter" data-option-value=".collection-trending"><i class="icon icon-comments"></i> Trending</a>
             </li>
-            <li><a href="#filter" data-option-value=".collection-common"><i class="icon icon-circle-arrow-up"></i>
+            <li><a href="#filter" data-option-value=".collection-rising"><i class="icon icon-circle-arrow-up"></i>
                 Rising</a></li>
         </ul>
     </div>
@@ -29,68 +29,11 @@
             <div id="collection-content" class="col-lg-12  col-md-12 col-sm-12 col-xs-12 collections-wrap">
                 <div class="row">
                     <div class="portfolio">
-                        {% for work in works %}
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 item collection-great">
-                                <div class="boxcontainer">
-                                    <div class="cover-wrap">
-                                        <img src="{{ work.cover|thumbnail_url:"big_cover" }}" alt="">
-                                    </div>
-
-                                    <div class="roll">
-                                        <div class="wrapcaption">
-                                            <a class="vote" data-id="{{ work.id }}" href="projectdetail.html">
-                                                <i class="icon-heart-empty captionicons"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div class="work-information">
-                                        <span class="badge badge-danger pull-right work-number">#{{ work.unit_count }}</span>
-
-                                        <h1>{{ work.title }}</h1>
-
-                                        <h2>{{ work.collection.name }}</h2>
-                                    </div>
-                                </div>
-                                <div id="work-popup-{{ work.id }}" class="popover-data">
-                                    <div class="work-detail-popup">
-                                        <div class="popover-details">
-                                            <div class="row pull-left">
-                                                <div class="col-sm-2 center">
-                                                    <img class="artist"
-                                                         src="{{ MEDIA_URL }}user_avatar/falleco-social.jpg"
-                                                         alt="Artist Photo"/>
-                                                    <span>Israel</span>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    This is some neat description This is some neat description This is
-                                                    some
-                                                    neat description This is some neat description This is some neat
-                                                    description
-                                                    This is some neat description
-                                                </div>
-
-                                                <div class="col-sm-1">
-                                                    <div class="popup-likes pull-right center">
-                                                        <i class="icon-heart"></i><br/>
-                                                        0
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="clearfix"></div>
-                                        <div class="pull-right popup-buttons">
-                                            <a href="#" class="btn btn-minier btn-success">
-                                                <i class="icon-zoom-in"></i> Read Now!
-                                            </a>
-                                            <a href="#" class="btn btn-minier btn-info">
-                                                <i class="icon-share"></i> Share
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        {% for work in new_works %}
+                            {% work_element work "collection-new" %}
+                        {% endfor %}
+                        {% for work in rising_works %}
+                            {% work_element work "collection-rising" %}
                         {% endfor %}
                     </div>
                 </div>
