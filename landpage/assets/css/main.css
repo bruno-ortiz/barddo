@@ -1506,3 +1506,7 @@ body {
     left: -9999px;
     top: -9999px;
 }
+
+#title-slide h1, .social {
+    coloe: #0d384f !important;
+}
