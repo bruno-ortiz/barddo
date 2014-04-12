@@ -1,5 +1,5 @@
 #video
-  height: 120px
+  height: 320px
 
   +breakpoint(sm)
     min-height: 300px
@@ -10,18 +10,17 @@
     height: auto
 
 #title-slide
-  height: 120px
-  background: url(../img/title-image.jpg) left no-repeat
-  +background-size(cover)
+  height: 750px
+  background: #b3dddb
   border-bottom: solid 3px rgba(40, 40, 40, 0.45)
 
   +breakpoint(sm)
-    min-height: 300px
-    height: auto
+    height: 670px
+    background: #b3dddb url(../img/title-image.jpg) left no-repeat
+    background-size: 100% auto
 
   +breakpoint(md)
-    min-height: 350px
-    height: auto
+    height: 800px
 
   h1
     color: #000
@@ -30,13 +29,21 @@
     +font-size(64)
 
   .start
+    margin-top: 25px
+    margin-bottom: 25px
+
     +breakpoint(sm)
       +font-size(42)
-      margin-top: 25px
+      margin-top: 45px
+      margin-bottom: 25px
 
     +breakpoint(md)
       margin-top: 45px
       margin-bottom: 45px
+
+    img
+      width: 100%
+      max-width: 400px
 
 #sub-title
   min-height: 130px

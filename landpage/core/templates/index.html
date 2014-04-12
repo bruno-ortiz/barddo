@@ -18,10 +18,12 @@
         <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
 
         <link rel="stylesheet" href="{% static "css/font-awesome.min.css" %}"/>
+        <link rel="stylesheet" href="{% static "css/flag-icon.min.css" %}"/>
 
         <!--[if IE 7]>
 		  <link rel="stylesheet" href="{% static "css/font-awesome-ie7.min.css" %}" />
 		<![endif]-->
+
 
         <link rel="stylesheet" type="text/x-sass" media="screen" href="{% static 'sass/main.sass' %}">
     {% endcompress %}
@@ -106,12 +108,35 @@
 
 </head>
 <body>
+<div class="language-bar pull-right">
+
+    <form name="setLangPt" action="/i18n/setlang/" method="POST" class="pull-right">
+        {% csrf_token %}
+        <input type="hidden" name="language" value="pt"/>
+        <input type="hidden" name="next" value="/"/>
+
+        <a href="#" onclick="document.setLangPt.submit(); return false;">
+            <span class="flag flag-icon flag-icon-br"></span>
+        </a>
+    </form>
+
+    <form name="setLangEn" action="/i18n/setlang/" method="POST" class="pull-right">
+        {% csrf_token %}
+        <input type="hidden" name="language" value="en"/>
+        <input type="hidden" name="next" value="/"/>
+
+        <a href="#" onclick="document.setLangEn.submit(); return false;">
+            <span class="flag flag-icon flag-icon-us"></span>
+        </a>
+    </form>
+</div>
+
 <section id="title-slide" class="clearfix" data-stellar-background-ratio="0.5">
 
     <div class="container">
 
         <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-4 start">
+            <div class="col-xs-12 start">
                 <img src="{% static "img/brand.png" %}"/>
             </div>
         </div>
@@ -125,7 +150,7 @@
 
         <div class="row">
             <div class="col-xs-12 col-sm-12">
-                <h1 class="amatic animated fadeIn">{% trans "We believe that all forms of talent are noteworthy" %}</h1>
+                <h1 class="amatic animated fadeIn slug">{% trans "We believe that all forms of talent are noteworthy" %}</h1>
             </div>
         </div>
 
@@ -178,7 +203,7 @@
 </div>
 
 <div class="row ">
-    <div class="col-xs-12 col-sm-4 col-sm-offset-5 hidden-xs">
+    <div class="col-xs-12">
         <div class="story-image-container" style="padding-top: 80px;">
             <img data-delay="1" src="{% static 'img/art/why.png' %}" alt="user icon">
         </div>
@@ -262,7 +287,7 @@
 </div>
 
 <div class="row ">
-    <div class="col-xs-12 col-sm-2 col-sm-offset-5 hidden-xs">
+    <div class="col-xs-12 col-sm-2 col-sm-offset-5">
         <div class="story-image-container" data-delay="3" style="padding-top: 80px;">
             <img src="{% static 'img/art/halfhalf.png' %}" alt="user icon">
         </div>
@@ -523,7 +548,8 @@
                                            class="control-label">{{ form.name.label }}</label>
 
                                     <div class=" col-sm-8 col-md-9 col-lg-10 input-container">
-                                        {% render_field form.name class="form-control" placeholder="Please tell us your name" %}
+                                        {% trans "Please tell us your name" as name_placeholder_attr %}
+                                        {% render_field form.name class="form-control" placeholder=name_placeholder_attr %}
                                     </div>
 
                                 </div>
@@ -533,14 +559,16 @@
                                            class="control-label">{{ form.email.label }}</label>
 
                                     <div class=" col-sm-8 col-md-9  col-lg-10 input-container">
-                                        {% render_field form.email class="form-control" placeholder="So we can stay in touch" %}
+                                        {% trans "So we can stay in touch" as email_placeholder_attr %}
+                                        {% render_field form.email class="form-control" placeholder=email_placeholder_attr %}
                                     </div>
                                 </div>
 
                                 <div class="form-group clearfix">
 
                                     <div class=" input-container col-xs-12">
-                                        {% render_field form.message class="form-control" rows="5" placeholder="Thoughts about the project? Are you an artist or a reader? Maybe both?" %}
+                                        {% trans "Thoughts about the project? Are you an artist or a reader? Maybe both?" as msg_placeholder_attr %}
+                                        {% render_field form.message class="form-control" rows="5" placeholder=msg_placeholder_attr %}
                                     </div>
                                 </div>
 

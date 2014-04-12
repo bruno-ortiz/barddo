@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from os import path
 import sys
 from os.path import dirname, abspath, basename
@@ -58,7 +59,16 @@ TIME_ZONE = 'America/Sao_Paulo'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
+
+LANGUAGES = (
+    ('pt', 'Portuguese'),
+    ('en', 'English'),
+)
+
+LOCALE_PATHS = (
+    path.normpath(path.join(SITE_ROOT, 'locale')),
+)
 
 SITE_ID = 1
 
@@ -158,6 +168,7 @@ TEMPLATE_DIRS = (
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#middleware-classes
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
