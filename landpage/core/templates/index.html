@@ -98,12 +98,12 @@
         }
 
         function callback_feedback_error() {
-            $("#feedback-form button").html('<i class="entypo-mail  pull-left"></i> Try Again!');
+            $("#feedback-form button").html('<i class="entypo-mail  pull-left"></i> {% trans "Try Again!" %}');
         }
 
         $(document).ready(function () {
             $("#feedback-form button").on("click", function (e) {
-                $(this).html('<i class="icon-spinner icon-spin"></i> Sending...');
+                $(this).html('<i class="icon-spinner icon-spin"></i> {% trans "Sending..."  %}');
 
                 Dajaxice.core.register_feedback(Dajax.process, {
                     'form': $('#feedback-form').serialize()
@@ -644,7 +644,7 @@
             {% endif %}
 
             <div class=" col-xs-12 ">
-                <h1>Thanks for your feedback!</h1>
+                <h1>{% trans "Thanks for your feedback!" %} </h1>
                 <img src="{% static 'img/mail.png' %}" alt="mail icon">
             </div>
             </div>
