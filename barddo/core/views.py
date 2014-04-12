@@ -19,6 +19,8 @@ from publishing.views import publisher_landpage
 class IndexView(ProfileAwareView):
     LAST_WEEK = -7
 
+    LAST_MONTH = -30
+
     template_name = 'index.html'
 
     def get(self, request, *args, **kwargs):
@@ -28,18 +30,27 @@ class IndexView(ProfileAwareView):
 
         new_works = self.get_new_works(barddo_user)
         rising_works = self.get_rising_works(barddo_user)
+        trending_works = self.get_trending_works(barddo_user)
 
-        context = self.get_context_data(**{'user': request.user, "next_url": next_url, "new_works": new_works, "rising_works": rising_works})
+        context = self.get_context_data(
+            **{'user': request.user, "next_url": next_url, "new_works": new_works, "rising_works": rising_works,
+               "trending_works": trending_works})
         return super(IndexView, self).render_to_response(context)
 
     def get_new_works(self, user):
         limit = self.get_relative_date(self.LAST_WEEK)
 
         return Work.objects.select_related("collection").total_likes(). \
-            liked_by(user).filter(publish_date__gte=limit)
+            liked_by(user).filter(publish_date__gte=limit).order_by("-publish_date")
 
     def get_rising_works(self, user):
         limit = self.get_relative_date(self.LAST_WEEK)
+
+        return Work.objects.select_related("collection").total_likes(). \
+            liked_by(user).liked_after(limit).order_by("-total_likes")
+
+    def get_trending_works(self, user):
+        limit = self.get_relative_date(self.LAST_MONTH)
 
         return Work.objects.select_related("collection").total_likes(). \
             liked_by(user).liked_after(limit).order_by("-total_likes")
