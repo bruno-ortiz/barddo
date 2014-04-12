@@ -1,9 +1,9 @@
 {% extends 'main_template.html' %}
 {% load staticfiles %}
 {% load compress %}
-{% load search_result_collection %}
-{% load search_result_work %}
-{% load search_result_person %}
+{% load collection_result %}
+{% load work_result %}
+{% load person_result %}
 
 {% block header %}
     <link rel="stylesheet" href="{% static "css/uncompressed/barddo.gallery.css" %}"/>
@@ -41,13 +41,13 @@
                     <div class="row">
                         <div class="portfolio">
                             {% for collection in collections %}
-                                {% search_result_collection collection %}
+                                {% collection_result collection %}
                             {% endfor %}
                             {% for work in works %}
-                                {% search_result_work work %}
+                                {% work_result work %}
                             {% endfor %}
                             {% for person in people %}
-                                {% search_result_person person %}
+                                {% person_result person %}
                             {% endfor %}
                         </div>
                     </div>

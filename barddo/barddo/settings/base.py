@@ -97,6 +97,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'assets')),
     path.normpath(path.join(SITE_ROOT, 'feedback', 'assets')),
+    path.normpath(path.join(SITE_ROOT, 'search', 'assets')),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
@@ -220,7 +221,7 @@ LOCAL_APPS = (
     'feedback',
     'publishing',
     'rating',
-
+    'search',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
