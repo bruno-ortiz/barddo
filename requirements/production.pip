@@ -18,3 +18,4 @@ BeautifulSoup<4
 easy-thumbnails
 django-imagekit
 pilkit
+djorm-ext-pgfulltext

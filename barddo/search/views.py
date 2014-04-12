@@ -3,7 +3,6 @@ from django.utils.html import escape
 from django.utils.translation import ugettext as _
 
 from accounts.models import BarddoUser
-
 from accounts.views import ProfileAwareView
 from core.models import Collection, Work
 
@@ -24,7 +23,7 @@ class SearchResultView(ProfileAwareView):
             works = self.search_in_works(text)
             people = self.search_in_users(text)
 
-            if len(collections) != 0 and len(works) != 0 and len(people) != 0:
+            if len(collections) == 0 and len(works) == 0 and len(people) == 0:
                 context = self.get_context_data(**{'user': request.user, "error": _(u"Não foi encontrado nenhum resultado para sua busca."), "success": False})
             else:
                 context = self.get_context_data(**{'user': request.user, "collections": collections, "works": works, "people": people, "success": True})
@@ -37,13 +36,13 @@ class SearchResultView(ProfileAwareView):
         return ' '.join(word for word in text.split() if len(word) > 3)
 
     def search_in_collections(self, text):
-        return Collection.objects.filter(name__icontains=text)[:30]
+        return Collection.search_manager.search(text)[:30]
 
     def search_in_works(self, text):
-        return Work.objects.filter(title__icontains=text)[:30]
+        return Work.search_manager.search(text)[:30]
 
     def search_in_users(self, text):
-        return BarddoUser.objects.filter(username__icontains=text)[:30]
+        return BarddoUser.search_manager.search(text)[:30]
 
 
 search_result = SearchResultView.as_view()
