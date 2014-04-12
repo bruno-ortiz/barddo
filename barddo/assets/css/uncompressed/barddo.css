@@ -207,3 +207,13 @@ footer {
         overflow: auto;
     }
 }
+
+.modal-body {
+    width: auto;
+    height: auto;
+    max-height: 100%;
+}
+
+.modal-backdrop.in {
+    opacity: 0.9;
+}

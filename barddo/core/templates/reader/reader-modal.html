@@ -1,110 +1,25 @@
 {% load i18n %}
 {% load staticfiles %}
-
-<div class="modal fade" id="readerModal" role="dialog" aria-labelledby="createGroupLabel" aria-hidden="true">
+<div class="modal fade fullscreen-modal" id="readerModal" role="dialog" tabindex="-1" aria-labelledby="createGroupLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-            </div>
             <div class="modal-body">
-                <div id="slider_container" style="position: relative; width: 960px; height: 380px; overflow: hidden;">
-                    <div u="slides" style="cursor: move; position: absolute; left: 0; top: 0; width: 600px; height: 300px; overflow: hidden;">
-                        {% for page in work.load_work_pages %}
-                            <div>
-                                <img u="image" src="{{ page.url }}"/>
-                                <img u="thumb" src="{{ page.url }}"/>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <!-- Arrow Left -->
-                    <span u="arrowleft" class="jssord20l" style="width: 55px; height: 55px; top: 123px; left: 8px;"></span>
-                    <!-- Arrow Right -->
-                    <span u="arrowright" class="jssord20r" style="width: 55px; height: 55px; top: 123px; right: 8px"></span>
-                    <!-- ThumbnailNaigator Skin Begin -->
-                    <div u="thumbnavigator" class="slider1-T" style="position: absolute; width: 600px; height: 60px; left:0px; bottom: 0px;">
-                        <div style=" background-color: #000; filter:alpha(opacity=30); opacity:.3; width: 100%; height:100%;"></div>
-                        <!-- Thumbnail Item Skin Begin -->
-                        <style>
-                            .slider1-T .w, .slider1-T .pav:hover .w, .slider1-T .phv .w {
-                                position: absolute;
-                                WIDTH: 60px;
-                                HEIGHT: 30px;
-                                border: white 1px dashed;
-                            }
-
-                            * html .slider1-T .w {
-                                WIDTH /**/: 62px;
-                                HEIGHT /**/: 32px;
-                            }
-
-                            .slider1-T .pdn .w, .slider1-T .pav .w {
-                                border-style: solid;
-                            }
-
-                            .slider1-T .c {
-                                WIDTH: 62px;
-                                HEIGHT: 32px;
-                                FILTER: alpha(opacity=45);
-                                opacity: .45;
-                                transition: opacity .6s;
-                                -moz-transition: opacity .6s;
-                                -webkit-transition: opacity .6s;
-                                -o-transition: opacity .6s;
-                            }
-
-                            .slider1-T .p:hover .c, .slider1-T .phv .c, .slider1-T .pav .c {
-                                FILTER: alpha(opacity=0);
-                                opacity: 0;
-                            }
-
-                            .slider1-T .p:hover .c, .slider1-T .phv .c {
-                                transition: none;
-                                -moz-transition: none;
-                                -webkit-transition: none;
-                                -o-transition: none;
-                            }
-                        </style>
-                        <div u="slides">
-                            <div u="prototype" class="p" style="POSITION: absolute; WIDTH: 62px; HEIGHT: 32px; TOP: 0; LEFT: 0;">
-                                <div class=w>
-                                    <ThumbnailTemplate style=" WIDTH: 100%; HEIGHT: 100%; border: none;position:absolute; TOP: 0; LEFT: 0;"></ThumbnailTemplate>
-                                </div>
-                                <div class=c style="POSITION: absolute; TOP: 0; LEFT: 0; BACKGROUND-COLOR: #000;">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Thumbnail Item Skin End -->
-                    </div>
-                    <!-- ThumbnailNavigator Skin End -->
-                </div>
-            </div>
-            <div class="modal-footer">
-
+                <ul id="pikame" class="jcarousel-skin-pika">
+                    {% for page in work.load_work_pages %}
+                        <li>
+                            <img src="{{ page.url }}"/>
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>
 </div>
-<script type="text/javascript" src="{% static "js/jssor.core.js" %}"></script>
-<script type="text/javascript" src="{% static "js/jssor.utils.js" %}"></script>
-<script type="text/javascript" src="{% static "js/jssor.slider.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.pikachoose.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery.jcarousel.min.js" %}"></script>
 <script type="text/javascript">
-    var options = {
-        $DragOrientation: 1,
-        $AutoPlay: false,
-        $DirectionNavigatorOptions: {
-            $Class: $JssorDirectionNavigator$,
-            $ChanceToShow: 2,
-            $AutoCenter: 2,
-            $Steps: 1
-        },
-        $ThumbnailNavigatorOptions: {
-            $Class: $JssorThumbnailNavigator$,              //Class to create thumbnail navigator instance
-            $ChanceToShow: 1,                               //0 Never, 1 Mouse Over, 2 Always
-            $Lanes: 1,                                      //Specify lanes to arrange thumbnails, default value is 1
-            $SpacingX: 3,                                   //Horizontal space between each thumbnail in pixel
-            $SpacingY: 3,                                   //Vertical space between each thumbnail in pixel
-            $DisplayPieces: 4                              //Number of pieces to display
-        }
-    };
-    var jssor_slider1 = new $JssorSlider$("slider_container", options);
+    $("#pikame").PikaChoose({
+        carousel: true,
+        autoPlay: false
+    });
 </script>
