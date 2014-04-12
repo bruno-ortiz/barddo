@@ -6,12 +6,18 @@
 
 <!DOCTYPE html>
 <html class="no-js">
-<head>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>{% trans "Barddo - Where talent gets attention" %}</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
+
+    <meta property="fb:app_id" content="1375067126097037"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="{{ BASE_URL }}"/>
+    <meta property="og:title" content="{% trans "Barddo - Where talent gets attention" %}"/>
+    <meta property="og:image" content="{{ BASE_URL }}{% static 'img/iconelogoapp.png' %}"/>
 
     {% compress css %}
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
@@ -23,6 +29,7 @@
         <!--[if IE 7]>
 		  <link rel="stylesheet" href="{% static "css/font-awesome-ie7.min.css" %}" />
 		<![endif]-->
+
 
 
         <link rel="stylesheet" type="text/x-sass" media="screen" href="{% static 'sass/main.sass' %}">
