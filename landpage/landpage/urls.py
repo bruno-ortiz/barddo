@@ -14,6 +14,7 @@ urlpatterns = patterns(
     url(r'^$', 'core.views.index', name='home'),
     url(r'^stats/', include(admin.site.urls)),
     url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
 )
 
 urlpatterns += staticfiles_urlpatterns()

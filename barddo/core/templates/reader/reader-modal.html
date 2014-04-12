@@ -1,13 +1,13 @@
 {% load i18n %}
 {% load staticfiles %}
 <div class="modal fade fullscreen-modal" id="readerModal" role="dialog" tabindex="-1" aria-labelledby="createGroupLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
                 <ul id="pikame" class="jcarousel-skin-pika">
                     {% for page in work.load_work_pages %}
                         <li>
-                            <img src="{{ page.url }}"/>
+                            <img class="img-responsive" src="{{ page.url }}"/>
                         </li>
                     {% endfor %}
                 </ul>
@@ -20,6 +20,16 @@
 <script type="text/javascript">
     $("#pikame").PikaChoose({
         carousel: true,
-        autoPlay: false
+        autoPlay: false,
+        imageChanged: function () {
+            $('#readerModal').scrollTop(0);
+        }
+    });
+    $("#readerModal").keydown(function (e) {
+        if (e.keyCode == '37') {
+            $('#pikame').data('pikachoose').Prev();
+        } else if (e.keyCode == '39') {
+            $('#pikame').data('pikachoose').Next();
+        }
     });
 </script>

@@ -6,9 +6,11 @@ $(function () {
 
     /*==========  Initalize fit text for responsive text  ==========*/
 
-    $(".fittext").fitText();
-
-    $(".littext").fitText(0.8, {maxFontSize: '40px'});
+    setInterval(function () {
+        $(".fittext").fitText();
+        $(".littext").fitText(0.8, {maxFontSize: '40px'});
+        $(".slug").fitText(0.8, {maxFontSize: '50px'});
+    }, 500);
 
 
     /*==================================================================

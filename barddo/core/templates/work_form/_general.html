@@ -15,6 +15,22 @@
 </div>
 
 <div class="form-group">
+    <label for="{{ work_form.title.auto_id }}"
+           class="col-xs-12 col-sm-3 control-label no-padding-right">{{ work_form.publish_date.label }}</label>
+
+    <div class="col-xs-12 col-sm-5">
+            <span class="block">
+                <div class="input-group">
+                    {% render_field work_form.publish_date class="form-control date-picker" data-date-format="dd-mm-yyyy" %}
+                     <span class="input-group-addon">
+                        <i class="icon-calendar bigger-110"></i>
+                    </span>
+                </div>
+            </span>
+    </div>
+</div>
+
+<div class="form-group">
     <label for="{{ work_form.summary.auto_id }}"
            class="col-xs-12 col-sm-3 control-label no-padding-right">{{ work_form.summary.label }}</label>
 
@@ -39,5 +55,11 @@
 <script type="text/javascript">
     jQuery(function ($) {
         $({{ work_form.unit_count.auto_id }}).ace_spinner({value: {{ next_unit }}, min: 1, step: 1, btn_up_class: 'btn-info', btn_down_class: 'btn-info'})
+
+        $('.date-picker').datepicker({autoclose: true}).next().on(ace.click_event, function () {
+            $(this).prev().focus();
+        });
+
+        $({{ work_form.publish_date.auto_id }}).datepicker('setValue', new Date());
     });
 </script>

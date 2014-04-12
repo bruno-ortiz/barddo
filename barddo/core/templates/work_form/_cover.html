@@ -33,22 +33,43 @@
                 var file = input[0].files[0];
                 var reader = new FileReader();
                 reader.onload = function (e) {
+                    // Just a sanity check, avoiding two selected area at once
                     if (window.selectedArea) {
                         window.selectedArea.cancelSelection();
                     }
 
-                    $("#current-image").remove();
+                    // To show a preview, we encode the image as a base64 and use it on the src attr in the img tag
+                    $("#upload-preview").html("");
                     image_base64 = e.target.result;
                     preview.append("<img id='current-image' src='" + image_base64 + "'/><br/>");
+
+                    // A trick to get the real image dimensions
+                    var tmpImg = new Image();
+                    tmpImg.src = image_base64
+
+                    // Now we need to calculate the minimal size based on the preview resize
+                    // Ie: The image is 5000x5000, but the preview is 1000x1000, then the minimal size should be
+                    // calculated as 1000/5000 * MINIMAL_WIDTH
+
                     var selected_image = $("#current-image");
-                    if (selected_image.width() < 261 || selected_image.height() < 300) {
+                    var previewWidth = selected_image.width();
+                    var previewHeight = selected_image.height();
+
+                    var originalWidth = tmpImg.width;
+                    var originalHeight = tmpImg.height;
+
+                    var widthRatio = previewWidth / originalWidth;
+                    var heightRatio = previewHeight / originalHeight;
+
+                    if (originalWidth < 261 || originalHeight < 300) {
                         $("#form-work-next").html("<i class='icon-star'></i> Select a Cover!").prop("disabled", true);
                         $("#current-image").remove()
-                        alert("Sorry, but the minimal size accepted is 261x300! Please, select another image!");
+                        alert("Sorry, but the minimal size accepted is 261x300 pixels! Please, select another image! Your was " + tmpImg.width + "px width and " + tmpImg.height + "px height;");
                     } else {
+                        // TODO: minimal sizes on application settings
                         setTimeout(function () {
                             window.selectedArea = $('#current-image').imgAreaSelect({
-                                x1: 0, y1: 0, x2: 261, y2: 300,
+                                x1: 0, y1: 0, x2: 261 * widthRatio, y2: 300 * heightRatio,
                                 handles: true,
                                 aspectRatio: '261:300',
                                 show: true,
@@ -56,8 +77,8 @@
                                 instance: true,
                                 parent: "#crop-container",
                                 zIndex: 9999,
-                                minWidth: 261,
-                                minHeight: 300
+                                minWidth: 261 * widthRatio,
+                                minHeight: 300 * heightRatio
                             });
                         }, 500);
                     }

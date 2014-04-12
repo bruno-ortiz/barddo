@@ -1,5 +1,6 @@
 import json
 import os
+import datetime
 
 from django.views.generic import View
 from django.views.generic.base import TemplateResponseMixin
@@ -16,15 +17,38 @@ from publishing.views import publisher_landpage
 
 
 class IndexView(ProfileAwareView):
+    LAST_WEEK = -7
+
     template_name = 'index.html'
 
     def get(self, request, *args, **kwargs):
         next_url = request.GET.get('next', '')
 
-        works = Work.objects.select_related("collection").all()
+        barddo_user = self.get_barddo_user(request.user)
 
-        context = self.get_context_data(**{'user': request.user, "next_url": next_url, "works": works})
+        new_works = self.get_new_works(barddo_user)
+        rising_works = self.get_rising_works(barddo_user)
+
+        context = self.get_context_data(**{'user': request.user, "next_url": next_url, "new_works": new_works, "rising_works": rising_works})
         return super(IndexView, self).render_to_response(context)
+
+    def get_new_works(self, user):
+        limit = self.get_relative_date(self.LAST_WEEK)
+
+        return Work.objects.select_related("collection").total_likes(). \
+            liked_by(user).filter(publish_date__gte=limit)
+
+    def get_rising_works(self, user):
+        limit = self.get_relative_date(self.LAST_WEEK)
+
+        return Work.objects.select_related("collection").total_likes(). \
+            liked_by(user).liked_after(limit).order_by("-total_likes")
+
+    def get_barddo_user(self, user):
+        return user if user.is_authenticated() else None
+
+    def get_relative_date(self, delta):
+        return datetime.datetime.now() + datetime.timedelta(days=delta)
 
 
 index = IndexView.as_view()

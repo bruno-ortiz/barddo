@@ -1,15 +1,27 @@
 $(document).ready(function () {
     $('.vote').click(function (e) {
-        if ($(this).hasClass("liked")) {
-            $(this).html('<i class="icon-heart-empty captionicons"></i>');
-            $(this).removeClass("liked");
-        } else {
-            $(this).html('<i class="icon-heart captionicons"></i>');
-            $(this).addClass("liked");
-        }
+        Dajaxice.rating.toggle_rating(Dajax.process, { 'work_id': $(this).attr("data-work-id") });
+        $(this).html('<i class="icon-heart-empty"></i>');
+        $(this).removeClass("liked");
+
+        $(this).addClass("waiting");
+        $(this).html('<i class="icon-spinner icon-spin white"></i>');
 
         e.preventDefault();
         e.stopPropagation();
         return false;
     });
+
 });
+
+function set_rating(work_id, liked) {
+    var icon_element = $("a[data-work-id=" + work_id + "]");
+
+    icon_element.removeClass("waiting");
+    if (liked) {
+        icon_element.addClass("liked");
+        icon_element.html('<i class="icon-heart"></i>');
+    } else {
+        icon_element.html('<i class="icon-heart-empty"></i>');
+    }
+}

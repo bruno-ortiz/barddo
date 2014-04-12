@@ -1,0 +1,70 @@
+{% load thumbnail %}
+{% load staticfiles %}
+
+<div data-work-id="{{ work.id }}" class=" col-lg-3 col-md-3 col-sm-3 col-xs-12 item {{ classes }}">
+    <div class="boxcontainer">
+        <div class="cover-wrap">
+            <img src="{{ work.cover|thumbnail_url:"big_cover" }}" alt="">
+        </div>
+
+        <div class="roll">
+            <div class="wrapcaption">
+                {% if work.liked %}
+                    <a class="vote liked captionicons" data-work-id="{{ work.id }}" href="projectdetail.html">
+                        <i class="icon-heart"></i>
+                    </a>
+                {% else %}
+                    <a class="vote captionicons" data-work-id="{{ work.id }}" href="projectdetail.html">
+                        <i class="icon-heart-empty"></i>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="work-information">
+            <span class="badge badge-danger pull-right work-number">#{{ work.unit_count }}</span>
+
+            <h1>{{ work.title }}</h1>
+
+            <h2>{{ work.collection.name }}</h2>
+        </div>
+    </div>
+    <div id="work-popup-{{ work.id }}" class="popover-data">
+        <div class="work-detail-popup">
+            <div class="popover-details">
+                <div class="row pull-left">
+                    <div class="col-sm-2 center">
+                        <img class="artist"
+                             src="{{ MEDIA_URL }}user_avatar/brunortiz11-social_1.jpg"
+                             alt="Artist Photo"/>
+                        <span>Israel</span>
+                    </div>
+                    <div class="col-sm-9">
+                        This is some neat description This is some neat description This is
+                        some
+                        neat description This is some neat description This is some neat
+                        description
+                        This is some neat description
+                    </div>
+
+                    <div class="col-sm-1">
+                        <div class="popup-likes pull-right center">
+                            <i class="icon-heart"></i><br/>
+                            {{ work.total_likes }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="pull-right popup-buttons">
+                <button data-work-id="{{ work.id }}" type="button" class="btn-reader btn btn-minier btn-success">
+                    <i class="icon-zoom-in"></i> Read Now!
+                </button>
+                <a href="#" class="btn btn-minier btn-info">
+                    <i class="icon-share"></i> Share
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

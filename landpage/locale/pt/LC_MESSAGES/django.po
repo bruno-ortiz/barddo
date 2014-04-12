@@ -1,0 +1,206 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Barddo\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-04-12 00:26-0300\n"
+"PO-Revision-Date: 2014-04-12 00:27-0300\n"
+"Last-Translator: Israel Crisanto <israel.crisanto@gmail.com>\n"
+"Language-Team: PORTUGUESE <LL@li.org>\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.4\n"
+
+#: core/models.py:9
+msgid "Name"
+msgstr "Nome"
+
+#: core/models.py:10
+msgid "Email"
+msgstr "Email"
+
+#: core/models.py:11
+msgid "Message"
+msgstr "Mensagem"
+
+#: core/templates/index.html:12 core/templates/index.html.py:19
+#: core/templates/index.html:543 core/templates/index.html.py:547
+msgid "Barddo - Where talent gets attention"
+msgstr "Barddo - Onde o talento recebe atenção"
+
+#: core/templates/index.html:101
+msgid "Try Again!"
+msgstr "Novamente!"
+
+#: core/templates/index.html:106
+msgid "Sending..."
+msgstr "Enviando..."
+
+#: core/templates/index.html:173
+msgid "We believe that all forms of talent are noteworthy"
+msgstr "Nós acreditamos que todas as formas de talento merecem atenção"
+
+#: core/templates/index.html:187
+msgid ""
+"Have you ever stopped to think about how many talented artists there are in "
+"the world?"
+msgstr "Já parou para pensar em quantos artistas talentosos existem no mundo?"
+
+#: core/templates/index.html:188
+msgid "How many exceptional art pieces were created  and we did not ever know?"
+msgstr ""
+"Quantas obras de arte excepcionais foram criadas e nós sequer ouvimos falar?"
+
+#: core/templates/index.html:190
+msgid ""
+"If you like comics, you'll love the Barddo Project just because it allows "
+"these pieces of work to receive the atention it deserves!"
+msgstr ""
+"Se você gosta de quadrinhos, você vai amar o projeto Barddo, simplesmente "
+"porque ele permite que estas obras recebam a merecida atenção!"
+
+#: core/templates/index.html:220
+msgid "Barddo?"
+msgstr "Barddo?"
+
+#: core/templates/index.html:236
+msgid "Why should I care?"
+msgstr "Por que devo me importar?"
+
+#: core/templates/index.html:271
+msgid "Users"
+msgstr "Leitores"
+
+#: core/templates/index.html:276
+msgid "Artists"
+msgstr "Artistas"
+
+#: core/templates/index.html:284
+msgid "Wants To"
+msgstr "Querem"
+
+#: core/templates/index.html:290
+msgid "Wants"
+msgstr "Querem"
+
+#: core/templates/index.html:298
+msgid "Read"
+msgstr "Conteúdo"
+
+#: core/templates/index.html:304
+msgid "Visibility"
+msgstr "Visibilidade"
+
+#: core/templates/index.html:320
+msgid "We Put"
+msgstr "Nós colocamos"
+
+#: core/templates/index.html:328
+msgid "Hungry Readers"
+msgstr "Leitores Vorazes"
+
+#: core/templates/index.html:344
+msgid "Talented Artists"
+msgstr "Artistas Talentosos"
+
+#: core/templates/index.html:352
+msgid "In Touch"
+msgstr "Em contato"
+
+#: core/templates/index.html:364
+msgid "What does the reader want?"
+msgstr "O que o leitor quer?"
+
+#: core/templates/index.html:386
+msgid "A lot of content to read"
+msgstr "Muito conteúdo de qualidade"
+
+#: core/templates/index.html:390
+msgid "Read anywhere"
+msgstr "Ler em qualquer canto"
+
+#: core/templates/index.html:393
+msgid "Share, comment, vote"
+msgstr "Compartilhar, comentar, votar"
+
+#: core/templates/index.html:397
+msgid "Discover awesome works made by awesome people"
+msgstr "Descobrir trabalhos magníficos de outras pessoas"
+
+#: core/templates/index.html:407
+msgid "Great for artists!"
+msgstr "Ótimo para artistas"
+
+#: core/templates/index.html:433
+msgid "Easily publish your work"
+msgstr "Facilidade de publicação"
+
+#: core/templates/index.html:449
+msgid "You tell the price"
+msgstr "Você define o preço"
+
+#: core/templates/index.html:465
+msgid "Users will rate it"
+msgstr "Usuários avaliam"
+
+#: core/templates/index.html:481
+msgid "relevant statistics"
+msgstr "Estatísticas relevantes"
+
+#: core/templates/index.html:509
+msgid "Help us"
+msgstr "Ajude-nos a"
+
+#: core/templates/index.html:517
+msgid "make this real"
+msgstr "tornar isto real"
+
+#: core/templates/index.html:534
+msgid "Subscribe & share this"
+msgstr "Compartilhe!"
+
+#: core/templates/index.html:577
+msgid "Please tell us your name"
+msgstr "Por favor, informe seu nome"
+
+#: core/templates/index.html:588
+msgid "So we can stay in touch"
+msgstr "Assim poderemos manter contato"
+
+#: core/templates/index.html:596
+msgid "Thoughts about the project? Are you an artist or a reader? Maybe both?"
+msgstr ""
+"O que acha do projeto? Você é um artista ou um leitor? Quem sabe ambos?"
+
+#: core/templates/index.html:603
+msgid "Submit"
+msgstr "Enviar"
+
+#: core/templates/index.html:615
+msgid "Want to hear more about the big release?"
+msgstr "Quer ser avisado quando lançarmos?"
+
+#: core/templates/index.html:617
+msgid ""
+"Sign up here and we will get in touch when we are launching. What about just "
+"saying hi and let us know that you liked the idea?"
+msgstr ""
+"Cadastre-se aqui e nós o avisaremos quando lançarmos. Que tal apenas dar um "
+"oi e nos falar o que achou da ideia?"
+
+#: core/templates/index.html:620
+msgid "Hopefully we'll be seeing you soon."
+msgstr "Esperamos vê-lo em breve!"
+
+#: core/templates/index.html:647
+msgid "Thanks for your feedback!"
+msgstr "Obrigado pelo contato!"
+
+#~ msgid "Language"
+#~ msgstr "Idioma"
