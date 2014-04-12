@@ -150,6 +150,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request',
     'django.core.context_processors.csrf',
+    # custom
+    'core.context_preprocessors.baseurl',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders

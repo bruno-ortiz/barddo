@@ -106,8 +106,21 @@
         });
     </script>
 
+
 </head>
 <body>
+<div id="fb-root"></div>
+<script>
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=579142508831157";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
 <div class="language-bar pull-right">
 
     <form name="setLangPt" action="/i18n/setlang/" method="POST" class="pull-right">
@@ -519,10 +532,16 @@
     <div class="col-xs-12 col-sm-12">
         <div class="footer-container">
             <div class="social social-footer">
-                <a href="#"><span class="social-item"><i class="entypo-facebook"></i></span></a>
-                <a href="#"><span class="social-item"><i class="entypo-twitter"></i></span></a>
-                <a href="#"><span class="social-item"><i class="entypo-gplus"></i></span></a>
-                <a href="#"><span class="social-item"><i class="entypo-pinterest"></i></span></a>
+                <a target="_blank"
+                   href="http://m.facebook.com/sharer.php?u={{ BASE_URL }}&t={% trans "Barddo - Where talent gets attention" %}">
+                    <span class="social-item"><i class="entypo-facebook"></i></span>
+                </a>
+                <a target="_blank"
+                   href="https://twitter.com/home?status={% trans "Barddo - Where talent gets attention" %} - {{ BASE_URL }}"><span
+                        class="social-item"><i
+                        class="entypo-twitter"></i></span></a>
+                <a target="_blank" href="https://plus.google.com/share?url={{ BASE_URL }}"><span class="social-item"><i
+                        class="entypo-gplus"></i></span></a>
             </div>
         </div>
     </div>
@@ -629,6 +648,7 @@
         </div>
         <!-- END ontact -->
 </footer>
+
 
 </body>
 </html>
