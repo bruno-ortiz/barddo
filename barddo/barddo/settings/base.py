@@ -255,6 +255,12 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
+
+        'dajaxice': {
+            'handlers': ['console', 'mail_admins'],
+            'level': 'INFO',
+            'propagate': True,
+        },
     }
 }
 ########## END LOGGING CONFIGURATION
