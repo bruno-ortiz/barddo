@@ -1,0 +1,74 @@
+{% extends 'main_template.html' %}
+{% load staticfiles %}
+{% load compress %}
+{% load search_result_collection %}
+{% load search_result_work %}
+{% load search_result_person %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static "css/uncompressed/barddo.gallery.css" %}"/>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <div id="options">
+        <ul id="filters" class="option-set clearfix" data-option-key="filter">
+            <li>
+                <a href="#filter" data-option-value=".result-collection">
+                    <i class="icon icon-book"/>Collections
+                </a>
+            </li>
+            <li>
+                <a href="#filter" data-option-value=".result-work">
+                    <i class="icon icon-file"/>Works
+                </a>
+            </li>
+            <li>
+                <a href="#filter" data-option-value=".result-people">
+                    <i class="icon icon-user"/>People
+                </a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="page-content">
+        <div class="row">
+            <!-- PAGE CONTENT BEGINS -->
+
+            {% if success %}
+                <div id="result-content" class="col-lg-12  col-md-12 col-sm-12 col-xs-12 collections-wrap">
+                    <div class="row">
+                        <div class="portfolio">
+                            {% for collection in collections %}
+                                {% search_result_collection collection %}
+                            {% endfor %}
+                            {% for work in works %}
+                                {% search_result_work work %}
+                            {% endfor %}
+                            {% for person in people %}
+                                {% search_result_person person %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div id="result-content" class="col-lg-12  col-md-12 col-sm-12 col-xs-12 collections-wrap">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+            <!-- /.row -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block page_specific_javascript %}
+    {% compress js %}
+        <script src="{% static "js/jquery.isotope.min.js" %}"></script>
+        <script src="{% static "js/portfolio.js" %}"></script>
+    {% endcompress %}
+{% endblock %}
+
+{% block bottom_page %}
+{% endblock %}
