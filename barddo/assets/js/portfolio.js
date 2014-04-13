@@ -10,14 +10,17 @@ jQuery(function () {
 
     var jQuerycontainer = jQuery('.portfolio');
 
+
     //jQuerycontainer.isotope({
     //    itemSelector: '.item'
     //});
 
-    jQuerycontainer.imagesLoaded( function(){
+    jQuerycontainer.imagesLoaded(function () {
+        jQuerycontainer.show();
+
         jQuerycontainer.isotope({
             itemSelector: '.item',
-            filter: '*',
+            filter: '.collection-trending',
             animationOptions: {
                 duration: 750,
                 easing: 'linear',
@@ -57,8 +60,6 @@ jQuery(function () {
 
         return false;
     });
-
-
 
 
 });

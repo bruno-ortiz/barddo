@@ -10,6 +10,7 @@ from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.core.files.images import ImageFile
+from django.db.models import Q
 from easy_thumbnails.files import get_thumbnailer
 
 from accounts.models import BarddoUser
@@ -34,18 +35,20 @@ class RatingQuerySet(QuerySet):
     def total_likes(self):
         total_likes = Rating.objects.filter(like=True).annotate(work_likes=Count("like")) \
             .values("work_likes").extra(where=["core_work.id = rating_rating.work_id"]).query
+        total_likes.group_by = []
         return self.extra(select={"total_likes": total_likes})
 
     def liked_by(self, user=None):
         if user:
-            sub_query = Rating.objects.filter(user=user.id, like=True).annotate(Count('like')).values('like__count').query
+            sub_query = Rating.objects.filter(user=user.id, like=True).annotate(Count('like')).values('like__count') \
+                .extra(where=["core_work.id = rating_rating.work_id"]).query
         else:
             sub_query = False
 
         return self.extra(select={"liked": sub_query})
 
     def liked_after(self, date):
-        return self.filter(like__date__gte=date)
+        return self.filter(Q(like__date__gte=date) | Q(like__isnull=True))
 
 
 class CollectionUnit(models.Model):
