@@ -46,14 +46,16 @@ class IndexView(ProfileAwareView):
     def get_rising_works(self, user):
         limit = self.get_relative_date(self.LAST_WEEK)
 
+        # TODO: Rever o distinct
         return Work.objects.select_related("collection").total_likes(). \
-            liked_by(user).liked_after(limit).order_by("-total_likes")
+            liked_by(user).liked_after(limit).distinct().order_by("-total_likes")
 
     def get_trending_works(self, user):
         limit = self.get_relative_date(self.LAST_MONTH)
 
+        # TODO: Rever o distinct
         return Work.objects.select_related("collection").total_likes(). \
-            liked_by(user).liked_after(limit).order_by("-total_likes")
+            liked_by(user).liked_after(limit).distinct().order_by("-total_likes")
 
     def get_barddo_user(self, user):
         return user if user.is_authenticated() else None
@@ -341,3 +343,34 @@ class RemoveWorkPageView(LoginRequiredMixin, View):
 
 
 remove_work_page = RemoveWorkPageView.as_view()
+
+
+
+###
+### Docs
+###
+class AboutUsView(ProfileAwareView):
+    template_name = 'docs/about-us.html'
+
+    def get_context_data(self, **kwargs):
+        context = {}
+        context.update(kwargs)
+        return super(AboutUsView, self).get_context_data(**context)
+
+
+class TermsView(ProfileAwareView):
+    template_name = 'docs/terms.html'
+
+    def get_context_data(self, **kwargs):
+        context = {}
+        context.update(kwargs)
+        return super(TermsView, self).get_context_data(**context)
+
+
+class HelpView(ProfileAwareView):
+    template_name = 'docs/help.html'
+
+    def get_context_data(self, **kwargs):
+        context = {}
+        context.update(kwargs)
+        return super(HelpView, self).get_context_data(**context)
