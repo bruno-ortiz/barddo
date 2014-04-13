@@ -23,14 +23,14 @@
                 {% endif %}
                 {% if works.count > 0 %}
                     <li>
-                        <a href="#filter" data-option-value=".result-work">
+                        <a href="#filter" data-option-value=".result_work">
                             <i class="icon icon-file"></i> Works
                         </a>
                     </li>
                 {% endif %}
                 {% if people.count > 0 %}
                     <li>
-                        <a href="#filter" data-option-value=".result-person">
+                        <a href="#filter" data-option-value=".result_person">
                             <i class="icon icon-user"></i> People
                         </a>
                     </li>
@@ -69,9 +69,39 @@
 {% block page_specific_javascript %}
     {% compress js %}
         <script src="{% static "js/jquery.isotope.min.js" %}"></script>
-        <script src="{% static "js/results.js" %}"></script>
     {% endcompress %}
 {% endblock %}
 
 {% block bottom_page %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var jQuerycontainer = jQuery('.results');
+
+            jQuerycontainer.imagesLoaded(function () {
+                $("a[data-option-value=\"" + get_selected_group() + "\"]").addClass("selected");
+
+                jQuerycontainer.show();
+
+                jQuerycontainer.isotope({
+                    itemSelector: '.result_item',
+                    filter: get_selected_group(),
+                    animationOptions: {
+                        duration: 750,
+                        easing: 'linear',
+                        queue: false
+                    }
+                });
+            });
+
+            function get_selected_group(){
+                {% if collections.count > 0 %}
+                    return '.result_collection';
+                {% elif works.count > 0 %}
+                    return '.result_work';
+                {% else %}
+                    return '.result_person';
+                {% endif %}
+            }
+        });
+    </script>
 {% endblock %}
