@@ -426,11 +426,3 @@
 
     </script>
 {% endblock %}
-
-{% for page in work.load_work_pages_without_timestamp %}
-    <li>
-        {% thumbnail page.url "136x136" crop="center" as im %}
-            <img class="img-responsive" src="{{ im.url }}" ref="{{ page.url }}"/>
-        {% endthumbnail %}
-    </li>
-{% endfor %}

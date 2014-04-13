@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 
-from .views import index, AboutUsView, FeaturesView
+from .views import index, AboutUsView, TermsView, HelpView
 from .views import artist_dashboard, upload_work_page, move_work_page, remove_work_page
 
 
@@ -30,11 +30,15 @@ urlpatterns = patterns(
         remove_work_page,
         name='core.remove.work.page'),
 
+    url(r'^help$',
+        HelpView.as_view(),
+        name='core.help'),
+
     url(r'^about-us$',
         AboutUsView.as_view(),
         name='core.about'),
 
-    url(r'^features$',
-        FeaturesView.as_view(),
-        name='core.features'),
+    url(r'^terms',
+        TermsView.as_view(),
+        name='core.terms'),
 )
