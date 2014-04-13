@@ -6,6 +6,7 @@ from django.utils.translation import ugettext as _
 from accounts.models import BarddoUser
 from accounts.views import ProfileAwareView
 from core.models import Collection, Work
+from rating.models import Rating
 
 
 __author__ = 'jovial'
@@ -51,11 +52,14 @@ class SearchResultView(ProfileAwareView):
         return ' & '.join(word for word in text.split() if len(word) > 3)
 
     def search_in_collections(self, text):
-        return Collection.search_manager.search(text).\
+        return Collection.search_manager.search(text). \
             annotate(work_count=Count("work"))[:30]
 
     def search_in_works(self, text):
-        return Work.search_manager.search(text)[:30]
+        sub_query = Rating.objects.annotate(Count('id')).values('id__count') \
+            .extra(where=["core_work.id = rating_rating.work_id"]).filter(like=True).query
+
+        return Work.search_manager.search(text).extra(select={"like_count": sub_query})[:30]
 
     def search_in_users(self, text):
         return BarddoUser.search_manager.search(text)[:30]
