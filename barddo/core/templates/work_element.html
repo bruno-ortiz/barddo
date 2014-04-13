@@ -58,12 +58,21 @@
 
             <div class="clearfix"></div>
             <div class="pull-right popup-buttons">
-                <button data-work-id="{{ work.id }}" type="button" class="btn-reader btn btn-minier btn-success">
-                    <i class="icon-zoom-in"></i> Read Now!
-                </button>
-                <a href="#" class="btn btn-minier btn-info">
-                    <i class="icon-share"></i> Share
-                </a>
+                {% if user.is_authenticated %}
+                    <button data-work-id="{{ work.id }}" type="button" class="btn-reader btn btn-minier btn-success">
+                        <i class="icon-zoom-in"></i> Read Now!
+                    </button>
+                    <a href="#" class="btn btn-minier btn-info">
+                        <i class="icon-share"></i> Share
+                    </a>
+                {% else %}
+                    <button type="button" class="login-required btn btn-minier btn-success">
+                        <i class="icon-zoom-in"></i> Read Now!
+                    </button>
+                    <a href="#" class="login-required btn btn-minier btn-info">
+                        <i class="icon-share"></i> Share
+                    </a>
+                {% endif %}
             </div>
         </div>
     </div>

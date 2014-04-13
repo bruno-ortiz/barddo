@@ -135,15 +135,16 @@
                     }
                 }, 100);
             });
-
-            $(document).on("click", ".popover-content button.btn-reader", function () {
-                var work_id = $(this).attr("data-work-id");
-                Shards.reader(function (shard_id, shard_data, parent) {
-                    $(shard_id).remove();
-                    $(parent).append(shard_data);
-                    $(shard_id).modal('show');
-                }, {"work_id": work_id});
-            });
+            {% if user.is_authenticated %}
+                $(document).on("click", ".popover-content button.btn-reader", function () {
+                    var work_id = $(this).attr("data-work-id");
+                    Shards.reader(function (shard_id, shard_data, parent) {
+                        $(shard_id).remove();
+                        $(parent).append(shard_data);
+                        $(shard_id).modal('show');
+                    }, {"work_id": work_id});
+                });
+            {% endif %}
         });
     </script>
 {% endblock %}
