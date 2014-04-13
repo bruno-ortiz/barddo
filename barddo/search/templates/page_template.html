@@ -13,21 +13,27 @@
     {% if success %}
         <div id="options">
             <ul id="filters" class="option-set clearfix" data-option-key="filter">
-                <li>
-                    <a href="#filter" class="selected" data-option-value=".result-collection">
-                        <i class="icon icon-book"></i> Collections
-                    </a>
-                </li>
-                <li>
-                    <a href="#filter" data-option-value=".result-work">
-                        <i class="icon icon-file"></i> Works
-                    </a>
-                </li>
-                <li>
-                    <a href="#filter" data-option-value=".result-person">
-                        <i class="icon icon-user"></i> People
-                    </a>
-                </li>
+                {% if collections.count > 0 %}
+                    <li>
+                        <a href="#filter" class="selected" data-option-value=".result-collection">
+                            <i class="icon icon-book"></i> Collections
+                        </a>
+                    </li>
+                {% endif %}
+                {% if works.count > 0 %}
+                    <li>
+                        <a href="#filter" data-option-value=".result-work">
+                            <i class="icon icon-file"></i> Works
+                        </a>
+                    </li>
+                {% endif %}
+                {% if people.count > 0 %}
+                    <li>
+                        <a href="#filter" data-option-value=".result-person">
+                            <i class="icon icon-user"></i> People
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     {% endif %}
