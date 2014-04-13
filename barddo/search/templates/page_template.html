@@ -14,7 +14,7 @@
         <div id="options">
             <ul id="filters" class="option-set clearfix" data-option-key="filter">
                 <li>
-                    <a href="#filter" data-option-value=".result-collection">
+                    <a href="#filter" class="selected" data-option-value=".result-collection">
                         <i class="icon icon-book"></i> Collections
                     </a>
                 </li>
@@ -41,7 +41,7 @@
             {% if success %}
                 <div id="result-content" class="col-lg-12  col-md-12 col-sm-12 col-xs-12 collections-wrap">
                     <div class="row">
-                        <div class="portfolio">
+                        <div class="results">
                             {% for collection in collections %}
                                 {% collection_result collection %}
                             {% endfor %}
@@ -68,7 +68,7 @@
 {% block page_specific_javascript %}
     {% compress js %}
         <script src="{% static "js/jquery.isotope.min.js" %}"></script>
-        <script src="{% static "js/portfolio.js" %}"></script>
+        <script src="{% static "results.js" %}"></script>
     {% endcompress %}
 {% endblock %}
 
