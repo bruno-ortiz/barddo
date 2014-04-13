@@ -324,6 +324,7 @@ THUMBNAIL_ALIASES = {
     '': {
         'big_cover': {'size': (261, 300), 'crop': False},
         'small_cover': {'size': (163, 236), 'crop': False},
+        'reader_thumbs': {'size': (136, 136), 'crop': True},
     },
 }
 

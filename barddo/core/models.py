@@ -31,7 +31,7 @@ class RatingManager(Manager):
 
 class RatingQuerySet(QuerySet):
     def total_likes(self):
-        total_likes = Rating.objects.filter(like=True).annotate(work_likes=Count("like"))\
+        total_likes = Rating.objects.filter(like=True).annotate(work_likes=Count("like")) \
             .values("work_likes").extra(where=["core_work.id = rating_rating.work_id"]).query
         return self.extra(select={"total_likes": total_likes})
 
@@ -223,6 +223,36 @@ class Work(models.Model):
                 "size": img.size,
                 "url": settings.MEDIA_URL + img.name.replace(settings.MEDIA_ROOT + "/", "") + "?t=" + timestamp,
                 "name": image_file
+            })
+
+        return image_files
+
+    def load_work_pages_without_timestamp(self):
+        """
+        Return a dict with loaded images data to be rendered
+        Example dict: {
+            "size": 123,
+            "url": /media/all/black_flag.png,
+            "name": black_flag.png
+        }
+        """
+        work_path = self.media_path()
+
+        # Sanity directory check
+        if not os.path.exists(work_path):
+            return []
+
+        files = self.image_files()
+
+        image_files = []
+
+        for image_file in files:
+            img = ImageFile(open(os.path.join(work_path, image_file), "rb"))
+            image_files.append({
+                "size": img.size,
+                "url": settings.MEDIA_URL + img.name.replace(settings.MEDIA_ROOT + "/", ""),
+                "name": image_file,
+                "file": img
             })
 
         return image_files

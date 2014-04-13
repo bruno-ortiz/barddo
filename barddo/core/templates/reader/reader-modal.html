@@ -1,13 +1,20 @@
 {% load i18n %}
 {% load staticfiles %}
+{% load thumbnail %}
 <div class="modal fade fullscreen-modal" id="readerModal" role="dialog" tabindex="-1" aria-labelledby="createGroupLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
             <div class="modal-body">
                 <ul id="pikame" class="jcarousel-skin-pika">
-                    {% for page in work.load_work_pages %}
+                    {% for page in work.load_work_pages_without_timestamp %}
                         <li>
-                            <img class="img-responsive" src="{{ page.url }}"/>
+                            {% with file=page.file %}
+                                {% thumbnail file 'reader_thumbs' crop as thumb %}
+                                <img class="img-responsive" src="{{ thumb.url }}" ref="{{ page.url }}"/>
+                            {% endwith %}
                         </li>
                     {% endfor %}
                 </ul>

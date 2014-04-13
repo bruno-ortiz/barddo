@@ -117,15 +117,11 @@ a {
 }
 
 .pika-textnav a.previous {
-    float: left;
-    width: auto;
-    display: block;
+    display: none;
 }
 
 .pika-textnav a.next {
-    float: right;
-    width: auto;
-    display: block;
+    display: none;
 }
 
 /*for the tool tips*/

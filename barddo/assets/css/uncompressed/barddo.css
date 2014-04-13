@@ -212,6 +212,10 @@ footer {
 
 }
 
+.fullscreen-modal .modal-header {
+    border: 0;
+}
+
 .fullscreen-modal .modal-dialog {
     width: auto;
 }

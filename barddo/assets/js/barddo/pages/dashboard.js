@@ -10,7 +10,7 @@ function sortable_image_upload(target, preview_container, existing_data) {
     var dropzoned = $(target).dropzone({
         paramName: "file", // The name that will be used to transfer the file
         maxFilesize: 1.5, // MB,
-        maxFiles: 100, // TODO: need this limit
+        maxFiles: 300, // TODO: need this limit
         parallelUploads: 1,
         uploadMultiple: false,
 
