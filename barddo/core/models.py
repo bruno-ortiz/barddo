@@ -108,6 +108,14 @@ class Collection(models.Model):
 
     objects = RatingManager()
 
+    search_index = VectorField()
+    search_manager = SearchManager(
+        fields=('name', 'summary'),
+        config='pg_catalog.english',
+        search_field='search_index',
+        auto_update_search_field=True
+    )
+
     def get_total_works(self):
         return Work.objects.filter(collection__id=self.id).count()
 
@@ -173,6 +181,14 @@ class Work(models.Model):
 
     objects = RatingManager()
 
+    search_index = VectorField()
+    search_manager = SearchManager(
+        fields=('title', 'summary'),
+        config='pg_catalog.english',
+        search_field='search_index',
+        auto_update_search_field=True
+    )
+
     def is_owner(self, user):
         """
         Return true if the given user is the owner of the current work
@@ -229,6 +245,36 @@ class Work(models.Model):
                 "size": img.size,
                 "url": settings.MEDIA_URL + img.name.replace(settings.MEDIA_ROOT + "/", "") + "?t=" + timestamp,
                 "name": image_file
+            })
+
+        return image_files
+
+    def load_work_pages_without_timestamp(self):
+        """
+        Return a dict with loaded images data to be rendered
+        Example dict: {
+            "size": 123,
+            "url": /media/all/black_flag.png,
+            "name": black_flag.png
+        }
+        """
+        work_path = self.media_path()
+
+        # Sanity directory check
+        if not os.path.exists(work_path):
+            return []
+
+        files = self.image_files()
+
+        image_files = []
+
+        for image_file in files:
+            img = ImageFile(open(os.path.join(work_path, image_file), "rb"))
+            image_files.append({
+                "size": img.size,
+                "url": settings.MEDIA_URL + img.name.replace(settings.MEDIA_ROOT + "/", ""),
+                "name": image_file,
+                "thumb": get_thumbnailer(img, relative_name=os.path.join("work_data", "%04d" % self.id, 'thumb', image_file))
             })
 
         return image_files
