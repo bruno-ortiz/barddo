@@ -208,6 +208,16 @@ footer {
     }
 }
 
+.highlight {
+    color: rgb(75, 146, 223);
+    font-weight: bold;
+}
+
+.foot-link {
+    padding-left: 15px;
+    color: white;
+}
+
 .fullscreen-modal {
 
 }

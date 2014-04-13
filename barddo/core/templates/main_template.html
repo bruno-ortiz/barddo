@@ -189,51 +189,17 @@
 <footer>
     <div class="container">
         <div class="row">
-            <div class="col-md-3  col-xs-6">
-                <div class="footer-link">
-                    <h5>Barddo</h5>
-                    <a href="#">What is this?</a><br>
-                    <a href="#">Features</a><br>
-                    <a href="#">Site Map</a>
-                </div>
-            </div>
-
-            <div class="col-md-3  col-xs-6">
-                <div class="footer-link">
-                    <h5>Company</h5>
-                    <a href="#">Terms of Use</a><br>
-                    <a href="#">Privacy Policy</a><br>
-                    <a href="#">Disclaimer</a>
-
-                </div>
-            </div>
-            <div class="col-md-3  col-xs-6">
-                <div class="footer-link">
-                    <h5>Support</h5>
-                    <a href="#">FAQ</a><br>
-                    <a href="#">Artist</a><br>
-                    <a href="#">Reader</a>
-                </div>
-            </div>
-            <div class="col-md-3  col-xs-6">
-                <div class="footer-link">
-                    <h5>Misc</h5>
-                    <a href="#">Videos</a><br>
-                    <a href="#">Blog</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
             <div class="col-md-12">
-
-                <hr>
-                <div class="copy text-center">
-                    &copy; 2014 <a href="#">The Barddo</a> - {% trans "Made with love!" %}
+                <div class="copy pull-left">
+                    &copy; 2014 <a href="#">Barddo Project</a> - {% trans "Made with love!" %}
+                </div>
+                <div class=" copy pull-right">
+                    <a href="{% url "core.help" %}" class="foot-link"><i class="icon-info-sign"></i> Help</a>
+                    <a href="{% url "core.about" %}" class="foot-link"><i class="icon-lightbulb"></i> About Us</a>
+                    <a href="{% url "core.terms" %}" class="foot-link"><i class="icon-briefcase"></i> Terms of Use</a>
                 </div>
             </div>
         </div>
-
     </div>
 </footer>
 <!-- Footer Ends -->

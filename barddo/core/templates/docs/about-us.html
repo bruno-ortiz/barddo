@@ -1,0 +1,229 @@
+{% extends 'main_template.html' %}
+{% load static %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static "css/uncompressed/cards.css" %}"/>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="{% url "core.index" %}">Home</a>
+        </li>
+        <li class="active">About Us</li>
+    </ul><!-- .breadcrumb -->
+{% endblock %}
+
+{% block content %}
+    <div class="page-content">
+        <div class="row">
+            <div class="col-sm-7 widget-container-span ui-sortable">
+                <div class="widget-box transparent">
+                    <div class="widget-header">
+                        <h4 class="lighter"><i class="icon-star"></i> Nossa proposta</h4>
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="widget-main padding-6 no-padding-left no-padding-right">
+                            Aposto que você, assim como nós
+                            acompanha
+                            mangás ou hqs famosas e muitos outros estilos publicados por editoras que fazem isto há
+                            muito tempo. E não há nada
+                            errado com
+                            isto, nós adoramos estes trabalhos também.
+                        </div>
+
+                        <div class="widget-main padding-6 no-padding-left no-padding-right">
+                            Mas por que se ater apenas a este modelo? Acreditamos que existam muitos artistas
+                            talentosos pelo mundo, e com o poder da tecnologia é
+                            possível dar a visibilidade que eles merecem.
+                        </div>
+
+                        <div class="widget-main padding-6 no-padding-left no-padding-right">
+                            O <span class="highlight">Barddo</span> é um sistema de <span class="highlight">publicações on-line focado em
+                            artistas independentes</span>. Nele qualquer
+                            artista,
+                            de <span class="highlight">qualquer estilo</span>, pode disponibilizar suas obras para que
+                            os leitores avaliem.
+                        </div>
+
+                        <div class="widget-main padding-6 no-padding-left no-padding-right">
+                            A ideia é bem simples, o artista publica sua obra, diz seu preço, e começa a compartilhá-la.
+                            Os
+                            leitores
+                            podem avaliar estes trabalhos de uma forma simples e rápida. Quanto melhor a avaliação, mais
+                            destaque as obras recebem.
+                        </div>
+
+                        <div class="widget-main padding-6 no-padding-left no-padding-right">
+                            E assim, sem descartar o que existe hoje, nossa proposta é oferecer o melhor dos dois mundos
+                            para nossos
+                            leitores: a maior quantidade possível de trabalhos de qualidades, oferecidos por editoras
+                            bem conhecidas e estabelecidas
+                            e ajudar a descobrir novos trabalhos e artistas, deixando que os próprios leitores tenham
+                            controle sobre isso, <span
+                                class="highlight">sem
+                            intermediários</span>.
+                        </div>
+
+                        <div class="widget-main padding-6 no-padding-left no-padding-right">
+                            Imagine só!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget-box transparent">
+                    <div class="widget-header">
+                        <h4 class="lighter"><i class="icon-star"></i> Por quê?</h4>
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="widget-main padding-6 no-padding-left no-padding-right">
+                            Diferente do modelo atual, em que
+                            algumas empresas e indivíduos determinam o que é bom o suficiente para publicação e acabam
+                            influenciando no andamento das mesmas,
+                            nós acreditamos que <span class="highlight">ninguém melhor
+                            do que os próprios leitores para decidirem o sucesso de uma publicação</span>.
+                        </div>
+
+                        <div class="widget-main padding-6 no-padding-left no-padding-right">
+                            O grande diferencial do <span class="highlight">Barddo</span> é exatamente este: <span
+                                class="highlight">liberdade para o artista</span> publicar o que
+                            quiser, e o <span class="highlight">contato direto com os leitores</span>.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <img src="{% static "images/art/reader.png" %}"/>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="widget-box transparent">
+                    <div class="widget-header">
+                        <h4 class="lighter"><i class="icon-user"></i> A equipe</h4>
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="widget-main padding-6 no-padding-left no-padding-right">
+                            Conheça os envolvidos na criação nesta ideia!
+                        </div>
+
+                        <div class="widget-main padding-6 no-padding-left no-padding-right">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="white-card">
+                                        <div class="img-w">
+                                            <img alt="Photo-card" src="{% static "images/test-user.png" %}">
+                                        </div>
+                                        <h5>Israel Crisanto</h5>
+
+                                        <p class="highlight">israel@barddo.com</p>
+
+                                        <p>Macaquinho faz-tudo</p>
+
+                                        <p>Sonha com um mundo em que
+                                            publicações online
+                                            serão mais comuns do que as físicas.</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <div class="white-card">
+                                        <div class="img-w">
+                                            <img alt="Photo-card" src="{% static "images/test-user.png" %}">
+                                        </div>
+                                        <h5>Bruno Ortiz</h5>
+
+                                        <p class="highlight">bruno@barddo.com</p>
+
+                                        <p>Desenvolvedor e amante de tecnologia</p>
+
+                                        <p>
+                                            Um dos idealizadores do projeto, viciado em mangás.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <div class="white-card">
+                                        <div class="img-w">
+                                            <img alt="Photo-card" src="{% static "images/test-user.png" %}">
+                                        </div>
+                                        <h5>Rafael Ortiz</h5>
+
+                                        <p class="highlight">rafael@barddo.com</p>
+
+                                        <p>Designer</p>
+
+                                        <p>Apaixonado por ilustração manual e pintura digital, viciado em games cuida
+                                            da parte artística do projeto.</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <div class="white-card">
+                                        <div class="img-w">
+                                            <img alt="Photo-card" src="{% static "images/test-user.png" %}">
+                                        </div>
+                                        <h5>José Almada</h5>
+
+                                        <p class="highlight">jose@barddo.com</p>
+
+                                        <p>Desenvolvedor</p>
+
+                                        <p>Colecionador de gadgets eletrônicos, um dia verá o Barddo em dispositivos
+                                            pelo
+                                            mundo
+                                            inteiro!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="widget-box transparent">
+                    <div class="widget-header">
+                        <h4 class="lighter"><i class="icon-envelope"></i> Contato</h4>
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="widget-main padding-6 no-padding-left no-padding-right">
+                            Qualquer dúvida, crítica ou sugestão, pode mandar uma mensagem direta para qualquer um dos
+                            integrantes,
+                            ou diretamente
+                            para <a href="mailto:contact@barddo.com" target="_top"><span
+                                class="highlight">contact@barddo.com</span></a>. Se isto te deixa mais confortável,
+                            você também pode nos encontrar
+                            no
+                            facebook!
+                            Dê um pulinho lá
+                            e diga o que achou do projeto e ajude-nos a torná-lo um sucesso!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block page_specific_javascript %}
+
+
+{% endblock %}
+
+{% block bottom_page %}
+
+
+{% endblock %}
