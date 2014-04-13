@@ -80,7 +80,7 @@
             </a><!-- /.brand -->
 
             <div class="nav-search pull-left" id="nav-search">
-                <form class="form-search" action="/search/" method="get">
+                <form class="form-search" action="{% url 'search.result' %}" method="get">
                     <span class="input-icon">
                         <input type="text" placeholder="{% trans "Search people, collections, mangas, HQs etc..." %}"
                                class="nav-search-input"
