@@ -226,19 +226,6 @@
     margin-bottom: 30px;
 }
 
-.full-screen-modal {
-}
-
-.full-screen-modal .modal-dialog {
-    width: 90%;
-}
-
-.full-screen-modal .modal-content {
-    height: 80%;
-    margin: 0 auto 0 auto;
-    width: 90%;
-}
-
 .work-list-wrapper {
     overflow-y: scroll;
     max-height: 400px
@@ -380,4 +367,17 @@
 
 .work-detail-load .lbl {
     padding-left: 15px;
+}
+
+.collection-modal {
+}
+
+.collection-modal .modal-dialog {
+    width: 90%;
+}
+
+.collection-modal .modal-content {
+    height: 80%;
+    margin: 0 auto 0 auto;
+    width: 90%;
 }

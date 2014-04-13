@@ -81,12 +81,12 @@
 
             <div class="nav-search pull-left" id="nav-search">
                 <form class="form-search">
-                <span class="input-icon">
-                    <input type="text" placeholder="{% trans "Search people, collections, mangas, HQs etc..." %}"
-                           class="nav-search-input"
-                           id="nav-search-input" autocomplete="off"/>
-                    <i class="icon-search nav-search-icon"></i>
-                </span>
+                    <span class="input-icon">
+                        <input type="text" placeholder="{% trans "Search people, collections, mangas, HQs etc..." %}"
+                               class="nav-search-input"
+                               id="nav-search-input" autocomplete="off"/>
+                        <i class="icon-search nav-search-icon"></i>
+                    </span>
                 </form>
             </div>
         </div>
@@ -143,7 +143,7 @@
                     </li>
                 </ul>
             {% else %}
-                <button class="btn btn-signin" data-toggle="modal" data-target="#loginModal">
+                <button class="login-required btn btn-signin" data-target="#loginModal">
                     <i class="icon-signin"></i> Login
                 </button>
             {% endif %}
@@ -242,6 +242,14 @@
 <script src="{% static "js/ace-elements.min.js" %}"></script>
 <script src="{% static "js/ace.min.js" %}"></script>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(document).on("click", ".login-required", function () {
+            $('#loginModal').modal('show');
+        });
+    });
+
+</script>
 {% block bottom_page %}
 
 {% endblock %}

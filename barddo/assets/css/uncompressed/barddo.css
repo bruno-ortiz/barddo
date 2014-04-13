@@ -124,6 +124,10 @@ img {
     width: 400px;
 }
 
+.modal-lg {
+    width: 800px;
+}
+
 /**
  ** Index Theme
  **/
@@ -212,4 +216,20 @@ footer {
 .foot-link {
     padding-left: 15px;
     color: white;
+}
+
+.fullscreen-modal {
+
+}
+
+.fullscreen-modal .modal-header {
+    border: 0;
+}
+
+.fullscreen-modal .modal-dialog {
+    width: auto;
+}
+
+.modal-backdrop.in {
+    opacity: 0.9;
 }
