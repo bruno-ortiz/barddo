@@ -10,6 +10,7 @@ from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.core.files.images import ImageFile
+from easy_thumbnails.files import get_thumbnailer
 
 from accounts.models import BarddoUser
 from rating.models import Rating
@@ -252,7 +253,7 @@ class Work(models.Model):
                 "size": img.size,
                 "url": settings.MEDIA_URL + img.name.replace(settings.MEDIA_ROOT + "/", ""),
                 "name": image_file,
-                "file": img
+                "thumb": get_thumbnailer(img, relative_name=os.path.join("work_data", "%04d" % self.id, 'thumb', image_file))
             })
 
         return image_files
