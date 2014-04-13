@@ -1,3 +1,25 @@
-<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 item result-collection">
-    {{ collection.name }} {{ collection.summary }}
+{% load thumbnail %}
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 row result_card result_item result_collection">
+    <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2">
+        <img class="img-responsive" src="{{ collection.cover|thumbnail_url:"small_cover" }}"
+             alt="{{ collection.name }}">
+    </div>
+    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10 result_info">
+        <div class="title">
+            <h2>{{ collection.name }}
+                <span style="font-size: 14px;font-style: italic;">
+                    (<a href="{{ collection.author.user_url }}">{{ collection.author.username }}</a>)
+                </span>
+            </h2>
+        </div>
+        <div class="summary">
+            <p>{{ collection.summary }}</p>
+        </div>
+    </div>
+    <div class="work_count">
+        <i class="icon icon-copy"></i> {{ collection.work_count }}
+    </div>
 </div>
+
+

@@ -53,7 +53,7 @@ class BarddoUser(AbstractUser):
         return self.publishing_group.filter(pk=1).count() > 0
 
     def user_url(self):
-        return reverse('core.profile', args=(self.id,))
+        return reverse('account.profile', args=(self.id,))
 
 
 class BarddoUserAuthBackend(ModelBackend):

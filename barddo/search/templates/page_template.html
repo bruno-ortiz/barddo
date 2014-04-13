@@ -7,6 +7,7 @@
 
 {% block header %}
     <link rel="stylesheet" href="{% static "css/uncompressed/barddo.gallery.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/result_page.css" %}"/>
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -41,40 +42,34 @@
 
 {% block content %}
     <div class="page-content">
-        <div class="row">
-            <!-- PAGE CONTENT BEGINS -->
 
-            {% if success %}
-                <div id="result-content" class="col-lg-12  col-md-12 col-sm-12 col-xs-12 collections-wrap">
-                    <div class="row">
-                        <div class="results">
-                            {% for collection in collections %}
-                                {% collection_result collection %}
-                            {% endfor %}
-                            {% for work in works %}
-                                {% work_result work %}
-                            {% endfor %}
-                            {% for person in people %}
-                                {% person_result person %}
-                            {% endfor %}
-                        </div>
-                    </div>
+        {% if success %}
+            <div id="result-content" class="col-lg-12  col-md-12 col-sm-12 col-xs-12 collections-wrap">
+                <div class="results">
+                    {% for collection in collections %}
+                        {% collection_result collection %}
+                    {% endfor %}
+                    {% for work in works %}
+                        {% work_result work %}
+                    {% endfor %}
+                    {% for person in people %}
+                        {% person_result person %}
+                    {% endfor %}
                 </div>
-            {% else %}
-                <div id="result-content" class="col-lg-12  col-md-12 col-sm-12 col-xs-12 collections-wrap">
-                    {{ error }}
-                </div>
-            {% endif %}
+            </div>
+        {% else %}
+            <div id="result-content" class="col-lg-12  col-md-12 col-sm-12 col-xs-12 collections-wrap">
+                {{ error }}
+            </div>
+        {% endif %}
 
-            <!-- /.row -->
-        </div>
     </div>
 {% endblock %}
 
 {% block page_specific_javascript %}
     {% compress js %}
         <script src="{% static "js/jquery.isotope.min.js" %}"></script>
-        <script src="{% static "results.js" %}"></script>
+        <script src="{% static "js/results.js" %}"></script>
     {% endcompress %}
 {% endblock %}
 

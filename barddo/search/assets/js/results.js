@@ -11,8 +11,8 @@ jQuery(function () {
         jQuerycontainer.show();
 
         jQuerycontainer.isotope({
-            itemSelector: '.item',
-            filter: '.result-collection',
+            itemSelector: '.result_item',
+            filter: '.result_collection',
             animationOptions: {
                 duration: 750,
                 easing: 'linear',
