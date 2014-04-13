@@ -341,3 +341,25 @@ class RemoveWorkPageView(LoginRequiredMixin, View):
 
 
 remove_work_page = RemoveWorkPageView.as_view()
+
+
+
+###
+### Docs
+###
+class AboutUsView(ProfileAwareView):
+    template_name = 'docs/about-us.html'
+
+    def get_context_data(self, **kwargs):
+        context = {}
+        context.update(kwargs)
+        return super(AboutUsView, self).get_context_data(**context)
+
+
+class FeaturesView(ProfileAwareView):
+    template_name = 'docs/features.html'
+
+    def get_context_data(self, **kwargs):
+        context = {}
+        context.update(kwargs)
+        return super(FeaturesView, self).get_context_data(**context)

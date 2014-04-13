@@ -1,0 +1,152 @@
+{% extends 'main_template.html' %}
+{% load static %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static "css/uncompressed/cards.css" %}"/>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="{% url "core.index" %}">Home</a>
+        </li>
+        <li class="active">About Us</li>
+    </ul><!-- .breadcrumb -->
+{% endblock %}
+
+{% block content %}
+    <div class="page-content">
+        <div class="row">
+            <div class="col-sm-7 widget-container-span ui-sortable">
+                <div class="widget-box transparent">
+                    <div class="widget-header">
+                        <h4 class="lighter"><i class="icon-star"></i> O que?</h4>
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="widget-main padding-6 no-padding-left no-padding-right">
+                            Já parou para se perguntar como os quadrinhos chegam até você? E como eles são escolhidos?
+                            Acreditamos que existam muitos artistas talentosos pelo mundo, e com o poder da internet é
+                            possível
+                            dar a
+                            visibilidade que eles merecem.
+                        </div>
+
+                        <div class="widget-main padding-6 no-padding-left no-padding-right">
+                            O Barddo é um sistema de publicações on-line focado em artistas independentes. Nele qualquer
+                            artista,
+                            de qualquer estilo, pode disponibilizar suas obras para que os leitores avaliem.
+                        </div>
+
+                        <div class="widget-main padding-6 no-padding-left no-padding-right">
+                            A ideia é bem simples, o artista publica sua obra, diz seu preço, e começa a compartilhá-la.
+                            Os
+                            leitores
+                            podem avaliar estes trabalhos de uma forma simples e rápida. Quanto melhor a avaliação, mais
+                            destaque as obras recebem.
+                        </div>
+
+                        <div class="widget-main padding-6 no-padding-left no-padding-right">
+                            E assim o poder de encontrar as melhores obras é diretamente dos leitores, sem
+                            intermediários.
+                            Imagine só!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <img src="{% static "images/art/reader.png" %}"/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="lighter blue"><i class="icon-user"></i> A equipe</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="white-card">
+                    <div class="img-w">
+                        <img alt="Photo-card" src="{% static "images/test-user.png" %}">
+                    </div>
+                    <h5>Israel Crisanto</h5>
+
+                    <p>jose.almada@barddo.com</p>
+
+                    <p>Bla bla bla bla.</p>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="white-card">
+                    <div class="img-w">
+                        <img alt="Photo-card" src="{% static "images/test-user.png" %}">
+                    </div>
+                    <h5>Bruno Ortiz</h5>
+
+                    <p>jose.almada@barddo.com</p>
+
+                    <p>bla bla bla bla</p>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="white-card">
+                    <div class="img-w">
+                        <img alt="Photo-card" src="{% static "images/test-user.png" %}">
+                    </div>
+                    <h5>Rafael Ortiz</h5>
+
+                    <p>jose.almada@barddo.com</p>
+
+                    <p>Bla bla bla bla</p>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="white-card">
+                    <div class="img-w">
+                        <img alt="Photo-card" src="{% static "images/test-user.png" %}">
+                    </div>
+                    <h5>José Almada</h5>
+
+                    <p>jose.almada@barddo.com</p>
+
+                    <p>Bla bla bla</p>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="lighter blue"><i class="icon-envelope"></i> Contato</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                Qualquer dúvida, crítica ou sugestão, pode mandar uma mensagem direta para qualquer um dos integrantes,
+                ou diretamente
+                para contact@barddo.com. Se isto te deixa mais confortável, você também pode nos encontrar no facebook!
+                Dê um pulinho lá
+                e diga o que achou do projeto e nos ajude a torná-lo um sucesso!
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block page_specific_javascript %}
+
+
+{% endblock %}
+
+{% block bottom_page %}
+
+
+{% endblock %}
