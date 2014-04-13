@@ -33,7 +33,7 @@ class SearchResultView(ProfileAwareView):
         return super(SearchResultView, self).render_to_response(context)
 
     def remove_small_words(self, text):
-        return ' '.join(word for word in text.split() if len(word) > 3)
+        return ' & '.join(word for word in text.split() if len(word) > 3)
 
     def search_in_collections(self, text):
         return Collection.search_manager.search(text)[:30]
