@@ -11,6 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.core.files.images import ImageFile
 from django.db.models import Q
+from easy_thumbnails.files import get_thumbnailer
 from djorm_pgfulltext.models import SearchManager
 from djorm_pgfulltext.fields import VectorField
 
@@ -107,14 +108,6 @@ class Collection(models.Model):
 
     objects = RatingManager()
 
-    search_index = VectorField()
-    search_manager = SearchManager(
-        fields=('name', 'summary'),
-        config='pg_catalog.english',
-        search_field='search_index',
-        auto_update_search_field=True
-    )
-
     def get_total_works(self):
         return Work.objects.filter(collection__id=self.id).count()
 
@@ -179,14 +172,6 @@ class Work(models.Model):
     publish_date = models.DateTimeField(_('Publish Date'))
 
     objects = RatingManager()
-
-    search_index = VectorField()
-    search_manager = SearchManager(
-        fields=('title', 'summary'),
-        config='pg_catalog.english',
-        search_field='search_index',
-        auto_update_search_field=True
-    )
 
     def is_owner(self, user):
         """

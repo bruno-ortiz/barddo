@@ -15,7 +15,7 @@ $(document).ready(function () {
 });
 
 function set_rating(work_id, liked) {
-    var icon_element = $("*[data-work-id=" + work_id + "]");
+    var icon_element = $("a[data-work-id=" + work_id + "]");
 
     icon_element.removeClass("waiting");
     if (liked) {

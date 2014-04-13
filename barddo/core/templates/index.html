@@ -5,6 +5,7 @@
 
 {% block header %}
     <link rel="stylesheet" href="{% static "css/uncompressed/barddo.gallery.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/bottom.css" %}"/>
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -79,8 +80,9 @@
 
             //ROLL ON HOVER
             $(function () {
-                $(".roll").css("opacity", "0");
-                $(".roll").hover(function () {
+                var $roll = $(".roll");
+                $roll.css("opacity", "0");
+                $roll.hover(function () {
                             $(this).css("opacity", 1);
                         },
                         function () {
@@ -97,7 +99,7 @@
                 placement: "bottom",
                 container: "body",
                 content: function () {
-                    var id = $(this).attr("data-id");
+                    var id = $(this).closest("div[data-work-id]").attr("data-work-id");
                     return $("#work-popup-" + id).html();
                 },
 
@@ -107,10 +109,11 @@
             $(".boxcontainer").on("mouseenter",function () {
                 var _this = this;
 
-                if (!$(".popover").length) {
+                var $popover = $(".popover");
+                if (!$popover.length) {
                     $(".vote", _this).popover("show");
 
-                    $(".popover").on("mouseleave", function () {
+                    $popover.on("mouseleave", function () {
                         setTimeout(function () {
                             if (!$(".boxcontainer:hover").length) {
                                 $(".vote", _this).popover('hide');
@@ -134,6 +137,16 @@
                     }
                 }, 100);
             });
+            {% if user.is_authenticated %}
+                $(document).on("click", ".popover-content button.btn-reader", function () {
+                    var work_id = $(this).attr("data-work-id");
+                    Shards.reader(function (shard_id, shard_data, parent) {
+                        $(shard_id).remove();
+                        $(parent).append(shard_data);
+                        $(shard_id).modal('show');
+                    }, {"work_id": work_id});
+                });
+            {% endif %}
         });
     </script>
 {% endblock %}
