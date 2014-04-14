@@ -1,5 +1,5 @@
 {% load thumbnail %}
-{% load staticfiles %}
+{% load static %}
 
 <div data-work-id="{{ work.id }}" class=" col-lg-3 col-md-3 col-sm-3 col-xs-12 item {{ classes }}">
     <div class="boxcontainer">
@@ -32,19 +32,15 @@
     <div id="work-popup-{{ work.id }}" class="popover-data">
         <div class="work-detail-popup">
             <div class="popover-details">
-                <div class="row pull-left">
+                <div class="row pull-left popover-detail-width">
                     <div class="col-sm-2 center">
                         <img class="artist"
-                             src="{{ MEDIA_URL }}user_avatar/brunortiz11-social_1.jpg"
+                             src="{% get_media_prefix %}{{ work.author.user_profile.avatar }}"
                              alt="Artist Photo"/>
-                        <span>Israel</span>
+                        <span>{{ work.author.first_name }}</span>
                     </div>
-                    <div class="col-sm-9">
-                        This is some neat description This is some neat description This is
-                        some
-                        neat description This is some neat description This is some neat
-                        description
-                        This is some neat description
+                    <div class="col-sm-9 break-all">
+                        <p>{{ work.summary }}</p>
                     </div>
 
                     <div class="col-sm-1">

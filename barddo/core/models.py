@@ -165,6 +165,8 @@ class Work(models.Model):
     summary = models.TextField(_('Summary'))
     cover = models.ImageField(_('Cover Art'), upload_to=get_work_cover_path)
 
+    author = models.ForeignKey(BarddoUser, related_name='author_works')
+
     unit_count = models.IntegerField(_('Item Number'))
     total_pages = models.SmallIntegerField(_('Total Pages'))
     publish_date = models.DateTimeField(_('Publish Date'))
