@@ -233,3 +233,11 @@ footer {
 .modal-backdrop.in {
     opacity: 0.9;
 }
+
+.popover-detail-width {
+    width: 344px;
+}
+
+.break-all {
+    word-break: break-all
+}

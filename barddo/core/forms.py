@@ -42,4 +42,4 @@ class WorkForm(ModelForm):
 
     class Meta:
         model = Work
-        fields = ['title', 'summary', 'unit_count', 'collection', 'cover', 'publish_date']
+        fields = ['title', 'author', 'summary', 'unit_count', 'collection', 'cover', 'publish_date']
