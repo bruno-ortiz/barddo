@@ -46,6 +46,11 @@ footer .footer-link {
   padding-right: 15px;
   color: white;
 }
+footer .footer-link-last {
+  padding-top: 15px;
+  text-align: center;
+  color: white;
+}
 footer .footer-link h5 {
   color: #fff;
   font-size: 18px;
