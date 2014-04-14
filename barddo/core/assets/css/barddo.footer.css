@@ -1,0 +1,61 @@
+@media (max-width: 539px) {
+  footer .trade_mark {
+    text-align: center;
+    width: 100%;
+  }
+  footer .pages {
+    text-align: center;
+    width: 100%;
+  }
+}
+@media (min-width: 540px) {
+  footer .trade_mark {
+    float: right !important;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    font-size: 13px;
+  }
+  footer .pages {
+    float: left !important;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    font-size: 13px;
+  }
+}
+footer {
+  padding-top: 5px;
+  background: #252525 repeat;
+  color: #ccc;
+}
+footer a {
+  color: #aaa;
+}
+footer a:hover {
+  text-decoration: none;
+  color: #eee;
+}
+footer hr {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border-top: #101010 1px solid;
+  border-bottom: #222 1px solid;
+}
+footer .footer-link {
+  padding-top: 15px;
+  text-align: center;
+  padding-right: 15px;
+  color: white;
+}
+footer .footer-link-last {
+  padding-top: 15px;
+  text-align: center;
+  color: white;
+}
+footer .footer-link h5 {
+  color: #fff;
+  font-size: 18px;
+}
+footer .footer-link a {
+  margin-bottom: 2px;
+  display: inline-block;
+}
