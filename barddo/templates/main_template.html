@@ -1,0 +1,75 @@
+{% load staticfiles %}
+{% load compress %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>{% block title %} Barddo - Because we like art {% endblock %}</title>
+
+    <meta name="description" content="overview &amp; stats"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="shortcut icon" href="{% static "images/favicon.ico" %}">
+
+    {% compress css %}
+        {% include 'main_template/base_css_imports.html' %}
+    {% endcompress %}
+
+    {% compress js %}
+        {% include 'main_template/base_js_imports.html' %}
+    {% endcompress %}
+
+    {% block header %}
+    {% endblock %}
+</head>
+
+<body class="navbar-fixed skin-1">
+
+{% include 'main_template/navbar.html' %}
+
+{% block page_content %}
+    <div class="main-container container" id="main-container">
+        <div class="main-container-inner">
+
+            {% block sidebar %}
+            {% endblock %}
+
+            <div class="main-content">
+                <div class="breadcrumbs" id="breadcrumbs">
+                    <div class="pull-left">
+
+                        {% block breadcrumbs %}
+                        {% endblock %}
+
+                    </div>
+                </div>
+
+                {% block content %}
+                {% endblock %}
+
+            </div>
+        </div>
+        <a href="#" class="scrollup">&nbsp;</a>
+    </div>
+{% endblock %}
+
+{% include 'main_template/footer.html' %}
+
+{% include "feedback-button.html" %}
+
+{% if not user.is_authenticated %}
+    {% include "login-modal.html" %}
+{% endif %}
+
+{% block bottom_page %}
+{% endblock %}
+
+{% block page_specific_javascript %}
+{% endblock %}
+
+<script type="text/javascript">
+    if ("ontouchend" in document) document.write("<script src='{% static "js/jquery.mobile.custom.min.js" %}'>" + "<" + "/script>");
+</script>
+
+</body>
+</html>
