@@ -130,7 +130,7 @@ def crop_image(work, x, y, width, height):
     """
     image = Image.open(work.cover.path)
     crop = Crop(width=width, height=height, x=x, y=y)
-    crop.process(image).save(work.cover.path, 'JPEG', quality=75)
+    crop.process(image).save(work.cover.path, 'JPEG', quality=90)
 
 
 @login_required

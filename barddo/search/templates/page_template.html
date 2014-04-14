@@ -1,0 +1,140 @@
+{% extends 'main_template.html' %}
+{% load staticfiles %}
+{% load compress %}
+{% load collection_result %}
+{% load work_result %}
+{% load person_result %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static "css/uncompressed/barddo.gallery.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/result_page.css" %}"/>
+{% endblock %}
+
+{% block breadcrumbs %}
+    {% if success %}
+        <div id="options">
+            <ul id="filters" class="option-set clearfix" data-option-key="filter">
+                {% if collections.count > 0 %}
+                    <li>
+                        <a href="#filter" class="selected" data-option-value=".result_collection">
+                            <i class="icon icon-book"></i> Collections
+                        </a>
+                    </li>
+                {% endif %}
+                {% if works.count > 0 %}
+                    <li>
+                        <a href="#filter" data-option-value=".result_work">
+                            <i class="icon icon-file"></i> Works
+                        </a>
+                    </li>
+                {% endif %}
+                {% if people.count > 0 %}
+                    <li>
+                        <a href="#filter" data-option-value=".result_person">
+                            <i class="icon icon-user"></i> People
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="page-content">
+
+        {% if success %}
+            <div id="result-content" class="col-lg-12  col-md-12 col-sm-12 col-xs-12 collections-wrap">
+                <div class="results">
+                    {% for collection in collections %}
+                        {% collection_result collection %}
+                    {% endfor %}
+                    {% for work in works %}
+                        {% work_result work %}
+                    {% endfor %}
+                    {% for person in people %}
+                        {% person_result person %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <div id="result-content" class="col-lg-12  col-md-12 col-sm-12 col-xs-12 collections-wrap">
+                {{ error }}
+            </div>
+        {% endif %}
+
+    </div>
+{% endblock %}
+
+{% block page_specific_javascript %}
+    {% compress js %}
+        <script src="{% static "js/jquery.isotope.min.js" %}"></script>
+    {% endcompress %}
+{% endblock %}
+
+{% block bottom_page %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var jQuerycontainer = jQuery('.results');
+
+            jQuerycontainer.imagesLoaded(function () {
+                $("a[data-option-value]").removeClass("selected");
+
+                $("a[data-option-value=\"" + get_selected_group() + "\"]").addClass("selected");
+
+                jQuerycontainer.show();
+
+                jQuerycontainer.isotope({
+                    itemSelector: '.result_item',
+                    filter: get_selected_group(),
+                    animationOptions: {
+                        duration: 750,
+                        easing: 'linear',
+                        queue: false
+                    }
+                });
+            });
+
+            function get_selected_group() {
+                {% if collections.count > 0 %}
+                    return '.result_collection';
+                {% elif works.count > 0 %}
+                    return '.result_work';
+                {% else %}
+                    return '.result_person';
+                {% endif %}
+            }
+
+            var jQueryoptionSets = jQuery('#options .option-set'),
+                    jQueryoptionLinks = jQueryoptionSets.find('a');
+
+            jQueryoptionLinks.click(function () {
+                var jQuerythis = jQuery(this);
+                // don't proceed if already selected
+                if (jQuerythis.hasClass('selected')) {
+                    return false;
+                }
+                var jQueryoptionSet = jQuerythis.parents('.option-set');
+                jQueryoptionSet.find('.selected').removeClass('selected');
+                jQuerythis.addClass('selected');
+
+                // make option object dynamically, i.e. { filter: '.my-filter-class' }
+                var options = {},
+                        key = jQueryoptionSet.attr('data-option-key'),
+                        value = jQuerythis.attr('data-option-value');
+                // parse 'false' as false boolean
+                value = value === 'false' ? false : value;
+                options[key] = value;
+                if (key === 'layoutMode' && typeof changeLayoutMode === 'function') {
+                    // changes in layout modes need extra logic
+                    changeLayoutMode(jQuerythis, options)
+                } else {
+                    // otherwise, apply new options
+                    jQuerycontainer.isotope(options);
+                }
+
+                return false;
+            });
+        });
+    </script>
+{% endblock %}
