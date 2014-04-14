@@ -1,0 +1,31 @@
+{% load thumbnail %}
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 row result_card result_item result_work">
+    <div class="row">
+        <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2">
+            <img class="img-responsive" src="{{ work.cover|thumbnail_url:"small_cover" }}"
+                 alt="{{ work.title }}">
+        </div>
+        <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10 result_info">
+            <div class="title">
+                <h2>{{ work.title }}
+                <span style="font-size: 14px;font-style: italic;">
+                    ({{ work.collection.name }})
+                </span>
+                </h2>
+            </div>
+            <div class="summary">
+                <p>{{ work.summary }}</p>
+            </div>
+        </div>
+        <div class="work_count">
+            <i class="icon icon-heart"></i>
+            {% if work.like_count  %}
+                {{ work.like_count }}
+            {% else %}
+                0
+            {% endif %}
+        </div>
+    </div>
+</div>
+

@@ -7,6 +7,8 @@ from django.db import models
 from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.utils.translation import ugettext as _
+from djorm_pgfulltext.fields import VectorField
+from djorm_pgfulltext.models import SearchManager
 
 
 __author__ = 'bruno'
@@ -34,6 +36,14 @@ class UserQuerySet(QuerySet):
 class BarddoUser(AbstractUser):
     objects = BarddoUserManager()
 
+    search_index = VectorField()
+    search_manager = SearchManager(
+        fields=('username', 'first_name', 'last_name'),
+        config='pg_catalog.english',
+        search_field='search_index',
+        auto_update_search_field=True
+    )
+
     def is_publisher(self):
         owned_publishers = self.publishing_group_owner.all().count()
         num_publishers = self.publishing_group.all().count()
@@ -43,7 +53,7 @@ class BarddoUser(AbstractUser):
         return self.publishing_group.filter(pk=1).count() > 0
 
     def user_url(self):
-        return reverse('core.profile', args=(self.id,))
+        return reverse('account.profile', args=(self.id,))
 
 
 class BarddoUserAuthBackend(ModelBackend):
