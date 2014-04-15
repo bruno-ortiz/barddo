@@ -1363,74 +1363,6 @@ blockquote.pull-right {
     opacity: 1;
 }
 
-.navbar {
-    margin-bottom: 0;
-}
-
-.navbar {
-    margin-left: 0;
-    margin-right: 0;
-    border: none;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    border-radius: 0;
-    margin: 0;
-    padding-left: 0;
-    padding-right: 0;
-    min-height: 45px;
-    position: relative;
-    background: #438eb9;
-}
-
-.navbar > .container {
-    padding-left: 0;
-    padding-right: 0;
-}
-
-.navbar .navbar-text,
-.navbar .navbar-link {
-    color: #ffffff;
-}
-
-.navbar .navbar-brand {
-    color: #ffffff;
-    font-size: 24px;
-    text-shadow: none;
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
-.navbar .navbar-brand:hover,
-.navbar .navbar-brand:focus {
-    color: #ffffff;
-}
-
-.navbar .navbar-header {
-    margin: 0 !important;
-}
-
-.navbar .navbar-nav > li > a,
-.navbar .navbar-nav > li > a:hover,
-.navbar .navbar-nav > li > a:focus {
-    font-size: 13px;
-    text-shadow: none;
-    color: #ffffff;
-}
-
-.navbar-fixed-top,
-.navbar-fixed-bottom {
-    position: fixed;
-}
-
-.navbar-container {
-    padding-left: 10px;
-    padding-right: 20px;
-}
-
-.navbar-container.container {
-    padding-left: 0;
-    padding-right: 0;
-}
 
 /* ace-nav */
 .ace-nav {
@@ -2042,7 +1974,7 @@ blockquote.pull-right {
 /* searchbox */
 .nav-search {
     margin-top: 8px;
-    margin-left: 80px;
+    margin-left: 10px;
 }
 
 .nav-search .form-search {

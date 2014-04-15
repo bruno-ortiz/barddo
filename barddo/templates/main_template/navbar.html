@@ -5,9 +5,8 @@
     <div class="navbar navbar-default navbar-fixed-top" id="navbar">
         <div class="navbar-container container" id="navbar-container">
             <div class="navbar-header pull-left">
-                <a href="{% url "core.index" %}" class="navbar-brand">
-                    <img src="{% static "images/logo.png" %}" alt="Barddo"/>
-                </a><!-- /.brand -->
+
+                <a href="{% url "core.index" %}" class="navbar-brand"></a>
 
                 <div class="nav-search pull-left" id="nav-search">
                     <form class="form-search" action="{% url 'search.result' %}" method="get">
@@ -20,9 +19,8 @@
                     </span>
                     </form>
                 </div>
-            </div>
-            <!-- /.navbar-header -->
 
+            </div>
 
             <div class="navbar-header pull-right" role="navigation">
                 {% if user.is_authenticated %}
