@@ -96,7 +96,6 @@ STATIC_URL = '/static/'
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'assets')),
-    path.normpath(path.join(SITE_ROOT, 'core', 'assets')),
     path.normpath(path.join(SITE_ROOT, 'feedback', 'assets')),
     path.normpath(path.join(SITE_ROOT, 'search', 'assets')),
 )
@@ -155,6 +154,7 @@ TEMPLATE_LOADERS = (
 )
 
 TEMPLATE_DIRS = (
+    path.normpath(path.join(SITE_ROOT, 'templates')),
     path.normpath(path.join(SITE_ROOT, 'core', 'templates')),
     path.normpath(path.join(SITE_ROOT, 'feedback', 'templates')),
     path.normpath(path.join(SITE_ROOT, 'shards', 'templates')),
