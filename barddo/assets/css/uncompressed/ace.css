@@ -26,7 +26,7 @@ body.breadcrumbs-fixed {
 .main-container {
     position: static;
     min-height: 500px;
-    padding: 0 0 223px;
+    padding: 0 0 50px;
 }
 
 .main-container:after {
@@ -68,7 +68,7 @@ body.breadcrumbs-fixed {
 .page-content {
     background: rgba(255, 255, 255, 1);
     margin: 0;
-    padding: 8px 20px 70px;
+    padding: 8px 20px 10px;
 }
 
 .page-header {

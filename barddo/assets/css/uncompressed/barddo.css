@@ -160,21 +160,6 @@ footer {
     margin-top: 5px;
 }
 
-/**
- ** Page Scrolling
- **/
-.scrollup {
-    width: 40px;
-    height: 40px;
-    opacity: 0.3;
-    position: fixed;
-    bottom: 50px;
-    right: 100px;
-    display: none;
-    z-index: 9999;
-    background: url('../../images/icon_top.png') no-repeat;
-}
-
 #loginModal .modal-dialog {
     width: 30%;
 }
