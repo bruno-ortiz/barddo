@@ -24,12 +24,12 @@ PASSWORD_HASHERS = (
 ########## JENKINS TESTS CONFIGURATION
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
 INSTALLED_APPS += (
-    'django_jenkins',
+    #'django_jenkins',
 )
 
 JENKINS_TASKS = (
-    'django_jenkins.tasks.with_coverage',
-    'django_jenkins.tasks.django_tests',   # select one django or
+    #'django_jenkins.tasks.with_coverage',
+    #'django_jenkins.tasks.django_tests',   # select one django or
     #'django_jenkins.tasks.dir_tests'      # directory tests discovery
     #'django_jenkins.tasks.run_pep8',
     #'django_jenkins.tasks.run_pyflakes',
