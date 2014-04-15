@@ -135,7 +135,6 @@
     -moz-transition: border 500ms ease-out;
     -o-transition: border 500ms ease-out;
     position: relative;
-    overflow: hidden;
 
     transition: background-color 500ms ease-out;
     -webkit-transition: background-color 500ms ease-out;
