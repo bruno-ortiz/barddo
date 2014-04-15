@@ -78,4 +78,4 @@ GOOGLE_OAUTH2_CLIENT_SECRET = 'VWrV9x7s6Xxsr058StR6G09Q'
 
 FIXTURE_DIRS += (path.normpath(path.join(SITE_ROOT, 'accounts', 'test-fixtures')),)
 
-COMPRESS_ENABLED = False
+COMPRESS_ENABLED = True
