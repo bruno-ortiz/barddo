@@ -11,12 +11,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="shortcut icon" href="{% static "images/favicon.ico" %}">
 
+
+
     {% compress css %}
         {% include 'main_template/base_css_imports.html' %}
     {% endcompress %}
 
     {% compress js %}
-        {% include 'main_template/base_js_imports.html' %}
+        <!-- Always load jquery on header, so we can use javascript on the page body -->
+        <script src="{% static 'js/jquery-2.0.3.min.js' %}"></script>
+        <script src="{% static "js/bootstrap.min.js" %}"></script>
     {% endcompress %}
 
     {% block header %}
@@ -63,6 +67,10 @@
 
 {% block bottom_page %}
 {% endblock %}
+
+{% compress js %}
+    {% include 'main_template/base_js_imports.html' %}
+{% endcompress %}
 
 {% block page_specific_javascript %}
 {% endblock %}

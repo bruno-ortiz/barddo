@@ -3,14 +3,11 @@
 {% load shards_templatetags %}
 
 {% block base_js_imports %}
-    <!-- Always load jquery on header, so we can use javascript on the page body -->
-    <script src="{% static 'js/jquery-2.0.3.min.js' %}"></script>
     <script src="{% static "js/jquery-ui-1.10.3.custom.min.js" %}"></script>
     <script src="{% static "js/jquery.ui.touch-punch.min.js" %}"></script>
     <script src="{% static "js/jquery.slimscroll.min.js" %}"></script>
     <script src="{% static "js/jquery.gritter.min.js" %}"></script>
 
-    <script src="{% static "js/bootstrap.min.js" %}"></script>
     <script src="{% static "js/typeahead-bs2.min.js" %}"></script>
 
     <!-- ace settings handler -->
