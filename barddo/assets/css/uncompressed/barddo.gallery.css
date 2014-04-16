@@ -98,9 +98,9 @@
     position: absolute;
     font-size: 30px;
     width: 100%;
-    margin: 0px auto;
+    margin: 0 auto;
     height: 100%;
-    top: 0.0px;
+    top: 0;
     display: table-cell;
     vertical-align: middle;
     background: #000;
@@ -180,7 +180,7 @@
     font-size: 30px;
     background: transparent;
     width: 100%;
-    margin: 0px auto;
+    margin: 0 auto;
     display: table-cell;
     vertical-align: middle;
     top: 45%;
@@ -190,29 +190,25 @@
     font-size: 20px;
     padding: 11px 13px 13px 13px;
     background: #D5DAD6;
-    margin-right: 0px;
     border-radius: 50%;
     color: #850303;
     position: relative;
     top: 55%;
     vertical-align: middle;
-    margin-top: 0px;
     margin: 0 auto;
     border: 5px solid black;
-    background: #D5DAD6;
     display: inline-block;
     width: 60px;
     height: 60px;
 }
 
 .captionicons.liked {
-    color: #D13D3D;
+    color: #03354c;
 }
 
 .captionicons:hover {
     opacity: 0.9;
     text-decoration: none;
-    font-size: 22px;
 }
 
 .boxportfolio2 .captionicons {

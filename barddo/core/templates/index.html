@@ -114,19 +114,19 @@
                 $(".vote", _this).popover("show");
 
                 $(".popover").on("mouseleave", function (e) {
-                    setTimeout(function () {
-                        var $boxcontainer = $(".boxcontainer:hover");
-                        if ($boxcontainer.length) {
-                            var new_work_id = $boxcontainer.closest('div[data-work-id]').attr('data-work-id');
-                            if (new_work_id != work_id) {
-                                $(".vote", _this).popover('hide');
-                                $(".roll", _this).css("opacity", 0);
-                            }
-                        } else {
+                    {#                    setTimeout(function () {#}
+                    var $boxcontainer = $(".boxcontainer:hover");
+                    if ($boxcontainer.length) {
+                        var new_work_id = $boxcontainer.closest('div[data-work-id]').attr('data-work-id');
+                        if (new_work_id != work_id) {
                             $(".vote", _this).popover('hide');
                             $(".roll", _this).css("opacity", 0);
                         }
-                    }, 100);
+                    } else {
+                        $(".vote", _this).popover('hide');
+                        $(".roll", _this).css("opacity", 0);
+                    }
+                    {#                    }, 100);#}
                     e.preventDefault();
                     e.stopPropagation();
                     onPopupHover = false;
@@ -137,13 +137,13 @@
 
             }).on("mouseleave", function () {
                 var _this = this;
-                setTimeout(function () {
-                    if (!$(".popover:hover").length) {
-                        onPopupHover = false;
-                        $(".vote", _this).popover("hide");
-                        $(".roll", _this).css("opacity", 0);
-                    }
-                }, 100);
+                {#                setTimeout(function () {#}
+                if (!$(".popover:hover").length) {
+                    onPopupHover = false;
+                    $(".vote", _this).popover("hide");
+                    $(".roll", _this).css("opacity", 0);
+                }
+                {#                }, 100);#}
             });
             {% if user.is_authenticated %}
                 $(document).on("click", ".popover-content button.btn-reader", function () {
