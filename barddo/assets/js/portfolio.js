@@ -21,6 +21,7 @@ jQuery(function () {
         jQuerycontainer.isotope({
             itemSelector: '.item',
             filter: '.collection-trending',
+            layoutMode: 'fitRows',
             animationOptions: {
                 duration: 750,
                 easing: 'linear',
