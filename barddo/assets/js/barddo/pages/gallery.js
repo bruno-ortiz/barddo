@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $('.vote').click(function (e) {
         Dajaxice.rating.toggle_rating(Dajax.process, { 'work_id': $(this).attr("data-work-id") });
-        $(this).html('<i class="icon-heart-empty"></i>');
+        $(this).html('<i class="icon-star-empty"></i>');
         $(this).removeClass("liked");
 
         $(this).addClass("waiting");
@@ -20,8 +20,9 @@ function set_rating(work_id, liked) {
     icon_element.removeClass("waiting");
     if (liked) {
         icon_element.addClass("liked");
-        icon_element.html('<i class="icon-heart"></i>');
+        icon_element.html('<i class="icon-star"></i>');
     } else {
-        icon_element.html('<i class="icon-heart-empty"></i>');
+        icon_element.addClass("liked");
+        icon_element.html('<i class="icon-star-empty"></i>');
     }
 }

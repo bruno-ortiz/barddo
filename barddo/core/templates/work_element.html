@@ -11,11 +11,11 @@
             <div class="wrapcaption">
                 {% if work.liked %}
                     <a class="vote liked captionicons" data-work-id="{{ work.id }}" href="projectdetail.html">
-                        <i class="icon-heart"></i>
+                        <i class="icon-star"></i>
                     </a>
                 {% else %}
-                    <a class="vote captionicons" data-work-id="{{ work.id }}" href="projectdetail.html">
-                        <i class="icon-heart-empty"></i>
+                    <a class="vote liked captionicons" data-work-id="{{ work.id }}" href="projectdetail.html">
+                        <i class="icon-star-empty"></i>
                     </a>
                 {% endif %}
             </div>

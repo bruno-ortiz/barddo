@@ -108,34 +108,31 @@
 
             $(".boxcontainer").on("mouseenter",function () {
                 var _this = this;
+                var work_id = $(this).closest('div[data-work-id]').attr('data-work-id');
+                $(".vote", _this).popover("show");
 
-                var $popover = $(".popover");
-                if (!$popover.length) {
-                    $(".vote", _this).popover("show");
-
-                    $popover.on("mouseleave", function () {
-                        setTimeout(function () {
-                            if (!$(".boxcontainer:hover").length) {
-                                $(".vote", _this).popover('hide');
-                                $(".roll", _this).css("opacity", 0);
-                            }
-                        }, 100);
-
-                        onPopupHover = false;
-                    });
-                }
-
-                onPopupHover = true;
-
-            }).on("mouseleave", function () {
-                var _this = this;
-                setTimeout(function () {
-                    if (!$(".popover:hover").length) {
-                        onPopupHover = false;
-                        $(".vote", _this).popover("hide");
+                $(".popover").on("mouseleave", function (e) {
+                    var $boxcontainer = $(".boxcontainer:hover");
+                    if ($boxcontainer.length) {
+                        var new_work_id = $boxcontainer.closest('div[data-work-id]').attr('data-work-id');
+                        if (new_work_id != work_id) {
+                            $(".vote", _this).popover('hide');
+                            $(".roll", _this).css("opacity", 0);
+                        }
+                    } else {
+                        $(".vote", _this).popover('hide');
                         $(".roll", _this).css("opacity", 0);
                     }
-                }, 100);
+                    onPopupHover = false;
+                });
+                onPopupHover = true;
+            }).on("mouseleave", function () {
+                var _this = this;
+                if (!$(".popover:hover").length) {
+                    onPopupHover = false;
+                    $(".vote", _this).popover("hide");
+                    $(".roll", _this).css("opacity", 0);
+                }
             });
             {% if user.is_authenticated %}
                 $(document).on("click", ".popover-content button.btn-reader", function () {
