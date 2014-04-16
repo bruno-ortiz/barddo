@@ -1,0 +1,93 @@
+{% load staticfiles %}
+{% load i18n %}
+
+{% block navbar %}
+    <div class="navbar navbar-default navbar-fixed-top" id="navbar">
+        <div class="navbar-container container" id="navbar-container">
+            <div class="navbar-header pull-left">
+
+                <a href="{% url "core.index" %}" class="navbar-brand"></a>
+
+                <div class="nav-search pull-left" id="nav-search">
+                    <form class="form-search" action="{% url 'search.result' %}" method="get">
+                    <span class="input-icon">
+                        <input type="text" placeholder="{% trans "Search people, collections, mangas, HQs etc..." %}"
+                               class="nav-search-input"
+                               name="t"
+                               id="nav-search-input" autocomplete="off"/>
+                        <i class="icon-search nav-search-icon"></i>
+                    </span>
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="navbar-header pull-right" role="navigation">
+                {% if user.is_authenticated %}
+                    <ul class="nav ace-nav">
+                        {% if user.is_publisher %}
+                            <li class="dashboard-link hidden-xs">
+                                <a href="{% url "core.dashboard" %}">
+                                    <i class="icon-dashboard"></i>
+                                    Dashboard
+                                </a>
+                            </li>
+                        {% endif %}
+                        <li class="light-blue">
+                            <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                                <img class="nav-user-photo" src="{{ MEDIA_URL }}{{ avatar }}" alt="User Photo"/>
+                            <span class="user-info">
+                                <small>Welcome,</small>
+                                {{ username }}
+                            </span>
+
+                                <i class="icon-caret-down"></i>
+                            </a>
+
+                            <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+
+                                <li>
+                                    <a href="{% url 'account.editable_profile' %}">
+                                        <i class="icon-user"></i>
+                                        Profile
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{% url 'publishing.landpage' %}">
+                                        <i class="icon-book"></i>
+                                        Publisher Area
+                                    </a>
+                                </li>
+
+                                <li class="divider"></li>
+
+                                <li>
+                                    <a href="{% url 'logout' %}">
+                                        <i class="icon-off"></i>
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                {% else %}
+                    <button class="login-required btn btn-signin" data-target="#loginModal">
+                        <i class="icon-signin"></i> Login
+                    </button>
+                {% endif %}
+                <!-- /.ace-nav -->
+            </div>
+            <!-- /.navbar-header -->
+        </div>
+        <!-- /.container -->
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(document).on("click", ".login-required", function () {
+                $('#loginModal').modal('show');
+            });
+        });
+    </script>
+{% endblock %}

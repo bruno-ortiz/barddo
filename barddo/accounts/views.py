@@ -93,7 +93,7 @@ editable_profile = UserProfileView.as_view(editable=True)
 class UsernamesAjaxView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         query_paramter = escape(request.GET['q'])
-        should_ignore_owner = is_true(request.GET.get('ignore_owner', True))
+        should_ignore_owner = is_true(request.GET.get('ignore_owner', "true"))
         user_query_set = BarddoUser.objects.username_startswith(query_paramter)
         if should_ignore_owner:
             user_query_set = user_query_set.differs_from(request.user.id)
