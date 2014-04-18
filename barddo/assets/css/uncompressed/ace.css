@@ -16853,12 +16853,6 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     }
 }
 
-@media (max-width: 460px) {
-    body.navbar-fixed {
-        padding-top: 90px;
-    }
-}
-
 @media only screen and (max-width: 767px) {
     .error-container {
         margin: 12px;

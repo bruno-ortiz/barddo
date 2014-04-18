@@ -29,11 +29,6 @@
     border-color: #dd4b39;
 }
 
-.navbar-header > button {
-    padding-top: 12px;
-    padding-bottom: 12px;
-}
-
 .ace-nav .nav-user-photo {
     border-radius: 0;
     border: 1px solid #FFF;
