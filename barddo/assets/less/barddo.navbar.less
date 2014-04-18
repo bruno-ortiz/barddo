@@ -22,6 +22,16 @@
   padding-right: 0;
 }
 
+.navbar-collapse {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.navbar-toggle {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
 .navbar .navbar-text,
 .navbar .navbar-link {
   color: #ffffff;
@@ -32,14 +42,16 @@
   font-size: 24px;
   text-shadow: none;
 
-  @media (max-width: (@screen-xs - 1)) {
+  @media (max-width: (@screen-xs-max + 20)) {
     margin: 5px 10px 5px 10px !important;
     background: url('../images/logo-icon.png') no-repeat;
+    padding-left: 0px;
+    padding-right: 0px;
     width: 11px;
     height: 29px;
   }
 
-  @media (min-width: @screen-xs) {
+  @media (min-width: (@screen-xs + 20)) {
     margin: 5px 5px 5px 0px !important;
     background: url('../images/logo.png') no-repeat;
     width: 110px;
@@ -78,4 +90,13 @@
 .navbar-container.container {
   padding-left: 0;
   padding-right: 0;
+}
+
+.btn-signin {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.navbar-max-width {
+  width: 100%;
 }
