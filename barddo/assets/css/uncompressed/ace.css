@@ -3267,11 +3267,6 @@ li [class*=" icon-"],
     font-size: 12px;
 }
 
-button.btn:active {
-    top: 1px;
-    left: 1px;
-}
-
 .btn,
 .btn-default,
 .btn:focus,

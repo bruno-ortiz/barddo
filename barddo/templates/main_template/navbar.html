@@ -32,7 +32,7 @@
                 </div>
 
                 {% if user.is_authenticated == False %}
-                    <div class="pull-right" id="barddo-nav-search">
+                    <div class="pull-right">
                         <button class="login-required btn btn-signin" data-target="#loginModal">
                             <i class="icon-signin"></i> Login
                         </button>
@@ -44,8 +44,7 @@
                 <div class="collapse navbar-collapse" id="barddo-navbar">
                     <div class="pull-right" role="navigation">
 
-                        <ul class="nav navbar-nav">
-
+                        <ul class="nav navbar-nav nav ace-nav">
 
                             {% if user.is_publisher %}
                                 <li class="dashboard-link"> {# hidden-xs  #}
@@ -55,8 +54,7 @@
                                 </li>
                             {% endif %}
 
-                            <li class="light-blue">
-                            <li class="dropdown">
+                            <li class="dropdown light-blue">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <img class="nav-user-photo" src="{{ MEDIA_URL }}{{ avatar }}" alt="User Photo"/>
                                     <span class="user-info"><small>Welcome,</small>
