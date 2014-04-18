@@ -9,10 +9,10 @@
                 <h4 class="modal-title" id="loginModalLabel">{% trans "Barddo Login" %}</h4>
             </div>
             <div class="modal-body">
-                <a href="{% url 'socialauth_begin' 'facebook' %}{% if next_url %}?next={{ next_url }}{% endif %}"
+                <a href="{% url 'social:begin' "facebook" %}{% if next_url %}?next={{ next_url }}{% endif %}"
                    class="btn btn-block facebook-color"><i class="icon-facebook-sign"></i>
                     {% trans "Login with Facebook" %}</a>
-                <a href="{% url 'socialauth_begin' 'google-oauth2' %}{% if next_url %}?next={{ next_url }}{% endif %}"
+                <a href="{% url 'social:begin' "google-oauth2" %}{% if next_url %}?next={{ next_url }}{% endif %}"
                    class="btn btn-block google-color"><i class="icon-google-plus-sign"></i>
                     {% trans "Login with Google" %}</a>
             </div>
