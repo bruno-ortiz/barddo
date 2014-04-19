@@ -1,23 +1,29 @@
 # coding=utf-8
 from PIL import Image
-from urllib2 import urlopen, HTTPError
+import json
+from urllib2 import urlopen, HTTPError, Request
 import datetime
+
 from django.core.files.base import ContentFile
 from django.template.defaultfilters import slugify
 from facepy.graph_api import GraphAPI
-from social_auth.backends import google
-from social_auth.backends.facebook import FacebookBackend
+from social.backends import google
+from social.backends.facebook import FacebookOAuth2
+
 from accounts.models import BarddoUserProfile
 
+
 __author__ = 'bruno'
+
+GOOGLE_PLUS_BASE_URL = 'https://www.googleapis.com/plus/v1/people/{}'
 
 
 def get_avatar(backend, user, response, is_new=False, **kwargs):
     if is_new:
         url = None
-        if backend.__class__ is FacebookBackend:
+        if backend.__class__ is FacebookOAuth2:
             url = "http://graph.facebook.com/{0}/picture?type=large".format(response["id"])
-        elif backend.__class__ is google.GoogleOAuth2Backend and "picture" in response:
+        elif backend.__class__ is google.GooglePlusAuth and "picture" in response:
             url = response["picture"]
         if url:
             try:
@@ -32,23 +38,24 @@ def get_avatar(backend, user, response, is_new=False, **kwargs):
 def get_birth_date(backend, user, response, is_new=False, **kwargs):
     if is_new:
         birth_date = None
-        if backend.__class__ is FacebookBackend:
-            birth_date = response['birthday']
-        elif backend.__class__ is google.GoogleOAuth2Backend:
-        # TODO: birthday está disponivel apenas no google-plus, porem o django-social-auth busca apenas informações do google
-            birth_date = '02/15/1990'  # default date
+        if backend.__class__ is FacebookOAuth2:
+            birth_date = datetime.datetime.strptime(response['birthday'], '%m/%d/%Y').date()
+        elif backend.__class__ is google.GooglePlusAuth:
+            user_id = response['id']
+            data = __get_google_plus_data(GOOGLE_PLUS_BASE_URL.format(user_id), response['access_token'])
+            birth_date = datetime.datetime.strptime(data.get('birthday', '2014-01-17'), '%Y-%m-%d').date()
         if birth_date:
             profile = user.user_profile
-            profile.birth_date = datetime.datetime.strptime(birth_date, '%m/%d/%Y').date()
+            profile.birth_date = birth_date
             profile.save()
 
 
 def get_gender(backend, user, response, is_new=False, **kwargs):
     if is_new:
         gender = None
-        if backend.__class__ is FacebookBackend:
+        if backend.__class__ is FacebookOAuth2:
             gender = response['gender'][:1]
-        elif backend.__class__ is google.GoogleOAuth2Backend:
+        elif backend.__class__ is google.GooglePlusAuth:
             gender = response['gender'][:1]
         if gender:
             profile = user.user_profile
@@ -59,13 +66,18 @@ def get_gender(backend, user, response, is_new=False, **kwargs):
 def get_country(backend, user, response, is_new=False, **kwargs):
     if is_new:
         country = None
-        if backend.__class__ is FacebookBackend:
+        if backend.__class__ is FacebookOAuth2:
             graph = GraphAPI(oauth_token=response['access_token'])
             country_query = graph.fql(r'SELECT current_location FROM user WHERE uid=me()')
             country = country_query['data'][0]['current_location']['country']
-        elif backend.__class__ is google.GoogleOAuth2Backend:
+        elif backend.__class__ is google.GooglePlusAuth:
             country = 'Brazil'
         if country:
             profile = user.user_profile
             profile.country = country
             profile.save()
+
+
+def __get_google_plus_data(url, access_token):
+    request = Request(url, headers={"Authorization": "Bearer {}".format(access_token)})
+    return json.loads(urlopen(request).read())
