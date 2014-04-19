@@ -3267,11 +3267,6 @@ li [class*=" icon-"],
     font-size: 12px;
 }
 
-button.btn:active {
-    top: 1px;
-    left: 1px;
-}
-
 .btn,
 .btn-default,
 .btn:focus,
@@ -16850,12 +16845,6 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     .sidebar.fixed,
     .sidebar.sidebar-fixed {
         position: absolute;
-    }
-}
-
-@media (max-width: 460px) {
-    body.navbar-fixed {
-        padding-top: 90px;
     }
 }
 
