@@ -307,7 +307,7 @@ COMPRESS_ROOT = STATIC_ROOT
 AUTHENTICATION_BACKENDS = (
     'accounts.models.BarddoUserAuthBackend',
     'social.backends.facebook.FacebookOAuth2',
-    'social.backends.google.GoogleOAuth2',
+    'social.backends.google.GooglePlusAuth',
     'django.contrib.auth.backends.ModelBackend',
 )
 

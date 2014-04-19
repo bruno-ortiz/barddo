@@ -3,11 +3,14 @@ import json
 import os
 import datetime
 
+from django.conf import settings
+
 from django.views.generic import View
 from django.views.generic.base import TemplateResponseMixin
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.db.models import Max
+from social.backends.google import GooglePlusAuth
 
 from shards.decorators import register_shard
 from .forms import CollectionForm, WorkForm
@@ -32,11 +35,14 @@ class IndexView(ProfileAwareView):
         new_works = self.get_new_works(barddo_user)
         rising_works = self.get_rising_works(barddo_user)
         trending_works = self.get_trending_works(barddo_user)
-
-        context = self.get_context_data(
-            **{'user': request.user, "next_url": next_url, "new_works": new_works, "rising_works": rising_works,
-               "trending_works": trending_works})
-        return super(IndexView, self).render_to_response(context)
+        context = {"next_url": next_url, "new_works": new_works, "rising_works": rising_works,
+                   "trending_works": trending_works}
+        if not barddo_user:
+            plus_scope = ' '.join(GooglePlusAuth.DEFAULT_SCOPE)
+            plus_id = settings.SOCIAL_AUTH_GOOGLE_PLUS_KEY
+            context['plus_scope'] = plus_scope
+            context['plus_id'] = plus_id
+        return super(IndexView, self).get(request, **context)
 
     def get_new_works(self, user):
         limit = self.get_relative_date(self.LAST_WEEK)
