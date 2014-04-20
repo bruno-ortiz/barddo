@@ -7,7 +7,7 @@ __author__ = 'bruno'
 
 urlpatterns = patterns(
     '',
-    url(r'', include('social_auth.urls')),
+    url('', include('social.apps.django_app.urls', namespace='social')),
 
     url(r'^user/usernames$',
         UsernamesAjaxView.as_view(),

@@ -208,7 +208,7 @@ THIRD_PARTY_APPS = (
     'dajax',
 
     'widget_tweaks',
-    'social_auth',
+    'social.apps.django_app.default',
     'endless_pagination',
     'imagekit',
     'easy_thumbnails'
@@ -306,8 +306,8 @@ COMPRESS_ROOT = STATIC_ROOT
 ##
 AUTHENTICATION_BACKENDS = (
     'accounts.models.BarddoUserAuthBackend',
-    'social_auth.backends.facebook.FacebookBackend',
-    'social_auth.backends.google.GoogleOAuth2Backend',
+    'social.backends.facebook.FacebookOAuth2',
+    'social.backends.google.GooglePlusAuth',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -322,22 +322,25 @@ SOCIAL_AUTH_NONCE_SERVER_URL_LENGTH = 32
 SOCIAL_AUTH_ASSOCIATION_SERVER_URL_LENGTH = 32
 
 SOCIAL_AUTH_PIPELINE = (
-    'social_auth.backends.pipeline.social.social_auth_user',
-    'social_auth.backends.pipeline.associate.associate_by_email',
-    'social_auth.backends.pipeline.user.get_username',
-    'social_auth.backends.pipeline.user.create_user',
-    'social_auth.backends.pipeline.social.associate_user',
-    'social_auth.backends.pipeline.social.load_extra_data',
-    'social_auth.backends.pipeline.user.update_user_details',
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'social.pipeline.user.get_username',
+    'social.pipeline.user.user_details',
+    'social.pipeline.user.create_user',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details',
     'accounts.pipelines.get_avatar',
     'accounts.pipelines.get_birth_date',
     'accounts.pipelines.get_gender',
     'accounts.pipelines.get_country',
 )
 
-LOGIN_URL = '/'
-LOGIN_REDIRECT_URL = '/'
-LOGIN_ERROR_URL = '/login-error'
+SOCIAL_AUTH_LOGIN_URL = '/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/login-error'
 
 FACEBOOK_EXTENDED_PERMISSIONS = ['email', 'user_about_me', 'user_birthday', 'user_location']
 

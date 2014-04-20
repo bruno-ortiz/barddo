@@ -9,13 +9,51 @@
                 <h4 class="modal-title" id="loginModalLabel">{% trans "Barddo Login" %}</h4>
             </div>
             <div class="modal-body">
-                <a href="{% url 'socialauth_begin' 'facebook' %}{% if next_url %}?next={{ next_url }}{% endif %}"
+                <a id="facebook-login" href="{% url 'social:begin' "facebook" %}{% if next_url %}?next={{ next_url }}{% endif %}"
                    class="btn btn-block facebook-color"><i class="icon-facebook-sign"></i>
                     {% trans "Login with Facebook" %}</a>
-                <a href="{% url 'socialauth_begin' 'google-oauth2' %}{% if next_url %}?next={{ next_url }}{% endif %}"
-                   class="btn btn-block google-color"><i class="icon-google-plus-sign"></i>
-                    {% trans "Login with Google" %}</a>
+                <button class="btn btn-block google-color g-signin"
+                        data-scope="{{ plus_scope }}"
+                        data-clientid="{{ plus_id }}"
+                        data-redirecturi="postmessage"
+                        data-accesstype="offline"
+                        data-cookiepolicy="single_host_origin"
+                        data-callback="signInCallback"><i class="icon-google-plus-sign"></i>
+                    {% trans "Login with Google" %}</button>
+
+                <form id="google-plus" method="post" action="{% url 'social:complete' "google-plus" %}
+                {% if next_url %}?next={{ next_url }}{% endif %}">
+                    {% csrf_token %}
+                    <input id="at" type="hidden" name="access_token" value=""/>
+                    <input id="code" type="hidden" name="code" value=""/>
+                </form>
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        $('.g-signin').on('click', function () {
+            var po = document.createElement('script');
+            po.type = 'text/javascript';
+            po.async = true;
+            po.src = 'https://plus.google.com/js/client:plusone.js?onload=start';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(po, s);
+        });
+        var signInCallback = function (result) {
+            if (result['error']) {
+                var error = result['error'];
+                if (error != "immediate_failed") {
+                    gritterError('Error', 'Sorry an error occured:' + result['error'], true)
+                    $('#facebook-login').removeClass('disabled');
+                } else {
+                    $('.g-signin').trigger('click'); //OUCH! My eyes are bleeding, but i didnt see another way of turning off the immediate login from gplus api
+                }
+            } else {
+                $('#facebook-login').addClass('disabled');
+                $('#code').attr('value', result['code']);
+                $('#at').attr('value', result['access_token']);
+                $('#google-plus').submit();
+            }
+        };
+    </script>
 </div>
