@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Barddo\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-04-29 23:57-0300\n"
-"PO-Revision-Date: 2014-04-29 23:59-0300\n"
+"PO-Revision-Date: 2014-04-30 00:48-0300\n"
 "Last-Translator: Israel Crisanto <israel.crisanto@gmail.com>\n"
 "Language-Team: PORTUGUESE <LL@li.org>\n"
 "Language: pt\n"
@@ -159,7 +159,7 @@ msgstr "Ajude leitores"
 
 #: core/templates/index.html:535
 msgid "artists!"
-msgstr "Artistas!"
+msgstr "e artistas!"
 
 #: core/templates/index.html:552
 msgid "Subscribe & share this"
