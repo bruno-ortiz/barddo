@@ -110,7 +110,24 @@
                 });
                 e.preventDefault();
             });
+
         });
+
+        $(function () {
+            $('a[href*=#]:not([href=#])').click(function () {
+                if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+                    var target = $(this.hash);
+                    target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                    if (target.length) {
+                        $('html,body').animate({
+                            scrollTop: target.offset().top
+                        }, 1000);
+                        return false;
+                    }
+                }
+            });
+        });
+
     </script>
 
 
@@ -196,7 +213,7 @@
     </div>
 </section>
 
-<div class="container">
+<div class="container" name="start" id="start">
 
 <section id="sub-title">
     <div class="row">
@@ -227,7 +244,8 @@
             <a href="#contact"><img src="{% static 'img/mail.png' %}" alt="person icon" class="story-icon-4"></a>
         </div>
 
-        <span class="keep-scrolling hidden-xs pulse">Scroll Down <i class="entypo-down-open-big jump "></i></span>
+        <a href="#start" class="keep-scrolling hidden-xs pulse">Scroll Down <i
+                class="entypo-down-open-big jump "></i></a>
 
     </div>
 </section>
