@@ -27,18 +27,6 @@ INSTALLED_APPS += (
     #'django_jenkins',
 )
 
-JENKINS_TASKS = (
-    #'django_jenkins.tasks.with_coverage',
-    #'django_jenkins.tasks.django_tests',   # select one django or
-    #'django_jenkins.tasks.dir_tests'      # directory tests discovery
-    #'django_jenkins.tasks.run_pep8',
-    #'django_jenkins.tasks.run_pyflakes',
-    #'django_jenkins.tasks.run_jslint',
-    #'django_jenkins.tasks.run_csslint',
-    #'django_jenkins.tasks.run_sloccount',
-    #'django_jenkins.tasks.lettuce_tests',
-)
-
 FIXTURE_DIRS += (path.normpath(path.join(SITE_ROOT, 'accounts', 'test-fixtures')),)
 
 PROJECT_APPS = LOCAL_APPS
@@ -49,6 +37,13 @@ DEBUG = False
 ########## MISC CONFIGURATION
 COMPRESS_OFFLINE = False
 
+##
+#OAuth apps
+##
+SOCIAL_AUTH_FACEBOOK_KEY = ''
+SOCIAL_AUTH_FACEBOOK_SECRET = ''
+SOCIAL_AUTH_GOOGLE_PLUS_KEY = ''
+SOCIAL_AUTH_GOOGLE_PLUS_SECRET = ''
 
 ##
 # Disable SOUTH

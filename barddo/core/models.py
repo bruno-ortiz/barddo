@@ -12,11 +12,10 @@ from django.conf import settings
 from django.core.files.images import ImageFile
 from django.db.models import Q
 from easy_thumbnails.files import get_thumbnailer
-from djorm_pgfulltext.models import SearchManager
-from djorm_pgfulltext.fields import VectorField
 
 from accounts.models import BarddoUser
 from rating.models import Rating
+from search.search_manager import SearchManager
 
 
 class RatingManager(Manager):
@@ -98,23 +97,16 @@ class Collection(models.Model):
 
     slug = models.SlugField(_('Slug'), max_length=250, db_index=True)
     status = models.SmallIntegerField(_('Status'), choices=STATUS_CHOICES, default=STATUS_ONGOING, db_index=True)
-    unit = models.ForeignKey(CollectionUnit, null=False, blank=False)
+    unit = models.ForeignKey(CollectionUnit, null=False, blank=False, db_index=True)
 
-    start_date = models.DateField(_('Start Date'), blank=False, null=False)
+    start_date = models.DateField(_('Start Date'), blank=False, null=False, db_index=True)
     end_date = models.DateField(_('End Date'), blank=True, null=True)
 
-    author = models.ForeignKey(BarddoUser, null=False)
+    author = models.ForeignKey(BarddoUser, null=False, db_index=True)
     cover = models.ImageField(_('Cover Art'), upload_to=get_collection_cover_path, blank=True, null=True)
 
     objects = RatingManager()
-
-    search_index = VectorField()
-    search_manager = SearchManager(
-        fields=('name', 'summary'),
-        config='pg_catalog.english',
-        search_field='search_index',
-        auto_update_search_field=True
-    )
+    search_manager = SearchManager()
 
     def get_total_works(self):
         return Work.objects.filter(collection__id=self.id).count()
@@ -134,6 +126,11 @@ class Collection(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    class Meta:
+        index_together = [
+            ["name", "summary"],
+        ]
 
 
 def get_work_cover_path(instance, filename):
@@ -175,21 +172,14 @@ class Work(models.Model):
     summary = models.TextField(_('Summary'))
     cover = models.ImageField(_('Cover Art'), upload_to=get_work_cover_path)
 
-    author = models.ForeignKey(BarddoUser, related_name='author_works')
+    author = models.ForeignKey(BarddoUser, related_name='author_works', db_index=True)
 
-    unit_count = models.IntegerField(_('Item Number'))
+    unit_count = models.IntegerField(_('Item Number'), db_index=True)
     total_pages = models.SmallIntegerField(_('Total Pages'))
-    publish_date = models.DateTimeField(_('Publish Date'))
+    publish_date = models.DateTimeField(_('Publish Date'), db_index=True)
 
     objects = RatingManager()
-
-    search_index = VectorField()
-    search_manager = SearchManager(
-        fields=('title', 'summary'),
-        config='pg_catalog.english',
-        search_field='search_index',
-        auto_update_search_field=True
-    )
+    search_manager = SearchManager()
 
     def is_owner(self, user):
         """
@@ -276,13 +266,15 @@ class Work(models.Model):
                 "size": img.size,
                 "url": settings.MEDIA_URL + img.name.replace(settings.MEDIA_ROOT + "/", ""),
                 "name": image_file,
-                "thumb": get_thumbnailer(img, relative_name=os.path.join("work_data", "%04d" % self.id, 'thumb', image_file))
+                "thumb": get_thumbnailer(img,
+                                         relative_name=os.path.join("work_data", "%04d" % self.id, 'thumb', image_file))
             })
 
         return image_files
 
     class Meta:
         unique_together = (("collection", "unit_count"))
+        index_together = [["title", "summary"], ]
 
         # TODO: work tags
         # TODO: work categories

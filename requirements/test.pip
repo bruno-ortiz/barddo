@@ -18,4 +18,3 @@ easy-thumbnails
 django-imagekit
 pilkit
 fabric
-djorm-ext-pgfulltext
