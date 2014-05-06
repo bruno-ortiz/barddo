@@ -29,8 +29,8 @@ class Migration(SchemaMigration):
         # Detect if application supports fulltext search on given backend
         if not db.dry_run and db.backend_name == "mysql":
             try:
-                db.execute(
-                    "CREATE FULLTEXT INDEX fix_accounts_barddouser ON accounts_barddouser (username, first_name, last_name)")
+                db.execute("ALTER TABLE accounts_barddouser ENGINE = MYISAM;")
+                db.execute("CREATE FULLTEXT INDEX fix_accounts_barddouser ON accounts_barddouser (username, first_name, last_name)")
             except Warning:
                 pass
                 #db.execute("CREATE FULLTEXT INDEX fix_accounts_barddouser_username ON accounts_barddouser (username)")
