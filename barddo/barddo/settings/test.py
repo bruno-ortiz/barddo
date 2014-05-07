@@ -39,7 +39,8 @@ JENKINS_TASKS = (
     #'django_jenkins.tasks.lettuce_tests',
 )
 
-FIXTURE_DIRS += (path.normpath(path.join(SITE_ROOT, 'accounts', 'test-fixtures')),)
+FIXTURE_DIRS += (path.normpath(path.join(SITE_ROOT, 'accounts', 'test-fixtures')),
+                 path.normpath(path.join(SITE_ROOT, 'publishing', 'test-fixtures')))
 
 PROJECT_APPS = LOCAL_APPS
 ########## END OF JENKINS TESTS CONFIGURATION

@@ -1,0 +1,25 @@
+[
+    {
+        "model": "publishing.PublishingHouse",
+        "pk": 3,
+        "fields": {
+            "name": "Teste",
+            "info": "This is the first test group!",
+            "avatar": "/media/barddo_avatar/barddo-avatar.jpg",
+            "country": 1,
+            "owner": 1
+        }
+    },
+
+    {
+        "model": "publishing.PublishingHouse",
+        "pk": 4,
+        "fields": {
+            "name": "Teste2",
+            "info": "This is the second test group!",
+            "avatar": "/media/barddo_avatar/barddo-avatar.jpg",
+            "country": 1,
+            "owner": 1
+        }
+    }
+]
