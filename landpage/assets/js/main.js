@@ -2,7 +2,7 @@ $(function () {
 
     /*==========  Initalize steller for parrallax header  ==========*/
 
-    $.stellar();
+    //$.stellar();
 
     /*==========  Initalize fit text for responsive text  ==========*/
 

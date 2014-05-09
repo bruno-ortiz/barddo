@@ -8,8 +8,8 @@ from django.db import models
 from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.utils.translation import ugettext as _
-from djorm_pgfulltext.fields import VectorField
-from djorm_pgfulltext.models import SearchManager
+
+from search.search_manager import SearchManager
 
 from follow.models import Follow
 
@@ -41,13 +41,7 @@ class BarddoUser(AbstractUser):
 
     objects = BarddoUserManager()
 
-    search_index = VectorField()
-    search_manager = SearchManager(
-        fields=('username', 'first_name', 'last_name'),
-        config='pg_catalog.english',
-        search_field='search_index',
-        auto_update_search_field=True
-    )
+    search_manager = SearchManager()
 
     def is_publisher(self):
         owned_publishers = self.publishing_group_owner.all().count()
@@ -59,6 +53,9 @@ class BarddoUser(AbstractUser):
 
     def user_url(self):
         return reverse('account.profile', args=(self.id,))
+
+    class Meta:
+        index_together = [["username", "first_name", "last_name"], ]
 
 
 class BarddoUserAuthBackend(ModelBackend):

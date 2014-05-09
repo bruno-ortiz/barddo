@@ -4,7 +4,7 @@
         "pk": 1,
         "fields": {
             "country_name": "Brazil",
-            "country_language": "PT-BR"
+            "country_language": "pt-BR"
         }
     },
     {
@@ -12,7 +12,7 @@
         "pk": 2,
         "fields": {
             "country_name": "United States of America",
-            "country_language": "EN-US"
+            "country_language": "en-US"
         }
     },
     {
@@ -20,7 +20,7 @@
         "pk": 3,
         "fields": {
             "country_name": "Japan",
-            "country_language": "???"
+            "country_language": "ja"
         }
     },
     {
