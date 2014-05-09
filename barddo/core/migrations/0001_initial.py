@@ -31,7 +31,6 @@ class Migration(SchemaMigration):
         # Detect if application supports fulltext search on given backend
         if not db.dry_run and db.backend_name == "mysql":
             try:
-                db.execute("ALTER TABLE core_collection ENGINE = MYISAM;")
                 db.execute("CREATE FULLTEXT INDEX fix_core_collection ON core_collection (name, summary)")
             except Warning:
                 pass
@@ -62,7 +61,6 @@ class Migration(SchemaMigration):
         # Detect if application supports fulltext search on given backend
         if not db.dry_run and db.backend_name == "mysql":
             try:
-                db.execute("ALTER TABLE core_work ENGINE = MYISAM;")
                 db.execute("CREATE FULLTEXT INDEX fix_core_work ON core_work (title, summary)")
             except Warning:
                 pass

@@ -50,7 +50,7 @@
         </div>
     </div>
 </div>
-<script src="{% static "js/barddo/pages/publishing.group.create.js" %}"></script>
+<script src="{% static "barddo/js/pages/publishing.group.create.js" %}"></script>
 <script type="text/javascript">
 
     var $createBtn = $("#createBtn");
@@ -77,6 +77,7 @@
         freeInput: false,
         typeahead: {
             source: function (search) {
+                alert(":D");
                 return $.getJSON("{% url "accounts.usernames" %}", {'q': search});
             }
         }
