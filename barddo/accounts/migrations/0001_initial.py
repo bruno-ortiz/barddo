@@ -33,9 +33,6 @@ class Migration(SchemaMigration):
                     "CREATE FULLTEXT INDEX fix_accounts_barddouser ON accounts_barddouser (username, first_name, last_name)")
             except Warning:
                 pass
-                #db.execute("CREATE FULLTEXT INDEX fix_accounts_barddouser_username ON accounts_barddouser (username)")
-                #db.execute("CREATE FULLTEXT INDEX fix_accounts_barddouser_first_name ON accounts_barddouser (first_name)")
-                #db.execute("CREATE FULLTEXT INDEX fix_accounts_barddouser_last_name ON accounts_barddouser (last_name)")
         else:
             # Adding index on 'BarddoUser', fields ['username', 'first_name', 'last_name']
             db.create_index(u'accounts_barddouser', ['username', 'first_name', 'last_name'])

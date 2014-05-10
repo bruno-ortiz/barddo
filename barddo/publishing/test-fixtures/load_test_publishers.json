@@ -1,9 +1,18 @@
 [
+
+    {
+        "model": "publishing.Country",
+        "pk": 1,
+        "fields": {
+            "country_name": "Brazil",
+            "country_language": "pt-BR"
+        }
+    },
     {
         "model": "publishing.PublishingHouse",
-        "pk": 3,
+        "pk": 1,
         "fields": {
-            "name": "Teste",
+            "name": "Shounen Jump",
             "info": "This is the first test group!",
             "avatar": "/media/barddo_avatar/barddo-avatar.jpg",
             "country": 1,
@@ -13,9 +22,9 @@
 
     {
         "model": "publishing.PublishingHouse",
-        "pk": 4,
+        "pk": 2,
         "fields": {
-            "name": "Teste2",
+            "name": "Hakusensha",
             "info": "This is the second test group!",
             "avatar": "/media/barddo_avatar/barddo-avatar.jpg",
             "country": 1,

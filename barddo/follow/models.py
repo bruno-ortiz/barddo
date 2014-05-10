@@ -144,7 +144,7 @@ class Follow(models.Model):
     class Meta:
         verbose_name = _('Following Relationship')
         verbose_name_plural = _('Following Relationships')
-        unique_together = ('follower', 'object_id')
+        unique_together = ('follower', 'content_type', 'object_id')
 
     def __unicode__(self):
         return "User #{} follows #{}".format(self.follower_id, self.object_id)
