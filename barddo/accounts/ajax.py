@@ -5,9 +5,27 @@ from django.forms.models import model_to_dict
 
 from accounts.forms import BarddoUserForm, BarddoUserProfileForm
 from accounts.models import BarddoUser, BarddoUserProfile
+from follow.models import Follow
 
 
 __author__ = 'bruno'
+
+
+@login_required
+@dajaxice_register
+def follow_or_unfollow(request, user_id):
+    ajax = Dajax()
+    current_user = request.user
+    viewing_user = BarddoUser.objects.get(id=user_id)
+    follows = Follow.objects.follows(current_user, viewing_user)
+    if follows:
+        Follow.objects.remove_follower(current_user, viewing_user)
+        ajax.script('user_unfollowed_callback()')
+
+    else:
+        Follow.objects.add_follower(current_user, viewing_user)
+        ajax.script('user_followed_callback()')
+    return ajax.json()
 
 
 @login_required

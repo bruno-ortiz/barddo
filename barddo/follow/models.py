@@ -106,7 +106,8 @@ class FollowingManager(models.Manager):
     def remove_follower(self, follower, followee):
         """ Remove 'follower' follows 'followee' relationship """
         try:
-            rel = Follow.objects.get(follower=follower, object_id=followee.pk)
+            content_type = ContentType.objects.get_for_model(followee.__class__)
+            rel = Follow.objects.get(follower=follower, content_type=content_type, object_id=followee.pk)
             rel.delete()
             bust_cache('followers', followee.pk)
             bust_cache('following', follower.pk, followee.__class__.__name__)
@@ -125,7 +126,8 @@ class FollowingManager(models.Manager):
             return True
         else:
             try:
-                Follow.objects.get(follower=follower, followee=followee)
+                content_type = ContentType.objects.get_for_model(followee.__class__)
+                Follow.objects.get(follower=follower, content_type=content_type, object_id=followee.pk)
                 return True
             except Follow.DoesNotExist:
                 return False

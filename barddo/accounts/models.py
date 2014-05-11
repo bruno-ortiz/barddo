@@ -80,7 +80,7 @@ class BarddoUserProfile(models.Model):
     GENDER_FEMALE = 'F'
     GENDER_CHOICES = ((GENDER_MALE, 'Male'), (GENDER_FEMALE, 'Female'))
 
-    user = models.OneToOneField(BarddoUser, related_name='user_profile')
+    user = models.OneToOneField(BarddoUser, related_name='profile')
     avatar = models.ImageField(upload_to='user_avatar/')
     birth_date = models.DateField(default=datetime.date.today())
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default=GENDER_MALE)

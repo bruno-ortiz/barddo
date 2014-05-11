@@ -13,6 +13,7 @@ from django.views.generic import View
 
 from .exceptions import UserNotProvided
 from accounts.models import BarddoUser
+from follow.models import Follow
 
 
 __author__ = 'bruno'
@@ -37,7 +38,7 @@ class UserContextMixin(ContextMixin):
             raise UserNotProvided(_('User not provided'))
         user = kwargs['user']
         if user.is_authenticated():
-            context['avatar'] = user.user_profile.avatar
+            context['avatar'] = user.profile.avatar
             context['username'] = user.username
         context.update(kwargs)
         return super(UserContextMixin, self).get_context_data(**context)
@@ -50,28 +51,13 @@ class ProfileAwareView(UserContextMixin, TemplateResponseMixin, View):
         return super(ProfileAwareView, self).render_to_response(context)
 
 
-class UserProfileMixin(SingleObjectMixin, UserContextMixin):
-    model = BarddoUser
-
-    def get_context_data(self, **kwargs):
-        profile_user = kwargs.get('profile_user')
-        if not profile_user:
-            profile_user = self.get_object()
-        context = {}
-        if profile_user:
-            context['viewing_user'] = profile_user
-            context['viewing_user_profile'] = profile_user.user_profile
-            context['editable'] = kwargs.get('editable', False)
-        context.update(kwargs)
-        return UserContextMixin.get_context_data(self, **context)
-
-
-class UserProfileView(LoginRequiredMixin, UserProfileMixin, TemplateResponseMixin, View):
+class UserProfileView(LoginRequiredMixin, SingleObjectMixin, ProfileAwareView):
     """
         This view is responsible for rendering the user profile,
         it makes some verifcations, to avoid that a user edits another user profile.
     """
     template_name = 'profile.html'
+    model = BarddoUser
     editable = False
 
     def get(self, request, *args, **kwargs):
@@ -81,8 +67,18 @@ class UserProfileView(LoginRequiredMixin, UserProfileMixin, TemplateResponseMixi
             self.editable = profile_user.id == current_user.id
         else:
             profile_user = current_user
-        context = {'user': current_user, 'profile_user': profile_user, 'editable': self.editable}
-        context = self.get_context_data(**context)
+        following = Follow.objects.following(profile_user, BarddoUser)
+        followers = Follow.objects.followers(profile_user)
+        context = {'user': current_user,
+                   'viewing_user': profile_user,
+                   'viewing_user_profile': profile_user.profile,
+                   'editable': self.editable,
+                   'following': following,
+                   'followers': followers}
+        if current_user != profile_user:
+            follows = Follow.objects.follows(current_user, profile_user)
+            context['follows'] = follows
+        context = UserContextMixin.get_context_data(self, **context)
         return super(UserProfileView, self).render_to_response(context)
 
 

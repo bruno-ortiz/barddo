@@ -58,7 +58,7 @@ class Migration(SchemaMigration):
         # Adding model 'BarddoUserProfile'
         db.create_table(u'accounts_barddouserprofile', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.OneToOneField')(related_name='user_profile', unique=True,
+            ('user', self.gf('django.db.models.fields.related.OneToOneField')(related_name='profile', unique=True,
                                                                               to=orm['accounts.BarddoUser'])),
             ('avatar', self.gf('django.db.models.fields.files.ImageField')(max_length=100)),
             ('birth_date', self.gf('django.db.models.fields.DateField')(default=datetime.datetime(2014, 5, 3, 0, 0))),
@@ -114,7 +114,7 @@ class Migration(SchemaMigration):
             'gender': ('django.db.models.fields.CharField', [], {'default': "'M'", 'max_length': '1'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [],
-                     {'related_name': "'user_profile'", 'unique': 'True', 'to': u"orm['accounts.BarddoUser']"})
+                     {'related_name': "'profile'", 'unique': 'True', 'to': u"orm['accounts.BarddoUser']"})
         },
         u'auth.group': {
             'Meta': {'object_name': 'Group'},

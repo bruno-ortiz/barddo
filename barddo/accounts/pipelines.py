@@ -45,7 +45,7 @@ def get_birth_date(backend, user, response, is_new=False, **kwargs):
             data = __get_google_plus_data(GOOGLE_PLUS_BASE_URL.format(user_id), response['access_token'])
             birth_date = datetime.datetime.strptime(data.get('birthday', '2014-01-17'), '%Y-%m-%d').date()
         if birth_date:
-            profile = user.user_profile
+            profile = user.profile
             profile.birth_date = birth_date
             profile.save()
 
@@ -58,7 +58,7 @@ def get_gender(backend, user, response, is_new=False, **kwargs):
         elif backend.__class__ is google.GooglePlusAuth:
             gender = response['gender'][:1]
         if gender:
-            profile = user.user_profile
+            profile = user.profile
             profile.gender = gender.upper()
             profile.save()
 
@@ -73,7 +73,7 @@ def get_country(backend, user, response, is_new=False, **kwargs):
         elif backend.__class__ is google.GooglePlusAuth:
             country = 'Brazil'
         if country:
-            profile = user.user_profile
+            profile = user.profile
             profile.country = country
             profile.save()
 

@@ -42,7 +42,7 @@ class Migration(DataMigration):
             'gender': ('django.db.models.fields.CharField', [], {'default': "'M'", 'max_length': '1'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [],
-                     {'related_name': "'user_profile'", 'unique': 'True', 'to': u"orm['accounts.BarddoUser']"})
+                     {'related_name': "'profile'", 'unique': 'True', 'to': u"orm['accounts.BarddoUser']"})
         },
         u'auth.group': {
             'Meta': {'object_name': 'Group'},

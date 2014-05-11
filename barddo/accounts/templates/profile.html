@@ -1,5 +1,4 @@
 {% extends 'main_template.html' %}
-{% load dajaxice_templatetags %}
 {% load staticfiles %}
 {% load compress %}
 
@@ -55,15 +54,15 @@
                             {% if not editable %}
                                 <div class="profile-contact-info">
                                     <button id="follow-button" class="btn btn-sm btn-block btn-success">
-                                        <i class="icon-plus-sign bigger-120"></i>
-                                        <span class="bigger-110">Follow</span>
+                                        {% if follows %}
+                                            <i class="icon-minus-sign bigger-120"></i>
+                                            <span class="bigger-110">Unfollow</span>
+                                        {% else %}
+                                            <i class="icon-plus-sign bigger-120"></i>
+                                            <span class="bigger-110">Follow</span>
+                                        {% endif %}
                                     </button>
                                 </div>
-                                <script type="text/javascript">
-                                    $('#follow-button').on('click', function () {
-
-                                    });
-                                </script>
                             {% endif %}
 
                             <div class="space-6"></div>
@@ -71,18 +70,20 @@
                             <div class="hr hr12 dotted"></div>
 
                             <div class="clearfix">
-                                <div class="grid2">
-
-                                    <span class="bigger-175 blue"><i class="icon-star"></i> 25</span>
-
+                                <div id="num-followers" class="grid2">
+                                    <span class="bigger-175 blue">
+                                        <i class="icon-star"></i>
+                                        <span>{{ followers|length }}</span>
+                                    </span>
                                     <br/>
                                     Followers
                                 </div>
 
                                 <div class="grid2">
-
-                                    <span class="bigger-175 blue"><i class="icon-group"></i> 12</span>
-
+                                    <span class="bigger-175 blue">
+                                        <i class="icon-group"></i>
+                                        <span>{{ following|length }}</span>
+                                    </span>
                                     <br/>
                                     Following
                                 </div>
@@ -164,16 +165,16 @@
                                     </li>
 
                                     <li>
-                                        <a data-toggle="tab" href="#friends">
+                                        <a data-toggle="tab" href="#following">
                                             <i class="blue icon-star bigger-120"></i>
-                                            Friends
+                                            Following
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a data-toggle="tab" href="#library">
-                                            <i class="green icon-picture bigger-120"></i>
-                                            Library
+                                        <a data-toggle="tab" href="#followers">
+                                            <i class="green icon-bullseye bigger-120"></i>
+                                            Followers
                                         </a>
                                     </li>
                                 </ul>
@@ -181,9 +182,9 @@
                                 <div class="tab-content no-border padding-24">
                                     {% include "profile_fragments/_activity.html" %}
 
-                                    {% include "profile_fragments/_friends.html" %}
+                                    {% include "profile_fragments/_following.html" %}
 
-                                    {% include "profile_fragments/_library.html" %}
+                                    {% include "profile_fragments/_followers.html" %}
                                 </div>
                             </div>
 
@@ -202,7 +203,6 @@
         </div>
         <!-- /.row -->
     </div>
-    <!-- /.page-content -->
 
 {% endblock %}
 
@@ -214,16 +214,13 @@
             <script src="{% static "js/uncompressed/jquery.maskedinput.js" %}"></script>
             <script src="{% static "js/uncompressed/x-editable/bootstrap-editable.js" %}"></script>
             <script src="{% static "js/uncompressed/x-editable/ace-editable.js" %}"></script>
-            {% dajaxice_js_import 'nocsrf' %}
-            <script type="text/javascript" src="{% static "dajax/jquery.dajax.core.js" %}"></script>
         {% endcompress %}
     {% endif %}
 {% endblock %}
 
 {% block bottom_page %}
-    <!-- inline scripts related to this page -->
+    <script type="text/javascript">
     {% if  editable %}
-        <script type="text/javascript">
         jQuery(function ($) {
             //editables on first profile page
             $.fn.editable.defaults.mode = 'inline';
@@ -433,6 +430,28 @@
             }
         })
         ;
-        </script>
+    {% else %}
+        $('#follow-button').on('click', function () {
+            Dajaxice.accounts.follow_or_unfollow(Dajax.process, {
+                'user_id':{{ viewing_user_profile.id }}
+            });
+            $(this).html('<i class="bigger-120 icon-spinner icon-spin white"></i><span class="bigger-110"></span>')
+        });
+
+        function user_unfollowed_callback() {
+            $('#follow-button').html(' <i class="icon-plus-sign bigger-120"></i> <span class="bigger-110">follow</span>');
+            var follower_tag = $('#num-followers').find('span').find('span');
+            var num_followers = parseInt(follower_tag.text().trim(), 10);
+            follower_tag.html(num_followers - 1);
+        }
+
+        function user_followed_callback() {
+            $('#follow-button').html(' <i class="icon-minus-sign bigger-120"></i> <span class="bigger-110">Unfollow</span>');
+            var follower_tag = $('#num-followers').find('span').find('span');
+            var num_followers = parseInt(follower_tag.text().trim(), 10);
+            follower_tag.html(num_followers + 1);
+        }
     {% endif %}
+    </script>
+
 {% endblock %}
