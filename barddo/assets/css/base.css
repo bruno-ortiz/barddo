@@ -84,7 +84,7 @@ a {
 }
 
 .pika-imgnav a.previous {
-    background: url('../img/prev.png') no-repeat left 45%;
+    background: url('../barddo/img/prev.png') no-repeat left 45%;
     height: 100%;
     width: 50px;
     top: 10px;
@@ -93,7 +93,7 @@ a {
 }
 
 .pika-imgnav a.next {
-    background: url('../img/next.png') no-repeat right 45%;
+    background: url('../barddo/img/next.png') no-repeat right 45%;
     height: 100%;
     width: 50px;
     top: 10px;
@@ -148,7 +148,7 @@ a {
 
 /* If using user thumbnails there's a pause well the new large image loads. This is the loader for that */
 .pika-loader {
-    background: rgba(0, 0, 0, 0.9) url('../img/loading.gif') no-repeat 3px 3px;
+    background: rgba(0, 0, 0, 0.9) url('../barddo/img/loading.gif') no-repeat 3px 3px;
     color: white;
     width: 60px;
     font-size: 11px;
