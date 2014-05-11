@@ -18,3 +18,5 @@ easy-thumbnails
 django-imagekit
 pilkit
 fabric
+mysql-python
+django-jenkins
