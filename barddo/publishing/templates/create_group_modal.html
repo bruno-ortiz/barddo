@@ -77,7 +77,6 @@
         freeInput: false,
         typeahead: {
             source: function (search) {
-                alert(":D");
                 return $.getJSON("{% url "accounts.usernames" %}", {'q': search});
             }
         }
