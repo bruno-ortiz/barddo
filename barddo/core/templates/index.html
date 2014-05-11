@@ -9,6 +9,8 @@
 
     <link rel="stylesheet" href="{% static "css/uncompressed/barddo.banner.css" %}"/>
     <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="{% static "custom-modal/css/style.css" %}"/>
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -44,7 +46,7 @@
             <ul class="dropdown-menu" role="menu" aria-labelledby="discover-drop">
                 <li role="presentation">
                     <a id="btn-discover" role="menuitem" tabindex="-1" href="#">
-                        <img src="{% static "images/banner/discover.png" %}" class="image pull-left"/>
+                        <img src="{% static "images/banner/discover-blue.png" %}" class="image pull-left"/>
                         <span class="call">Descubra</span>
                         <span class="description">Publicar, compartilhar e encontrar mangás e HQs nunca foi tão simples!</span>
                     </a>
@@ -53,7 +55,7 @@
 
                 <li role="presentation">
                     <a id="btn-understand" role="menuitem" tabindex="-1" href="#">
-                        <img src="{% static "images/banner/understand.png" %}" class="image pull-left"/>
+                        <img src="{% static "images/banner/understand-blue.png" %}" class="image pull-left"/>
                         <span class="call">Entenda</span>
                         <span class="description">Tudo que você precisa saber sobre o Barddo está aqui!</span>
                     </a>
@@ -63,7 +65,7 @@
 
                 <li role="presentation">
                     <a id="btn-enjoy" role="menuitem" tabindex="-1" href="#">
-                        <img src="{% static "images/banner/enjoy.png" %}" class="image pull-left"/>
+                        <img src="{% static "images/banner/enjoy-blue.png" %}" class="image pull-left"/>
 
                         <div>
                             <span class="call">Aproveite</span>
@@ -119,12 +121,17 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#btn-discover").on("click", function () {
+
                 Shards.modal.help.discover(function (shard_id, shard_data, parent) {
                     $(shard_id).remove();
                     $(parent).append(shard_data);
                     $(shard_id).modal('show');
                 });
             });
+
+            if (window.location.hash == "#discover") {
+                $("#btn-discover").trigger("click");
+            }
 
             $("#btn-understand").on("click", function () {
                 Shards.modal.help.understand(function (shard_id, shard_data, parent) {
@@ -134,6 +141,10 @@
                 });
             });
 
+            if (window.location.hash == "#understand") {
+                $("#btn-understand").trigger("click");
+            }
+
             $("#btn-enjoy").on("click", function () {
                 Shards.modal.help.enjoy(function (shard_id, shard_data, parent) {
                     $(shard_id).remove();
@@ -141,6 +152,10 @@
                     $(shard_id).modal('show');
                 });
             });
+
+            if (window.location.hash == "#enjoy") {
+                $("#btn-enjoy").trigger("click");
+            }
 
 
             {% if next_url %}

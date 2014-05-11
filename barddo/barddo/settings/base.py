@@ -98,6 +98,7 @@ STATICFILES_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'assets')),
     path.normpath(path.join(SITE_ROOT, 'feedback', 'assets')),
     path.normpath(path.join(SITE_ROOT, 'search', 'assets')),
+    path.normpath(path.join(SITE_ROOT, 'core', 'assets')),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
