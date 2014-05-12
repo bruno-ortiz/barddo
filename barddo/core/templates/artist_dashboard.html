@@ -6,7 +6,7 @@
 
 {% block header %}
     <link rel="stylesheet" href="{% static "css/datepicker.css" %}"/>
-    <link rel="stylesheet" href="{% static "css/uncompressed/barddo.dashboard.css" %}"/>
+    <link rel="stylesheet" href="{% static "barddo/css/barddo.dashboard.css" %}"/>
     <link rel="stylesheet" href="{% static "css/crop/imgareaselect-animated.css" %}"/>
     <link rel="stylesheet" href="{% static "css/dropzone.css" %}"/>
     <link rel="stylesheet" href="{% static "css/select2.css" %}"/>
@@ -169,7 +169,7 @@
         <script src="{% static "js/bootstrap-tag.min.js" %}"></script>
         {% dajaxice_js_import 'nocsrf' %}
 
-        <script type="text/javascript" src="{% static "js/barddo/pages/collection.create.js" %}"></script>
+        <script type="text/javascript" src="{% static "barddo/js/pages/collection.create.js" %}"></script>
 
         <script src="{% static "js/uncompressed/dropzone.js" %}"></script>
         <script src="{% static "js/uncompressed/select2.js" %}"></script>
@@ -183,7 +183,7 @@
     <script src="{% static "js/jquery.nestable.min.js" %}"></script>
     <script src="{% static "js/jquery.form.min.js" %}"></script>
 
-    <script src="{% static "js/barddo/pages/dashboard.js" %}"></script>
+    <script src="{% static "barddo/js/pages/dashboard.js" %}"></script>
 {% endblock %}
 
 {% block bottom_page %}

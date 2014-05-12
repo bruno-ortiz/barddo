@@ -4,7 +4,7 @@
 {% load work_element %}
 
 {% block header %}
-    <link rel="stylesheet" href="{% static "css/uncompressed/barddo.gallery.css" %}"/>
+    <link rel="stylesheet" href="{% static "barddo/css/barddo.gallery.css" %}"/>
     <link rel="stylesheet" href="{% static "css/bottom.css" %}"/>
 {% endblock %}
 
@@ -65,7 +65,7 @@
     {% compress js %}
         <script src="{% static "js/jquery.isotope.min.js" %}"></script>
         <script src="{% static "js/portfolio.js" %}"></script>
-        <script type="text/javascript" src="{% static "js/barddo/pages/gallery.js" %}"></script>
+        <script type="text/javascript" src="{% static "barddo/js/pages/gallery.js" %}"></script>
     {% endcompress %}
 {% endblock %}
 

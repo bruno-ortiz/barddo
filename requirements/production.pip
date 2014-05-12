@@ -1,5 +1,6 @@
-# Requirements for production
-
+##
+# barddo box production requirements
+##
 django==1.6.1
 South==0.8.4
 python-social-auth
