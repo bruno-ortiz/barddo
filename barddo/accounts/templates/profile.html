@@ -1,5 +1,5 @@
 {% extends 'main_template.html' %}
-{% load staticfiles %}
+{% load static %}
 {% load compress %}
 
 {% block header %}
@@ -428,8 +428,7 @@
                 })
             } catch (e) {
             }
-        })
-        ;
+        });
     {% else %}
         $('#follow-button').on('click', function () {
             Dajaxice.accounts.follow_or_unfollow(Dajax.process, {
@@ -443,6 +442,7 @@
             var follower_tag = $('#num-followers').find('span').find('span');
             var num_followers = parseInt(follower_tag.text().trim(), 10);
             follower_tag.html(num_followers - 1);
+            gritter_feedback('User unfollowed!')
         }
 
         function user_followed_callback() {
@@ -450,6 +450,17 @@
             var follower_tag = $('#num-followers').find('span').find('span');
             var num_followers = parseInt(follower_tag.text().trim(), 10);
             follower_tag.html(num_followers + 1);
+            gritter_feedback('User followed!')
+        }
+
+        function gritter_feedback(msg) {
+            $.gritter.add({
+                title: msg,
+                image: '{%get_media_prefix%}{{ viewing_user_profile.avatar }}',
+                sticky: false,
+                time: '2000',
+                class_name: 'gritter-info'
+            });
         }
     {% endif %}
     </script>
