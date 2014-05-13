@@ -24,7 +24,7 @@ PASSWORD_HASHERS = (
 ########## JENKINS TESTS CONFIGURATION
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
 INSTALLED_APPS += (
-    #'django_jenkins',
+    'django_jenkins',
 )
 
 FIXTURE_DIRS += (path.normpath(path.join(SITE_ROOT, 'accounts', 'test-fixtures')),)
