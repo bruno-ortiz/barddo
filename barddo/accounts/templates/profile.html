@@ -434,15 +434,13 @@
             Dajaxice.accounts.follow_or_unfollow(Dajax.process, {
                 'user_id':{{ viewing_user_profile.id }}
             });
-            $(this).removeClass('enabled');
-            $(this).addClass('disabled');
+            $(this).prop('disabled', true);
             $(this).html('<i class="bigger-120 icon-spinner icon-spin white"></i><span class="bigger-110"></span>')
         });
 
         function user_unfollowed_callback() {
             var $follow = $('#follow-button');
-            $follow.removeClass('disabled');
-            $follow.addClass('enabled');
+            $follow.prop('disabled', false);
             $follow.html(' <i class="icon-plus-sign bigger-120"></i> <span class="bigger-110">follow</span>');
             var follower_tag = $('#num-followers').find('span').find('span');
             var num_followers = parseInt(follower_tag.text().trim(), 10);
@@ -452,8 +450,7 @@
 
         function user_followed_callback() {
             var $follow = $('#follow-button');
-            $follow.removeClass('disabled');
-            $follow.addClass('enabled');
+            $follow.prop('disabled', false);
             $follow.html(' <i class="icon-minus-sign bigger-120"></i> <span class="bigger-110">Unfollow</span>');
             var follower_tag = $('#num-followers').find('span').find('span');
             var num_followers = parseInt(follower_tag.text().trim(), 10);
