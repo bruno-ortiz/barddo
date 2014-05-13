@@ -434,23 +434,31 @@
             Dajaxice.accounts.follow_or_unfollow(Dajax.process, {
                 'user_id':{{ viewing_user_profile.id }}
             });
+            $(this).removeClass('enabled');
+            $(this).addClass('disabled');
             $(this).html('<i class="bigger-120 icon-spinner icon-spin white"></i><span class="bigger-110"></span>')
         });
 
         function user_unfollowed_callback() {
-            $('#follow-button').html(' <i class="icon-plus-sign bigger-120"></i> <span class="bigger-110">follow</span>');
+            var $follow = $('#follow-button');
+            $follow.removeClass('disabled');
+            $follow.addClass('enabled');
+            $follow.html(' <i class="icon-plus-sign bigger-120"></i> <span class="bigger-110">follow</span>');
             var follower_tag = $('#num-followers').find('span').find('span');
             var num_followers = parseInt(follower_tag.text().trim(), 10);
             follower_tag.html(num_followers - 1);
-            gritter_feedback('User unfollowed!')
+            gritter_feedback('{{ viewing_user.first_name }} unfollowed!')
         }
 
         function user_followed_callback() {
-            $('#follow-button').html(' <i class="icon-minus-sign bigger-120"></i> <span class="bigger-110">Unfollow</span>');
+            var $follow = $('#follow-button');
+            $follow.removeClass('disabled');
+            $follow.addClass('enabled');
+            $follow.html(' <i class="icon-minus-sign bigger-120"></i> <span class="bigger-110">Unfollow</span>');
             var follower_tag = $('#num-followers').find('span').find('span');
             var num_followers = parseInt(follower_tag.text().trim(), 10);
             follower_tag.html(num_followers + 1);
-            gritter_feedback('User followed!')
+            gritter_feedback('{{ viewing_user.first_name }} followed!')
         }
 
         function gritter_feedback(msg) {

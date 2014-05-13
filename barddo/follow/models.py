@@ -15,28 +15,13 @@ __author__ = 'bruno'
 AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
 
 CACHE_TYPES = {
-    'friends': 'f-{}',
     'followers': 'fo-{}',
     'following': 'fl-{}-{}',
-    'requests': 'fr-{}',
-    'sent_requests': 'sfr-{}',
-    'unread_requests': 'fru-{}',
-    'unread_request_count': 'fruc-{}',
-    'read_requests': 'frr-{}',
-    'rejected_requests': 'frj-{}',
 }
 
 BUST_CACHES = {
-    'friends': ['friends'],
     'followers': ['followers'],
     'following': ['following'],
-    'requests': [
-        'requests',
-        'unread_requests',
-        'unread_request_count',
-        'read_requests',
-        'rejected_requests',
-    ],
 }
 
 
