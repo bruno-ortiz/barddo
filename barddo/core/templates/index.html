@@ -113,6 +113,7 @@
     {% compress js %}
         <script src="{% static "js/jquery.isotope.min.js" %}"></script>
         <script src="{% static "js/portfolio.js" %}"></script>
+        <script src="{% static "js/uncompressed/jquery.cookie.js" %}"></script>
         <script type="text/javascript" src="{% static "barddo/js/pages/gallery.js" %}"></script>
     {% endcompress %}
 {% endblock %}
@@ -120,6 +121,7 @@
 {% block bottom_page %}
     <script type="text/javascript">
         $(document).ready(function () {
+            // Help modals shards
             $("#btn-discover").on("click", function () {
 
                 Shards.modal.help.discover(function (shard_id, shard_data, parent) {
@@ -129,9 +131,6 @@
                 });
             });
 
-            if (window.location.hash == "#discover") {
-                $("#btn-discover").trigger("click");
-            }
 
             $("#btn-understand").on("click", function () {
                 Shards.modal.help.understand(function (shard_id, shard_data, parent) {
@@ -141,10 +140,6 @@
                 });
             });
 
-            if (window.location.hash == "#understand") {
-                $("#btn-understand").trigger("click");
-            }
-
             $("#btn-enjoy").on("click", function () {
                 Shards.modal.help.enjoy(function (shard_id, shard_data, parent) {
                     $(shard_id).remove();
@@ -153,8 +148,23 @@
                 });
             });
 
+            // just allowing direct reference to the modals
+            if (window.location.hash == "#discover") {
+                $("#btn-discover").trigger("click");
+            }
+
+            if (window.location.hash == "#understand") {
+                $("#btn-understand").trigger("click");
+            }
+
             if (window.location.hash == "#enjoy") {
                 $("#btn-enjoy").trigger("click");
+            }
+
+            // Shows the first popup if the user is a first time
+            if (!$.cookie("is_first_visit")) {
+                $.cookie('is_first_visit', 'nope', { expires: 365, path: '/' });
+                $("#btn-discover").trigger("click");
             }
 
 
