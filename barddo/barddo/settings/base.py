@@ -211,7 +211,7 @@ THIRD_PARTY_APPS = (
     'social.apps.django_app.default',
     'endless_pagination',
     'imagekit',
-    'easy_thumbnails'
+    'easy_thumbnails',
 )
 
 # Apps specific for this project go here.
@@ -223,6 +223,7 @@ LOCAL_APPS = (
     'publishing',
     'rating',
     'search',
+    'follow',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

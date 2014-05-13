@@ -76,6 +76,4 @@ SOCIAL_AUTH_FACEBOOK_SECRET = '3b9439528f2bd7cce28f25f8948f03fe'
 SOCIAL_AUTH_GOOGLE_PLUS_KEY = '1010521892059-tf5leugg86ib3t2vsa2g4sbqm04lkj43.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_PLUS_SECRET = 'VWrV9x7s6Xxsr058StR6G09Q'
 
-FIXTURE_DIRS += (path.normpath(path.join(SITE_ROOT, 'accounts', 'test-fixtures')),)
-
 COMPRESS_ENABLED = True

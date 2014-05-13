@@ -2,6 +2,7 @@ import datetime
 
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import AbstractUser, UserManager
+from django.contrib.contenttypes.generic import GenericRelation
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Q
@@ -9,6 +10,8 @@ from django.db.models.query import QuerySet
 from django.utils.translation import ugettext as _
 
 from search.search_manager import SearchManager
+
+from follow.models import Follow
 
 
 __author__ = 'bruno'
@@ -34,6 +37,8 @@ class UserQuerySet(QuerySet):
 
 
 class BarddoUser(AbstractUser):
+    user_followee = GenericRelation(Follow, related_name='user_followee')
+
     objects = BarddoUserManager()
 
     search_manager = SearchManager()
@@ -75,8 +80,8 @@ class BarddoUserProfile(models.Model):
     GENDER_FEMALE = 'F'
     GENDER_CHOICES = ((GENDER_MALE, 'Male'), (GENDER_FEMALE, 'Female'))
 
-    user = models.OneToOneField(BarddoUser, related_name='user_profile')
+    user = models.OneToOneField(BarddoUser, related_name='profile')
     avatar = models.ImageField(upload_to='user_avatar/')
     birth_date = models.DateField(default=datetime.date.today())
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default=GENDER_MALE)
-    country = models.CharField(max_length='30', default=_('Brazil'))
+    country = models.CharField(max_length=30, default=_('Brazil'))

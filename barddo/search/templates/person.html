@@ -3,8 +3,8 @@
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 row result_card result_item result_person">
     <div class="row">
         <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2">
-            {% if person.user_profile.avatar %}
-                <img class="img-responsive" src="{{ person.user_profile.avatar.url }}"
+            {% if person.profile.avatar %}
+                <img class="img-responsive" src="{{ person.profile.avatar.url }}"
                      alt="{{ person.username }}">
             {% endif %}
         </div>
