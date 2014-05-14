@@ -113,7 +113,7 @@
 
                 $(".popover").mouseenter(function () {
                     clearTimeout($(this).data('timeoutId'));
-                }).mouseleave(function (e) {
+                }).mouseleave(function () {
                     var $boxcontainer = $(".boxcontainer:hover");
                     if ($boxcontainer.length) {
                         var new_work_id = $boxcontainer.closest('div[data-work-id]').attr('data-work-id');
@@ -130,8 +130,8 @@
                 onPopupHover = true;
             }).on("mouseleave", function () {
                 var _this = this;
+                onPopupHover = false;
                 var timeoutId = setTimeout(function () {
-                    onPopupHover = false;
                     $(".vote", _this).popover("hide");
                     $(".roll", _this).css("opacity", 0);
                 }, 50);
