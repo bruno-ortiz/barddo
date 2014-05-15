@@ -4,6 +4,7 @@
         "pk": 1,
         "fields": {
             "username": "Barddo",
+            "first_name": "Barddo",
             "password": "pbkdf2_sha256$12000$Y1TGT0FHlZVs$nRO6ocTFsP2LmhLuUoyYvX49WLzCLK8ZIrTnyJmspVo=",
             "is_active": false,
             "is_superuser": false,
@@ -15,6 +16,7 @@
         "pk": 1,
         "fields": {
             "user": 1,
+            "avatar": "barddo_avatar/barddo-avatar.jpg",
             "gender": "M",
             "country": "Brazil",
             "birth_date": "2014-02-15"

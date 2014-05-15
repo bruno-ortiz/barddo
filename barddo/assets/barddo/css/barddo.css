@@ -212,3 +212,11 @@ footer {
 .break-all {
     word-break: break-all
 }
+
+.profile-users .user img {
+    max-width: 64px;
+    width: 64px;
+    max-height: 64px;
+    height: 64px;
+    border-radius: 0;
+}

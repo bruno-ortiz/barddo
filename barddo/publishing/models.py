@@ -1,8 +1,10 @@
+from django.contrib.contenttypes.generic import GenericRelation
 from django.db import models
 from django.db.models.fields import CharField
 
 from accounts.models import BarddoUser
 from core.models import Collection
+from follow.models import Follow
 
 
 __author__ = 'bruno'
@@ -21,3 +23,4 @@ class PublishingHouse(models.Model):
     collections = models.ForeignKey(Collection, blank=True, null=True)
     owner = models.ForeignKey(BarddoUser, related_name='publishing_group_owner')
     publishers = models.ManyToManyField(BarddoUser, blank=True, null=True, related_name='publishing_group')
+    followee = GenericRelation(Follow, related_name='publishing_followee')
