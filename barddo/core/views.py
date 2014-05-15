@@ -4,7 +4,6 @@ import os
 import datetime
 
 from django.conf import settings
-
 from django.views.generic import View
 from django.views.generic.base import TemplateResponseMixin
 from django.http import HttpResponse
@@ -221,6 +220,40 @@ class WorkModalView(TemplateResponseMixin, View):
 
 
 render_work_modal = WorkModalView.as_view()
+
+
+# TODO: move it to a shards.py module
+@register_shard(name=u"modal.help.discover")
+class HelpDiscoverModalView(TemplateResponseMixin, View):
+    """
+        Render a work detail modal shard.
+    """
+    template_name = 'help/modal-discover.html'
+
+    def post(self, request, *args, **kwargs):
+        return super(HelpDiscoverModalView, self).render_to_response({})
+
+
+@register_shard(name=u"modal.help.understand")
+class HelpUnderstandModalView(TemplateResponseMixin, View):
+    """
+        Render a work detail modal shard.
+    """
+    template_name = 'help/modal-understand.html'
+
+    def post(self, request, *args, **kwargs):
+        return super(HelpUnderstandModalView, self).render_to_response({})
+
+
+@register_shard(name=u"modal.help.enjoy")
+class HelpEnjoyModalView(TemplateResponseMixin, View):
+    """
+        Render a work detail modal shard.
+    """
+    template_name = 'help/modal-enjoy.html'
+
+    def post(self, request, *args, **kwargs):
+        return super(HelpEnjoyModalView, self).render_to_response({})
 
 
 ###

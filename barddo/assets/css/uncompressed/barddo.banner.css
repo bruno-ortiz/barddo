@@ -1,0 +1,107 @@
+.discover {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 10px;
+}
+
+.discover li {
+    list-style: none;
+}
+
+.breadcrumbs > div {
+    width: 100%;
+}
+
+#discover-drop {
+    color: #dd5a43 !important;
+    font-weight: bold;
+}
+
+#discover-drop:hover {
+    color: #f25e46 !important;
+}
+
+#discover-drop:hover {
+    text-decoration: none;
+}
+
+#discover-drop b {
+    border-top-color: #dd5a43;
+}
+
+.discover .dropdown-menu > li > a, .discover .dropdown-menu > li > span {
+    white-space: nowrap;
+}
+
+.discover ul li a {
+    height: 100%;
+    padding: 10px;
+}
+
+.discover ul li a:hover {
+    color: Black;
+    background-color: #e8e8e8;
+}
+
+.discover .call {
+    font-weight: bold;
+    font-size: 18px;
+    display: block;
+    color: #1b5072;
+}
+
+.discover .description {
+    font-size: 12px;
+    color: #808080;
+}
+
+.discover .image {
+    max-width: 50px;
+    padding-right: 10px;
+}
+
+.discover .dropdown-menu {
+    padding: 0;
+}
+
+.discover .divider {
+    margin: 0;
+}
+
+.discover ul.dropdown-menu {
+    width: 500px;
+    margin-right: -10px;
+}
+
+.discover > li > .dropdown-menu::before {
+    position: absolute;
+    top: -7px;
+    right: 69px;
+    display: inline-block;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid #CCC;
+    border-left: 7px solid transparent;
+    border-bottom-color: rgba(0, 0, 0, 0.2);
+    content: '';
+}
+
+.discover > li > .dropdown-menu::after {
+    position: absolute;
+    top: -6px;
+    right: 70px;
+    display: inline-block;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid white;
+    border-left: 6px solid transparent;
+    content: '';
+}
+
+body .large {
+    width: 90%; /* desired relative width */
+    max-width: 1105px;
+    left: 5%; /* (100%-width)/2 */
+    /* place center */
+    margin-left: auto;
+    margin-right: auto;
+}

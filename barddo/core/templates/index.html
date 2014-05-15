@@ -6,6 +6,11 @@
 {% block header %}
     <link rel="stylesheet" href="{% static "barddo/css/barddo.gallery.css" %}"/>
     <link rel="stylesheet" href="{% static "css/bottom.css" %}"/>
+
+    <link rel="stylesheet" href="{% static "css/uncompressed/barddo.banner.css" %}"/>
+    <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="{% static "custom-modal/css/style.css" %}"/>
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -30,6 +35,49 @@
             </li>
         </ul>
     </div>
+
+
+    <ul class="discover navbar-right">
+        <li class="dropdown">
+            <a href="#" id="discover-drop" role="button" class="dropdown-toggle red"
+               data-toggle="dropdown">Descubra o Barddo
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="discover-drop">
+                <li role="presentation">
+                    <a id="btn-discover" role="menuitem" tabindex="-1" href="#">
+                        <img src="{% static "images/banner/discover-blue.png" %}" class="image pull-left"/>
+                        <span class="call">Descubra</span>
+                        <span class="description">Publicar, compartilhar e encontrar mangás e HQs nunca foi tão simples!</span>
+                    </a>
+                </li>
+                <li class="divider"></li>
+
+                <li role="presentation">
+                    <a id="btn-understand" role="menuitem" tabindex="-1" href="#">
+                        <img src="{% static "images/banner/understand-blue.png" %}" class="image pull-left"/>
+                        <span class="call">Entenda</span>
+                        <span class="description">Tudo que você precisa saber sobre o Barddo está aqui!</span>
+                    </a>
+                </li>
+
+                <li class="divider"></li>
+
+                <li role="presentation">
+                    <a id="btn-enjoy" role="menuitem" tabindex="-1" href="#">
+                        <img src="{% static "images/banner/enjoy-blue.png" %}" class="image pull-left"/>
+
+                        <div>
+                            <span class="call">Aproveite</span>
+                            <span class="description">Relaxe, leia, compartilhe, indique e ajude artistas a ter o destque que merecem!</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+
 {% endblock %}
 
 {% block content %}
@@ -65,6 +113,7 @@
     {% compress js %}
         <script src="{% static "js/jquery.isotope.min.js" %}"></script>
         <script src="{% static "js/portfolio.js" %}"></script>
+        <script src="{% static "js/uncompressed/jquery.cookie.js" %}"></script>
         <script type="text/javascript" src="{% static "barddo/js/pages/gallery.js" %}"></script>
     {% endcompress %}
 {% endblock %}
@@ -72,6 +121,53 @@
 {% block bottom_page %}
     <script type="text/javascript">
         $(document).ready(function () {
+            // Help modals shards
+            $("#btn-discover").on("click", function () {
+
+                Shards.modal.help.discover(function (shard_id, shard_data, parent) {
+                    $(shard_id).remove();
+                    $(parent).append(shard_data);
+                    $(shard_id).modal('show');
+                });
+            });
+
+
+            $("#btn-understand").on("click", function () {
+                Shards.modal.help.understand(function (shard_id, shard_data, parent) {
+                    $(shard_id).remove();
+                    $(parent).append(shard_data);
+                    $(shard_id).modal('show');
+                });
+            });
+
+            $("#btn-enjoy").on("click", function () {
+                Shards.modal.help.enjoy(function (shard_id, shard_data, parent) {
+                    $(shard_id).remove();
+                    $(parent).append(shard_data);
+                    $(shard_id).modal('show');
+                });
+            });
+
+            // just allowing direct reference to the modals
+            if (window.location.hash == "#discover") {
+                $("#btn-discover").trigger("click");
+            }
+
+            if (window.location.hash == "#understand") {
+                $("#btn-understand").trigger("click");
+            }
+
+            if (window.location.hash == "#enjoy") {
+                $("#btn-enjoy").trigger("click");
+            }
+
+            // Shows the first popup if the user is a first time
+            if (!$.cookie("is_first_visit")) {
+                $.cookie('is_first_visit', 'nope', { expires: 365, path: '/' });
+                $("#btn-discover").trigger("click");
+            }
+
+
             {% if next_url %}
                 $("#loginModal").modal();
             {% endif %}
