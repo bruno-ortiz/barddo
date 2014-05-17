@@ -1,14 +1,239 @@
-<div id="modal-discover" class="modal fade collection-modal" tabindex="-1" role="dialog"
+{% load staticfiles %}
+<div id="modal-discover" class="modal fade" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="loginModalLabel"><i class="icon-th-large"></i> Collection Details</h4>
+<div class="modal-dialog large">
+<div class="modal-content">
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="loginModalLabel">&nbsp;</h4>
+</div>
+
+<div class="features block">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 col-xs-12">
+                <div class="page-title text-center">
+                    <h3>Descubra</h3>
+
+                    <p>Seja bem-vindo! Se interessou pelo projeto e deseja mais
+                        informações sobre o Barddo? Continue lendo, não se esqueça que seu feedback é
+                        muito importante
+                        para nós.</p>
+                </div>
             </div>
-            <div class="modal-body">
-                Discover-me!
+            <div class="col-md-5 col-xs-12">
+                <img src="{% static "img/celularsemfundo.png" %}">
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal-body">
+
+
+    <!-- Shots starts -->
+    <div class="shots block">
+        <div class="container">
+            <!-- shot1-->
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="screenshot">
+                        <img src="{% static "img/phone-barddo-01.png" %}" alt="image"
+                             class="img-responsive"/>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="shotcontent">
+                        <h3>Projeto Barddo</h3>
+
+                        <p class="shot-para">Criado com a <span>missão de unir artistas e leitores</span>, o Barddo é um
+                            sistema criado para ser simples e fácil de usar. Um espaço para que artistas independentes e
+                            editoras publiquem seus trabalhos e recebam feedback diretamente dos leitores, responsáveis
+                            diretamente pelo sucesso destas publicações.
+                        </p>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-6 col-xs-6">
+                                <div class="shot-content-body">
+                                    <h4><i class="icon-cloud-download tblue"></i> Leitura na Nuvem</h4>
+
+                                    <p>Leia suas obras favoritas de qualquer lugar, em qualquer dispositivo.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-6">
+                                <div class="shot-content-body">
+                                    <h4><i class="icon-cloud-upload tblue"></i> Publicações automatizadas</h4>
+
+                                    <p> Sem burocracia excessiva, você pode publicar toda e qualquer obra de sua autoria
+                                        com
+                                        apenas alguns cliques!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <hr>
+            <!-- shot1 ends -->
+
+            <!-- shot2 -->
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="shotcontent second">
+                        <h3>Mobilidade e Simplicidade</h3>
+
+                        <p class="shot-para">O Barddo foi desenvolvido com duas preocupações em mente: simplicidade e
+                            mobilidade. Isto significa que o sistema é o mais simples que conseguimos criar, e com
+                            certeza
+                            ficará muito mais com o tempo. Além disto, você também poderá usá-lo de qualquer lugar:
+                            computador, tablet, celular...
+                        </p>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-6 col-xs-6">
+                                <div class="shot-content-body">
+                                    <h4><i class="icon-mobile-phone tblue"></i> Mobile</h4>
+
+                                    <p>Ainda não criamos os aplicativos para cada plataforma. Mas isto não impede que
+                                        você
+                                        acesse e utilize o Barddo do navegador do seu celular!</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-6">
+                                <div class="shot-content-body">
+                                    <h4><i class="icon-desktop tblue"></i> Web</h4>
+
+                                    <p>O Barddo é independente do Sistema Operacional! É possível acessá-lo usando
+                                        qualquer
+                                        navegador recente!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div style="height: 100px;" class="hidden-xs"></div>
+                    <div class="screenshot">
+                        <img src="{% static "img/phone-barddo-04.png" %}" alt="image"
+                             class="img-responsive"/>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <!-- shot2 ends -->
+
+            <!-- shot3 -->
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="screenshot">
+                        <img src="{% static "img/phone-barddo-02.png" %}" alt="image"
+                             class="img-responsive"/>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="shotcontent third">
+                        <h3>Qualquer um pode participar.</h3>
+
+                        <p class="shot-para">Um sistema feito para todos! Qualquer um, de qualquer país pode se
+                            cadastrar,
+                            ler
+                            e publicar. Além disto, estamos integrados com redes sociais como Facebook, Google Plus e
+                            Twitter para que seja
+                            possivel compartilhar e convidar mais amigos.</p>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-6 col-xs-6">
+                                <div class="shot-content-body">
+                                    <h4><i class="icon-globe tblue"></i> Mundial</h4>
+
+                                    <p> O Barddo é aberto para o mundo inteiro, pessoas de qualquer país poderão se
+                                        cadastrar e utilizá-lo.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-6">
+                                <div class="shot-content-body">
+                                    <h4><i class="icon-facebook tblue"></i> Redes Sociais</h4>
+
+                                    <p> Integração com as redes sociais mais importantes da atualidade. Compartilhe,
+                                        fale,
+                                        convide. </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- shot3 ends -->
+
+            <div class="row">
+                <div class="col-md-12 col-md-offset-0  col-sm-10 col-sm-offset-1">
+                    <div class="shotcontent second">
+                        <h3>Sua opinião é importante!</h3>
+
+                        <div class="row">
+                            <div class="col-md-8 col-sm-12 col-xs-12">
+                                <p class="shot-para">Suas dúvidas e opiniões são muito importante para nós! Se você tem
+                                    algo
+                                    a
+                                    falar, nós queremos ouvir e acreditamos que só
+                                    assim conseguiremos criar um serviço que deixe seus usuários satisfeitos. Temos
+                                    diversos
+                                    meios de contato, escolha o seu e mande sua mensagem!</p>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6 col-xs-6">
+                                        <div class="shot-content-body">
+                                            <h4><i class="icon-envelope tblue"></i> Email</h4>
+
+                                            <p> Você pode entrar em contado através do email <a
+                                                    href="mailto:contact@barddo.com">contact@barddo.com</a>.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-6">
+                                        <div class="shot-content-body">
+                                            <h4><i class="icon-facebook tblue"></i> Facebook</h4>
+
+                                            <p> Visite <a href="https://www.facebook.com/thebarddo" target="_blank">nossa
+                                                página</a> no facebook e deixe seu comentário. </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12 col-xs-12">
+                                <div class="screenshot custom-screenshot">
+                                    <img src="{% static "img/phone-barddo-03.png" %}" alt="image"
+                                         class="img-responsive"/>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <a id="modal-feedback-now" href="#" class="download btn-block text-center btn-danger">
+                            <div class="hidden-xs"><i class="icon-comment"></i> Deixe seu feedback agora mesmo!</div>
+                            <div class="visible-xs"><i class="icon-comment"></i> Deixe seu feedback!</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Shots Ends -->
+</div>
+</div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#modal-feedback-now").on("click", function () {
+            $("#modal-discover").modal("hide");
+            $("#feedbackButton").trigger("click");
+        });
+    });
+</script>
 </div>

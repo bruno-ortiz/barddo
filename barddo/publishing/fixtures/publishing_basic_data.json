@@ -29,7 +29,7 @@
         "fields": {
             "name": "Barddo",
             "info": "We are awesome!",
-            "avatar": "/media/barddo_avatar/barddo-avatar.jpg",
+            "avatar": "barddo_avatar/barddo-avatar.jpg",
             "country": 1,
             "owner": 1
         }

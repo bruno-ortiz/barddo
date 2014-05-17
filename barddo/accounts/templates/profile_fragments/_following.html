@@ -1,0 +1,25 @@
+{% load static %}
+<div id="following" class="tab-pane">
+    <div class="profile-users clearfix">
+        {% for user in following %}
+            <div class="itemdiv memberdiv">
+                <div class="inline position-relative">
+                    <div class="user">
+                        <a href="{{ user.user_url }}">
+                            <img src="{% get_media_prefix %}{{ user.profile.avatar }}" alt={{ user.name }}"s avatar"/>
+                        </a>
+                    </div>
+
+                    <div class="body">
+                        <div class="name">
+                            <a href="{{ user.user_url }}">
+                                <span class="user-status status-online"></span>
+                                {{ user.get_full_name }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

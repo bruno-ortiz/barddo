@@ -98,6 +98,7 @@ STATICFILES_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'assets')),
     path.normpath(path.join(SITE_ROOT, 'feedback', 'assets')),
     path.normpath(path.join(SITE_ROOT, 'search', 'assets')),
+    path.normpath(path.join(SITE_ROOT, 'core', 'assets')),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
@@ -144,6 +145,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request',
     'django.core.context_processors.csrf',
+    'social.apps.django_app.context_processors.backends',
+    'social.apps.django_app.context_processors.login_redirect',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
@@ -211,7 +214,7 @@ THIRD_PARTY_APPS = (
     'social.apps.django_app.default',
     'endless_pagination',
     'imagekit',
-    'easy_thumbnails'
+    'easy_thumbnails',
 )
 
 # Apps specific for this project go here.
@@ -223,6 +226,7 @@ LOCAL_APPS = (
     'publishing',
     'rating',
     'search',
+    'follow',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
