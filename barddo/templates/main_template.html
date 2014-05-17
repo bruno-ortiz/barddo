@@ -1,11 +1,12 @@
 {% load staticfiles %}
 {% load compress %}
+{% load i18n %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>{% block title %} Barddo - Because we like art {% endblock %}</title>
+    <title>{% block title %} {% trans "Barddo - Because we like art" %}{% endblock %}</title>
 
     <meta name="description" content="overview &amp; stats"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>

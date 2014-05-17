@@ -9,7 +9,8 @@
 
     <div class="col-xs-12 col-sm-9">
         <span class="block">
-            {% render_field work_form.title class="width-100" placeholder="Whats the name of your work?" %}
+            {% trans "Whats the name of your work?" as %}
+            {% render_field work_form.title class="width-100" placeholder=title_placeholder %}
         </span>
     </div>
 </div>
@@ -45,7 +46,8 @@
 
     <div class="col-xs-12 col-sm-9">
         <span class="block">
-            {% render_field work_form.summary class="form-control" placeholder="What happens?" %}
+            {% trans "What happens?" as summary_placeholder %}
+            {% render_field work_form.summary class="form-control" placeholder=summary_placeholder %}
         </span>
     </div>
 </div>

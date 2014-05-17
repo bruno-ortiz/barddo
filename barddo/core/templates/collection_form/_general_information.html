@@ -21,7 +21,8 @@
 
         <div class="col-xs-12 col-sm-9">
             <span class="block">
-                {% render_field form.summary class="form-control" placeholder="Write some meaningful description about this work here..." %}
+                {% trans "Write some meaningful description about this work here..." as summary_ph %}
+                {% render_field form.summary class="form-control" placeholder=summary_ph %}
             </span>
         </div>
     </div>
@@ -67,7 +68,7 @@
             // Use a beauty drop file widget
             $('#new-collection-wizard input[type=file]').ace_file_input({
                 style: 'well',
-                btn_choose: 'Drop your collection cover here or click to choose',
+                btn_choose: '{% trans "Drop your collection cover here or click to choose" %}',
                 btn_change: null,
                 no_icon: 'icon-cloud-upload',
                 droppable: true,

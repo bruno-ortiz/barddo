@@ -1,5 +1,6 @@
 {% load thumbnail %}
 {% load static %}
+{% load i18n %}
 
 <div data-work-id="{{ work.id }}" class=" col-lg-3 col-md-3 col-sm-3 col-xs-12 item {{ classes }}">
     <div class="boxcontainer">
@@ -36,7 +37,7 @@
                     <div class="col-sm-2 center">
                         <img class="artist"
                              src="{% get_media_prefix %}{{ work.author.profile.avatar }}"
-                             alt="Artist Photo"/>
+                             alt="{% trans "Artist Photo" %}"/>
                         <span>{{ work.author.first_name }}</span>
                     </div>
                     <div class="col-sm-9 break-all">
@@ -56,17 +57,17 @@
             <div class="pull-right popup-buttons">
                 {% if user.is_authenticated %}
                     <button data-work-id="{{ work.id }}" type="button" class="btn-reader btn btn-minier btn-success">
-                        <i class="icon-zoom-in"></i> Read Now!
+                        <i class="icon-zoom-in"></i> {% trans "Read Now!" %}
                     </button>
                     <a href="#" class="btn btn-minier btn-info">
-                        <i class="icon-share"></i> Share
+                        <i class="icon-share"></i> {% trans "Share" %}
                     </a>
                 {% else %}
                     <button type="button" class="login-required btn btn-minier btn-success">
-                        <i class="icon-zoom-in"></i> Read Now!
+                        <i class="icon-zoom-in"></i> {% trans "Read Now!" %}
                     </button>
                     <a href="#" class="login-required btn btn-minier btn-info">
-                        <i class="icon-share"></i> Share
+                        <i class="icon-share"></i> {% trans "Share" %}
                     </a>
                 {% endif %}
             </div>
