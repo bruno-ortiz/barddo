@@ -358,3 +358,6 @@ THUMBNAIL_ALIASES = {
 }
 
 ########## End of image crop settings
+
+LOGIN_URL = "/"
+LOGOUT_URL = "/logout"

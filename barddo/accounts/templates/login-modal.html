@@ -9,7 +9,8 @@
                 <h4 class="modal-title" id="loginModalLabel">{% trans "Barddo Login" %}</h4>
             </div>
             <div class="modal-body">
-                <a id="facebook-login" href="{% url 'social:begin' "facebook" %}{% if next_url %}?next={{ next_url }}{% endif %}"
+                <a id="facebook-login"
+                   href="{% url 'social:begin' "facebook" %}{% if next_url %}?next={{ next_url }}{% endif %}"
                    class="btn btn-block facebook-color"><i class="icon-facebook-sign"></i>
                     {% trans "Login with Facebook" %}</a>
                 <button class="btn btn-block google-color g-signin"
@@ -39,11 +40,12 @@
             var s = document.getElementsByTagName('script')[0];
             s.parentNode.insertBefore(po, s);
         });
+
         var signInCallback = function (result) {
             if (result['error']) {
                 var error = result['error'];
                 if (error != "immediate_failed") {
-                    gritterError('Error', 'Sorry an error occured:' + result['error'], true)
+                    gritterError('{% trans "Error" %}', '{% trans "Sorry an error occured:" %}' + result['error'], true)
                     $('#facebook-login').removeClass('disabled');
                 } else {
                     $('.g-signin').trigger('click'); //OUCH! My eyes are bleeding, but i didnt see another way of turning off the immediate login from gplus api

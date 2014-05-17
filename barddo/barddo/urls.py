@@ -4,6 +4,10 @@ from django.contrib import admin
 from dajaxice.core import dajaxice_autodiscover, dajaxice_config
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
+from shards.core import shards_autodiscover
+
+
+shards_autodiscover()
 
 admin.autodiscover()
 
