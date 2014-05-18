@@ -3,6 +3,7 @@ from os import path
 import sys
 from os.path import dirname, abspath, basename
 
+
 ########## PATH CONFIGURATION
 # Absolute filesystem path to the Django project directory:
 DJANGO_ROOT = dirname(dirname(abspath(__file__)))
@@ -226,6 +227,7 @@ THIRD_PARTY_APPS = (
     'endless_pagination',
     'imagekit',
     'easy_thumbnails',
+    'analytical',
 )
 
 # Apps specific for this project go here.
@@ -369,6 +371,35 @@ THUMBNAIL_ALIASES = {
 }
 
 ########## End of image crop settings
+
+########## Analytics Services Settigns
+# Disabled tracking ips
+ANALYTICAL_INTERNAL_IPS = ['0.0.0.0', '127.0.0.1', 'localhost']
+
+# Do the best to identify users on tracking tools that can handle this
+ANALYTICAL_AUTO_IDENTIFY = True
+
+# Url: http://clicky.com/
+# Description: A real time analytics site
+# Type: free tier
+CLICKY_SITE_ID = '100737229'
+
+# Url: https://www.crazyegg.com
+# Description: A PAID heat map, we are on trial, started ad 17/05/2014 and ends at 17/06/2014
+# Type: Paid Yearly
+CRAZY_EGG_ACCOUNT_NUMBER = '00230100'
+
+# Url: https://www.google.com/analytics
+# Description: Google Analytics Services
+# Type: free tier
+GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-50511116-2'
+GOOGLE_ANALYTICS_SITE_SPEED = True
+
+# Url: https://www.woopra.com
+# Description: Another real time analytics, but better at showing what the user is doing
+# Type: trial
+WOOPRA_DOMAIN = 'barddo.com'
+########## End of analytics Services Settigns
 
 LOGIN_URL = "/"
 LOGOUT_URL = "/logout"
