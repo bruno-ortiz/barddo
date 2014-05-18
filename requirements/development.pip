@@ -19,3 +19,4 @@ django-imagekit
 pilkit
 fabric
 mysql-python
+django-analytical==0.17.1
