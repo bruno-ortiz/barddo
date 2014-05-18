@@ -220,3 +220,7 @@ footer {
     height: 64px;
     border-radius: 0;
 }
+
+.g-signin {
+    margin-top: 10px;
+}

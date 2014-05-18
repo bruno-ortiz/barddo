@@ -1,5 +1,6 @@
 {% load staticfiles %}
 {% load compress %}
+{% load i18n %}
 {% load analytical %}
 
 <!DOCTYPE html>
@@ -7,7 +8,7 @@
 <head>
     {% analytical_head_top %}
     <meta charset="utf-8"/>
-    <title>{% block title %} Barddo - Because we like art {% endblock %}</title>
+    <title>{% block title %} {% trans "Barddo - Because we like art" %}{% endblock %}</title>
 
     <meta name="description" content="overview &amp; stats"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -84,6 +85,5 @@
     if ("ontouchend" in document) document.write("<script src='{% static "js/jquery.mobile.custom.min.js" %}'>" + "<" + "/script>");
 </script>
 
-{% analytical_body_bottom %}
 </body>
 </html>

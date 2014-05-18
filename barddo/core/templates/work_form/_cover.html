@@ -1,3 +1,4 @@
+{% load i18n %}
 <div class="center" style="height: 100%">
     <input type="file" id="{{ work_form.cover.auto_id }}" name="{{ work_form.cover.name }}"/>
 
@@ -14,9 +15,9 @@
             var preview = $("#upload-preview");
 
             $('#' + '{{ work_form.cover.auto_id }}').ace_file_input({
-                no_file: 'Select your work cover...',
-                btn_choose: 'Choose',
-                btn_change: 'Change',
+                no_file: '{% trans "Select your work cover..." %}',
+                btn_choose: '{% trans "Choose" %}',
+                btn_change: '{% trans "Change" %}',
                 icon_remove: "",
                 droppable: false,
                 onchange: null,
@@ -27,7 +28,7 @@
                 //
             }).on('change', function () {
 
-                $("#form-work-next").html("<i class='icon-star'></i> Select a Cover!").prop("disabled", false);
+                $("#form-work-next").html("<i class='icon-star'></i> {% trans "Select a Cover!" %}").prop("disabled", false);
 
                 var input = $(event.currentTarget);
                 var file = input[0].files[0];

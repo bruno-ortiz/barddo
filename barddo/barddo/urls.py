@@ -4,6 +4,10 @@ from django.contrib import admin
 from dajaxice.core import dajaxice_autodiscover, dajaxice_config
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
+from shards.core import shards_autodiscover
+
+
+shards_autodiscover()
 
 admin.autodiscover()
 
@@ -21,6 +25,9 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
     url(r'^shards/', include('shards.urls')),
+
+    # Internationalization
+    url(r'^i18n/', include('django.conf.urls.i18n')),
 )
 
 urlpatterns += staticfiles_urlpatterns()

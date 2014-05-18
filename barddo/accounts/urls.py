@@ -1,9 +1,7 @@
 from django.conf.urls import patterns, include, url
 
-from accounts.views import logout_user, UsernamesAjaxView, profile, editable_profile
+from accounts.views import LogoutView, UsernamesAjaxView, UserProfileView
 
-
-__author__ = 'bruno'
 
 urlpatterns = patterns(
     '',
@@ -14,14 +12,14 @@ urlpatterns = patterns(
         name='accounts.usernames'),
 
     url(r'logout$',
-        logout_user,
+        LogoutView.as_view(),
         name='logout'),
 
     url(r'^profile/(?P<pk>\d+)$',
-        profile,
+        UserProfileView.as_view(),
         name='account.profile'),
 
     url(r'^profile$',
-        editable_profile,
+        UserProfileView.as_view(editable=True),
         name='account.editable_profile'),
 )

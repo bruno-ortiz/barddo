@@ -1,6 +1,8 @@
 import inspect
 import logging
 
+from django.utils.importlib import import_module
+
 from django.views.generic import View
 
 from shards.exceptions import InvalidClassViewError
@@ -119,3 +121,37 @@ class ShardModule(object):
             self.submodules[module].add(extra, function)
         else:
             self.callables[name] = function
+
+
+LOADING_SHARDS = False
+
+
+def shards_autodiscover():
+    """
+    Auto-discover INSTALLED_APPS ajax.py modules and fail silently when
+    not present. NOTE: shards_autodiscover was inspired/copied from
+    django.contrib.admin autodiscover
+    """
+    global LOADING_SHARDS
+    if LOADING_SHARDS:
+        return
+    LOADING_SHARDS = True
+
+    import imp
+    from django.conf import settings
+
+    for app in settings.INSTALLED_APPS:
+
+        try:
+            app_path = import_module(app).__path__
+        except AttributeError:
+            continue
+
+        try:
+            imp.find_module('shard', app_path)
+        except ImportError:
+            continue
+
+        import_module("%s.shard" % app)
+
+    LOADING_SHARDS = False

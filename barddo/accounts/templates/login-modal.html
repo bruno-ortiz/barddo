@@ -53,11 +53,12 @@
             var s = document.getElementsByTagName('script')[0];
             s.parentNode.insertBefore(po, s);
         });
+
         var signInCallback = function (result) {
             if (result['error']) {
                 var error = result['error'];
                 if (error != "immediate_failed") {
-                    gritterError('Error', 'Sorry an error occured:' + result['error'], true)
+                    gritterError('{% trans "Error" %}', '{% trans "Sorry an error occured:" %}' + result['error'], true)
                     $('#facebook-login').removeClass('disabled');
                 } else {
                     $('.g-signin').trigger('click'); //OUCH! My eyes are bleeding, but i didnt see another way of turning off the immediate login from gplus api

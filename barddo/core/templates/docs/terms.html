@@ -1,5 +1,6 @@
 {% extends 'main_template.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block header %}
     <link rel="stylesheet" href="{% static "css/uncompressed/cards.css" %}"/>
@@ -7,29 +8,19 @@
 
 {% block breadcrumbs %}
     <ul class="breadcrumb">
-        <li>
-            <i class="icon-home home-icon"></i>
-            <a href="{% url "core.index" %}">Home</a>
-        </li>
-        <li class="active">Terms of Use</li>
-    </ul><!-- .breadcrumb -->
+    <li>
+        <i class="icon-home home-icon"></i>
+        <a href="{% url "core.index" %}">{% trans "Home" %}</a>
+    </li>
+    <li class="active">{% trans "Terms of Use" %}</li>
 {% endblock %}
 
 {% block content %}
     <div class="page-content">
         <div class="row">
             <div class="col-sm-12">
+                <img src="{% static "images/art/worker.png" %}" style="max-width: 300px;"/>
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block page_specific_javascript %}
-
-
-{% endblock %}
-
-{% block bottom_page %}
-
-
 {% endblock %}
