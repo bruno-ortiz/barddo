@@ -22,4 +22,4 @@ class BarddoUserProfileForm(ModelForm):
 
     class Meta:
         model = BarddoUserProfile
-        field = ['birth_date', 'gender', 'country']
+        field = ['birth_date', 'gender', 'country', 'language']

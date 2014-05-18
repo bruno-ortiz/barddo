@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*
 from os import path
 import sys
 from os.path import dirname, abspath, basename
@@ -58,7 +59,16 @@ TIME_ZONE = 'America/Sao_Paulo'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
+
+LANGUAGES = (
+    ('pt', 'Português'),
+    ('en', 'English'),
+)
+
+LOCALE_PATHS = (
+    path.normpath(path.join(SITE_ROOT, 'locale')),
+)
 
 SITE_ID = 1
 
@@ -173,6 +183,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'accounts.middleware.LocaleMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )

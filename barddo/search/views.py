@@ -36,7 +36,7 @@ class SearchResultView(ProfileAwareView):
             if len(collections) == 0 and len(works) == 0 and len(people) == 0:
                 context = self.get_context_data(**{
                     "user": request.user,
-                    "error": _(u"Não foi encontrado nenhum resultado para sua busca."),
+                    "error": _(u"No results found for your query."),
                     "success": False
                 })
             else:
@@ -50,7 +50,7 @@ class SearchResultView(ProfileAwareView):
         else:
             context = self.get_context_data(**{
                 "user": request.user,
-                "error": _(u"Pesquisa inválida."),
+                "error": _(u"Invalid search."),
                 "success": False
             })
 

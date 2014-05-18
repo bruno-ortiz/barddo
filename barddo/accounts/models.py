@@ -1,6 +1,7 @@
 import datetime
 
 from django.contrib.auth.backends import ModelBackend
+
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.contrib.contenttypes.generic import GenericRelation
 from django.core.urlresolvers import reverse
@@ -8,6 +9,7 @@ from django.db import models
 from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.utils.translation import ugettext as _
+from django.conf import settings
 
 from search.search_manager import SearchManager
 from follow.models import Follow
@@ -125,4 +127,5 @@ class BarddoUserProfile(models.Model):
     avatar = models.ImageField(upload_to='user_avatar/')
     birth_date = models.DateField(default=datetime.date.today())
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default=GENDER_MALE)
+    language = models.CharField(max_length=5, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE)
     country = models.CharField(max_length=30, default=_('Brazil'))

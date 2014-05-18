@@ -25,6 +25,9 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
     url(r'^shards/', include('shards.urls')),
+
+    # Internationalization
+    url(r'^i18n/', include('django.conf.urls.i18n')),
 )
 
 urlpatterns += staticfiles_urlpatterns()

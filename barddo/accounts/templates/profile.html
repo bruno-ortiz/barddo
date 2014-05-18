@@ -70,11 +70,7 @@
                                         <span>{{ followers|length }}</span>
                                     </span>
                                     <br/>
-                                    {% blocktrans count followers|length as total_followers %}
-                                        Follower
-                                    {% plural %}
-                                        Followers
-                                    {% endblocktrans %}
+                                    {% blocktrans count followers|length as total_followers %}Follower{% plural %}Followers{% endblocktrans %}
                                 </div>
 
                                 <div class="grid2">
@@ -120,6 +116,14 @@
                                     <div class="profile-info-value">
                                         <i class="icon-map-marker light-orange bigger-110"></i>
                                         <span class="editable" id="id_country">{{ viewing_user_profile.country }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> {% trans "Site Language" %}</div>
+
+                                    <div class="profile-info-value">
+                                        <span class="editable" id="id_language">{{ viewing_user_profile.get_language_display }}</span>
                                     </div>
                                 </div>
 
@@ -326,6 +330,30 @@
                 }
             });
 
+            var languages = [];
+            {# TODO: programatic way #}
+            var lang_dict = {"English": "en", "Português": "pt"};
+            $.each(lang_dict, function (k, v) {
+                languages.push({id: v, text: k});
+            });
+            var language = $('#id_language');
+            var current_language = lang_dict[language.text()];
+            language.editable({
+                type: 'select2',
+                name: 'language',
+                source: languages,
+                value: current_language,
+                success: function (response, newValue) {
+                    if (current_language != newValue) {
+                        current_language = newValue;
+                        Dajaxice.accounts.edit_profile(Dajax.process, {
+                            'model': 'BarddoUserProfile',
+                            '_id':{{ viewing_user_profile.id }},
+                            'field': 'language',
+                            'value': newValue});
+                    }
+                }
+            });
 
             // *** editable avatar *** //
             try {//ie8 throws some harmless exception, so let's catch it

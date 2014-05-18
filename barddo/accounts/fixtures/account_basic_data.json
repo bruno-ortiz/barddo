@@ -18,6 +18,7 @@
             "user": 1,
             "avatar": "barddo_avatar/barddo-avatar.jpg",
             "gender": "M",
+            "language": "en",
             "country": "Brazil",
             "birth_date": "2014-02-15"
         }
