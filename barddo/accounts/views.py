@@ -106,6 +106,9 @@ class UserProfileView(LoginRequiredMixin, SingleObjectMixin, ProfileAwareView):
 ##
 # Ajax views
 ##
+_is_true = lambda value: bool(value) and value.lower() not in ('false', '0')
+
+
 class UsernamesAjaxView(LoginRequiredMixin, View):
     """
     Handle username matching for auto complete
@@ -115,7 +118,7 @@ class UsernamesAjaxView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         query_paramter = escape(request.GET['q'])
-        should_ignore_owner = __is_true(request.GET.get('ignore_owner', "true"))
+        should_ignore_owner = _is_true(request.GET.get('ignore_owner', "true"))
         user_query_set = BarddoUser.objects.username_startswith(query_paramter)
 
         if should_ignore_owner:
@@ -127,4 +130,3 @@ class UsernamesAjaxView(LoginRequiredMixin, View):
         return HttpResponse(json_data, content_type='application/json')
 
 
-__is_true = lambda value: bool(value) and value.lower() not in ('false', '0')

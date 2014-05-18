@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Barddo Main Site\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-05-18 12:27-0300\n"
-"PO-Revision-Date: 2014-05-18 12:32-0300\n"
+"PO-Revision-Date: 2014-05-18 12:39-0300\n"
 "Last-Translator: Israel Crisanto <israel.crisanto@gmail.com>\n"
 "Language-Team: Barddo Team <israel.crisanto@gmail.com>\n"
 "Language: pt\n"
@@ -322,7 +322,7 @@ msgstr "Adicionar uma Obra a esta coleção"
 
 #: core/templates/artist_dashboard.html:129
 msgid "Add a Work"
-msgstr "Adicionar uma Obra"
+msgstr "Nova Obra"
 
 #: core/templates/artist_dashboard.html:136
 msgid "Edit Collection"
