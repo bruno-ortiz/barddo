@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from manager import Shards
+from manager import Shards, shards_autodiscover
 
 
 class ShardsConfig(object):

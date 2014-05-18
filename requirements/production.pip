@@ -19,3 +19,4 @@ easy-thumbnails
 django-imagekit
 pilkit
 mysql-python
+django-analytical==0.17.1

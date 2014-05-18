@@ -8,11 +8,11 @@ from django.utils.translation import ugettext as _
 from feedback.forms import FeedbackForm
 
 
-__author__ = 'jovial'
-
-
 @dajaxice_register
 def send_feedback(request, form_data):
+    """
+    Register an user feedback
+    """
     ajax = Dajax()
     form_data = deserialize_form(form_data)
     form = FeedbackForm(data=form_data)
@@ -30,5 +30,7 @@ def send_feedback(request, form_data):
         for field, errors in form.errors.items():
             ajax.script('error_tooltip("#{}", "{}", null, null)'.format(field, errors[0]))
             ajax.script('$("#{}").closest("div.form-group").addClass("has-error")'.format(field))
+
+    # TODO: send an email warning us of what's happening
 
     return ajax.json()

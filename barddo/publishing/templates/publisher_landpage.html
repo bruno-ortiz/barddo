@@ -14,40 +14,36 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-    <!-- TODO: extract this logic to a template tag, so the breadcrumbs are calculated by the system -->
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
-            <a href="{% url "core.index" %}">Home</a>
+            <a href="{% url "core.index" %}">{% trans "Home" %}</a>
         </li>
-        <li class="active">Publisher</li>
-    </ul><!-- .breadcrumb -->
+        <li class="active">{% trans "Publisher" %}</li>
+    </ul>
 {% endblock %}
 
 {% block content %}
     <div class="page-content">
         <div id="carousel-publisher" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
             <ol class="carousel-indicators">
                 <li data-target="#carousel-publisher" data-slide-to="0" class="active"></li>
                 <li data-target="#carousel-publisher" data-slide-to="1"></li>
                 <li data-target="#carousel-publisher" data-slide-to="2"></li>
             </ol>
 
-            <!-- Wrapper for slides -->
             <div class="carousel-inner">
                 <div class="item active">
-                    <img class="img-responsive" src="{% static "barddo/img/01-editor.png" %}">
+                    <img class="img-responsive" src="{% static "barddo/img/01-editor.jpg" %}">
                 </div>
                 <div class="item">
-                    <img class="img-responsive" src="{% static "barddo/img/02-editor.png" %}">
+                    <img class="img-responsive" src="{% static "barddo/img/02-editor.jpg" %}">
                 </div>
                 <div class="item">
-                    <img class="img-responsive" src="{% static "barddo/img/03-editor.png" %}">
+                    <img class="img-responsive" src="{% static "barddo/img/03-editor.jpg" %}">
                 </div>
             </div>
 
-            <!-- Controls -->
             <a class="left carousel-control" href="#carousel-publisher" data-slide="prev">
                 <span class="icon-chevron-left center-chevron"></span>
             </a>

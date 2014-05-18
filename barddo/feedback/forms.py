@@ -3,10 +3,11 @@ from django import forms
 from .models import Feedback
 
 
-__author__ = 'jose'
-
-
 class FeedbackForm(forms.ModelForm):
+    """
+    Feedback form
+    """
+
     class Meta:
         model = Feedback
         exclude = ['date']

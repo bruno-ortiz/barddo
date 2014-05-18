@@ -9,7 +9,7 @@
             <div class="navbar-header {{ user.is_authenticated | yesno:",navbar-max-width" }}">
                 {% if user.is_authenticated %}
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#barddo-navbar">
-                        <span class="sr-only">Toggle navigation</span>
+                        <span class="sr-only">{% trans "Toggle navigation" %}</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -34,7 +34,7 @@
                 {% if user.is_authenticated == False %}
                     <div class="pull-right">
                         <button class="login-required btn btn-signin" data-target="#loginModal">
-                            <i class="icon-signin"></i> Login
+                            <i class="icon-signin"></i> {% trans "Login" %}
                         </button>
                     </div>
                 {% endif %}
@@ -49,28 +49,28 @@
                             {% if user.is_publisher %}
                                 <li class="dashboard-link"> {# hidden-xs  #}
                                     <a href="{% url "core.dashboard" %}">
-                                        <i class="icon-dashboard"></i>Dashboard
+                                        <i class="icon-dashboard"></i>{% trans "Dashboard" %}
                                     </a>
                                 </li>
                             {% endif %}
 
                             <li class="dropdown light-blue">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img class="nav-user-photo" src="{{ MEDIA_URL }}{{ avatar }}" alt="User Photo"/>
-                                    <span class="user-info"><small>Welcome,</small>
+                                    <img class="nav-user-photo" src="{{ MEDIA_URL }}{{ avatar }}" alt="{% trans "User Photo" %}"/>
+                                    <span class="user-info"><small>{% trans "Welcome," %}</small>
                                         {{ username }}</span>
                                     <i class="icon-caret-down"></i>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="{% url 'account.editable_profile' %}">
-                                        <i class="icon-user"></i>Profile</a>
+                                        <i class="icon-user"></i>{% trans "Profile" %}</a>
                                     </li>
                                     <li><a href="{% url 'publishing.landpage' %}">
-                                        <i class="icon-book"></i>Publisher Area</a>
+                                        <i class="icon-book"></i>{% trans "Publisher Area" %}</a>
                                     </li>
                                     <li class="divider"></li>
                                     <li><a href="{% url 'logout' %}">
-                                        <i class="icon-off"></i>Logout</a>
+                                        <i class="icon-off"></i>{% trans "Logout" %}</a>
                                     </li>
                                 </ul>
                             </li>

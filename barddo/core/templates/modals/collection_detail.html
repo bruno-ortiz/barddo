@@ -1,4 +1,5 @@
 {% load thumbnail %}
+{% load i18n %}
 {% csrf_token %}
 <div class="row">
     <div class="col-sm-12">
@@ -21,14 +22,14 @@
                     <li class="active">
                         <a data-toggle="tab" href="#general-{{ collection.id }}">
                             <i class="blue icon-info-sign bigger-120"></i>
-                            General
+                            {% trans "General" %}
                         </a>
                     </li>
 
                     <li>
                         <a data-toggle="tab" href="#files-{{ collection.id }}">
                             <i class="green icon-picture bigger-120"></i>
-                            Pages
+                            {% trans "Pages" %}
                         </a>
                     </li>
 
@@ -43,17 +44,17 @@
                                      src="{{ current_work.cover|thumbnail_url:"big_cover" }}"/>
                             </span>
                                 <span class="cover-subtitle"><i
-                                        class="icon-pencil"></i> Click to change</span>
+                                        class="icon-pencil"></i> {% trans "Click to change" %}</span>
                             </div>
                             <!-- /span -->
 
                             <div class="col-xs-12 col-sm-7">
                                 <div id="collection-editable" class="profile-user-info profile-user-info-striped">
                                     <div class="table-header center">
-                                        <i class="icon-edit"></i> Work Information
+                                        <i class="icon-edit"></i> {% trans "Work Information" %}
                                     </div>
                                     <div class="profile-info-row">
-                                        <div class="profile-info-name"> Title:</div>
+                                        <div class="profile-info-name"> {% trans "Title:" %}</div>
 
                                         <div class="profile-info-value">
                                         <span class="editable"
@@ -62,7 +63,7 @@
                                     </div>
 
                                     <div class="profile-info-row">
-                                        <div class="profile-info-name"> Number:</div>
+                                        <div class="profile-info-name"> {% trans "Number:" %}</div>
 
                                         <div class="profile-info-value">
                                         <span class="editable"
@@ -71,7 +72,7 @@
                                     </div>
 
                                     <div class="profile-info-row">
-                                        <div class="profile-info-name"> Summary:</div>
+                                        <div class="profile-info-name"> {% trans "Summary:" %}</div>
 
                                         <div class="profile-info-value">
                                         <span class="editable"
@@ -80,10 +81,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- /span -->
                         </div>
-                        <!-- /row-fluid -->
-
                     </div>
 
                     <div id="files-{{ collection.id }}" class="tab-pane">
@@ -92,8 +90,8 @@
                                   class="dropzone">
                                 <div class="work-action-overlay center"><i
                                         class="icon-spinner icon-spin white icon-2x"></i>
-                                    <span>Please Wait</span>
-                                    <span class="subtitle">Sending changes to the server</span>
+                                    <span>{% trans "Please Wait" %}</span>
+                                    <span class="subtitle">{% trans "Sending changes to the server..." %}</span>
                                 </div>
 
                                 {% csrf_token %}
@@ -110,7 +108,6 @@
                             </form>
                         </div>
                     </div>
-                    <!-- /#feed -->
                 </div>
             </div>
         </div>

@@ -6,9 +6,9 @@
             "username": "Barddo",
             "first_name": "Barddo",
             "password": "pbkdf2_sha256$12000$Y1TGT0FHlZVs$nRO6ocTFsP2LmhLuUoyYvX49WLzCLK8ZIrTnyJmspVo=",
-            "is_active": false,
-            "is_superuser": false,
-            "is_staff": false
+            "is_active": true,
+            "is_superuser": true,
+            "is_staff": true
         }
     },
     {
@@ -18,6 +18,7 @@
             "user": 1,
             "avatar": "barddo_avatar/barddo-avatar.jpg",
             "gender": "M",
+            "language": "en",
             "country": "Brazil",
             "birth_date": "2014-02-15"
         }

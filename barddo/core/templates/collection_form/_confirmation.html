@@ -1,8 +1,11 @@
 {% load staticfiles %}
+{% load i18n %}
 <div class="center">
     <img src="{% static "images/art/happy-face.png" %}"/>
 
-    <h3 class="green">Congrats!</h3>
-    Your awesome collection were created! <br/>
-    Now, it's time to add some work to it!
+    <h3 class="green">{% trans "Congrats!" %}</h3>
+    {% blocktrans %}
+        Your awesome collection were created! <br/>
+        Now, it's time to add some work to it!
+    {% endblocktrans %}
 </div>

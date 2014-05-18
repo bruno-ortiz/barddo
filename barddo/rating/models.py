@@ -5,8 +5,6 @@ from django.db import models
 
 from accounts.models import BarddoUser
 
-__author__ = 'jovial'
-
 
 class Rating(models.Model):
     class Meta:

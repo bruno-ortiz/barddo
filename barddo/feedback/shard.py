@@ -15,8 +15,7 @@ class FeedbackModalView(TemplateResponseMixin, View):
     def post(self, request, *args, **kwargs):
         context = {}
 
-        if request.user.is_authenticated():
-            context["username"] = request.user.get_full_name()
-            context["email"] = request.user.email
+        context["username"] = request.user.get_full_name()
+        context["email"] = request.user.email
 
         return super(FeedbackModalView, self).render_to_response(context)

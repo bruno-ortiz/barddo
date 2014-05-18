@@ -1,5 +1,6 @@
 {% extends 'main_template.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block header %}
     <link rel="stylesheet" href="{% static "css/uncompressed/cards.css" %}"/>
@@ -9,10 +10,10 @@
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
-            <a href="{% url "core.index" %}">Home</a>
+            <a href="{% url "core.index" %}">{% trans "Home" %}</a>
         </li>
-        <li class="active">About Us</li>
-    </ul><!-- .breadcrumb -->
+        <li class="active">{% trans "About Us" %}</li>
+    </ul>
 {% endblock %}
 
 {% block content %}
@@ -21,76 +22,82 @@
             <div class="col-sm-7 widget-container-span ui-sortable">
                 <div class="widget-box transparent">
                     <div class="widget-header">
-                        <h4 class="lighter"><i class="icon-star"></i> Nossa proposta</h4>
+                        <h4 class="lighter"><i class="icon-star"></i> {% trans "Our proposal" %}</h4>
                     </div>
 
                     <div class="widget-body">
                         <div class="widget-main padding-6 no-padding-left no-padding-right">
-                            Aposto que você, assim como nós
-                            acompanha
-                            mangás ou hqs famosas e muitos outros estilos publicados por editoras que fazem isto há
-                            muito tempo. E não há nada
-                            errado com
-                            isto, nós adoramos estes trabalhos também.
+                            {% blocktrans %}
+                                I bet you, like us,
+                                follow
+                                famous manga or comics and many other styles published by known publishing houses, who've been doing this a
+                                long time. And there is nothing
+                                wrong with
+                                this, we love these works also.
+                            {% endblocktrans %}
                         </div>
 
                         <div class="widget-main padding-6 no-padding-left no-padding-right">
-                            Mas por que se ater apenas a este modelo? Acreditamos que existam muitos artistas
-                            talentosos pelo mundo, e com o poder da tecnologia é
-                            possível dar a visibilidade que eles merecem.
+                            {% blocktrans %}
+                                But why stick to this publishing style, only? We believe there are many talented artists
+                                in the world, and with the power of technology it's
+                                possible to give the visibility they deserve.
+                            {% endblocktrans %}
                         </div>
 
                         <div class="widget-main padding-6 no-padding-left no-padding-right">
-                            O <span class="highlight">Barddo</span> é um sistema de <span class="highlight">publicações on-line focado em
-                            artistas independentes</span>. Nele qualquer
-                            artista,
-                            de <span class="highlight">qualquer estilo</span>, pode disponibilizar suas obras para que
-                            os leitores avaliem.
+                            {% blocktrans %}
+                                The <span class="highlight">Barddo</span> is a system of <span class="highlight">online publications focused on Independent Artists</span>.
+                                With it, any artist, from <span class="highlight">any style</span>, can offer their works for readers to evaluate.
+                            {% endblocktrans %}
                         </div>
 
                         <div class="widget-main padding-6 no-padding-left no-padding-right">
-                            A ideia é bem simples, o artista publica sua obra, diz seu preço, e começa a compartilhá-la.
-                            Os
-                            leitores
-                            podem avaliar estes trabalhos de uma forma simples e rápida. Quanto melhor a avaliação, mais
-                            destaque as obras recebem.
+                            {% blocktrans %}
+                                The idea is simple, the artist publish his work, at his price, and starts to share it.
+                                Readers can review these works simply and quickly.
+                                The better the review, the more the work receive more highlight on home page.
+                            {% endblocktrans %}
                         </div>
 
                         <div class="widget-main padding-6 no-padding-left no-padding-right">
-                            E assim, sem descartar o que existe hoje, nossa proposta é oferecer o melhor dos dois mundos
-                            para nossos
-                            leitores: a maior quantidade possível de trabalhos de qualidades, oferecidos por editoras
-                            bem conhecidas e estabelecidas
-                            e ajudar a descobrir novos trabalhos e artistas, deixando que os próprios leitores tenham
-                            controle sobre isso, <span
-                                class="highlight">sem
-                            intermediários</span>.
+                            {% blocktrans %}
+                                And so, without discarding what exists today, our proposal is to provide the best of both worlds
+                                for our readers:
+                                the largest possible amount of quality works, offered by publishers well-known and established
+                                and help you discover new artists and great works, letting readers themselves have
+                                control over this, with <span class="highlight"> no intermediaries</span>.
+                            {% endblocktrans %}
                         </div>
 
                         <div class="widget-main padding-6 no-padding-left no-padding-right">
-                            Imagine só!
+                            {% trans "Imagine that!" %}
                         </div>
                     </div>
                 </div>
 
                 <div class="widget-box transparent">
                     <div class="widget-header">
-                        <h4 class="lighter"><i class="icon-star"></i> Por quê?</h4>
+                        <h4 class="lighter"><i class="icon-star"></i> {% trans "Why?" %}</h4>
                     </div>
 
                     <div class="widget-body">
                         <div class="widget-main padding-6 no-padding-left no-padding-right">
-                            Diferente do modelo atual, em que
-                            algumas empresas e indivíduos determinam o que é bom o suficiente para publicação e acabam
-                            influenciando no andamento das mesmas,
-                            nós acreditamos que <span class="highlight">ninguém melhor
-                            do que os próprios leitores para decidirem o sucesso de uma publicação</span>.
+                            {% blocktrans %}
+                                Unlike current current model, in which
+                                some companies and individuals determine what is good enough for publication and
+                                influence the course of the published works,
+                                we believe that there's <span class="highlight">no one better
+                            than the readers themselves to decide the success of a publication </span>.
+                            {% endblocktrans %}
                         </div>
 
                         <div class="widget-main padding-6 no-padding-left no-padding-right">
-                            O grande diferencial do <span class="highlight">Barddo</span> é exatamente este: <span
-                                class="highlight">liberdade para o artista</span> publicar o que
-                            quiser, e o <span class="highlight">contato direto com os leitores</span>.
+                            {% blocktrans %}
+                                The big difference about <span class="highlight">Barddo</span> is exactly this:
+                                <span class="highlight">freedom for the artist</span> publish what they want,
+                                and <span class="highlight">direct contact with readers</span>.
+                            {% endblocktrans %}
                         </div>
                     </div>
                 </div>
@@ -100,17 +107,16 @@
             </div>
         </div>
 
-
         <div class="row">
             <div class="col-sm-12">
                 <div class="widget-box transparent">
                     <div class="widget-header">
-                        <h4 class="lighter"><i class="icon-user"></i> A equipe</h4>
+                        <h4 class="lighter"><i class="icon-user"></i> {% trans "The Team" %}</h4>
                     </div>
 
                     <div class="widget-body">
                         <div class="widget-main padding-6 no-padding-left no-padding-right">
-                            Conheça os envolvidos na criação nesta ideia!
+                            {% trans "Meet the people involved in creating this idea!" %}
                         </div>
 
                         <div class="widget-main padding-6 no-padding-left no-padding-right">
@@ -124,11 +130,9 @@
 
                                         <p class="highlight">israel@barddo.com</p>
 
-                                        <p>Macaquinho faz-tudo</p>
+                                        <p>{% trans "Handymonkey" %}</p>
 
-                                        <p>Sonha com um mundo em que
-                                            publicações online
-                                            serão mais comuns do que as físicas.</p>
+                                        <p>{% trans "Dream of a world where online publications will be more common than physical." %}</p>
                                     </div>
                                 </div>
 
@@ -141,10 +145,10 @@
 
                                         <p class="highlight">bruno@barddo.com</p>
 
-                                        <p>Desenvolvedor e amante de tecnologia</p>
+                                        <p>{% trans "Developer and technology lover" %}</p>
 
                                         <p>
-                                            Um dos idealizadores do projeto, viciado em mangás.
+                                            {% trans "One of the creators of the project, manga addicted." %}
                                         </p>
                                     </div>
                                 </div>
@@ -158,10 +162,9 @@
 
                                         <p class="highlight">rafael@barddo.com</p>
 
-                                        <p>Designer</p>
+                                        <p>{% trans "Designer" %}</p>
 
-                                        <p>Apaixonado por ilustração manual e pintura digital, viciado em games cuida
-                                            da parte artística do projeto.</p>
+                                        <p>{% trans "Fond of manual illustration and digital painting, games addict, take care the project artistic part." %}</p>
                                     </div>
                                 </div>
 
@@ -174,12 +177,9 @@
 
                                         <p class="highlight">jose@barddo.com</p>
 
-                                        <p>Desenvolvedor</p>
+                                        <p>{% trans "Developer" %}</p>
 
-                                        <p>Colecionador de gadgets eletrônicos, um dia verá o Barddo em dispositivos
-                                            pelo
-                                            mundo
-                                            inteiro!</p>
+                                        <p>{% trans "Collector Electronic gadgets, one day will see the Barddo on mobile devices over the world!" %}</p>
                                     </div>
                                 </div>
                             </div>
@@ -193,37 +193,25 @@
             <div class="col-sm-12">
                 <div class="widget-box transparent">
                     <div class="widget-header">
-                        <h4 class="lighter"><i class="icon-envelope"></i> Contato</h4>
+                        <h4 class="lighter"><i class="icon-envelope"></i> {% trans "Contact" %}</h4>
                     </div>
 
                     <div class="widget-body">
                         <div class="widget-main padding-6 no-padding-left no-padding-right">
-                            Qualquer dúvida, crítica ou sugestão, pode mandar uma mensagem direta para qualquer um dos
-                            integrantes,
-                            ou diretamente
-                            para <a href="mailto:contact@barddo.com" target="_top"><span
-                                class="highlight">contact@barddo.com</span></a>. Se isto te deixa mais confortável,
-                            você também pode nos encontrar
-                            no
-                            facebook!
-                            Dê um pulinho lá
-                            e diga o que achou do projeto e ajude-nos a torná-lo um sucesso!
+                            {% blocktrans %}
+                                Any questions, criticism or suggestion, you can send a direct message to any of the members,
+                                or directly to <a href="mailto:contact@barddo.com" target="_top"><span class="highlight">contact@barddo.com</span></a>.
+                            {% endblocktrans %}
+                        </div>
+                        <div class="widget-main padding-6 no-padding-left no-padding-right">
+                            {% blocktrans %}
+                                If you prefer, you can also find us on facebook!
+                                Take a hop over there and tell us what you think about the project and help us make it a success!
+                            {% endblocktrans %}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-
-{% endblock %}
-
-{% block page_specific_javascript %}
-
-
-{% endblock %}
-
-{% block bottom_page %}
-
-
 {% endblock %}

@@ -6,13 +6,12 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="pages">
-                        <a href="{% url "core.help" %}" class="footer-link"><i class="icon-info-sign"></i> Help</a>
-                        <a href="{% url "core.about" %}" class="footer-link"><i class="icon-lightbulb"></i> About Us</a>
-                        <a href="{% url "core.terms" %}" class="footer-link-last"><i class="icon-briefcase"></i> Terms
-                            of Use</a>
+                        <a href="{% url "core.help" %}" class="footer-link"><i class="icon-info-sign"></i> {% trans "Help" %}</a>
+                        <a href="{% url "core.about" %}" class="footer-link"><i class="icon-lightbulb"></i> {% trans "About Us" %}</a>
+                        <a href="{% url "core.terms" %}" class="footer-link-last"><i class="icon-briefcase"></i> {% trans "Terms of Use" %}</a>
                     </div>
                     <div class="trade_mark">
-                        &copy; 2014 <a href="#">Barddo Project</a> - {% trans "Made with love!" %}
+                        &copy; 2014 <a href="#">{% trans "Barddo Project" %}</a> - {% trans "Made with love!" %}
                     </div>
                 </div>
             </div>
