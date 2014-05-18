@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load i18n %}
 <div id="modal-discover" class="modal fade" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
 <div class="modal-dialog large">
@@ -13,12 +14,12 @@
         <div class="row">
             <div class="col-md-7 col-xs-12">
                 <div class="page-title text-center">
-                    <h3>Descubra</h3>
+                    <h3>{% trans "Discover" %}</h3>
 
-                    <p>Seja bem-vindo! Se interessou pelo projeto e deseja mais
-                        informações sobre o Barddo? Continue lendo, não se esqueça que seu feedback é
-                        muito importante
-                        para nós.</p>
+                    <p>Welcome!
+                        Interested in the project and want more
+                        information Barddo? Keep reading, and please, do not forget that your feedback is
+                        very important for us.</p>
                 </div>
             </div>
             <div class="col-md-5 col-xs-12">
@@ -29,12 +30,8 @@
 </div>
 
 <div class="modal-body">
-
-
-    <!-- Shots starts -->
     <div class="shots block">
         <div class="container">
-            <!-- shot1-->
             <div class="row">
                 <div class="col-md-4">
                     <div class="screenshot">
@@ -44,30 +41,31 @@
                 </div>
                 <div class="col-md-8">
                     <div class="shotcontent">
-                        <h3>Projeto Barddo</h3>
+                        <h3>{% trans "Barddo Project" %}</h3>
 
-                        <p class="shot-para">Criado com a <span>missão de unir artistas e leitores</span>, o Barddo é um
-                            sistema criado para ser simples e fácil de usar. Um espaço para que artistas independentes e
-                            editoras publiquem seus trabalhos e recebam feedback diretamente dos leitores, responsáveis
-                            diretamente pelo sucesso destas publicações.
+                        <p class="shot-para">
+                            {% blocktrans %}
+                                Created with the <span> mission to unite artists and readers </span>, Barddo is a
+                                system designed to be simple and easy to use. A space for independent artists and
+                                companies publish their work and receive feedback directly from readers, directly responsible
+                                by the success of these publications
+                            {% endblocktrans %}
                         </p>
                         <hr>
 
                         <div class="row">
                             <div class="col-md-6 col-xs-6">
                                 <div class="shot-content-body">
-                                    <h4><i class="icon-cloud-download tblue"></i> Leitura na Nuvem</h4>
+                                    <h4><i class="icon-cloud-download tblue"></i> {% trans "Cloud Reading" %}</h4>
 
-                                    <p>Leia suas obras favoritas de qualquer lugar, em qualquer dispositivo.</p>
+                                    <p>{% trans "Read your favorite works from anywhere, on any device." %}</p>
                                 </div>
                             </div>
                             <div class="col-md-6 col-xs-6">
                                 <div class="shot-content-body">
-                                    <h4><i class="icon-cloud-upload tblue"></i> Publicações automatizadas</h4>
+                                    <h4><i class="icon-cloud-upload tblue"></i> {% trans "Automated publishing" %}</h4>
 
-                                    <p> Sem burocracia excessiva, você pode publicar toda e qualquer obra de sua autoria
-                                        com
-                                        apenas alguns cliques!</p>
+                                    <p> {% trans "Without excessive bureaucracy, you can publish any work of your own with just a few clicks!" %}</p>
                                 </div>
                             </div>
                         </div>
@@ -76,39 +74,40 @@
 
             </div>
             <hr>
-            <!-- shot1 ends -->
-
-            <!-- shot2 -->
             <div class="row">
                 <div class="col-md-8">
                     <div class="shotcontent second">
-                        <h3>Mobilidade e Simplicidade</h3>
+                        <h3>{% trans "Mobility and Simplicity" %}</h3>
 
-                        <p class="shot-para">O Barddo foi desenvolvido com duas preocupações em mente: simplicidade e
-                            mobilidade. Isto significa que o sistema é o mais simples que conseguimos criar, e com
-                            certeza
-                            ficará muito mais com o tempo. Além disto, você também poderá usá-lo de qualquer lugar:
-                            computador, tablet, celular...
+                        <p class="shot-para">
+                            {% blocktrans %}
+                                The Barddo was created with two objectives in mind: simplicity and
+                                mobility. This means that the system is the simplest we could create, and
+                                certainty will be much more over time. Moreover, you can also use it from anywhere:
+                                computer, tablet, mobile...
+                            {% endblocktrans %}
                         </p>
                         <hr>
 
                         <div class="row">
                             <div class="col-md-6 col-xs-6">
                                 <div class="shot-content-body">
-                                    <h4><i class="icon-mobile-phone tblue"></i> Mobile</h4>
+                                    <h4><i class="icon-mobile-phone tblue"></i> {% trans "Mobile" %}</h4>
 
-                                    <p>Ainda não criamos os aplicativos para cada plataforma. Mas isto não impede que
-                                        você
-                                        acesse e utilize o Barddo do navegador do seu celular!</p>
+                                    <p>
+
+                                        {% blocktrans %}
+                                            We haven't created applications for each mobile platform, yet.
+                                            But this does not prevent you to access and use the Barddo your phone's browser!
+                                        {% endblocktrans %}</p>
                                 </div>
                             </div>
                             <div class="col-md-6 col-xs-6">
                                 <div class="shot-content-body">
-                                    <h4><i class="icon-desktop tblue"></i> Web</h4>
+                                    <h4><i class="icon-desktop tblue"></i> {% trans "Web" %}</h4>
 
-                                    <p>O Barddo é independente do Sistema Operacional! É possível acessá-lo usando
-                                        qualquer
-                                        navegador recente!</p>
+                                    <p>The Barddo is OS independent!
+                                        You can access it using any recent web browser!</p>
                                 </div>
                             </div>
                         </div>
@@ -123,9 +122,6 @@
                 </div>
             </div>
             <hr>
-            <!-- shot2 ends -->
-
-            <!-- shot3 -->
             <div class="row">
                 <div class="col-md-4">
                     <div class="screenshot">
@@ -135,71 +131,80 @@
                 </div>
                 <div class="col-md-8">
                     <div class="shotcontent third">
-                        <h3>Qualquer um pode participar.</h3>
+                        <h3>{% trans "Anyone can participate." %}</h3>
 
-                        <p class="shot-para">Um sistema feito para todos! Qualquer um, de qualquer país pode se
-                            cadastrar,
-                            ler
-                            e publicar. Além disto, estamos integrados com redes sociais como Facebook, Google Plus e
-                            Twitter para que seja
-                            possivel compartilhar e convidar mais amigos.</p>
+                        <p class="shot-para">
+                            {% blocktrans %}
+                                A system designed for everyone! Anyone, from any country can register,
+                                read and publish. Moreover, we are integrated with social networks like Facebook, Google Plus and
+                                Twitter to make it possible to share and invite more friends.
+                            {% endblocktrans %}
+                        </p>
                         <hr>
 
                         <div class="row">
                             <div class="col-md-6 col-xs-6">
                                 <div class="shot-content-body">
-                                    <h4><i class="icon-globe tblue"></i> Mundial</h4>
+                                    <h4><i class="icon-globe tblue"></i> {% trans "Worldwide" %}</h4>
 
-                                    <p> O Barddo é aberto para o mundo inteiro, pessoas de qualquer país poderão se
-                                        cadastrar e utilizá-lo.</p>
+                                    <p>
+                                        {% blocktrans %}
+                                            The Barddo is open to everyone in the world, people of any country can register and use it.
+                                        {% endblocktrans %}
+                                    </p>
                                 </div>
                             </div>
                             <div class="col-md-6 col-xs-6">
                                 <div class="shot-content-body">
-                                    <h4><i class="icon-facebook tblue"></i> Redes Sociais</h4>
+                                    <h4><i class="icon-facebook tblue"></i> {% trans "Social Networks" %}</h4>
 
-                                    <p> Integração com as redes sociais mais importantes da atualidade. Compartilhe,
-                                        fale,
-                                        convide. </p>
+                                    <p>
+                                        {% blocktrans %}
+                                            Integration with major social networks today.
+                                            Share, talk, invite.
+                                        {% endblocktrans %}
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- shot3 ends -->
-
             <div class="row">
                 <div class="col-md-12 col-md-offset-0  col-sm-10 col-sm-offset-1">
                     <div class="shotcontent second">
-                        <h3>Sua opinião é importante!</h3>
+                        <h3>{% trans "Your opinion is important!" %}</h3>
 
                         <div class="row">
                             <div class="col-md-8 col-sm-12 col-xs-12">
-                                <p class="shot-para">Suas dúvidas e opiniões são muito importante para nós! Se você tem
-                                    algo
-                                    a
-                                    falar, nós queremos ouvir e acreditamos que só
-                                    assim conseguiremos criar um serviço que deixe seus usuários satisfeitos. Temos
-                                    diversos
-                                    meios de contato, escolha o seu e mande sua mensagem!</p>
+                                <p class="shot-para">
+                                    {% blocktrans %}
+                                        Your questions and opinions are very important to us! If you have
+                                        something to talk about, we want to hear, we believe that's the only
+                                        way to create a service that let our users happy. You can use
+                                        various means of contact, make your choice and send your message!
+                                    {% endblocktrans %}
+                                </p>
                                 <hr>
                                 <div class="row">
                                     <div class="col-md-6 col-xs-6">
                                         <div class="shot-content-body">
-                                            <h4><i class="icon-envelope tblue"></i> Email</h4>
+                                            <h4><i class="icon-envelope tblue"></i> {% trans "Email" %}</h4>
 
-                                            <p> Você pode entrar em contado através do email <a
+                                            <p> {% trans "You can get in contact via email" %} <a
                                                     href="mailto:contact@barddo.com">contact@barddo.com</a>.
                                             </p>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-xs-6">
                                         <div class="shot-content-body">
-                                            <h4><i class="icon-facebook tblue"></i> Facebook</h4>
+                                            <h4><i class="icon-facebook tblue"></i> {% trans "Facebook" %}</h4>
 
-                                            <p> Visite <a href="https://www.facebook.com/thebarddo" target="_blank">nossa
-                                                página</a> no facebook e deixe seu comentário. </p>
+                                            <p>
+                                                {% blocktrans %}
+                                                    Visit <a href="https://www.facebook.com/thebarddo" target="_blank">our page</a> on Facebook and leave your message.
+                                                {% endblocktrans %}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -213,8 +218,8 @@
                         </div>
                         <hr>
                         <a id="modal-feedback-now" href="#" class="download btn-block text-center btn-danger">
-                            <div class="hidden-xs"><i class="icon-comment"></i> Deixe seu feedback agora mesmo!</div>
-                            <div class="visible-xs"><i class="icon-comment"></i> Deixe seu feedback!</div>
+                            <div class="hidden-xs"><i class="icon-comment"></i> {% trans "Leave your feedback right now!" %}</div>
+                            <div class="visible-xs"><i class="icon-comment"></i> {% trans "Leave your feedback!" %}</div>
                         </a>
                     </div>
                 </div>
@@ -222,7 +227,6 @@
 
         </div>
     </div>
-    <!-- Shots Ends -->
 </div>
 </div>
 </div>
