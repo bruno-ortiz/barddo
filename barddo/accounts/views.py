@@ -14,6 +14,7 @@ from django.views.generic import View
 from .exceptions import UserNotProvided
 from accounts.models import BarddoUser
 from follow.models import Follow
+from feed.models import UserFeed
 
 
 ##
@@ -95,7 +96,8 @@ class UserProfileView(LoginRequiredMixin, SingleObjectMixin, ProfileAwareView):
                    'viewing_user_profile': profile_user.profile,
                    'editable': self.editable,
                    'following': following,
-                   'followers': followers}
+                   'followers': followers,
+                   'user_feed': UserFeed.objects.feed_for_user(profile_user)}
         if current_user != profile_user:
             follows = Follow.objects.follows(current_user, profile_user)
             context['follows'] = follows

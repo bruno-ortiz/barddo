@@ -240,6 +240,7 @@ LOCAL_APPS = (
     'rating',
     'search',
     'follow',
+    'feed',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -353,6 +354,7 @@ SOCIAL_AUTH_PIPELINE = (
     'accounts.pipelines.get_birth_date',
     'accounts.pipelines.get_gender',
     'accounts.pipelines.get_country',
+    'accounts.pipelines.post_user_creation',
 )
 
 SOCIAL_AUTH_LOGIN_URL = '/'

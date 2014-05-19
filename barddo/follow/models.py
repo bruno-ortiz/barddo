@@ -7,6 +7,7 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
+from signals import start_follow, stop_follow
 from .exceptions import AlreadyExistsError
 
 
@@ -90,6 +91,8 @@ class FollowingManager(models.Manager):
         except IntegrityError as e:
             raise AlreadyExistsError("User '{}' already follows '{}'".format((follower, followee)), e)
 
+        start_follow.send(self, follower=follower, followed=followee)
+
         return relation
 
     def remove_follower(self, follower, followee):
@@ -102,6 +105,9 @@ class FollowingManager(models.Manager):
             rel.delete()
             bust_cache('followers', followee.pk)
             bust_cache('following', follower.pk, followee.__class__.__name__)
+
+            stop_follow.send(self, follower=follower, unfollowed=followee)
+
             return True
         except Follow.DoesNotExist:
             return False

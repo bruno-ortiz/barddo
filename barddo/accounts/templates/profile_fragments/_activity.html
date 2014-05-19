@@ -3,126 +3,27 @@
 <div id="feed" class="tab-pane active">
     <div class="profile-feed row-fluid">
         <div class="span6">
-            <div class="profile-activity clearfix">
-                <div>
-                    <img class="pull-left" alt="Alex Doe's avatar" src="{% static "avatars/avatar5.png" %}"/>
-                    <a class="user" href="#"> Alex Doe </a>
-                    started to read
-                    <a href="#">Luke, I am your...</a>
+            {% for feed in user_feed %}
+                <div class="profile-activity clearfix">
+                    <div>
+                        {{ feed.get_picture|safe }}
+                        {{ feed.get_message|safe }}
 
-                    <div class="time">
-                        <i class="icon-time bigger-110"></i>
-                        an hour ago
+                        <div class="time">
+                            <i class="icon-time bigger-110"></i>
+                            {{ feed.get_elapsed|timesince }}
+                        </div>
+                    </div>
+
+                    <div class="tools action-buttons">
+                        <a href="#" class="red">
+                            <i class="icon-remove bigger-125"></i>
+                        </a>
                     </div>
                 </div>
-
-                <div class="tools action-buttons">
-                    <a href="#" class="blue">
-                        <i class="icon-pencil bigger-125"></i>
-                    </a>
-
-                    <a href="#" class="red">
-                        <i class="icon-remove bigger-125"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="profile-activity clearfix">
-                <div>
-                    <img class="pull-left" alt="Susan Smith's avatar" src="{% static "avatars/avatar1.png" %}"/>
-                    <a class="user" href="#"> Susan Smith </a>
-
-                    is now friends with Alex Doe.
-                    <div class="time">
-                        <i class="icon-time bigger-110"></i>
-                        2 hours ago
-                    </div>
-                </div>
-
-                <div class="tools action-buttons">
-                    <a href="#" class="blue">
-                        <i class="icon-pencil bigger-125"></i>
-                    </a>
-
-                    <a href="#" class="red">
-                        <i class="icon-remove bigger-125"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="profile-activity clearfix">
-                <div>
-                    <i class="pull-left thumbicon icon-ok btn-success no-hover"></i>
-                    <a class="user" href="#"> Alex Doe </a>
-                    joined
-                    <a href="#">Barddo Publisher</a>
-
-                    group.
-                    <div class="time">
-                        <i class="icon-time bigger-110"></i>
-                        5 hours ago
-                    </div>
-                </div>
-
-                <div class="tools action-buttons">
-                    <a href="#" class="blue">
-                        <i class="icon-pencil bigger-125"></i>
-                    </a>
-
-                    <a href="#" class="red">
-                        <i class="icon-remove bigger-125"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="profile-activity clearfix">
-                <div>
-                    <i class="pull-left thumbicon icon-picture btn-info no-hover"></i>
-                    <a class="user" href="#"> Alex Doe </a>
-                    won a <a href="#">Artist On Fire</a> badge.
-
-                    <div class="time">
-                        <i class="icon-time bigger-110"></i>
-                        5 hours ago
-                    </div>
-                </div>
-
-                <div class="tools action-buttons">
-                    <a href="#" class="blue">
-                        <i class="icon-pencil bigger-125"></i>
-                    </a>
-
-                    <a href="#" class="red">
-                        <i class="icon-remove bigger-125"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="profile-activity clearfix">
-                <div>
-                    <i class="pull-left thumbicon icon-key btn-info no-hover"></i>
-                    Barddo welcomes <a class="user" href="#"> Alex Doe </a>! Aho! Aho! Aho!
-
-                    <div class="time">
-                        <i class="icon-time bigger-110"></i>
-                        16 hours ago
-                    </div>
-                </div>
-
-                <div class="tools action-buttons">
-                    <a href="#" class="blue">
-                        <i class="icon-pencil bigger-125"></i>
-                    </a>
-
-                    <a href="#" class="red">
-                        <i class="icon-remove bigger-125"></i>
-                    </a>
-                </div>
-            </div>
+            {% endfor %}
         </div>
-        <!-- /span -->
     </div>
-    <!-- /row -->
 
     <div class="space-12"></div>
 
@@ -134,4 +35,3 @@
         </a>
     </div>
 </div>
-<!-- /#feed -->
