@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Barddo Main Site\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-18 12:27-0300\n"
-"PO-Revision-Date: 2014-05-18 12:39-0300\n"
+"POT-Creation-Date: 2014-05-19 22:34-0300\n"
+"PO-Revision-Date: 2014-05-19 22:38-0300\n"
 "Last-Translator: Israel Crisanto <israel.crisanto@gmail.com>\n"
 "Language-Team: Barddo Team <israel.crisanto@gmail.com>\n"
 "Language: pt\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Brazil"
 msgstr "Brasil"
 
-#: accounts/views.py:40
+#: accounts/views.py:41
 msgid "User not provided"
 msgstr "Usuário não fornecido"
 
@@ -30,20 +30,20 @@ msgstr "Usuário não fornecido"
 msgid "Barddo Login"
 msgstr "Entrar no Barddo"
 
-#: accounts/templates/login-modal.html:15
+#: accounts/templates/login-modal.html:18
 msgid "Login with Facebook"
 msgstr "Entrar usando o Facebook"
 
-#: accounts/templates/login-modal.html:23
+#: accounts/templates/login-modal.html:31
 msgid "Login with Google"
 msgstr "Entrar usando o Google+"
 
-#: accounts/templates/login-modal.html:48
+#: accounts/templates/login-modal.html:61
 #: publishing/templates/create_group_modal.html:98
 msgid "Error"
 msgstr "Erro"
 
-#: accounts/templates/login-modal.html:48
+#: accounts/templates/login-modal.html:61
 msgid "Sorry an error occured:"
 msgstr "Sinto muito, um erro ocorreu:"
 
@@ -158,10 +158,6 @@ msgstr "Deixou de seguir %(name)s!"
 #, python-format
 msgid "Following %(name)s!"
 msgstr "Seguindo %(name)s!"
-
-#: accounts/templates/profile_fragments/_activity.html:133
-msgid "Scroll for more"
-msgstr "Ver mais"
 
 #: accounts/templates/profile_fragments/_followers.html:11
 #: accounts/templates/profile_fragments/_following.html:11
@@ -1039,6 +1035,28 @@ msgstr "Quem é o autor?"
 msgid "Sending changes to the server"
 msgstr "Enviando alterações para o servidor"
 
+#: feed/models.py:49
+msgid ""
+"<b>Barddo</b> welcomes <a class=\"user\" href=\"{}\">{}</a>! Aho! Aho! Aho!"
+msgstr ""
+"<b>Barddo</b> saúda <a class=\"user\" href=\"{}\">{}</a>! Aho! Aho! Aho!"
+
+#: feed/models.py:57
+msgid ""
+"<a class=\"user\" href=\"{}\">{}</a> started to follow <a class=\"user\" "
+"href=\"{}\">{}</a>."
+msgstr ""
+"<a class=\"user\" href=\"{}\">{}</a> começou a seguir <a class=\"user\" href="
+"\"{}\">{}</a>."
+
+#: feed/models.py:65
+msgid ""
+"<a class=\"user\" href=\"{}\">{}</a> stopped to follow <a class=\"user\" "
+"href=\"{}\">{}</a>."
+msgstr ""
+"<a class=\"user\" href=\"{}\">{}</a> parou de seguir <a class=\"user\" href="
+"\"{}\">{}</a>."
+
 #: feedback/ajax.py:27
 msgid "Success"
 msgstr "Sucesso!"
@@ -1085,11 +1103,11 @@ msgstr "Cancelar"
 msgid "Send"
 msgstr "Enviar"
 
-#: follow/models.py:142
+#: follow/models.py:148
 msgid "Following Relationship"
 msgstr "Relacionamento com Seguidor"
 
-#: follow/models.py:143
+#: follow/models.py:149
 msgid "Following Relationships"
 msgstr "Relacionamento com Seguidores"
 
@@ -1206,7 +1224,7 @@ msgstr "Trabalhos"
 msgid "People"
 msgstr "Pessoas"
 
-#: templates/main_template.html:9
+#: templates/main_template.html:11
 msgid "Barddo - Because we like art"
 msgstr "Barddo - Porque nós gostamos de arte"
 
@@ -1241,3 +1259,6 @@ msgstr "Área de publicação"
 #: templates/main_template/navbar.html:73
 msgid "Logout"
 msgstr "Sair"
+
+#~ msgid "Scroll for more"
+#~ msgstr "Ver mais"
