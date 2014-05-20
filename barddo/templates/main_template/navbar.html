@@ -70,13 +70,6 @@
                             </li>
 
                             <!--  Bigger screens  -->
-                            {% if user.is_publisher %}
-                                <li class="dashboard-link hidden-xs">
-                                    <a href="{% url "core.dashboard" %}">
-                                        <i class="icon-dashboard"></i>Dashboard
-                                    </a>
-                                </li>
-                            {% endif %}
                             <li class="dropdown light-blue hidden-xs">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <img class="nav-user-photo" src="{{ MEDIA_URL }}{{ avatar }}" alt="{% trans "User Photo" %}"/>
@@ -97,6 +90,14 @@
                                     </li>
                                 </ul>
                             </li>
+
+                            {% if user.is_publisher %}
+                                <li class="dashboard-link hidden-xs">
+                                    <a href="{% url "core.dashboard" %}">
+                                        <i class="icon-dashboard"></i>Dashboard
+                                    </a>
+                                </li>
+                            {% endif %}
 
                         </ul>
                     </div>
