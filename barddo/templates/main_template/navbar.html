@@ -42,19 +42,42 @@
 
             {% if user.is_authenticated %}
                 <div class="collapse navbar-collapse" id="barddo-navbar">
-                    <div class="pull-right" role="navigation">
+                    <div role="navigation">
 
-                        <ul class="nav navbar-nav nav ace-nav">
-
+                        <ul class="nav navbar-nav ace-nav">
+                            <!--  Smaller screens  -->
                             {% if user.is_publisher %}
-                                <li class="dashboard-link"> {# hidden-xs  #}
+                                <li class="dashboard-link visible-xs">
                                     <a href="{% url "core.dashboard" %}">
                                         <i class="icon-dashboard"></i>{% trans "Dashboard" %}
                                     </a>
                                 </li>
                             {% endif %}
+                            <li class="visible-xs">
+                                <a href="{% url 'account.editable_profile' %}">
+                                    <i class="icon-user"></i>Profile
+                                </a>
+                            </li>
+                            <li class="visible-xs">
+                                <a href="{% url 'publishing.landpage' %}">
+                                    <i class="icon-book"></i>Publisher Area
+                                </a>
+                            </li>
+                            <li class="visible-xs">
+                                <a href="{% url 'logout' %}">
+                                    <i class="icon-off"></i>Logout
+                                </a>
+                            </li>
 
-                            <li class="dropdown light-blue">
+                            <!--  Bigger screens  -->
+                            {% if user.is_publisher %}
+                                <li class="dashboard-link hidden-xs">
+                                    <a href="{% url "core.dashboard" %}">
+                                        <i class="icon-dashboard"></i>Dashboard
+                                    </a>
+                                </li>
+                            {% endif %}
+                            <li class="dropdown light-blue hidden-xs">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <img class="nav-user-photo" src="{{ MEDIA_URL }}{{ avatar }}" alt="{% trans "User Photo" %}"/>
                                     <span class="user-info"><small>{% trans "Welcome," %}</small>
