@@ -1376,7 +1376,6 @@ blockquote.pull-right {
     border-left: 1px solid #DDD;
     padding: 0;
     position: relative;
-    float: left !important;
     /* different colors */
 
 }
@@ -1933,8 +1932,8 @@ blockquote.pull-right {
 @media only screen and (max-width: 320px) {
     .breadcrumb {
         margin-left: 36px;
-    }
 }
+    }
 
 .container.main-container .breadcrumbs.breadcrumbs-fixed {
     left: auto !important;

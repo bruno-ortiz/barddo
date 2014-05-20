@@ -11,10 +11,17 @@ from social.backends import google
 from social.backends.facebook import FacebookOAuth2
 from django.conf import settings
 
+from signals import account_created
 from accounts.models import BarddoUserProfile
 
 
 GOOGLE_PLUS_BASE_URL = 'https://www.googleapis.com/plus/v1/people/{}'
+
+
+def post_user_creation(backend, user, response, is_new=False, **kwargs):
+    if is_new:
+        account_created.send(user, user=user)
+        # TODO: send a welcome message
 
 
 def get_avatar(backend, user, response, is_new=False, **kwargs):

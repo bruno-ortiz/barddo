@@ -70,6 +70,13 @@ def deploy():
 
 
 @task
+def reset_db():
+    require("service")
+    print(_green("Reseting database..."))
+    reset()
+
+
+@task
 def full_deploy():
     """
     Restart the server applying new migrations
@@ -145,3 +152,10 @@ def apply_migrations():
     print(_green("Applying migrations"))
     with cd(env.app):
         sudo(env.python + ' manage.py migrate --all --settings=' + env.settings, user=env.user)
+
+
+def reset():
+    print(_green("Reseting database"))
+    with cd(env.app):
+        sudo(env.python + ' manage.py reset_db --settings=' + env.settings, user=env.user)
+        sudo(env.python + ' manage.py syncdb --settings=' + env.settings, user=env.user)

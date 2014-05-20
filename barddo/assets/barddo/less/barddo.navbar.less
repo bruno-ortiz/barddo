@@ -42,7 +42,7 @@
   font-size: 24px;
   text-shadow: none;
 
-  @media (max-width: (@screen-xs-max + 20)) {
+  @media (max-width: (@screen-sm-max)) {
     margin: 5px 10px 5px 10px !important;
     background: url('../../images/logo-icon.png') no-repeat;
     padding-left: 0px;
@@ -51,7 +51,7 @@
     height: 29px;
   }
 
-  @media (min-width: (@screen-xs + 20)) {
+  @media (min-width: (@screen-sm)) {
     margin: 5px 5px 5px 0px !important;
     background: url('../../images/logo.png') no-repeat;
     width: 110px;
@@ -99,4 +99,14 @@
 
 .navbar-max-width {
   width: 100%;
+}
+
+@media (min-width: (@screen-sm)) {
+  .navbar-nav {
+    float: right !important;
+  }
+
+  .navbar-nav > li {
+    float: right !important;
+  }
 }
