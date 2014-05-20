@@ -88,10 +88,10 @@ class FollowingManager(models.Manager):
             relation.save()
             bust_cache('followers', followee.pk)
             bust_cache('following', follower.pk, followee.__class__.__name__)
+
+            start_follow.send(self, follower=follower, followed=followee)
         except IntegrityError as e:
             raise AlreadyExistsError("User '{}' already follows '{}'".format((follower, followee)), e)
-
-        start_follow.send(self, follower=follower, followed=followee)
 
         return relation
 
