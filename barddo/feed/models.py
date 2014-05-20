@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.db.models.query import QuerySet
 from django.db.models import Q
-from django.contrib.contenttypes.models import ContentType
+from polymorphic import PolymorphicModel
 
 
 class FeedManager(models.Manager):
@@ -17,32 +17,11 @@ class FeedManager(models.Manager):
 
 class FeedQuerySet(QuerySet):
     def feed_for_user(self, user):
-        return self.filter(Q(user=user) | Q(action__target=user)).select_related("action__target__profile").order_by("-created")
+        return self.filter(Q(user=user) | Q(action__target=user)).select_related("user_profile").prefetch_related("action__target__profile").order_by("-created")
 
 
-class FeedAction(models.Model):
+class FeedAction(PolymorphicModel):
     target = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True)
-    real_type = models.ForeignKey(ContentType, editable=False)
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.real_type = self._get_real_type()
-        super(FeedAction, self).save(*args, **kwargs)
-
-    def _get_real_type(self):
-        return ContentType.objects.get_for_model(type(self))
-
-    def cast(self):
-        return self.real_type.get_object_for_this_type(pk=self.pk)
-
-    def get_picture(self):
-        return self.cast().get_picture()
-
-    def get_message(self, user):
-        return self.cast().get_message(user)
-
-    class Meta:
-        pass
 
 
 class UserFeed(models.Model):

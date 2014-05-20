@@ -228,6 +228,7 @@ THIRD_PARTY_APPS = (
     'imagekit',
     'easy_thumbnails',
     'analytical',
+    'polymorphic',
 )
 
 # Apps specific for this project go here.
