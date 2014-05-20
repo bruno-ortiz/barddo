@@ -26,7 +26,7 @@ def main():
 
 
 @task
-def beta():
+def production():
     env.service = "barddo"
     env.settings = "barddo.settings.production"
     env.project = fabconf['PROJECT_PATH.BETA']

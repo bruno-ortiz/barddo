@@ -13,7 +13,7 @@ fabconf['APP_PATH'] = ''
 fabconf['PYTHON_PATH'] = ''
 fabconf['PIP_PATH'] = ''
 
-fabconf['BRANCH'] = 'develop'
+fabconf['BRANCH'] = 'default'
 fabconf['PROJECT_PATH.BETA'] = '/opt/barddo/source'
 fabconf['APP_PATH.BETA'] = '/opt/barddo/source/barddo'
 fabconf['PYTHON_PATH.BETA'] = '/opt/barddo/venv/bin/python'
