@@ -20,3 +20,4 @@ django-imagekit
 pilkit
 mysql-python
 django-analytical==0.17.1
+django-polymorphic==0.5.5

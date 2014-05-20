@@ -5,7 +5,10 @@ from dajaxice.core import dajaxice_autodiscover, dajaxice_config
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from shards.core import shards_autodiscover
+import feed.receivers
 
+
+feed.receivers.register()
 
 shards_autodiscover()
 
