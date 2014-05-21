@@ -1,0 +1,9 @@
+[
+    {
+        "model": "payments.PaymentMethod",
+        "pk": 1,
+        "fields": {
+            "name": "Paypal"
+        }
+    }
+]
