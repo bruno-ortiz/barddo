@@ -90,7 +90,6 @@ class UserProfileView(LoginRequiredMixin, SingleObjectMixin, ProfileAwareView):
         else:
             profile_user = current_user
 
-        raise ArithmeticError()
         following = Follow.objects.following(profile_user, BarddoUser)
         followers = Follow.objects.followers(profile_user)
         context = {'user': current_user,
