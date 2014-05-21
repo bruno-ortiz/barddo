@@ -53,7 +53,7 @@ def get_birth_date(backend, user, response, is_new=False, **kwargs):
     if is_new:
         birth_date = None
         if backend.__class__ is FacebookOAuth2:
-            birth_date = datetime.datetime.strptime(response['birthday'], '%m/%d/%Y').date()
+            birth_date = datetime.datetime.strptime(response.get('birthday', '2014-01-17'), '%m/%d/%Y').date()
         elif backend.__class__ is google.GooglePlusAuth:
             user_id = response['id']
             data = __get_google_plus_data(GOOGLE_PLUS_BASE_URL.format(user_id), response['access_token'])
