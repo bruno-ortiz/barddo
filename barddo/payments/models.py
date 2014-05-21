@@ -15,14 +15,6 @@ class Payment(models.Model):
     method = models.ForeignKey(PaymentMethod)
 
 
-class Item(models.Model):
-    class Meta:
-        unique_together = ('work', 'price')
-
-    work = models.OneToOneField('core.Work')
-    price = models.DecimalField(max_digits=6, decimal_places=2)
-
-
 class PurchaseStatus(models.Model):
     name = models.CharField(_('Purchase Status'), max_length=20)
 
@@ -33,3 +25,12 @@ class Purchase(models.Model):
     payment = models.OneToOneField(Payment)
     buyer = models.ForeignKey(AUTH_USER)
     status = models.ForeignKey(PurchaseStatus)
+
+
+class Item(models.Model):
+    class Meta:
+        unique_together = ('purchase', 'work')
+
+    purchase = models.ForeignKey(Purchase)
+    work = models.OneToOneField('core.Work')
+    price = models.DecimalField(max_digits=6, decimal_places=2)
