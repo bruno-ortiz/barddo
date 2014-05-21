@@ -14,47 +14,69 @@ from django.views.generic import View
 from .exceptions import UserNotProvided
 from accounts.models import BarddoUser
 from follow.models import Follow
+from feed.models import UserFeed
 
 
-__author__ = 'bruno'
-
-
-def logout_user(request):
-    logout(request)
-    return HttpResponseRedirect(reverse('core.views.index'))
-
-
+##
+# Mixins
+##
 class LoginRequiredMixin(object):
+    """
+    Mixin to be used on login required views composition
+    """
+
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
 
 
 class UserContextMixin(ContextMixin):
-    def get_context_data(self, **kwargs):
+    """
+    Mixin to be used on views that need to provide current authenticated user
+    """
 
+    def get_context_data(self, **kwargs):
         context = {}
         if 'user' not in kwargs:
             raise UserNotProvided(_('User not provided'))
+
         user = kwargs['user']
         if user.is_authenticated():
             context['avatar'] = user.profile.avatar
             context['username'] = user.username
+
         context.update(kwargs)
         return super(UserContextMixin, self).get_context_data(**context)
 
 
 class ProfileAwareView(UserContextMixin, TemplateResponseMixin, View):
+    """
+    To be used on views that require user profile on it' composition
+    """
+
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**{'user': request.user})
         context.update(kwargs)
         return super(ProfileAwareView, self).render_to_response(context)
 
 
+##
+# Authentication Views
+##
+class LogoutView(View):
+    """
+    User logout from system
+    """
+
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return HttpResponseRedirect(reverse('core.views.index'))
+
+
 class UserProfileView(LoginRequiredMixin, SingleObjectMixin, ProfileAwareView):
     """
-        This view is responsible for rendering the user profile,
-        it makes some verifcations, to avoid that a user edits another user profile.
+    This view is responsible for rendering the user profile,
+    it makes some verifications, to avoid that a user edits another user profile.
     """
     template_name = 'profile.html'
     model = BarddoUser
@@ -67,6 +89,7 @@ class UserProfileView(LoginRequiredMixin, SingleObjectMixin, ProfileAwareView):
             self.editable = profile_user.id == current_user.id
         else:
             profile_user = current_user
+
         following = Follow.objects.following(profile_user, BarddoUser)
         followers = Follow.objects.followers(profile_user)
         context = {'user': current_user,
@@ -74,7 +97,8 @@ class UserProfileView(LoginRequiredMixin, SingleObjectMixin, ProfileAwareView):
                    'viewing_user_profile': profile_user.profile,
                    'editable': self.editable,
                    'following': following,
-                   'followers': followers}
+                   'followers': followers,
+                   'user_feed': UserFeed.objects.feed_for_user(profile_user)}
         if current_user != profile_user:
             follows = Follow.objects.follows(current_user, profile_user)
             context['follows'] = follows
@@ -82,21 +106,30 @@ class UserProfileView(LoginRequiredMixin, SingleObjectMixin, ProfileAwareView):
         return super(UserProfileView, self).render_to_response(context)
 
 
-profile = UserProfileView.as_view()
-editable_profile = UserProfileView.as_view(editable=True)
+##
+# Ajax views
+##
+_is_true = lambda value: bool(value) and value.lower() not in ('false', '0')
 
 
 class UsernamesAjaxView(LoginRequiredMixin, View):
+    """
+    Handle username matching for auto complete
+    """
+
+    SUGGESTIONS_LIMIT = 10
+
     def get(self, request, *args, **kwargs):
         query_paramter = escape(request.GET['q'])
-        should_ignore_owner = is_true(request.GET.get('ignore_owner', "true"))
+        should_ignore_owner = _is_true(request.GET.get('ignore_owner', "true"))
         user_query_set = BarddoUser.objects.username_startswith(query_paramter)
+
         if should_ignore_owner:
             user_query_set = user_query_set.differs_from(request.user.id)
-        users = user_query_set[:10]
+
+        users = user_query_set[:self.SUGGESTIONS_LIMIT]
         user_data = map(lambda x: {'id': x.id, 'username': x.username}, users)
         json_data = json.dumps(user_data)
         return HttpResponse(json_data, content_type='application/json')
 
 
-is_true = lambda value: bool(value) and value.lower() not in ('false', '0')

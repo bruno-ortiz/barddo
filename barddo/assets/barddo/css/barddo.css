@@ -152,7 +152,7 @@ footer {
 }
 
 #loginModal .modal-dialog {
-    width: 30%;
+    max-width: 400px;
 }
 
 .profile-user-col {
@@ -219,4 +219,8 @@ footer {
     max-height: 64px;
     height: 64px;
     border-radius: 0;
+}
+
+.g-signin {
+    margin-top: 10px;
 }

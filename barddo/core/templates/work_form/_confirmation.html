@@ -1,8 +1,11 @@
 {% load staticfiles %}
+{% load i18n %}
 <div class="center">
-    <h3 class="green">Congratulations, your work were created!</h3>
+    <h3 class="green">{% trans "Congratulations, your work were created!" %}</h3>
 
     <div class="center"><img src="{% static "images/art/reader.png" %}"/></div>
-    If you want, on the next step you will be able to upload it's files! If you don't, there's no problem! You can do it
-    later.
+    {% blocktrans %}
+        If you want, on the next step you will be able to upload it's files! If you don't, there's no problem! You can do it
+        later.
+    {% endblocktrans %}
 </div>

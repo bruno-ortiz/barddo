@@ -19,4 +19,5 @@ easy-thumbnails
 django-imagekit
 pilkit
 mysql-python
-paypalrestsdk
+paypalrestsdkdjango-analytical==0.17.1
+django-polymorphic==0.5.5

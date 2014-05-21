@@ -1,22 +1,22 @@
+{% load i18n %}
 <div id="new-collection-wizard" class="modal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <!-- HEADER -->
             <div class="modal-header" data-target="#modal-step-contents">
                 <ul class="wizard-steps">
                     <li data-target="#modal-start" class="active">
                         <span class="step">1</span>
-                        <span class="title">Name Verification</span>
+                        <span class="title">{% trans "Name Verification" %}</span>
                     </li>
 
                     <li data-target="#modal-details">
                         <span class="step">2</span>
-                        <span class="title">Details</span>
+                        <span class="title">{% trans "Details" %}</span>
                     </li>
 
                     <li data-target="#modal-confirmation">
                         <span class="step">3</span>
-                        <span class="title">Confirmation</span>
+                        <span class="title">{% trans "Confirmation" %}</span>
                     </li>
                 </ul>
             </div>
@@ -40,17 +40,17 @@
             <div class="modal-footer wizard-actions">
                 <button id="collection-prev" class="btn btn-sm btn-prev">
                     <i class="icon-arrow-left"></i>
-                    Prev
+                    {% trans "Prev" %}
                 </button>
 
                 <button id="collection-next" class="btn btn-success btn-sm btn-next">
-                    Next
+                    {% trans "Next" %}
                     <i class="icon-arrow-right icon-on-right"></i>
                 </button>
 
                 <button class="btn btn-danger btn-sm pull-left" data-dismiss="modal">
                     <i class="icon-remove"></i>
-                    Close
+                    {% trans "Close" %}
                 </button>
             </div>
         </div>

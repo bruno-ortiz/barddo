@@ -7,10 +7,9 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
+from signals import start_follow, stop_follow
 from .exceptions import AlreadyExistsError
 
-
-__author__ = 'bruno'
 
 AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
 
@@ -47,7 +46,9 @@ def bust_cache(cache_type, user_pk, model_class=None):
 
 
 class FollowingManager(models.Manager):
-    """ Following manager """
+    """
+    Following manager
+    """
 
     def followers(self, obj):
         """ Return a list of all followers """
@@ -62,7 +63,9 @@ class FollowingManager(models.Manager):
         return followers
 
     def following(self, user, followee_class):
-        """ Return a list of all objects of the followee_class the given user follows"""
+        """
+        Return a list of all objects of the followee_class the given user follows
+        """
         key = cache_key('following', user.pk, followee_class.__name__)
         following = cache.get(key)
 
@@ -75,7 +78,9 @@ class FollowingManager(models.Manager):
         return following
 
     def add_follower(self, follower, followee):
-        """ Create 'follower' follows 'followee' relationship """
+        """
+        Create 'follower' follows 'followee' relationship
+        """
         if follower == followee:
             raise ValidationError("Users cannot follow themselves")
         relation = Follow(follower=follower, followee=followee)
@@ -83,25 +88,34 @@ class FollowingManager(models.Manager):
             relation.save()
             bust_cache('followers', followee.pk)
             bust_cache('following', follower.pk, followee.__class__.__name__)
+
+            start_follow.send(self, follower=follower, followed=followee)
         except IntegrityError as e:
             raise AlreadyExistsError("User '{}' already follows '{}'".format((follower, followee)), e)
 
         return relation
 
     def remove_follower(self, follower, followee):
-        """ Remove 'follower' follows 'followee' relationship """
+        """
+        Remove 'follower' follows 'followee' relationship
+        """
         try:
             content_type = ContentType.objects.get_for_model(followee.__class__)
             rel = Follow.objects.get(follower=follower, content_type=content_type, object_id=followee.pk)
             rel.delete()
             bust_cache('followers', followee.pk)
             bust_cache('following', follower.pk, followee.__class__.__name__)
+
+            stop_follow.send(self, follower=follower, unfollowed=followee)
+
             return True
         except Follow.DoesNotExist:
             return False
 
     def follows(self, follower, followee):
-        """ Does follower follow followee? Smartly uses caches if exists """
+        """
+        Does follower follow followee? Smartly uses caches if exists
+        """
         followers = cache.get(cache_key('following', follower.pk, followee.__class__.__name__))
         following = cache.get(cache_key('followers', followee.pk))
 
@@ -119,7 +133,9 @@ class FollowingManager(models.Manager):
 
 
 class Follow(models.Model):
-    """ Model to represent Following relationships """
+    """
+    Model to represent Following relationships
+    """
     follower = models.ForeignKey(AUTH_USER_MODEL, related_name='user_following')
     created = models.DateTimeField(default=timezone.now)
     content_type = models.ForeignKey(ContentType)

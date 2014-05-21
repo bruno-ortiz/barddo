@@ -1,10 +1,9 @@
 # coding=utf-8
 from django.test import TestCase
+
 from accounts.models import BarddoUser
 from follow.models import Follow
 from publishing.models import PublishingHouse
-
-__author__ = 'bruno'
 
 
 class FollowingManagerTest(TestCase):
@@ -91,8 +90,9 @@ class FollowingManagerTest(TestCase):
             Follow.objects.following(self.beavis, PublishingHouse)
 
     def test_can_unfollow(self):
-        """Neste teste Butthead compartilham o mesmo id no banco de dados, porém são de tipos diferentes,
-           assim eu testo que o método de unfollow leva em consideração o tipo também.
+        """
+        Neste teste Butthead compartilham o mesmo id no banco de dados, porém são de tipos diferentes,
+        assim eu testo que o método de unfollow leva em consideração o tipo também.
         """
         Follow.objects.add_follower(follower=self.beavis, followee=self.butthead)
         Follow.objects.add_follower(follower=self.beavis, followee=self.hakusensha)

@@ -1,6 +1,7 @@
 {% extends 'main_template.html' %}
 {% load static %}
 {% load compress %}
+{% load i18n %}
 
 {% block header %}
     <link rel="stylesheet" href="{% static "css/jquery-ui-1.10.3.custom.min.css" %}"/>
@@ -9,34 +10,27 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-    <!-- TODO: extract this logic to a template tag, so the breadcrumbs are calculated by the system -->
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
-            <a href="{% url "core.index" %}">Home</a>
+            <a href="{% url "core.index" %}">{% trans "Home" %}</a>
         </li>
-        <li class="active">Profile</li>
-    </ul><!-- .breadcrumb -->
+        <li class="active">{% trans "Profile" %}</li>
+    </ul>
 {% endblock %}
 
 {% block content %}
 
     <div class="page-content">
 
-        <!-- /.page-header -->
-
         <div class="row">
             <div class="col-xs-12">
-                <!-- PAGE CONTENT BEGINS -->
-
-                {#    <div class="hr dotted"></div>#}
-
                 <div>
                     <div id="user-profile-1" class="user-profile row">
                         <div class="col-xs-12 col-sm-3 center profile-user-col">
                             <div>
                                 <span class="profile-picture">
-                                    <img id="avatar" class="editable img-responsive" alt="Alex's Avatar"
+                                    <img id="avatar" class="editable img-responsive" alt="{% trans "User Avatar" %}"
                                          src="{{ MEDIA_URL }}{{ viewing_user_profile.avatar }}"/>
                                 </span>
 
@@ -56,10 +50,10 @@
                                     <button id="follow-button" class="btn btn-sm btn-block btn-success">
                                         {% if follows %}
                                             <i class="icon-minus-sign bigger-120"></i>
-                                            <span class="bigger-110">Unfollow</span>
+                                            <span class="bigger-110">{% trans "Unfollow" %}</span>
                                         {% else %}
                                             <i class="icon-plus-sign bigger-120"></i>
-                                            <span class="bigger-110">Follow</span>
+                                            <span class="bigger-110">{% trans "Follow" %}</span>
                                         {% endif %}
                                     </button>
                                 </div>
@@ -76,7 +70,7 @@
                                         <span>{{ followers|length }}</span>
                                     </span>
                                     <br/>
-                                    Followers
+                                    {% blocktrans count followers|length as total_followers %}Follower{% plural %}Followers{% endblocktrans %}
                                 </div>
 
                                 <div class="grid2">
@@ -85,7 +79,7 @@
                                         <span>{{ following|length }}</span>
                                     </span>
                                     <br/>
-                                    Following
+                                    {% trans "Following" %}
                                 </div>
                             </div>
 
@@ -95,12 +89,12 @@
 
                             <a href="#" class="btn btn-sm btn-block btn-primary">
                                 <i class="icon-envelope-alt bigger-110"></i>
-                                <span class="bigger-110">Send a message</span>
+                                <span class="bigger-110">{% trans "Send a message" %}</span>
                             </a>
 
                             <a href="#" class="btn btn-sm btn-block btn-danger">
                                 <i class="icon-warning-sign bigger-110"></i>
-                                <span class="bigger-110">Report user</span>
+                                <span class="bigger-110">{% trans "Report User" %}</span>
                             </a>
                         </div>
 
@@ -109,7 +103,7 @@
                             <div class="space-12"></div>
                             <div class="profile-user-info profile-user-info-striped">
                                 <div class="profile-info-row">
-                                    <div class="profile-info-name"> Username</div>
+                                    <div class="profile-info-name"> {% trans "Username" %}</div>
 
                                     <div class="profile-info-value">
                                         <span class="editable" id="id_username">{{ viewing_user.username }}</span>
@@ -117,7 +111,7 @@
                                 </div>
 
                                 <div class="profile-info-row">
-                                    <div class="profile-info-name"> Location</div>
+                                    <div class="profile-info-name"> {% trans "Location" %}</div>
 
                                     <div class="profile-info-value">
                                         <i class="icon-map-marker light-orange bigger-110"></i>
@@ -125,8 +119,18 @@
                                     </div>
                                 </div>
 
+                                {% if editable %}
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">{% trans "Site Language" %} <i class="icon-lock" data-toggle="tooltip" data-placement="right" title="{% trans "Not displayed publicly" %}"></i></div>
+
+                                        <div class="profile-info-value">
+                                            <span class="editable" id="id_language">{{ viewing_user_profile.get_language_display }}</span>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
                                 <div class="profile-info-row birthday">
-                                    <div class="profile-info-name"> Birthday</div>
+                                    <div class="profile-info-name"> {% trans "Birthday" %}</div>
 
                                     <div class="profile-info-value">
                                         <span class="editable"
@@ -135,7 +139,7 @@
                                 </div>
 
                                 <div class="profile-info-row">
-                                    <div class="profile-info-name"> Gender</div>
+                                    <div class="profile-info-name"> {% trans "Gender" %}</div>
 
                                     <div class="profile-info-value">
                                         <span class="editable"
@@ -143,14 +147,17 @@
                                     </div>
                                 </div>
 
-                                <div class="profile-info-row">
-                                    <div class="profile-info-name"> Email</div>
+                                {% if editable %}
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">{% trans "Email" %} <i class="icon-lock" data-toggle="tooltip" data-placement="right" title="{% trans "Not displayed publicly" %}"></i></div>
 
-                                    <div class="profile-info-value">
-                                        <span class="editable" id="id_email">{{ viewing_user.email }}</span>
+                                        <div class="profile-info-value">
+                                            <span class="editable" id="id_email">{{ viewing_user.email }}</span>
+                                        </div>
                                     </div>
-                                </div>
+                                {% endif %}
                             </div>
+
 
                             <div class="space-20"></div>
 
@@ -160,21 +167,21 @@
                                     <li class="active">
                                         <a data-toggle="tab" href="#feed">
                                             <i class="orange icon-rss bigger-120"></i>
-                                            Activity Feed
+                                            {% trans "Activity Feed" %}
                                         </a>
                                     </li>
 
                                     <li>
                                         <a data-toggle="tab" href="#following">
                                             <i class="blue icon-star bigger-120"></i>
-                                            Following
+                                            {% trans "Following" %}
                                         </a>
                                     </li>
 
                                     <li>
                                         <a data-toggle="tab" href="#followers">
                                             <i class="green icon-bullseye bigger-120"></i>
-                                            Followers
+                                            {% trans "Followers" %}
                                         </a>
                                     </li>
                                 </ul>
@@ -196,14 +203,9 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- PAGE CONTENT ENDS -->
             </div>
-            <!-- /.col -->
         </div>
-        <!-- /.row -->
     </div>
-
 {% endblock %}
 
 {% block page_specific_javascript %}
@@ -220,6 +222,11 @@
 
 {% block bottom_page %}
     <script type="text/javascript">
+    jQuery(function ($) {
+        $("*[data-toggle='tooltip']").tooltip();
+
+    });
+
     {% if  editable %}
         jQuery(function ($) {
             //editables on first profile page
@@ -333,6 +340,30 @@
                 }
             });
 
+            var languages = [];
+            {# TODO: programatic way #}
+            var lang_dict = {"English": "en", "Português": "pt"};
+            $.each(lang_dict, function (k, v) {
+                languages.push({id: v, text: k});
+            });
+            var language = $('#id_language');
+            var current_language = lang_dict[language.text()];
+            language.editable({
+                type: 'select2',
+                name: 'language',
+                source: languages,
+                value: current_language,
+                success: function (response, newValue) {
+                    if (current_language != newValue) {
+                        current_language = newValue;
+                        Dajaxice.accounts.edit_profile(Dajax.process, {
+                            'model': 'BarddoUserProfile',
+                            '_id':{{ viewing_user_profile.id }},
+                            'field': 'language',
+                            'value': newValue});
+                    }
+                }
+            });
 
             // *** editable avatar *** //
             try {//ie8 throws some harmless exception, so let's catch it
@@ -349,7 +380,7 @@
                     value: null,
                     image: {
                         //specify ace file input plugin's options here
-                        btn_choose: 'Change Avatar',
+                        btn_choose: '{% trans "Change Avatar" %}',
                         droppable: true,
                         /**
                          //this will override the default before_change that only accepts image files
@@ -365,14 +396,14 @@
                             if (last_gritter) $.gritter.remove(last_gritter);
                             if (code == 1) {//file format error
                                 last_gritter = $.gritter.add({
-                                    title: 'File is not an image!',
-                                    text: 'Please choose a jpg|gif|png image!',
+                                    title: '{% trans "File is not an image!" %}',
+                                    text: '{% trans "Please choose a jpg|gif|png image!" %}',
                                     class_name: 'gritter-error gritter-center'
                                 });
                             } else if (code == 2) {//file size rror
                                 last_gritter = $.gritter.add({
-                                    title: 'File too big!',
-                                    text: 'Image size should not exceed 100Kb!',
+                                    title: '{%  trans "File is too big!" %}',
+                                    text: '{% trans "Image size should not exceed 100Kb!" %}',
                                     class_name: 'gritter-error gritter-center'
                                 });
                             }
@@ -413,8 +444,8 @@
 
                             if (last_gritter) $.gritter.remove(last_gritter);
                             last_gritter = $.gritter.add({
-                                title: 'Avatar Updated!',
-                                text: 'Uploading to server can be easily implemented. A working example is included with the template.',
+                                title: '{%  trans "Avatar Updated!" %}',
+                                text: '{%  trans "Your new avatar is ready!" %}',
                                 class_name: 'gritter-info gritter-center'
                             });
 
@@ -445,7 +476,8 @@
             var follower_tag = $('#num-followers').find('span').find('span');
             var num_followers = parseInt(follower_tag.text().trim(), 10);
             follower_tag.html(num_followers - 1);
-            gritter_feedback('{{ viewing_user.first_name }} unfollowed!')
+            gritter_feedback(
+                    '{% blocktrans with viewing_user.first_name as name %}{{ name }} unfollowed!{% endblocktrans %}')
         }
 
         function user_followed_callback() {
@@ -455,7 +487,8 @@
             var follower_tag = $('#num-followers').find('span').find('span');
             var num_followers = parseInt(follower_tag.text().trim(), 10);
             follower_tag.html(num_followers + 1);
-            gritter_feedback('{{ viewing_user.first_name }} followed!')
+            gritter_feedback(
+                    '{% blocktrans with viewing_user.first_name as name %}Following {{ name }}!{% endblocktrans %}')
         }
 
         function gritter_feedback(msg) {

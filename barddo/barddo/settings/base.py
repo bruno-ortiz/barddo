@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*
 from os import path
 import sys
 from os.path import dirname, abspath, basename
+
 
 ########## PATH CONFIGURATION
 # Absolute filesystem path to the Django project directory:
@@ -28,7 +30,10 @@ TEMPLATE_DEBUG = DEBUG
 ########## MANAGER CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
-    ('Barddo Team', 'barddoteam@gmail.com'),
+    ('Israel Crisanto', 'israel.crisanto@gmail.com'),
+    ('Bruno Ortiz', 'brunortiz11@gmail.com'),
+    ('Jose Almada', 'jovial1991@hotmail.com'),
+    ('Rafael Ortiz', 'rafa_ortiz11@hotmail.com')
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
@@ -58,7 +63,16 @@ TIME_ZONE = 'America/Sao_Paulo'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
+
+LANGUAGES = (
+    ('pt', 'Português'),
+    ('en', 'English'),
+)
+
+LOCALE_PATHS = (
+    path.normpath(path.join(SITE_ROOT, 'locale')),
+)
 
 SITE_ID = 1
 
@@ -173,6 +187,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'accounts.middleware.LocaleMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -215,6 +230,8 @@ THIRD_PARTY_APPS = (
     'endless_pagination',
     'imagekit',
     'easy_thumbnails',
+    'analytical',
+    'polymorphic',
     'paypalrestsdk',
 )
 
@@ -229,6 +246,7 @@ LOCAL_APPS = (
     'search',
     'follow',
     'payments',
+    'feed',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -270,16 +288,23 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
         },
+        'file': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'verbose',
+            'filename': '/tmp/barddo.log',
+            'maxBytes': 1024000,
+            'backupCount': 3,
+        },
     },
     'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
+        'django': {
+            'handlers': ['file', 'mail_admins'],
             'level': 'ERROR',
             'propagate': True,
         },
 
         'dajaxice': {
-            'handlers': ['console', 'mail_admins'],
+            'handlers': ['file', 'mail_admins'],
             'level': 'INFO',
             'propagate': True,
         },
@@ -342,13 +367,14 @@ SOCIAL_AUTH_PIPELINE = (
     'accounts.pipelines.get_birth_date',
     'accounts.pipelines.get_gender',
     'accounts.pipelines.get_country',
+    'accounts.pipelines.post_user_creation',
 )
 
 SOCIAL_AUTH_LOGIN_URL = '/'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/login-error'
 
-FACEBOOK_EXTENDED_PERMISSIONS = ['email', 'user_about_me', 'user_birthday', 'user_location']
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_about_me', 'user_birthday', 'user_location']
 
 ########## Image crop settings
 THUMBNAIL_ALIASES = {
@@ -360,3 +386,35 @@ THUMBNAIL_ALIASES = {
 }
 
 ########## End of image crop settings
+
+########## Analytics Services Settigns
+# Disabled tracking ips
+ANALYTICAL_INTERNAL_IPS = ['0.0.0.0', '127.0.0.1', 'localhost']
+
+# Do the best to identify users on tracking tools that can handle this
+ANALYTICAL_AUTO_IDENTIFY = True
+
+# Url: http://clicky.com/
+# Description: A real time analytics site
+# Type: free tier
+CLICKY_SITE_ID = '100737229'
+
+# Url: https://www.crazyegg.com
+# Description: A PAID heat map, we are on trial, started ad 17/05/2014 and ends at 17/06/2014
+# Type: Paid Yearly
+CRAZY_EGG_ACCOUNT_NUMBER = '00230100'
+
+# Url: https://www.google.com/analytics
+# Description: Google Analytics Services
+# Type: free tier
+GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-50511116-2'
+GOOGLE_ANALYTICS_SITE_SPEED = True
+
+# Url: https://www.woopra.com
+# Description: Another real time analytics, but better at showing what the user is doing
+# Type: trial
+WOOPRA_DOMAIN = 'barddo.com'
+########## End of analytics Services Settigns
+
+LOGIN_URL = "/"
+LOGOUT_URL = "/logout"
