@@ -89,6 +89,7 @@ class UserProfileView(LoginRequiredMixin, SingleObjectMixin, ProfileAwareView):
             self.editable = profile_user.id == current_user.id
         else:
             profile_user = current_user
+
         following = Follow.objects.following(profile_user, BarddoUser)
         followers = Follow.objects.followers(profile_user)
         context = {'user': current_user,
