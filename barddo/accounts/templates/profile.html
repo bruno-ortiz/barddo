@@ -119,13 +119,15 @@
                                     </div>
                                 </div>
 
-                                <div class="profile-info-row">
-                                    <div class="profile-info-name"> {% trans "Site Language" %}</div>
+                                {% if editable %}
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">{% trans "Site Language" %} <i class="icon-lock" data-toggle="tooltip" data-placement="right" title="{% trans "Not displayed publicly" %}"></i></div>
 
-                                    <div class="profile-info-value">
-                                        <span class="editable" id="id_language">{{ viewing_user_profile.get_language_display }}</span>
+                                        <div class="profile-info-value">
+                                            <span class="editable" id="id_language">{{ viewing_user_profile.get_language_display }}</span>
+                                        </div>
                                     </div>
-                                </div>
+                                {% endif %}
 
                                 <div class="profile-info-row birthday">
                                     <div class="profile-info-name"> {% trans "Birthday" %}</div>
@@ -145,14 +147,17 @@
                                     </div>
                                 </div>
 
-                                <div class="profile-info-row">
-                                    <div class="profile-info-name"> {% trans "Email" %}</div>
+                                {% if editable %}
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">{% trans "Email" %} <i class="icon-lock" data-toggle="tooltip" data-placement="right" title="{% trans "Not displayed publicly" %}"></i></div>
 
-                                    <div class="profile-info-value">
-                                        <span class="editable" id="id_email">{{ viewing_user.email }}</span>
+                                        <div class="profile-info-value">
+                                            <span class="editable" id="id_email">{{ viewing_user.email }}</span>
+                                        </div>
                                     </div>
-                                </div>
+                                {% endif %}
                             </div>
+
 
                             <div class="space-20"></div>
 
@@ -217,6 +222,11 @@
 
 {% block bottom_page %}
     <script type="text/javascript">
+    jQuery(function ($) {
+        $("*[data-toggle='tooltip']").tooltip();
+
+    });
+
     {% if  editable %}
         jQuery(function ($) {
             //editables on first profile page

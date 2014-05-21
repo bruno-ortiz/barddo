@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Barddo Main Site\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-19 22:34-0300\n"
-"PO-Revision-Date: 2014-05-19 22:38-0300\n"
+"POT-Creation-Date: 2014-05-20 23:33-0300\n"
+"PO-Revision-Date: 2014-05-20 23:34-0300\n"
 "Last-Translator: Israel Crisanto <israel.crisanto@gmail.com>\n"
 "Language-Team: Barddo Team <israel.crisanto@gmail.com>\n"
 "Language: pt\n"
@@ -54,7 +54,7 @@ msgstr "Sinto muito, um erro ocorreu:"
 msgid "Home"
 msgstr "Início"
 
-#: accounts/templates/profile.html:18 templates/main_template/navbar.html:66
+#: accounts/templates/profile.html:18 templates/main_template/navbar.html:82
 msgid "Profile"
 msgstr "Perfil"
 
@@ -76,7 +76,7 @@ msgid_plural "Followers"
 msgstr[0] "Seguidor"
 msgstr[1] "Seguidores"
 
-#: accounts/templates/profile.html:82 accounts/templates/profile.html:172
+#: accounts/templates/profile.html:82 accounts/templates/profile.html:177
 msgid "Following"
 msgstr "Seguindo"
 
@@ -96,65 +96,69 @@ msgstr "Usuário"
 msgid "Location"
 msgstr "Localização"
 
-#: accounts/templates/profile.html:123
+#: accounts/templates/profile.html:124
 msgid "Site Language"
 msgstr "Idioma do Site"
 
-#: accounts/templates/profile.html:131
+#: accounts/templates/profile.html:124 accounts/templates/profile.html:152
+msgid "Not displayed publicly"
+msgstr "Não é exibido publicamente"
+
+#: accounts/templates/profile.html:133
 msgid "Birthday"
 msgstr "Aniversário"
 
-#: accounts/templates/profile.html:140
+#: accounts/templates/profile.html:142
 msgid "Gender"
 msgstr "Gênero"
 
-#: accounts/templates/profile.html:149
+#: accounts/templates/profile.html:152
 #: core/templates/help/modal-discover.html:195 feedback/models.py:10
 msgid "Email"
 msgstr "Email"
 
-#: accounts/templates/profile.html:165
+#: accounts/templates/profile.html:170
 msgid "Activity Feed"
 msgstr "Mural de Atividade"
 
-#: accounts/templates/profile.html:179
+#: accounts/templates/profile.html:184
 msgid "Followers"
 msgstr "Seguidores"
 
-#: accounts/templates/profile.html:373
+#: accounts/templates/profile.html:383
 msgid "Change Avatar"
 msgstr "Mudar Avatar"
 
-#: accounts/templates/profile.html:389
+#: accounts/templates/profile.html:399
 msgid "File is not an image!"
 msgstr "O arquivo não é uma imagem!"
 
-#: accounts/templates/profile.html:390
+#: accounts/templates/profile.html:400
 msgid "Please choose a jpg|gif|png image!"
 msgstr "Por favor, escolha uma imagem do tipo jpg, gif ou png!"
 
-#: accounts/templates/profile.html:395
+#: accounts/templates/profile.html:405
 msgid "File is too big!"
 msgstr "O arquivo é muito grande!"
 
-#: accounts/templates/profile.html:396
+#: accounts/templates/profile.html:406
 msgid "Image size should not exceed 100Kb!"
 msgstr "O tamanho da imagem não pode ser maior que 100kb!\t\t"
 
-#: accounts/templates/profile.html:437
+#: accounts/templates/profile.html:447
 msgid "Avatar Updated!"
 msgstr "Avatar atualizado!"
 
-#: accounts/templates/profile.html:438
+#: accounts/templates/profile.html:448
 msgid "Your new avatar is ready!"
 msgstr "Seu novo avatar foi configurado!"
 
-#: accounts/templates/profile.html:470
+#: accounts/templates/profile.html:480
 #, python-format
 msgid "%(name)s unfollowed!"
 msgstr "Deixou de seguir %(name)s!"
 
-#: accounts/templates/profile.html:481
+#: accounts/templates/profile.html:491
 #, python-format
 msgid "Following %(name)s!"
 msgstr "Seguindo %(name)s!"
@@ -273,18 +277,6 @@ msgstr "Dashboard"
 #: core/templates/artist_dashboard.html:43
 msgid "Create a Collection"
 msgstr "Criar uma Coleção"
-
-#: core/templates/artist_dashboard.html:50
-msgid "Statistics"
-msgstr "Estatísticas"
-
-#: core/templates/artist_dashboard.html:57
-msgid "Bookmarks"
-msgstr "Favoritos"
-
-#: core/templates/artist_dashboard.html:64
-msgid "Archived Items"
-msgstr "Itens Arquivados"
 
 #: core/templates/artist_dashboard.html:77
 msgid "Uh Oh!"
@@ -694,11 +686,11 @@ msgstr ""
 "projeto e ajude-nos a torná-lo um sucesso!\n"
 "                             "
 
-#: core/templates/docs/help.html:15 templates/main_template/footer.html:9
+#: core/templates/docs/help.html:15
 msgid "Help"
 msgstr "Ajuda"
 
-#: core/templates/docs/terms.html:15 templates/main_template/footer.html:11
+#: core/templates/docs/terms.html:15
 msgid "Terms of Use"
 msgstr "Termos de Uso"
 
@@ -1244,21 +1236,30 @@ msgstr "Procure pessoas, coleções, mangás, quadrinhos etc..."
 msgid "Login"
 msgstr "Entrar"
 
-#: templates/main_template/navbar.html:59
+#: templates/main_template/navbar.html:75
 msgid "User Photo"
 msgstr "Foto do usuário"
 
-#: templates/main_template/navbar.html:60
+#: templates/main_template/navbar.html:76
 msgid "Welcome,"
 msgstr "Bem-vindo,"
 
-#: templates/main_template/navbar.html:69
+#: templates/main_template/navbar.html:85
 msgid "Publisher Area"
 msgstr "Área de publicação"
 
-#: templates/main_template/navbar.html:73
+#: templates/main_template/navbar.html:89
 msgid "Logout"
 msgstr "Sair"
+
+#~ msgid "Statistics"
+#~ msgstr "Estatísticas"
+
+#~ msgid "Bookmarks"
+#~ msgstr "Favoritos"
+
+#~ msgid "Archived Items"
+#~ msgstr "Itens Arquivados"
 
 #~ msgid "Scroll for more"
 #~ msgstr "Ver mais"
