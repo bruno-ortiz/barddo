@@ -3,6 +3,8 @@ from base import *
 
 ########## DEBUG CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
+from payments.paypal.processor import PaypalProcessor
+
 DEBUG = True
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
@@ -78,7 +80,14 @@ SOCIAL_AUTH_GOOGLE_PLUS_SECRET = 'VWrV9x7s6Xxsr058StR6G09Q'
 
 COMPRESS_ENABLED = True
 
-#paypal
+##
+#Paypal
+##
 PAYPAL_MODE = 'sandbox'
-PAYPAL_CLIENT_ID = 'Ad4ZlhDICH9h8LIFyiyGra8FcujLGQpfw-YLHUCe69DNsophD7FAiTiDOsMa'
-PAYPAL_CLIENT_SECRET = 'EAJ5-xDt5CNf5ACDl7ZufVQTzviTxAD1KsqgJAvF6-XPvaH26kA8I-LBFAPR'
+PAYPAL_CLIENT_ID = 'AfvhkBD1emgnIkcWR-IhH8C5OKeUBrn70Ndw5YHK3vTgBz_IxjAo-rlGv6FK'
+PAYPAL_CLIENT_SECRET = 'ECdhBBCrVxQJCA05hWEVDmvr40-J6UmSh-6Jv3p8HMJAshnlWkPUDWmVIdDR'
+
+
+PAYMENT_METHOD_PROCESSORS = {
+    1:  PaypalProcessor
+}

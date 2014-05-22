@@ -11,7 +11,8 @@ class PaymentMethod(models.Model):
 
 class Payment(models.Model):
     code = models.CharField(max_length=30)
-    date = models.DateField(db_index=True)
+    creation_date = models.DateField(db_index=True)
+    settled_date = models.DateField(db_index=True)
     method = models.ForeignKey(PaymentMethod)
 
 
@@ -22,7 +23,7 @@ class PurchaseStatus(models.Model):
 class Purchase(models.Model):
     date = models.DateField(db_index=True)
     total = models.DecimalField(max_digits=10, decimal_places=2)
-    payment = models.OneToOneField(Payment)
+    payment = models.OneToOneField(Payment, null=True)
     buyer = models.ForeignKey(AUTH_USER)
     status = models.ForeignKey(PurchaseStatus)
 
