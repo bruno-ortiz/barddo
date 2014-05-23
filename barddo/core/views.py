@@ -17,6 +17,7 @@ from .models import Collection, Work
 from .exceptions import InvalidFileUploadError, ChangeOnObjectNotOwnedError
 from accounts.views import ProfileAwareView, LoginRequiredMixin
 from publishing.views import publisher_landpage
+from rating.models import Rating, user_likes
 
 
 class IndexView(ProfileAwareView):
@@ -425,3 +426,20 @@ class HelpView(ProfileAwareView):
         context = {}
         context.update(kwargs)
         return super(HelpView, self).get_context_data(**context)
+
+
+class WorkPageView(LoginRequiredMixin, ProfileAwareView):
+    template_name = 'work_page/work_page.html'
+
+    def get(self, request, work_id, *args, **kwargs):
+        work = Work.objects.get(id=work_id)
+        voters = Rating.objects.filter(work__id=work_id).select_related("user")
+
+        context = self.get_context_data(**{'user': request.user})
+        context["work"] = work
+        context["voted"] = user_likes(request.user, work_id)
+        context["voters"] = voters
+
+        context.update(kwargs)
+
+        return super(WorkPageView, self).render_to_response(context)

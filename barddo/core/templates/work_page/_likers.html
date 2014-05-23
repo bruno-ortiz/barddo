@@ -1,0 +1,27 @@
+{% load static %}
+{% load i18n %}
+<div id="likers" class="tab-pane active">
+    <div class="profile-users clearfix">
+        {% for rating in voters %}
+            <div class="itemdiv memberdiv">
+                <div class="inline position-relative">
+                    <div class="user">
+                        <a href="{{ rating.user.user_url }}">
+                            <img src="{% get_media_prefix %}{{ rating.user.profile.avatar }}"
+                                 alt="{% blocktrans with rating.user.first_name as name %}{{ name }}'s avatar{% endblocktrans %}"/>
+                        </a>
+                    </div>
+
+                    <div class="body">
+                        <div class="name">
+                            <a href="{{ rating.user.user_url }}">
+                                <span class="user-status status-online"></span>
+                                {{ rating.user.get_full_name }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
