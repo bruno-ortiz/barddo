@@ -3,7 +3,6 @@ from base import *
 
 ########## DEBUG CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
-from payments.paypal.processor import PaypalProcessor
 
 DEBUG = True
 
@@ -86,8 +85,3 @@ COMPRESS_ENABLED = True
 PAYPAL_MODE = 'sandbox'
 PAYPAL_CLIENT_ID = 'AfvhkBD1emgnIkcWR-IhH8C5OKeUBrn70Ndw5YHK3vTgBz_IxjAo-rlGv6FK'
 PAYPAL_CLIENT_SECRET = 'ECdhBBCrVxQJCA05hWEVDmvr40-J6UmSh-6Jv3p8HMJAshnlWkPUDWmVIdDR'
-
-
-PAYMENT_METHOD_PROCESSORS = {
-    1:  PaypalProcessor
-}

@@ -10,9 +10,9 @@ class PaymentMethod(models.Model):
 
 
 class Payment(models.Model):
-    code = models.CharField(max_length=30)
-    creation_date = models.DateField(db_index=True)
-    settled_date = models.DateField(db_index=True)
+    code = models.CharField(max_length=50)
+    creation_date = models.DateField(db_index=True, null=False)
+    settled_date = models.DateField(db_index=True, null=True)
     method = models.ForeignKey(PaymentMethod)
 
 
@@ -32,6 +32,6 @@ class Item(models.Model):
     class Meta:
         unique_together = ('purchase', 'work')
 
-    purchase = models.ForeignKey(Purchase)
+    purchase = models.ForeignKey(Purchase, related_name='items')
     work = models.OneToOneField('core.Work')
     price = models.DecimalField(max_digits=6, decimal_places=2)

@@ -1,11 +1,12 @@
 # coding=utf-8
-from debug_toolbar import settings
 from payments.exceptions import PaymentError
 
 from payments.models import Purchase
+from payments.paypal.processor import PaypalProcessor
 
-# Melhor deixar no settings ou registrar aqui mesmo?
-PAYMENT_METHOD_PROCESSORS = getattr(settings, 'PAYMENT_METHOD_PROCESSORS')
+PAYMENT_METHOD_PROCESSORS = {
+    1: PaypalProcessor
+}
 
 
 class PaymentProcessor:
@@ -16,7 +17,7 @@ class PaymentProcessor:
     def __init__(self):
         pass
 
-    def create_payment(self, purchase, payment_method):
+    def create_payment(self, purchase, payment_method, **kwargs):
         """
             Delega a um processor uma requisição para criar um pagamento.
         """
@@ -26,18 +27,18 @@ class PaymentProcessor:
 
         processor = self.get_processor(payment_method)
 
-        payment = processor.create_payment(purchase)
+        payment = processor.create_payment(purchase, **kwargs)
         purchase.payment = payment
         purchase.save()  # Não sei se é bom fazer isso
 
         return payment
 
-    def execute_payment(self, payment):
+    def execute_payment(self, payment, **kwargs):
         """
             Delega a um processor uma requisição para executar um pagamento.
         """
         processor = self.get_processor(payment.method)
-        processor.execute_payment(payment)
+        processor.execute_payment(payment, **kwargs)
 
     def update_payment_information(self, purchase):
         """
