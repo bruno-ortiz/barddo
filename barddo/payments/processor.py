@@ -9,13 +9,10 @@ PAYMENT_METHOD_PROCESSORS = {
 }
 
 
-class PaymentProcessor:
+class PaymentProcessor(object):
     """
         Responsável por delegar chamadas aos processors específicos de cada método de pagamento
     """
-
-    def __init__(self):
-        pass
 
     def create_payment(self, purchase, payment_method, **kwargs):
         """

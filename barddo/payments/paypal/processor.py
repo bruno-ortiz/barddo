@@ -63,7 +63,8 @@ class PaypalProcessor(object):
         if paypal_payment.execute({"payer_id": payer_id}):
             payment.settled_date = datetime.datetime.now()
             payment.purchase.status = PurchaseStatus.objects.get(pk=self.PURCHASE_COMPLETED_ID)
-        raise PaymentError(_('It was not possible to confirm your payment'))
+        else:
+            raise PaymentError(_('It was not possible to confirm your payment'))
 
     def get_payment_status(self, payment):
         pass
