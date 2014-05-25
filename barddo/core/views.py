@@ -288,7 +288,7 @@ class HelpView(ProfileAwareView):
         return super(HelpView, self).get_context_data(**context)
 
 
-class WorkPageView(LoginRequiredMixin, ProfileAwareView):
+class WorkPageView(ProfileAwareView):
     template_name = 'work_page/work_page.html'
 
     def get(self, request, work_id, *args, **kwargs):
@@ -299,7 +299,7 @@ class WorkPageView(LoginRequiredMixin, ProfileAwareView):
 
         context = self.get_context_data(**{'user': request.user})
         context["work"] = work
-        context["voted"] = user_likes(request.user, work_id)
+        context["voted"] = user_likes(request.user, work_id) if request.user.is_authenticated() else False
         context["voters"] = voters
 
         from redis_metrics.models import R

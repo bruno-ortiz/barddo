@@ -61,14 +61,14 @@
                     <button data-work-id="{{ work.id }}" type="button" class="btn-reader btn btn-minier btn-success">
                         <i class="icon-zoom-in"></i> {% trans "Read Now!" %}
                     </button>
-                    <a href="#" class="btn btn-minier btn-info">
+                    <a href="{% url "core.work.detail" work.id %}" class="btn btn-minier btn-info">
                         <i class="icon-book"></i> {% trans "Details" %}
                     </a>
                 {% else %}
                     <button type="button" class="login-required btn btn-minier btn-success">
                         <i class="icon-zoom-in"></i> {% trans "Read Now!" %}
                     </button>
-                    <a href="#" class="btn btn-minier btn-info">
+                    <a href="{% url "core.work.detail" work.id %}" class="btn btn-minier btn-info">
                         <i class="icon-book"></i> {% trans "Details" %}
                     </a>
                 {% endif %}

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Barddo Main Site\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-20 23:33-0300\n"
-"PO-Revision-Date: 2014-05-20 23:34-0300\n"
+"POT-Creation-Date: 2014-05-25 03:01-0300\n"
+"PO-Revision-Date: 2014-05-25 03:01-0300\n"
 "Last-Translator: Israel Crisanto <israel.crisanto@gmail.com>\n"
 "Language-Team: Barddo Team <israel.crisanto@gmail.com>\n"
 "Language: pt\n"
@@ -50,6 +50,7 @@ msgstr "Sinto muito, um erro ocorreu:"
 #: accounts/templates/profile.html:16 core/templates/artist_dashboard.html:24
 #: core/templates/docs/about-us.html:13 core/templates/docs/help.html:13
 #: core/templates/docs/terms.html:13
+#: core/templates/work_page/work_page.html:18
 #: publishing/templates/publisher_landpage.html:20
 msgid "Home"
 msgstr "Início"
@@ -165,67 +166,70 @@ msgstr "Seguindo %(name)s!"
 
 #: accounts/templates/profile_fragments/_followers.html:11
 #: accounts/templates/profile_fragments/_following.html:11
+#: core/templates/work_page/_likers.html:11
+#: core/templates/work_page/_readers.html:11
 #, python-format
 msgid "%(name)s's avatar"
 msgstr "Avatar de %(name)s"
 
-#: core/models.py:63
+#: core/models.py:64
 msgid "Description"
 msgstr "Descrição"
 
-#: core/models.py:90
+#: core/models.py:91
 msgid "On Going"
 msgstr "Em Andamento"
 
-#: core/models.py:91
+#: core/models.py:92
 msgid "Completed"
 msgstr "Completo"
 
-#: core/models.py:92
+#: core/models.py:93
 msgid "Stopped"
 msgstr "Paralizado"
 
-#: core/models.py:95
+#: core/models.py:96
 msgid "Collection Name"
 msgstr "Nome da Coleção"
 
-#: core/models.py:96 core/models.py:172
+#: core/models.py:97 core/models.py:173
+#: core/templates/work_page/work_page.html:106
 msgid "Summary"
 msgstr "Sumário"
 
-#: core/models.py:98
+#: core/models.py:99
 msgid "Slug"
 msgstr "Slug"
 
-#: core/models.py:99
+#: core/models.py:100
 msgid "Status"
 msgstr "Estado"
 
-#: core/models.py:102
+#: core/models.py:103
 msgid "Start Date"
 msgstr "Data de Início"
 
-#: core/models.py:103
+#: core/models.py:104
 msgid "End Date"
 msgstr "Data de Fim"
 
-#: core/models.py:106 core/models.py:173
+#: core/models.py:107 core/models.py:174
 msgid "Cover Art"
 msgstr "Arte de Capa"
 
-#: core/models.py:171
+#: core/models.py:172 core/templates/work_page/work_page.html:98
 msgid "Title"
 msgstr "Título"
 
-#: core/models.py:177
+#: core/models.py:178
 msgid "Item Number"
 msgstr "Número"
 
-#: core/models.py:178
+#: core/models.py:179
 msgid "Total Pages"
 msgstr "Total de Páginas"
 
-#: core/models.py:179
+#: core/models.py:180
 msgid "Publish Date"
 msgstr "Data de Publicação"
 
@@ -234,7 +238,8 @@ msgid "Name Verification"
 msgstr "Verificação de Nome"
 
 #: core/templates/_new_collection_modal.html:14
-#: core/templates/_new_work_modal.html:9
+#: core/templates/_new_work_modal.html:9 core/templates/work_element.html:65
+#: core/templates/work_element.html:72
 msgid "Details"
 msgstr "Detalhes"
 
@@ -357,17 +362,14 @@ msgid "Relax, read, share and help artists to have the highlight they deserve!"
 msgstr ""
 "Relaxe, leia, compartilhe e ajude artistas a terem o destaque que merecem!"
 
-#: core/templates/work_element.html:40
+#: core/templates/work_element.html:42
 msgid "Artist Photo"
 msgstr "Foto do Artista"
 
-#: core/templates/work_element.html:60 core/templates/work_element.html:67
+#: core/templates/work_element.html:62 core/templates/work_element.html:69
+#: core/templates/work_page/work_page.html:148
 msgid "Read Now!"
 msgstr "Ler Agora!"
-
-#: core/templates/work_element.html:63 core/templates/work_element.html:70
-msgid "Share"
-msgstr "Compartilhar"
 
 #: core/templates/collection_form/_confirmation.html:6
 msgid "Congrats!"
@@ -1027,6 +1029,66 @@ msgstr "Quem é o autor?"
 msgid "Sending changes to the server"
 msgstr "Enviando alterações para o servidor"
 
+#: core/templates/work_page/work_page.html:9
+msgid " - On Barddo"
+msgstr " - No Barddo"
+
+#: core/templates/work_page/work_page.html:21
+#: search/templates/page_template.html:28
+msgid "Works"
+msgstr "Trabalhos"
+
+#: core/templates/work_page/work_page.html:38
+msgid "Work Cover"
+msgstr "Capa da Obra"
+
+#: core/templates/work_page/work_page.html:49
+#: core/templates/work_page/work_page.html:200
+msgid "Unvote"
+msgstr "Retirar Voto"
+
+#: core/templates/work_page/work_page.html:52
+#: core/templates/work_page/work_page.html:68
+#: core/templates/work_page/work_page.html:189
+msgid "Vote"
+msgid_plural "Votes"
+msgstr[0] "Votar"
+msgstr[1] "Votos"
+
+#: core/templates/work_page/work_page.html:77
+msgid "View"
+msgid_plural "Views"
+msgstr[0] "Visualização"
+msgstr[1] "Visualizações"
+
+#: core/templates/work_page/work_page.html:87
+msgid "Report Work"
+msgstr "Denunciar Obra"
+
+#: core/templates/work_page/work_page.html:114
+msgid "Published"
+msgstr "Publicado"
+
+#: core/templates/work_page/work_page.html:122
+msgid "Author"
+msgstr "Autor"
+
+#: core/templates/work_page/work_page.html:136
+msgid "Share"
+msgstr "Compartilhar"
+
+#: core/templates/work_page/work_page.html:160
+msgid "Who Liked"
+msgstr "Quem Gostou"
+
+#: core/templates/work_page/work_page.html:194
+msgid "Work unvoted!"
+msgstr "Voto descadastrado!"
+
+#: core/templates/work_page/work_page.html:205
+msgid "Work voted!"
+msgstr "Voto cadastrado!"
+
 #: feed/models.py:49
 msgid ""
 "<b>Barddo</b> welcomes <a class=\"user\" href=\"{}\">{}</a>! Aho! Aho! Aho!"
@@ -1196,21 +1258,17 @@ msgstr "Você já é um editor!"
 msgid "Create a publishing group"
 msgstr "Criar um grupo de publicação"
 
-#: search/views.py:39
+#: search/views.py:36
 msgid "No results found for your query."
 msgstr "Nenhum resultado encontrado para sua pesquisa."
 
-#: search/views.py:53
+#: search/views.py:50
 msgid "Invalid search."
 msgstr "Pesquisa Inválida"
 
 #: search/templates/page_template.html:21
 msgid "Collections"
 msgstr "Coleções"
-
-#: search/templates/page_template.html:28
-msgid "Works"
-msgstr "Trabalhos"
 
 #: search/templates/page_template.html:35
 msgid "People"

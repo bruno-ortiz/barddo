@@ -5,8 +5,11 @@
 {% load thumbnail %}
 {% load social_share %}
 
+{% block title %} Barddo - {{ work.title }} - #{{ work.unit_count }} {% endblock %}
+
 {% block header %}
-    {% render_opengraph_header work work.title|add:" - On Barddo" work.cover %}
+    {% trans " - On Barddo" as suffix %}
+    {% render_opengraph_header work work.title|add:suffix work.cover %}
     <link rel="stylesheet" href="{% static "css/bottom.css" %}"/>
 {% endblock %}
 
@@ -42,15 +45,22 @@
                             <div class="space-6"></div>
 
                             <div class="profile-contact-info">
-                                <button id="vote-button" class="btn btn-sm btn-block btn-purple">
-                                    {% if voted %}
-                                        <i class="icon-minus-sign bigger-120"></i>
-                                        <span class="bigger-110">{% trans "Unvote" %}</span>
-                                    {% else %}
+                                {% if user.is_authenticated %}
+                                    <button id="vote-button" class="btn btn-sm btn-block btn-purple">
+                                        {% if voted %}
+                                            <i class="icon-minus-sign bigger-120"></i>
+                                            <span class="bigger-110">{% trans "Unvote" %}</span>
+                                        {% else %}
+                                            <i class="icon-plus-sign bigger-120"></i>
+                                            <span class="bigger-110">{% trans "Vote" %}</span>
+                                        {% endif %}
+                                    </button>
+                                {% else %}
+                                    <button class="btn btn-sm btn-block btn-purple login-required">
                                         <i class="icon-plus-sign bigger-120"></i>
                                         <span class="bigger-110">{% trans "Vote" %}</span>
-                                    {% endif %}
-                                </button>
+                                    </button>
+                                {% endif %}
                             </div>
 
                             <div class="space-6"></div>
@@ -142,10 +152,17 @@
                                     </ul>
                                 </div>
 
-                                <a id="read-button" href="#" class="btn btn-sm btn-success pull-right">
-                                    <i class="icon-zoom-in bigger-110"></i>
-                                    <span class="bigger-110">{% trans "Read Now!" %}</span>
-                                </a>
+                                {% if user.is_authenticated %}
+                                    <a id="read-button" href="#" class="btn btn-sm btn-success pull-right">
+                                        <i class="icon-zoom-in bigger-110"></i>
+                                        <span class="bigger-110">{% trans "Read Now!" %}</span>
+                                    </a>
+                                {% else %}
+                                    <a href="#" class="btn btn-sm btn-success pull-right login-required">
+                                        <i class="icon-zoom-in bigger-110"></i>
+                                        <span class="bigger-110">{% trans "Read Now!" %}</span>
+                                    </a>
+                                {% endif %}
 
                             </div>
 
@@ -215,27 +232,28 @@
         }
 
         $(document).ready(function () {
-            $('#vote-button').on('click', function () {
-                Dajaxice.rating.toggle_rating_work(Dajax.process, {
-                    'work_id':{{ work.id }}
+            {% if user.is_authenticated %}
+                $('#vote-button').on('click', function () {
+                    Dajaxice.rating.toggle_rating_work(Dajax.process, {
+                        'work_id':{{ work.id }}
+                    });
+                    $(this).prop('disabled', true);
+                    $(this).html('<i class="bigger-120 icon-spinner icon-spin white"></i><span class="bigger-110"></span>')
                 });
-                $(this).prop('disabled', true);
-                $(this).html('<i class="bigger-120 icon-spinner icon-spin white"></i><span class="bigger-110"></span>')
-            });
 
+                $(document).on("click", "#read-button", function () {
+                    Shards.reader(function (shard_id, shard_data, parent) {
+                        $(shard_id).remove();
+                        $(parent).append(shard_data);
 
-            $(document).on("click", "#read-button", function () {
-                Shards.reader(function (shard_id, shard_data, parent) {
-                    $(shard_id).remove();
-                    $(parent).append(shard_data);
+                        var views_tag = $('#view-count').find('span');
+                        var num_views = parseInt(views_tag.text().trim(), 0);
+                        views_tag.html(num_views + 1);
 
-                    var views_tag = $('#view-count').find('span');
-                    var num_views = parseInt(views_tag.text().trim(), 0);
-                    views_tag.html(num_views + 1);
-
-                    $(shard_id).modal('show');
-                }, {"work_id": {{ work.id }}});
-            });
+                        $(shard_id).modal('show');
+                    }, {"work_id": {{ work.id }}});
+                });
+            {% endif %}
         });
     </script>
 {% endblock %}
