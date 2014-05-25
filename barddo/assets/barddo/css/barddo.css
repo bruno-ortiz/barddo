@@ -224,3 +224,12 @@ footer {
 .g-signin {
     margin-top: 10px;
 }
+
+.cover-edit {
+    width: 500px;
+}
+
+#change-cover {
+    cursor: pointer;
+    cursor: hand;
+}

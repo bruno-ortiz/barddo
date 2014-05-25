@@ -7,9 +7,11 @@ from django.contrib.auth.decorators import login_required
 from pilkit.processors import Crop
 from PIL import Image
 from django.forms.models import model_to_dict
+from easy_thumbnails.files import get_thumbnailer
+from django.utils.translation import ugettext as _
 
 from core.models import Collection, Work
-from .forms import CollectionForm, WorkForm
+from .forms import CollectionForm, WorkForm, CoverOnlyWorkForm
 
 
 @login_required
@@ -120,6 +122,55 @@ def register_a_work(request):
         ajax.script('callback_create_work_error()')
         for field, errors in form.errors.items():
             print field, errors
+
+    return ajax.json()
+
+
+@login_required
+@dajaxice_register
+def change_work_cover(request):
+    """
+    Create a new artist work. The most important part here, is the cover parsing. We need to save the cover before
+    cropping it.
+
+    Note that we also set the collection cover to the new one.
+    """
+    ajax = Dajax()
+
+    id = escape(request.POST["id"])
+    work = Work.objects.get(pk=id)
+
+    if work.author != request.user:
+        ajax.script('gritter_error("{}")'.format(_("You are not the owner of this work!")))
+        return ajax.json()
+
+    form = CoverOnlyWorkForm(request.POST, request.FILES, instance=work)
+
+    # TODO: validate minimal image size
+    if form.is_valid():
+        changed_work = form.save()
+
+        x_ratio = changed_work.cover.width / float(request.POST["width"])
+        y_ratio = changed_work.cover.height / float(request.POST["height"])
+
+        print x_ratio, y_ratio
+
+        cx, cy = -float(request.POST["crop_x"]) * x_ratio, -float(request.POST["crop_y"]) * y_ratio
+        cw, ch = float(request.POST["crop_w"]) * x_ratio, float(request.POST["crop_h"]) * y_ratio
+
+        print cx, cy, cw, ch, request.POST["crop_w"], request.POST["crop_h"]
+
+        crop_image(changed_work, int(cx), int(cy), int(cw), int(ch))
+
+        # TODO: only set as collection cover when user opted for it
+        changed_work.collection.cover = changed_work.cover
+        changed_work.collection.save()
+
+        thumb = get_thumbnailer(changed_work.cover)["big_cover"]
+
+        ajax.script('callback_edit_cover_ok(' + str(changed_work.id) + ', "' + thumb.url + '")')
+    else:
+        ajax.script('callback_edit_cover_error()')
 
     return ajax.json()
 
