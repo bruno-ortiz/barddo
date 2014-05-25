@@ -232,3 +232,9 @@ footer {
 .work-buttons a.pull-right {
     margin-left: 10px;
 }
+
+.dropdown.social-share {
+    margin-left: 10px;
+    float: right;
+
+}

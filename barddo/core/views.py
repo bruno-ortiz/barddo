@@ -18,6 +18,7 @@ from .exceptions import InvalidFileUploadError, ChangeOnObjectNotOwnedError
 from accounts.views import ProfileAwareView, LoginRequiredMixin
 from publishing.views import publisher_landpage
 from rating.models import Rating, user_likes
+from core.signals import work_read
 
 
 class IndexView(ProfileAwareView):
@@ -130,6 +131,7 @@ class ReaderShard(TemplateResponseMixin, View):
 
     def post(self, request, work_id, *args, **kwargs):
         work = Work.objects.get(pk=work_id)
+        work_read.send(request.user, work=work)
 
         context = {
             "work": work
@@ -435,11 +437,17 @@ class WorkPageView(LoginRequiredMixin, ProfileAwareView):
         work = Work.objects.get(id=work_id)
         voters = Rating.objects.filter(work__id=work_id).select_related("user")
 
+        this_work_view_slug = "work_views_{}".format(work_id)
+
         context = self.get_context_data(**{'user': request.user})
         context["work"] = work
         context["voted"] = user_likes(request.user, work_id)
         context["voters"] = voters
 
+        from redis_metrics.models import R
+
+        r = R()
+        context["views"] = r.get_metric(this_work_view_slug)['year']
         context.update(kwargs)
 
         return super(WorkPageView, self).render_to_response(context)

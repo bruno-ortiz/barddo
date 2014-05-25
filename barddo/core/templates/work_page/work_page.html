@@ -3,8 +3,10 @@
 {% load compress %}
 {% load i18n %}
 {% load thumbnail %}
+{% load social_share %}
 
 {% block header %}
+    {% render_opengraph_header work work.title|add:" - On Barddo" work.cover %}
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -67,10 +69,10 @@
                                 <div class="grid2">
                                     <span class="bigger-175 green">
                                         <i class="icon-eye-open"></i>
-                                        <span>{{ following|length }}</span>
+                                        <span>{{ views }}</span>
                                     </span>
                                     <br/>
-                                    {% blocktrans count followers|length as total_followers %}View{% plural %}Views{% endblocktrans %}
+                                    {% blocktrans count views as total_views %}View{% plural %}Views{% endblocktrans %}
                                 </div>
                             </div>
 
@@ -126,10 +128,18 @@
                             <div class="space-6"></div>
 
                             <div class="work-buttons clearfix">
-                                <a href="#" class="btn btn-sm btn-primary pull-right">
-                                    <i class="icon-share bigger-110"></i>
-                                    <span class="bigger-110">{% trans "Share" %}</span>
-                                </a>
+                                <div class="dropdown social-share">
+                                    <a href="#" id="dropdownMenu1" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                                        <i class="icon-share bigger-110"></i>
+                                        <span class="bigger-110">{% trans "Share" %}</span>
+                                    </a>
+
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                        <li role="presentation">{% post_to_facebook work "Facebook" %}</li>
+                                        <li role="presentation">{% post_to_twitter work.title work "Twitter" %}</li>
+                                        <li role="presentation">{% post_to_gplus work "Google+" %}</li>
+                                    </ul>
+                                </div>
 
                                 <a id="read-button" href="#" class="btn btn-sm btn-success pull-right">
                                     <i class="icon-zoom-in bigger-110"></i>

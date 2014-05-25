@@ -7,7 +7,8 @@ class FeedbackAdmin(admin.ModelAdmin):
     """
     Enabling feedback on the admin
     """
-    pass
+    list_display = ('name', 'email', 'feedback', 'date')
+    ordering = ['-date']
 
 
 admin.site.register(Feedback, FeedbackAdmin)
