@@ -18,22 +18,25 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript" src="{% static "js/jquery.pikachoose.js" %}"></script>
+    <script type="text/javascript">
+        $("#readerModal").ready(function () {
+            $("#pikame").PikaChoose({
+                carousel: true,
+                autoPlay: false,
+                imageChanged: function () {
+                    $('#readerModal').scrollTop(0);
+                }
+            });
+
+            $("#readerModal").keydown(function (e) {
+                if (e.keyCode == '37') {
+                    $('#pikame').data('pikachoose').Prev();
+                } else if (e.keyCode == '39') {
+                    $('#pikame').data('pikachoose').Next();
+                }
+            });
+        });
+    </script>
 </div>
-<script type="text/javascript" src="{% static "js/jquery.pikachoose.js" %}"></script>
-<script type="text/javascript" src="{% static "js/jquery.jcarousel.min.js" %}"></script>
-<script type="text/javascript">
-    $("#pikame").PikaChoose({
-        carousel: true,
-        autoPlay: false,
-        imageChanged: function () {
-            $('#readerModal').scrollTop(0);
-        }
-    });
-    $("#readerModal").keydown(function (e) {
-        if (e.keyCode == '37') {
-            $('#pikame').data('pikachoose').Prev();
-        } else if (e.keyCode == '39') {
-            $('#pikame').data('pikachoose').Next();
-        }
-    });
-</script>
+

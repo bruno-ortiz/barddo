@@ -7,6 +7,7 @@
 
 {% block header %}
     {% render_opengraph_header work work.title|add:" - On Barddo" work.cover %}
+    <link rel="stylesheet" href="{% static "css/bottom.css" %}"/>
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -67,7 +68,7 @@
                                 </div>
 
                                 <div class="grid2">
-                                    <span class="bigger-175 green">
+                                    <span id="view-count" class="bigger-175 green">
                                         <i class="icon-eye-open"></i>
                                         <span>{{ views }}</span>
                                     </span>
@@ -177,14 +178,6 @@
             </div>
         </div>
     </div>
-
-
-{% endblock %}
-
-{% block page_specific_javascript %}
-    {% compress js %}
-
-    {% endcompress %}
 {% endblock %}
 
 {% block bottom_page %}
@@ -231,10 +224,15 @@
             });
 
 
-            $('#read-button').on('click', function () {
+            $(document).on("click", "#read-button", function () {
                 Shards.reader(function (shard_id, shard_data, parent) {
                     $(shard_id).remove();
                     $(parent).append(shard_data);
+
+                    var views_tag = $('#view-count').find('span');
+                    var num_views = parseInt(views_tag.text().trim(), 0);
+                    views_tag.html(num_views + 1);
+
                     $(shard_id).modal('show');
                 }, {"work_id": {{ work.id }}});
             });

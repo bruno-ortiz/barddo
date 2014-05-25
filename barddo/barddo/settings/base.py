@@ -369,12 +369,13 @@ SOCIAL_AUTH_PIPELINE = (
     'accounts.pipelines.get_birth_date',
     'accounts.pipelines.get_gender',
     'accounts.pipelines.get_country',
+    'accounts.pipelines.get_language',
     'accounts.pipelines.post_user_creation',
 )
 
 SOCIAL_AUTH_LOGIN_URL = '/'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
-SOCIAL_AUTH_LOGIN_ERROR_URL = '/login-error'
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/login-error'  # TODO: handle that
 
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_about_me', 'user_birthday', 'user_location']
 
