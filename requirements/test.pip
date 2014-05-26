@@ -20,3 +20,4 @@ pilkit
 fabric
 mysql-python
 django-jenkins
+mock

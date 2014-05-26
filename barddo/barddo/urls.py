@@ -5,10 +5,10 @@ from dajaxice.core import dajaxice_autodiscover, dajaxice_config
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from shards.core import shards_autodiscover
-import feed.receivers
+from barddo.receivers import receivers_autodiscover
 
 
-feed.receivers.register()
+receivers_autodiscover()
 
 shards_autodiscover()
 
@@ -31,6 +31,9 @@ urlpatterns = patterns(
 
     # Internationalization
     url(r'^i18n/', include('django.conf.urls.i18n')),
+
+    # Custom Metrics
+    # url(r'^metrics/', staff_member_required(include('redis_metrics.urls'))), # Enable when secure
 )
 
 urlpatterns += staticfiles_urlpatterns()

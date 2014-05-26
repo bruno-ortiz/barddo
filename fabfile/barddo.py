@@ -67,14 +67,7 @@ def deploy():
     end_time = time.time()
     print(_green("Runtime: %f minutes" % ((end_time - start_time) / 60)))
     print(_green(env.host_string))
-
-
-@task
-def reset_db():
-    require("service")
-    print(_green("Reseting database..."))
-    reset()
-
+    
 
 @task
 def full_deploy():

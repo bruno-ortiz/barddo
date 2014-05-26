@@ -4,11 +4,12 @@
 
 <div data-work-id="{{ work.id }}" class=" col-lg-3 col-md-3 col-sm-3 col-xs-12 item {{ classes }}">
     <div class="boxcontainer">
+
         <div class="cover-wrap">
             <img src="{{ work.cover|thumbnail_url:"big_cover" }}" alt="">
         </div>
 
-        <div class="roll">
+        <div class="roll" style="cursor: -webkit-zoom-in;" onclick="window.location.href = '{% url "core.work.detail" work.id %}';">
             <div class="wrapcaption">
                 {% if work.liked %}
                     <a class="vote liked captionicons" data-work-id="{{ work.id }}" href="projectdetail.html">
@@ -30,6 +31,7 @@
             <h2>{{ work.collection.name }}</h2>
         </div>
     </div>
+
     <div id="work-popup-{{ work.id }}" class="popover-data">
         <div class="work-detail-popup">
             <div class="popover-details">
@@ -46,7 +48,7 @@
 
                     <div class="col-sm-1">
                         <div class="popup-likes pull-right center">
-                            <i class="icon-heart"></i><br/>
+                            <i class="icon-star"></i><br/>
                             {{ work.total_likes }}
                         </div>
                     </div>
@@ -59,15 +61,15 @@
                     <button data-work-id="{{ work.id }}" type="button" class="btn-reader btn btn-minier btn-success">
                         <i class="icon-zoom-in"></i> {% trans "Read Now!" %}
                     </button>
-                    <a href="#" class="btn btn-minier btn-info">
-                        <i class="icon-share"></i> {% trans "Share" %}
+                    <a href="{% url "core.work.detail" work.id %}" class="btn btn-minier btn-info">
+                        <i class="icon-book"></i> {% trans "Details" %}
                     </a>
                 {% else %}
                     <button type="button" class="login-required btn btn-minier btn-success">
                         <i class="icon-zoom-in"></i> {% trans "Read Now!" %}
                     </button>
-                    <a href="#" class="login-required btn btn-minier btn-info">
-                        <i class="icon-share"></i> {% trans "Share" %}
+                    <a href="{% url "core.work.detail" work.id %}" class="btn btn-minier btn-info">
+                        <i class="icon-book"></i> {% trans "Details" %}
                     </a>
                 {% endif %}
             </div>
