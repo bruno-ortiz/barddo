@@ -1,16 +1,17 @@
 import datetime
 
 from django.conf import settings
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 import paypalrestsdk
 
 from payments.exceptions import PaymentError
-from payments.models import Payment, PaymentMethod, PurchaseStatus
+from payments.models import Payment, PaymentMethod
 
 
 class PaypalProcessor(object):
     PAYPAL_METHOD_ID = 1
-    PURCHASE_COMPLETED_ID = 2
 
     def create_payment(self, purchase, **kwargs):
         """
@@ -48,23 +49,17 @@ class PaypalProcessor(object):
             return payment
         raise PaymentError(_("We are sorry but you're payment couldn't be created!"))
 
-    def execute_payment(self, payment, **kwargs):
+    def execute_payment(self, payment):
         """
         executa um pagamento do paypal
         """
-        payer_id = kwargs.get('payer_id')
-
-        paypalrestsdk.configure({
-            "mode": settings.PAYPAL_MODE,
-            "client_id": settings.PAYPAL_CLIENT_ID,
-            "client_secret": settings.PAYPAL_CLIENT_SECRET})
-
+        redirect_url = None
         paypal_payment = paypalrestsdk.Payment.find(payment.code)
-        if paypal_payment.execute({"payer_id": payer_id}):
-            payment.settled_date = datetime.datetime.now()
-            payment.purchase.status = PurchaseStatus.objects.get(pk=self.PURCHASE_COMPLETED_ID)
-        else:
-            raise PaymentError(_('It was not possible to confirm your payment'))
+        for link in paypal_payment.links:
+            if link.method == "REDIRECT":
+                redirect_url = link.href
+        redirect_url = reverse('core.index') if redirect_url is None else redirect_url
+        return HttpResponseRedirect(redirect_url)
 
     def get_payment_status(self, payment):
         pass

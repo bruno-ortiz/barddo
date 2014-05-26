@@ -35,7 +35,7 @@ class PaymentProcessor(object):
             Delega a um processor uma requisição para executar um pagamento.
         """
         processor = self.get_processor(payment.method)
-        processor.execute_payment(payment, **kwargs)
+        return processor.execute_payment(payment)
 
     def update_payment_information(self, purchase):
         """

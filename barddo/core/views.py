@@ -11,6 +11,8 @@ from django.shortcuts import redirect
 from django.db.models import Max
 from social.backends.google import GooglePlusAuth
 
+from payments.models import Purchase
+
 from shards.decorators import register_shard
 from .forms import CollectionForm, WorkForm
 from .models import Collection, Work
@@ -103,7 +105,7 @@ artist_dashboard = ArtistDashboardView.as_view()
 
 
 class CollectionDetailView(LoginRequiredMixin, ProfileAwareView):
-    template_name = 'collection_detail.html'
+    template_name = 'modals/collection_detail.html'
 
     def get(self, request, collection_id, *args, **kwargs):
         collection = Collection.objects.get(id=collection_id)
@@ -125,14 +127,15 @@ class ReaderShard(TemplateResponseMixin, View):
     """
         Render a simple reader.
     """
-    template_name = 'reader/reader-modal.html'
 
     def post(self, request, work_id, *args, **kwargs):
         work = Work.objects.get(pk=work_id)
-
-        context = {
-            "work": work
-        }
+        context = {}
+        if work.is_free() or Purchase.objects.is_owned_by(work_id, request.user):
+            self.template_name = 'reader/reader-modal.html'
+        else:
+            self.template_name = 'payments/buy-work-modal.html'
+        context["work"] = work
         return super(ReaderShard, self).render_to_response(context)
 
 
@@ -186,7 +189,7 @@ class NewWorkModalView(TemplateResponseMixin, View):
     def post(self, request, collection_id, *args, **kwargs):
         max_unit = Work.objects.filter(collection_id=collection_id).aggregate(Max("unit_count"))['unit_count__max']
 
-        if max_unit == None:
+        if max_unit is None:
             max_unit = 1
         else:
             max_unit += 1

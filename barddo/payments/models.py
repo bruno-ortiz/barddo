@@ -3,6 +3,8 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 AUTH_USER = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
+PENDING_PURCHASE_ID = 1
+FINISHED_PURCHASE_ID = 2
 
 
 class PaymentMethod(models.Model):
@@ -20,6 +22,11 @@ class PurchaseStatus(models.Model):
     name = models.CharField(_('Purchase Status'), max_length=20)
 
 
+class PurchaseManager(models.Manager):
+    def is_owned_by(self, work_id, user):
+        return self.get_queryset().filter(buyer=user, status=FINISHED_PURCHASE_ID, items__work=work_id).exists()
+
+
 class Purchase(models.Model):
     date = models.DateField(db_index=True)
     total = models.DecimalField(max_digits=10, decimal_places=2)
@@ -27,11 +34,13 @@ class Purchase(models.Model):
     buyer = models.ForeignKey(AUTH_USER)
     status = models.ForeignKey(PurchaseStatus)
 
+    objects = PurchaseManager()
+
 
 class Item(models.Model):
     class Meta:
         unique_together = ('purchase', 'work')
 
     purchase = models.ForeignKey(Purchase, related_name='items')
-    work = models.OneToOneField('core.Work')
+    work = models.ForeignKey('core.Work')
     price = models.DecimalField(max_digits=6, decimal_places=2)

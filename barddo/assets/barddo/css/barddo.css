@@ -209,10 +209,6 @@ footer {
     width: 360px;
 }
 
-.break-all {
-    word-break: break-all
-}
-
 .profile-users .user img {
     max-width: 64px;
     width: 64px;

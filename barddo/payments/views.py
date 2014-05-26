@@ -1,5 +1,6 @@
 import datetime
 
+from django.core.urlresolvers import reverse
 from django.views.generic import View
 
 from accounts.views import LoginRequiredMixin
@@ -13,12 +14,13 @@ class CreatePayment(LoginRequiredMixin, View):
     PAYPAL_METHOD_ID = 1
 
     def get(self, request):
-        work_ids = request.GET.getlist('items', [])
+        work_ids = request.GET.getlist('work_id', [])
         works = Work.objects.filter(id__in=work_ids)
 
         user = request.user
         pending_status = PurchaseStatus.objects.get(pk=self.PENDING_ID)
-        purchase = Purchase(date=datetime.datetime.now(), buyer=user, status=pending_status)
+        purchase = Purchase(date=datetime.datetime.now(), buyer=user, status=pending_status, total=0.0)
+        purchase.save()
 
         item_list = []
         total_price = 0
@@ -31,9 +33,12 @@ class CreatePayment(LoginRequiredMixin, View):
 
         processor = PaymentProcessor()
         payment_method = PaymentMethod.objects.get(pk=self.PAYPAL_METHOD_ID)
-        payment = processor.create_payment(purchase, payment_method)
+        return_url = request.build_absolute_uri(reverse('payment.paypal.execute'))
+        cancel_url = request.build_absolute_uri(reverse('core.index'))
+        payment = processor.create_payment(purchase, payment_method, return_url=return_url, cancel_url=cancel_url)
 
         purchase.total = total_price
         purchase.save()
 
+        request.session['payment_id'] = payment.code
         return processor.execute_payment(payment)

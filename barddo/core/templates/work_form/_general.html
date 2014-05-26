@@ -63,6 +63,19 @@
     </div>
 </div>
 
+<div class="form-group">
+    <label for="{{ work_form.price.auto_id }}"
+           class="col-xs-12 col-sm-3 control-label no-padding-right">{{ work_form.price.label }}</label>
+
+    <div class="col-xs-12 col-sm-9">
+        <div>
+            <div id="priceslider"></div>
+            <span id="current_price" class="blue no-border bolder pull-right">0.0</span> {# TODO: Tratar moeda local #}
+            <input type="hidden" id="{{ work_form.price.auto_id }}" name="price">
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
     jQuery(function ($) {
         $({{ work_form.unit_count.auto_id }}).ace_spinner({value: {{ next_unit }}, min: 1, step: 1, btn_up_class: 'btn-info', btn_down_class: 'btn-info'});
@@ -97,7 +110,15 @@
                         results: results
                     };
                 }
-
+            }
+        });
+        $('#priceslider').slider({
+            max: 30.00,
+            min: 0.00,
+            step: 0.10,
+            slide: function (e, ui) {
+                $({{ work_form.price.auto_id }}).val(ui.value);
+                $('#current_price').html(ui.value)
             }
         });
     });

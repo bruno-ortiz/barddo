@@ -174,12 +174,17 @@ class Work(models.Model):
 
     author = models.ForeignKey(BarddoUser, related_name='author_works', db_index=True)
 
+    price = models.DecimalField(max_digits=6, decimal_places=2, db_index=True, default=0.0)
+
     unit_count = models.IntegerField(_('Item Number'), db_index=True)
     total_pages = models.SmallIntegerField(_('Total Pages'))
     publish_date = models.DateTimeField(_('Publish Date'), db_index=True)
 
     objects = RatingManager()
     search_manager = SearchManager()
+
+    def is_free(self):
+        return self.price == 0.0
 
     def is_owner(self, user):
         """
