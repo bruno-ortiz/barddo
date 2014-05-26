@@ -5,18 +5,15 @@ import datetime
 
 from django.conf import settings
 from django.views.generic import View
-from django.views.generic.base import TemplateResponseMixin
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from django.db.models import Max
 from social.backends.google import GooglePlusAuth
 
-from shards.decorators import register_shard
-from .forms import CollectionForm, WorkForm, CoverOnlyWorkForm
 from .models import Collection, Work
 from .exceptions import InvalidFileUploadError, ChangeOnObjectNotOwnedError
 from accounts.views import ProfileAwareView, LoginRequiredMixin
 from publishing.views import publisher_landpage
+from rating.models import Rating, user_likes
 
 
 class IndexView(ProfileAwareView):
@@ -118,144 +115,6 @@ class CollectionDetailView(LoginRequiredMixin, ProfileAwareView):
 
 
 collection_detail = CollectionDetailView.as_view()
-
-
-@register_shard(name=u"reader")
-class ReaderShard(TemplateResponseMixin, View):
-    """
-        Render a simple reader.
-    """
-    template_name = 'reader/reader-modal.html'
-
-    def post(self, request, work_id, *args, **kwargs):
-        work = Work.objects.get(pk=work_id)
-
-        context = {
-            "work": work
-        }
-        return super(ReaderShard, self).render_to_response(context)
-
-
-# TODO: move it to a shards.py module
-@register_shard(name=u"modal.collection")
-class CollectionModalView(TemplateResponseMixin, View):
-    """
-        Render a simple collection modal. This is incomplete, another shard will be used to render a work detail.
-    """
-    template_name = 'modals/collection.html'
-
-    def post(self, request, collection_id, *args, **kwargs):
-        collection = Collection.objects.get(id=collection_id)
-        works = Work.objects.filter(collection_id=collection_id).order_by("-unit_count")
-
-        context = {
-            "collection": collection,
-            "works": works,
-            "current_work": works[0],
-            'work_form': CoverOnlyWorkForm(works[0])
-        }
-        return super(CollectionModalView, self).render_to_response(context)
-
-
-render_collection_modal = CollectionModalView.as_view()
-
-# TODO: move it to a shards.py module
-@register_shard(name=u"modal.new.collection")
-class NewCollectionModalView(TemplateResponseMixin, View):
-    """
-        Render a simple collection modal. This is incomplete, another shard will be used to render a work detail.
-    """
-    template_name = '_new_collection_modal.html'
-
-    def post(self, request, *args, **kwargs):
-        context = {
-            'form': CollectionForm(),
-        }
-        return super(NewCollectionModalView, self).render_to_response(context)
-
-
-render_new_collection_modal = NewCollectionModalView.as_view()
-
-
-@register_shard(name=u"modal.new.work")
-class NewWorkModalView(TemplateResponseMixin, View):
-    """
-        Render a simple collection modal. This is incomplete, another shard will be used to render a work detail.
-    """
-    template_name = '_new_work_modal.html'
-
-    def post(self, request, collection_id, *args, **kwargs):
-        max_unit = Work.objects.filter(collection_id=collection_id).aggregate(Max("unit_count"))['unit_count__max']
-
-        if max_unit == None:
-            max_unit = 1
-        else:
-            max_unit += 1
-
-        context = {
-            'next_unit': max_unit,
-            'work_form': WorkForm(),
-        }
-        return super(NewWorkModalView, self).render_to_response(context)
-
-
-render_new_work_modal = NewWorkModalView.as_view()
-
-
-# TODO: move it to a shards.py module
-@register_shard(name=u"modal.work")
-class WorkModalView(TemplateResponseMixin, View):
-    """
-        Render a work detail modal shard.
-    """
-    template_name = 'modals/collection_detail.html'
-
-    def post(self, request, work_id, *args, **kwargs):
-        work = Work.objects.select_related("collection").get(id=work_id)
-
-        context = {
-            "collection": work.collection,
-            "current_work": work,
-            "work_form": CoverOnlyWorkForm(work)
-        }
-        return super(WorkModalView, self).render_to_response(context)
-
-
-render_work_modal = WorkModalView.as_view()
-
-
-# TODO: move it to a shards.py module
-@register_shard(name=u"modal.help.discover")
-class HelpDiscoverModalView(TemplateResponseMixin, View):
-    """
-        Render a work detail modal shard.
-    """
-    template_name = 'help/modal-discover.html'
-
-    def post(self, request, *args, **kwargs):
-        return super(HelpDiscoverModalView, self).render_to_response({})
-
-
-@register_shard(name=u"modal.help.understand")
-class HelpUnderstandModalView(TemplateResponseMixin, View):
-    """
-        Render a work detail modal shard.
-    """
-    template_name = 'help/modal-understand.html'
-
-    def post(self, request, *args, **kwargs):
-        return super(HelpUnderstandModalView, self).render_to_response({})
-
-
-@register_shard(name=u"modal.help.enjoy")
-class HelpEnjoyModalView(TemplateResponseMixin, View):
-    """
-        Render a work detail modal shard.
-    """
-    template_name = 'help/modal-enjoy.html'
-
-    def post(self, request, *args, **kwargs):
-        return super(HelpEnjoyModalView, self).render_to_response({})
 
 
 ###
@@ -427,3 +286,26 @@ class HelpView(ProfileAwareView):
         context = {}
         context.update(kwargs)
         return super(HelpView, self).get_context_data(**context)
+
+
+class WorkPageView(ProfileAwareView):
+    template_name = 'work_page/work_page.html'
+
+    def get(self, request, work_id, *args, **kwargs):
+        work = Work.objects.get(id=work_id)
+        voters = Rating.objects.filter(work__id=work_id).select_related("user")
+
+        this_work_view_slug = "work_views_{}".format(work_id)
+
+        context = self.get_context_data(**{'user': request.user})
+        context["work"] = work
+        context["voted"] = user_likes(request.user, work_id) if request.user.is_authenticated() else False
+        context["voters"] = voters
+
+        from redis_metrics.models import R
+
+        r = R()
+        context["views"] = r.get_metric(this_work_view_slug)['year']
+        context.update(kwargs)
+
+        return super(WorkPageView, self).render_to_response(context)

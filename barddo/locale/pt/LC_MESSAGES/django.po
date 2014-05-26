@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Barddo Main Site\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-20 23:33-0300\n"
-"PO-Revision-Date: 2014-05-20 23:34-0300\n"
+"POT-Creation-Date: 2014-05-25 23:45-0300\n"
+"PO-Revision-Date: 2014-05-25 23:45-0300\n"
 "Last-Translator: Israel Crisanto <israel.crisanto@gmail.com>\n"
 "Language-Team: Barddo Team <israel.crisanto@gmail.com>\n"
 "Language: pt\n"
@@ -47,9 +47,10 @@ msgstr "Erro"
 msgid "Sorry an error occured:"
 msgstr "Sinto muito, um erro ocorreu:"
 
-#: accounts/templates/profile.html:16 core/templates/artist_dashboard.html:24
+#: accounts/templates/profile.html:16 core/templates/artist_dashboard.html:21
 #: core/templates/docs/about-us.html:13 core/templates/docs/help.html:13
 #: core/templates/docs/terms.html:13
+#: core/templates/work_page/work_page.html:20
 #: publishing/templates/publisher_landpage.html:20
 msgid "Home"
 msgstr "Início"
@@ -165,67 +166,74 @@ msgstr "Seguindo %(name)s!"
 
 #: accounts/templates/profile_fragments/_followers.html:11
 #: accounts/templates/profile_fragments/_following.html:11
+#: core/templates/work_page/_likers.html:11
+#: core/templates/work_page/_readers.html:11
 #, python-format
 msgid "%(name)s's avatar"
 msgstr "Avatar de %(name)s"
 
-#: core/models.py:63
+#: core/ajax.py:144
+msgid "You are not the owner of this work!"
+msgstr "Você não é o dono desta obra!"
+
+#: core/models.py:64
 msgid "Description"
 msgstr "Descrição"
 
-#: core/models.py:90
+#: core/models.py:91
 msgid "On Going"
 msgstr "Em Andamento"
 
-#: core/models.py:91
+#: core/models.py:92
 msgid "Completed"
 msgstr "Completo"
 
-#: core/models.py:92
+#: core/models.py:93
 msgid "Stopped"
 msgstr "Paralizado"
 
-#: core/models.py:95
+#: core/models.py:96
 msgid "Collection Name"
 msgstr "Nome da Coleção"
 
-#: core/models.py:96 core/models.py:172
+#: core/models.py:97 core/models.py:173
+#: core/templates/work_page/work_page.html:115
 msgid "Summary"
 msgstr "Sumário"
 
-#: core/models.py:98
+#: core/models.py:99
 msgid "Slug"
 msgstr "Slug"
 
-#: core/models.py:99
+#: core/models.py:100
 msgid "Status"
 msgstr "Estado"
 
-#: core/models.py:102
+#: core/models.py:103
 msgid "Start Date"
 msgstr "Data de Início"
 
-#: core/models.py:103
+#: core/models.py:104
 msgid "End Date"
 msgstr "Data de Fim"
 
-#: core/models.py:106 core/models.py:173
+#: core/models.py:107 core/models.py:174
 msgid "Cover Art"
 msgstr "Arte de Capa"
 
-#: core/models.py:171
+#: core/models.py:172 core/templates/work_page/work_page.html:107
 msgid "Title"
 msgstr "Título"
 
-#: core/models.py:177
+#: core/models.py:178
 msgid "Item Number"
 msgstr "Número"
 
-#: core/models.py:178
+#: core/models.py:179
 msgid "Total Pages"
 msgstr "Total de Páginas"
 
-#: core/models.py:179
+#: core/models.py:180
 msgid "Publish Date"
 msgstr "Data de Publicação"
 
@@ -234,7 +242,8 @@ msgid "Name Verification"
 msgstr "Verificação de Nome"
 
 #: core/templates/_new_collection_modal.html:14
-#: core/templates/_new_work_modal.html:9
+#: core/templates/_new_work_modal.html:9 core/templates/work_element.html:65
+#: core/templates/work_element.html:72
 msgid "Details"
 msgstr "Detalhes"
 
@@ -268,21 +277,21 @@ msgstr "Capa"
 msgid "Upload Files"
 msgstr "Enviar Arquivos"
 
-#: core/templates/artist_dashboard.html:26
-#: core/templates/artist_dashboard.html:36
+#: core/templates/artist_dashboard.html:23
+#: core/templates/artist_dashboard.html:33
 #: templates/main_template/navbar.html:52
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: core/templates/artist_dashboard.html:43
+#: core/templates/artist_dashboard.html:40
 msgid "Create a Collection"
 msgstr "Criar uma Coleção"
 
-#: core/templates/artist_dashboard.html:77
+#: core/templates/artist_dashboard.html:74
 msgid "Uh Oh!"
 msgstr "Oh, não!"
 
-#: core/templates/artist_dashboard.html:78
+#: core/templates/artist_dashboard.html:75
 msgid ""
 "\n"
 "                            Looks like you don't have any <span class=\"red"
@@ -296,23 +305,23 @@ msgstr ""
 "é algo simples de resolver!\n"
 "                        "
 
-#: core/templates/artist_dashboard.html:90
+#: core/templates/artist_dashboard.html:87
 msgid "Create an awesome new collection, now!"
 msgstr "Criar uma nova e maravilhosa coleção, agora!"
 
-#: core/templates/artist_dashboard.html:102
+#: core/templates/artist_dashboard.html:99
 msgid "My Collections"
 msgstr "Minhas Coleções"
 
-#: core/templates/artist_dashboard.html:120
+#: core/templates/artist_dashboard.html:117
 msgid "Create a work for this collection!"
 msgstr "Adicionar uma Obra a esta coleção"
 
-#: core/templates/artist_dashboard.html:129
+#: core/templates/artist_dashboard.html:126
 msgid "Add a Work"
 msgstr "Nova Obra"
 
-#: core/templates/artist_dashboard.html:136
+#: core/templates/artist_dashboard.html:133
 msgid "Edit Collection"
 msgstr "Editar Coleção"
 
@@ -357,17 +366,15 @@ msgid "Relax, read, share and help artists to have the highlight they deserve!"
 msgstr ""
 "Relaxe, leia, compartilhe e ajude artistas a terem o destaque que merecem!"
 
-#: core/templates/work_element.html:40
+#: core/templates/work_element.html:42
 msgid "Artist Photo"
 msgstr "Foto do Artista"
 
-#: core/templates/work_element.html:60 core/templates/work_element.html:67
+#: core/templates/work_element.html:62 core/templates/work_element.html:69
+#: core/templates/work_page/work_page.html:158
+#: core/templates/work_page/work_page.html:163
 msgid "Read Now!"
 msgstr "Ler Agora!"
-
-#: core/templates/work_element.html:63 core/templates/work_element.html:70
-msgid "Share"
-msgstr "Compartilhar"
 
 #: core/templates/collection_form/_confirmation.html:6
 msgid "Congrats!"
@@ -948,34 +955,55 @@ msgstr "Geral"
 msgid "Pages"
 msgstr "Páginas"
 
-#: core/templates/modals/collection_detail.html:47
+#: core/templates/modals/collection_detail.html:46
 msgid "Click to change"
 msgstr "Clique para alterar"
 
-#: core/templates/modals/collection_detail.html:54
+#: core/templates/modals/collection_detail.html:61
 msgid "Work Information"
 msgstr "Informações da Obra"
 
-#: core/templates/modals/collection_detail.html:57
+#: core/templates/modals/collection_detail.html:64
 msgid "Title:"
 msgstr "Título"
 
-#: core/templates/modals/collection_detail.html:66
+#: core/templates/modals/collection_detail.html:73
 msgid "Number:"
 msgstr "Número"
 
-#: core/templates/modals/collection_detail.html:75
+#: core/templates/modals/collection_detail.html:82
 msgid "Summary:"
 msgstr "Sumário"
 
-#: core/templates/modals/collection_detail.html:93
-#: core/templates/work_form/_upload.html:7
+#: core/templates/modals/collection_detail.html:100
+#: core/templates/work_form/_upload.html:8
+msgid ""
+"Add new pages dropping your files or clicking on the space bellow. You can "
+"reorder the pages by just dragging them."
+msgstr ""
+"Adicione novas páginas arrastando seus arquivos ou clicando no espaço "
+"abaixo. Também é possível reordenar as páginas simplesmente arrastando-as."
+
+#: core/templates/modals/collection_detail.html:109
+#: core/templates/work_form/_upload.html:16
 msgid "Please Wait"
 msgstr "Por favor, aguardr"
 
-#: core/templates/modals/collection_detail.html:94
+#: core/templates/modals/collection_detail.html:110
 msgid "Sending changes to the server..."
 msgstr "Enviando alterações para o servidor..."
+
+#: core/templates/modals/collection_detail.html:157
+msgid "Cover changed!"
+msgstr "Capa alterada!"
+
+#: core/templates/modals/collection_detail.html:161
+msgid "Failed to change cover!"
+msgstr "Falha ao alterar a capa!"
+
+#: core/templates/modals/collection_detail.html:182
+msgid "Upload your new cover bellow"
+msgstr "Escolha a nova capa abaixo"
 
 #: core/templates/work_form/_confirmation.html:4
 msgid "Congratulations, your work were created!"
@@ -995,19 +1023,19 @@ msgstr ""
 "        fazer isto depois.\n"
 "    "
 
-#: core/templates/work_form/_cover.html:18
+#: core/templates/work_form/_cover.html:19
 msgid "Select your work cover..."
 msgstr "Escolha a capa da sua obra..."
 
-#: core/templates/work_form/_cover.html:19
+#: core/templates/work_form/_cover.html:20
 msgid "Choose"
 msgstr "Escolha"
 
-#: core/templates/work_form/_cover.html:20
+#: core/templates/work_form/_cover.html:21
 msgid "Change"
 msgstr "Mude"
 
-#: core/templates/work_form/_cover.html:31
+#: core/templates/work_form/_cover.html:29
 msgid "Select a Cover!"
 msgstr "Selecione uma Capa!"
 
@@ -1023,9 +1051,70 @@ msgstr "O que acontece?"
 msgid "Who is the author"
 msgstr "Quem é o autor?"
 
-#: core/templates/work_form/_upload.html:8
+#: core/templates/work_form/_upload.html:17
 msgid "Sending changes to the server"
 msgstr "Enviando alterações para o servidor"
+
+#: core/templates/work_page/work_page.html:11
+msgid " - On Barddo"
+msgstr " - No Barddo"
+
+#: core/templates/work_page/work_page.html:23
+#: search/templates/page_template.html:28
+msgid "Works"
+msgstr "Trabalhos"
+
+#: core/templates/work_page/work_page.html:40
+msgid "Work Cover"
+msgstr "Capa da Obra"
+
+#: core/templates/work_page/work_page.html:52
+#: core/templates/work_page/work_page.html:216
+msgid "Unvote"
+msgstr "Retirar Voto"
+
+#: core/templates/work_page/work_page.html:55
+#: core/templates/work_page/work_page.html:61
+#: core/templates/work_page/work_page.html:77
+#: core/templates/work_page/work_page.html:205
+msgid "Vote"
+msgid_plural "Votes"
+msgstr[0] "Votar"
+msgstr[1] "Votos"
+
+#: core/templates/work_page/work_page.html:86
+msgid "View"
+msgid_plural "Views"
+msgstr[0] "Visualização"
+msgstr[1] "Visualizações"
+
+#: core/templates/work_page/work_page.html:96
+msgid "Report Work"
+msgstr "Denunciar Obra"
+
+#: core/templates/work_page/work_page.html:123
+msgid "Published"
+msgstr "Publicado"
+
+#: core/templates/work_page/work_page.html:131
+msgid "Author"
+msgstr "Autor"
+
+#: core/templates/work_page/work_page.html:145
+msgid "Share"
+msgstr "Compartilhar"
+
+#: core/templates/work_page/work_page.html:176
+msgid "Who Liked"
+msgstr "Quem Gostou"
+
+#: core/templates/work_page/work_page.html:210
+msgid "Work unvoted!"
+msgstr "Voto descadastrado!"
+
+#: core/templates/work_page/work_page.html:221
+msgid "Work voted!"
+msgstr "Voto cadastrado!"
 
 #: feed/models.py:49
 msgid ""
@@ -1196,21 +1285,17 @@ msgstr "Você já é um editor!"
 msgid "Create a publishing group"
 msgstr "Criar um grupo de publicação"
 
-#: search/views.py:39
+#: search/views.py:36
 msgid "No results found for your query."
 msgstr "Nenhum resultado encontrado para sua pesquisa."
 
-#: search/views.py:53
+#: search/views.py:50
 msgid "Invalid search."
 msgstr "Pesquisa Inválida"
 
 #: search/templates/page_template.html:21
 msgid "Collections"
 msgstr "Coleções"
-
-#: search/templates/page_template.html:28
-msgid "Works"
-msgstr "Trabalhos"
 
 #: search/templates/page_template.html:35
 msgid "People"

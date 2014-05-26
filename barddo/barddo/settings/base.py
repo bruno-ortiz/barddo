@@ -232,6 +232,9 @@ THIRD_PARTY_APPS = (
     'easy_thumbnails',
     'analytical',
     'polymorphic',
+    'django_bitly',
+    'redis_metrics',
+    'djcelery',
 )
 
 # Apps specific for this project go here.
@@ -245,6 +248,7 @@ LOCAL_APPS = (
     'search',
     'follow',
     'feed',
+    'share',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -296,13 +300,13 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['file', 'mail_admins'],
+            'handlers': ['console', 'file', 'mail_admins'],
             'level': 'ERROR',
             'propagate': True,
         },
 
         'dajaxice': {
-            'handlers': ['file', 'mail_admins'],
+            'handlers': ['console', 'file', 'mail_admins'],
             'level': 'INFO',
             'propagate': True,
         },
@@ -365,12 +369,13 @@ SOCIAL_AUTH_PIPELINE = (
     'accounts.pipelines.get_birth_date',
     'accounts.pipelines.get_gender',
     'accounts.pipelines.get_country',
+    'accounts.pipelines.get_language',
     'accounts.pipelines.post_user_creation',
 )
 
 SOCIAL_AUTH_LOGIN_URL = '/'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
-SOCIAL_AUTH_LOGIN_ERROR_URL = '/login-error'
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/login-error'  # TODO: handle that
 
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_about_me', 'user_birthday', 'user_location']
 
@@ -416,3 +421,28 @@ WOOPRA_DOMAIN = 'barddo.com'
 
 LOGIN_URL = "/"
 LOGOUT_URL = "/logout"
+
+#### Bitly Settings
+
+BITLY_LOGIN = "icrisanto"
+
+BITLY_API_KEY = "R_c5a307706efef2c2881a88a748120435"
+
+#### End of Bitly Settings
+
+#### Metrics Settings
+
+REDIS_METRICS_HOST = 'localhost'
+REDIS_METRICS_PORT = 6379
+REDIS_METRICS_DB = 0
+REDIS_METRICS_PASSWORD = None
+REDIS_METRICS_SOCKET_TIMEOUT = None
+REDIS_METRICS_SOCKET_CONNECTION_POOL = None
+
+### End of Metrics Settings
+
+
+#### Celery Settings
+BROKER_URL = 'amqp://guest:guest@localhost//'  # unsecure, for now
+#### End of Celery Settings
+
