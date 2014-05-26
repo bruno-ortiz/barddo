@@ -238,3 +238,12 @@ footer {
     float: right;
 
 }
+
+.cover-edit {
+    width: 500px;
+}
+
+#change-cover {
+    cursor: pointer;
+    cursor: hand;
+}

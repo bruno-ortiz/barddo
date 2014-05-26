@@ -5,7 +5,7 @@ from django.views.generic.base import TemplateResponseMixin
 from django.db.models import Max
 
 from shards.decorators import register_shard
-from .forms import CollectionForm, WorkForm
+from .forms import CollectionForm, WorkForm, CoverOnlyWorkForm
 from .models import Collection, Work
 from core.signals import work_read
 
@@ -41,7 +41,8 @@ class CollectionModalView(TemplateResponseMixin, View):
         context = {
             "collection": collection,
             "works": works,
-            "current_work": works[0]
+            "current_work": works[0],
+            'work_form': CoverOnlyWorkForm(works[0])
         }
         return super(CollectionModalView, self).render_to_response(context)
 
@@ -94,7 +95,8 @@ class WorkModalView(TemplateResponseMixin, View):
 
         context = {
             "collection": work.collection,
-            "current_work": work
+            "current_work": work,
+            "work_form": CoverOnlyWorkForm(work)
         }
         return super(WorkModalView, self).render_to_response(context)
 
