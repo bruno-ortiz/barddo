@@ -11,8 +11,12 @@
     {% trans " - On Barddo" as suffix %}
     {% render_opengraph_header work work.title|add:suffix work.summary work.cover %}
 
-    <link rel="stylesheet" href="{% static "css/bottom.css" %}"/>
+    {% compress css %}
+        <link rel="stylesheet" href="{% static "css/bottom.css" %}"/>
+    {% endcompress %}
 {% endblock %}
+
+
 
 {% block breadcrumbs %}
     <ul class="breadcrumb">
