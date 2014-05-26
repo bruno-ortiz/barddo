@@ -71,9 +71,10 @@ def get_gender(backend, user, response, is_new=False, **kwargs):
     if is_new:
         gender = None
         if backend.__class__ is FacebookOAuth2:
-            gender = response['gender'][:1]
+            gender = response.get('gender', 'Male')[:1]
         elif backend.__class__ is google.GooglePlusAuth:
-            gender = response['gender'][:1]
+            gender = response.get('gender', 'Male')[:1]
+            
         if gender:
             profile = user.profile
             profile.gender = gender.upper()
@@ -97,6 +98,22 @@ def get_country(backend, user, response, is_new=False, **kwargs):
             profile = user.profile
             profile.country = country
             profile.save()
+
+
+def get_language(backend, user, response, is_new=False, **kwargs):
+    """
+    User authentication pipeline step to get user language from browser, only on first login
+    """
+
+    if is_new:
+        user_lang = settings.LANGUAGE_CODE
+        request = kwargs['request']
+        if request.LANGUAGE_CODE in (l[0] for l in settings.LANGUAGES):
+            user_lang = request.LANGUAGE_CODE
+
+        profile = user.profile
+        profile.language = user_lang
+        profile.save()
 
 
 def __get_google_plus_data(url, access_token):

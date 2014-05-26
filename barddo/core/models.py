@@ -12,6 +12,7 @@ from django.conf import settings
 from django.core.files.images import ImageFile
 from django.db.models import Q
 from easy_thumbnails.files import get_thumbnailer
+from django.core.urlresolvers import reverse
 
 from accounts.models import BarddoUser
 from rating.models import Rating
@@ -181,6 +182,12 @@ class Work(models.Model):
     objects = RatingManager()
     search_manager = SearchManager()
 
+    def get_absolute_url(self):
+        """
+        Detail page url
+        """
+        return reverse('core.work.detail', args=[str(self.id)])
+
     def is_owner(self, user):
         """
         Return true if the given user is the owner of the current work
@@ -271,6 +278,9 @@ class Work(models.Model):
             })
 
         return image_files
+
+    def __unicode__(self):
+        return unicode(self.collection) + u" - " + self.title + u" #" + unicode(self.unit_count)
 
     class Meta:
         unique_together = (("collection", "unit_count"))
