@@ -1,5 +1,14 @@
 {% load i18n %}
 <div class="center" style="height: 100%">
+    <div class="alert alert-block alert-success">
+        <p>
+            <strong>
+                <i class="icon-ok"></i>
+            </strong>
+            {% trans "Add new pages dropping your files or clicking on the space bellow. You can reorder the pages by just dragging them." %}
+        </p>
+    </div>
+
     <div id="dropzone">
         <form id="new_work_upload" action="/work/page/upload" class="dropzone">
             <div class="work-action-overlay center">

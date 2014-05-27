@@ -1,0 +1,259 @@
+{% extends 'main_template.html' %}
+{% load staticfiles %}
+{% load compress %}
+{% load i18n %}
+{% load thumbnail %}
+{% load social_share %}
+
+{% block title %} Barddo - {{ work.title }} - #{{ work.unit_count }} {% endblock %}
+
+{% block header %}
+    {% trans " - On Barddo" as suffix %}
+    {% render_opengraph_header work work.title|add:suffix work.cover %}
+    <link rel="stylesheet" href="{% static "css/bottom.css" %}"/>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="{% url "core.index" %}">{% trans "Home" %}</a>
+        </li>
+        <li>
+            <a href="#">{% trans "Works" %}</a>
+        </li>
+        <li class="active">{{ work.title }} - #{{ work.unit_count }}</li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+
+    <div class="page-content">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div>
+                    <div id="user-profile-1" class="user-profile row">
+                        <div class="col-xs-12 col-sm-3 center profile-user-col">
+                            <div>
+                                <span class="profile-picture">
+                                    <img id="avatar" class="editable img-responsive" alt="{% trans "Work Cover" %}"
+                                         src="{{ work.cover|thumbnail_url:"big_cover" }}"/>
+                                </span>
+                            </div>
+
+                            <div class="space-6"></div>
+
+                            <div class="profile-contact-info">
+                                {% if user.is_authenticated %}
+                                    <button id="vote-button" class="btn btn-sm btn-block btn-purple">
+                                        {% if voted %}
+                                            <i class="icon-minus-sign bigger-120"></i>
+                                            <span class="bigger-110">{% trans "Unvote" %}</span>
+                                        {% else %}
+                                            <i class="icon-plus-sign bigger-120"></i>
+                                            <span class="bigger-110">{% trans "Vote" %}</span>
+                                        {% endif %}
+                                    </button>
+                                {% else %}
+                                    <button class="btn btn-sm btn-block btn-purple login-required">
+                                        <i class="icon-plus-sign bigger-120"></i>
+                                        <span class="bigger-110">{% trans "Vote" %}</span>
+                                    </button>
+                                {% endif %}
+                            </div>
+
+                            <div class="space-6"></div>
+
+                            <div class="hr hr12 dotted"></div>
+
+                            <div class="clearfix">
+                                <div id="num-voters" class="grid2">
+                                    <span class="bigger-175 red">
+                                        <i class="icon-heart"></i>
+                                        <span>{{ voters|length }}</span>
+                                    </span>
+                                    <br/>
+                                    {% blocktrans count voters|length as total_voters %}Vote{% plural %}Votes{% endblocktrans %}
+                                </div>
+
+                                <div class="grid2">
+                                    <span id="view-count" class="bigger-175 green">
+                                        <i class="icon-eye-open"></i>
+                                        <span>{{ views }}</span>
+                                    </span>
+                                    <br/>
+                                    {% blocktrans count views as total_views %}View{% plural %}Views{% endblocktrans %}
+                                </div>
+                            </div>
+
+                            <div class="hr hr16 dotted"></div>
+
+                            <div class="space-6"></div>
+
+                            <a href="#" class="btn btn-sm btn-block btn-danger">
+                                <i class="icon-warning-sign bigger-110"></i>
+                                <span class="bigger-110">{% trans "Report Work" %}</span>
+                            </a>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-9">
+
+                            <div class="space-12"></div>
+
+                            <div class="profile-user-info profile-user-info-striped">
+
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> {% trans "Title" %}</div>
+
+                                    <div class="profile-info-value">
+                                        <span>{{ work.title }} - #{{ work.unit_count }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> {% trans "Summary" %}</div>
+
+                                    <div class="profile-info-value">
+                                        <span>{{ work.summary }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> {% trans "Published" %}</div>
+
+                                    <div class="profile-info-value">
+                                        <span><i class="icon-time bigger-110"></i> {{ work.publish_date|timesince }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> {% trans "Author" %}</div>
+
+                                    <div class="profile-info-value">
+                                        <span><a href="{{ work.author.get_url }}"><i class="icon-user"></i> {{ work.author.get_full_name }}</a></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="space-6"></div>
+
+                            <div class="work-buttons clearfix">
+                                <div class="dropdown social-share">
+                                    <a href="#" id="dropdownMenu1" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                                        <i class="icon-share bigger-110"></i>
+                                        <span class="bigger-110">{% trans "Share" %}</span>
+                                    </a>
+
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                        <li role="presentation">{% post_to_facebook work "Facebook" %}</li>
+                                        <li role="presentation">{% post_to_twitter work.title work "Twitter" %}</li>
+                                        <li role="presentation">{% post_to_gplus work "Google+" %}</li>
+                                    </ul>
+                                </div>
+
+                                {% if user.is_authenticated %}
+                                    <a id="read-button" href="#" class="btn btn-sm btn-success pull-right">
+                                        <i class="icon-zoom-in bigger-110"></i>
+                                        <span class="bigger-110">{% trans "Read Now!" %}</span>
+                                    </a>
+                                {% else %}
+                                    <a href="#" class="btn btn-sm btn-success pull-right login-required">
+                                        <i class="icon-zoom-in bigger-110"></i>
+                                        <span class="bigger-110">{% trans "Read Now!" %}</span>
+                                    </a>
+                                {% endif %}
+
+                            </div>
+
+                            <!-- TABS -->
+                            <div class="tabbable">
+                                <ul class="nav nav-tabs padding-18 tab-color-blue background-blue">
+
+                                    <li class="active">
+                                        <a data-toggle="tab" href="#likers">
+                                            <i class="red icon-heart bigger-120"></i>
+                                            {% trans "Who Liked" %}
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content no-border padding-24">
+                                    {% include "work_page/_readers.html" %}
+
+                                    {% include "work_page/_likers.html" %}
+                                </div>
+                            </div>
+
+
+                            <div class="hr hr2 hr-double"></div>
+
+                            <div class="space-6"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block bottom_page %}
+    <script type="text/javascript">
+        function user_unvoted_callback() {
+            var $vote = $('#vote-button');
+            $vote.prop('disabled', false);
+            $vote.html(' <i class="icon-plus-sign bigger-120"></i> <span class="bigger-110">{% trans "Vote" %}</span>');
+
+            var voters_tag = $('#num-voters').find('span').find('span');
+            var num_voters = parseInt(voters_tag.text().trim(), 0);
+            voters_tag.html(num_voters - 1);
+            gritter_feedback('{% trans "Work unvoted!" %}')
+        }
+
+        function user_voted_callback() {
+            var $vote = $('#vote-button');
+            $vote.prop('disabled', false);
+            $vote.html(' <i class="icon-minus-sign bigger-120"></i> <span class="bigger-110">{% trans "Unvote" %}</span>');
+
+            var voters_tag = $('#num-voters').find('span').find('span');
+            var num_voters = parseInt(voters_tag.text().trim(), 0);
+            voters_tag.html(num_voters + 1);
+            gritter_feedback('{% trans "Work voted!" %}')
+        }
+
+        function gritter_feedback(msg) {
+            $.gritter.add({
+                title: msg,
+                image: '{{ viewing_user_profile.avatar }}',
+                sticky: false,
+                time: '2000',
+                class_name: 'gritter-info'
+            });
+        }
+
+        $(document).ready(function () {
+            {% if user.is_authenticated %}
+                $('#vote-button').on('click', function () {
+                    Dajaxice.rating.toggle_rating_work(Dajax.process, {
+                        'work_id':{{ work.id }}
+                    });
+                    $(this).prop('disabled', true);
+                    $(this).html('<i class="bigger-120 icon-spinner icon-spin white"></i><span class="bigger-110"></span>')
+                });
+
+                $(document).on("click", "#read-button", function () {
+                    Shards.reader(function (shard_id, shard_data, parent) {
+                        $(shard_id).remove();
+                        $(parent).append(shard_data);
+
+                        var views_tag = $('#view-count').find('span');
+                        var num_views = parseInt(views_tag.text().trim(), 0);
+                        views_tag.html(num_views + 1);
+
+                        $(shard_id).modal('show');
+                    }, {"work_id": {{ work.id }}});
+                });
+            {% endif %}
+        });
+    </script>
+{% endblock %}

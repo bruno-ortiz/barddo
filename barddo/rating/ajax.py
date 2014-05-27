@@ -27,3 +27,18 @@ def toggle_rating(request, work_id):
         ajax.script('$("#loginModal").modal("show");')
 
     return ajax.json()
+
+
+@dajaxice_register
+def toggle_rating_work(request, work_id):
+    user = request.user
+    ajax = Dajax()
+
+    if not user_likes(user, work_id):
+        add_like(user, work_id)
+        ajax.script('user_voted_callback();')
+    else:
+        remove_like(user, work_id)
+        ajax.script('user_unvoted_callback();')
+
+    return ajax.json()

@@ -220,3 +220,26 @@ footer {
 .g-signin {
     margin-top: 10px;
 }
+
+.work-buttons {
+    padding: 11px;
+}
+
+.work-buttons a.pull-right {
+    margin-left: 10px;
+}
+
+.dropdown.social-share {
+    margin-left: 10px;
+    float: right;
+
+}
+
+.cover-edit {
+    width: 500px;
+}
+
+#change-cover {
+    cursor: pointer;
+    cursor: hand;
+}
