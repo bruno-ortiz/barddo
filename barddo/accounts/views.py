@@ -70,7 +70,7 @@ class LogoutView(View):
 
     def get(self, request, *args, **kwargs):
         logout(request)
-        return HttpResponseRedirect(reverse('core.views.index'))
+        return HttpResponseRedirect(reverse('core.index'))
 
 
 class UserProfileView(LoginRequiredMixin, SingleObjectMixin, ProfileAwareView):
