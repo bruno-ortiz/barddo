@@ -121,7 +121,9 @@
 
                                 {% if editable %}
                                     <div class="profile-info-row">
-                                        <div class="profile-info-name">{% trans "Site Language" %} <i class="icon-lock" data-toggle="tooltip" data-placement="right" title="{% trans "Not displayed publicly" %}"></i></div>
+                                        <div class="profile-info-name">{% trans "Site Language" %} <i class="icon-lock" data-toggle="tooltip"
+                                                                                                      data-placement="right"
+                                                                                                      title="{% trans "Not displayed publicly" %}"></i></div>
 
                                         <div class="profile-info-value">
                                             <span class="editable" id="id_language">{{ viewing_user_profile.get_language_display }}</span>
@@ -149,7 +151,8 @@
 
                                 {% if editable %}
                                     <div class="profile-info-row">
-                                        <div class="profile-info-name">{% trans "Email" %} <i class="icon-lock" data-toggle="tooltip" data-placement="right" title="{% trans "Not displayed publicly" %}"></i></div>
+                                        <div class="profile-info-name">{% trans "Email" %} <i class="icon-lock" data-toggle="tooltip" data-placement="right"
+                                                                                              title="{% trans "Not displayed publicly" %}"></i></div>
 
                                         <div class="profile-info-value">
                                             <span class="editable" id="id_email">{{ viewing_user.email }}</span>
@@ -463,7 +466,7 @@
     {% else %}
         $('#follow-button').on('click', function () {
             Dajaxice.accounts.follow_or_unfollow(Dajax.process, {
-                'user_id':{{ viewing_user_profile.id }}
+                'user_id':{{ viewing_user.id }}
             });
             $(this).prop('disabled', true);
             $(this).html('<i class="bigger-120 icon-spinner icon-spin white"></i><span class="bigger-110"></span>')
