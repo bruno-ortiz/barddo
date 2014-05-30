@@ -33,12 +33,12 @@ class MockRequest(object):
         return '%s%s' % (current_site.domain, relative_url)
 
 
-def _build_url(request, obj_or_url):
+def _build_url(request, obj_or_url, force_raw=False):
     if obj_or_url is not None:
         if isinstance(obj_or_url, ImageFieldFile):
             return request.build_absolute_uri(obj_or_url.url)
         elif isinstance(obj_or_url, Model):
-            if DJANGO_BITLY:
+            if not force_raw and DJANGO_BITLY:
                 return bitlify(obj_or_url)
             else:
                 return request.build_absolute_uri(obj_or_url.get_absolute_url())
@@ -114,12 +114,13 @@ def post_to_gplus(context, obj_or_url=None, link_text='Post to GooglePlus'):
 
 
 @register.inclusion_tag('open-graph.html', takes_context=True)
-def render_opengraph_header(context, obj_or_url, title=None, image=None):
+def render_opengraph_header(context, obj_or_url, title=None, description=None, image=None):
     request = context.get('request', MockRequest())
 
     context['facebook_api_key'] = settings.SOCIAL_AUTH_FACEBOOK_KEY
-    context['object_url'] = _build_url(request, obj_or_url)
+    context['object_url'] = _build_url(request, obj_or_url, True)
     context['object_title'] = title if title is not None else obj_or_url
-    context['object_image'] = _build_url
+    context['object_image'] = _build_url(request, image)
+    context['object_description'] = description
 
     return context
