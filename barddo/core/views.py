@@ -3,11 +3,10 @@ import json
 import os
 import datetime
 
-from django.conf import settings
 from django.views.generic import View
+
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from social.backends.google import GooglePlusAuth
 
 from .models import Collection, Work
 from .exceptions import InvalidFileUploadError, ChangeOnObjectNotOwnedError
@@ -33,11 +32,6 @@ class IndexView(ProfileAwareView):
         trending_works = self.get_trending_works(barddo_user)
         context = {"next_url": next_url, "new_works": new_works, "rising_works": rising_works,
                    "trending_works": trending_works}
-        if not barddo_user:
-            plus_scope = ' '.join(GooglePlusAuth.DEFAULT_SCOPE)
-            plus_id = settings.SOCIAL_AUTH_GOOGLE_PLUS_KEY
-            context['plus_scope'] = plus_scope
-            context['plus_id'] = plus_id
         return super(IndexView, self).get(request, **context)
 
     def get_new_works(self, user):
@@ -69,9 +63,9 @@ class IndexView(ProfileAwareView):
 
 index = IndexView.as_view()
 
-###
-### Artist Dashboard
-###
+# ##
+# ## Artist Dashboard
+# ##
 
 
 class ArtistDashboardView(LoginRequiredMixin, ProfileAwareView):
@@ -117,9 +111,9 @@ class CollectionDetailView(LoginRequiredMixin, ProfileAwareView):
 collection_detail = CollectionDetailView.as_view()
 
 
-###
-### Work sorted upload
-###
+# ##
+# ## Work sorted upload
+# ##
 
 
 class UploadWorkPageView(LoginRequiredMixin, View):
@@ -258,9 +252,9 @@ remove_work_page = RemoveWorkPageView.as_view()
 
 
 
-###
-### Docs
-###
+# ##
+# ## Docs
+# ##
 class AboutUsView(ProfileAwareView):
     template_name = 'docs/about-us.html'
 
