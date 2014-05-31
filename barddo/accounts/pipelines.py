@@ -2,8 +2,8 @@
 import json
 from urllib2 import urlopen, HTTPError, Request
 import datetime
-
 from PIL import Image
+
 from django.core.files.base import ContentFile
 from django.template.defaultfilters import slugify
 from facepy.graph_api import GraphAPI
@@ -24,6 +24,12 @@ def post_user_creation(backend, user, response, is_new=False, **kwargs):
         # TODO: send a welcome message
 
 
+def create_user_profile(backend, user, response, is_new=False, **kwargs):
+    if is_new:
+        profile = BarddoUserProfile(user=user)
+        profile.save()
+
+
 def get_avatar(backend, user, response, is_new=False, **kwargs):
     """
     User authentication pipeline step to get user picture from social network, only on first login
@@ -40,7 +46,7 @@ def get_avatar(backend, user, response, is_new=False, **kwargs):
                 avatar = urlopen(url).read()
             except HTTPError:
                 avatar = Image.open(settings.STATIC_URL + 'avatars/unknown_avatar.png')
-            profile = BarddoUserProfile(user=user)
+            profile = user.profile
             profile.avatar.save(slugify(user.username + " social") + '.jpg', ContentFile(avatar))
             profile.save()
 
@@ -74,7 +80,7 @@ def get_gender(backend, user, response, is_new=False, **kwargs):
             gender = response.get('gender', 'Male')[:1]
         elif backend.__class__ is google.GooglePlusAuth:
             gender = response.get('gender', 'Male')[:1]
-            
+
         if gender:
             profile = user.profile
             profile.gender = gender.upper()
