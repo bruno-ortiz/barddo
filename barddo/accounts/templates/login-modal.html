@@ -12,7 +12,7 @@
             <div class="modal-body">
                 <div class="row">
                     <a id="facebook-login"
-                       href="{% url 'social:begin' "facebook" %}{% if next_url %}?next={{ next_url }}{% endif %}"
+                       href="{% url 'social:begin' "facebook" %}?next={% if next_url %}{{ next_url }}{% else %}{{ request.get_full_path }}{% endif %}"
                        class="btn btn-block facebook-color">
                         <i class="icon-facebook-sign"></i>
                         {% trans "Login with Facebook" %}
@@ -31,8 +31,8 @@
                         {% trans "Login with Google" %}
                     </button>
 
-                    <form id="google-plus" method="post" action="{% url 'social:complete' "google-plus" %}
-                            {% if next_url %}?next={{ next_url }}{% endif %}">
+                    <form id="google-plus" method="post" action="
+                            {% url 'social:complete' "google-plus" %}?next={% if next_url %}{{ next_url }}{% else %}{{ request.get_full_path }}{% endif %}">
                         {% csrf_token %}
                         <input id="at" type="hidden" name="access_token" value=""/>
                         <input id="code" type="hidden" name="code" value=""/>

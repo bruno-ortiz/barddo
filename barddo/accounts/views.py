@@ -1,6 +1,8 @@
 import json
 
+from django.conf import settings
 from django.contrib.auth import logout
+
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -10,6 +12,7 @@ from django.views.generic.detail import SingleObjectMixin
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.html import escape
 from django.views.generic import View
+from social.backends.google import GooglePlusAuth
 
 from .exceptions import UserNotProvided
 from accounts.models import BarddoUser
@@ -17,9 +20,9 @@ from follow.models import Follow
 from feed.models import UserFeed
 
 
-##
+# #
 # Mixins
-##
+# #
 class LoginRequiredMixin(object):
     """
     Mixin to be used on login required views composition
@@ -44,7 +47,11 @@ class UserContextMixin(ContextMixin):
         if user.is_authenticated():
             context['avatar'] = user.profile.avatar
             context['username'] = user.username
-
+        else:
+            plus_scope = ' '.join(GooglePlusAuth.DEFAULT_SCOPE)  # TODO: Mover para um GoogleAuthMixin?
+            plus_id = settings.SOCIAL_AUTH_GOOGLE_PLUS_KEY
+            context['plus_scope'] = plus_scope
+            context['plus_id'] = plus_id
         context.update(kwargs)
         return super(UserContextMixin, self).get_context_data(**context)
 
@@ -60,9 +67,9 @@ class ProfileAwareView(UserContextMixin, TemplateResponseMixin, View):
         return super(ProfileAwareView, self).render_to_response(context)
 
 
-##
+# #
 # Authentication Views
-##
+# #
 class LogoutView(View):
     """
     User logout from system
@@ -70,7 +77,7 @@ class LogoutView(View):
 
     def get(self, request, *args, **kwargs):
         logout(request)
-        return HttpResponseRedirect(reverse('core.views.index'))
+        return HttpResponseRedirect(reverse('core.index'))
 
 
 class UserProfileView(LoginRequiredMixin, SingleObjectMixin, ProfileAwareView):
@@ -106,9 +113,9 @@ class UserProfileView(LoginRequiredMixin, SingleObjectMixin, ProfileAwareView):
         return super(UserProfileView, self).render_to_response(context)
 
 
-##
+# #
 # Ajax views
-##
+# #
 _is_true = lambda value: bool(value) and value.lower() not in ('false', '0')
 
 
