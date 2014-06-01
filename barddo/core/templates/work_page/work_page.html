@@ -9,9 +9,14 @@
 
 {% block header %}
     {% trans " - On Barddo" as suffix %}
-    {% render_opengraph_header work work.title|add:suffix work.cover %}
-    <link rel="stylesheet" href="{% static "css/bottom.css" %}"/>
+    {% render_opengraph_header work work.title|add:suffix work.summary work.cover %}
+
+    {% compress css %}
+        <link rel="stylesheet" href="{% static "css/bottom.css" %}"/>
+    {% endcompress %}
 {% endblock %}
+
+
 
 {% block breadcrumbs %}
     <ul class="breadcrumb">
@@ -131,7 +136,7 @@
                                     <div class="profile-info-name"> {% trans "Author" %}</div>
 
                                     <div class="profile-info-value">
-                                        <span><a href="{{ work.author.get_url }}"><i class="icon-user"></i> {{ work.author.get_full_name }}</a></span>
+                                        <span><a href="{{ work.author.user_url }}"><i class="icon-user"></i> {{ work.author.get_full_name }}</a></span>
                                     </div>
                                 </div>
                             </div>
