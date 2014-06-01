@@ -33,7 +33,7 @@ class CreatePayment(LoginRequiredMixin, View):
 
         processor = PaymentProcessor()
         payment_method = PaymentMethod.objects.get(pk=self.PAYPAL_METHOD_ID)
-        return_url = request.build_absolute_uri(reverse('payment.paypal.execute'))
+        return_url = request.build_absolute_uri(reverse('payments.paypal.execute'))
         cancel_url = request.build_absolute_uri(reverse('core.index'))
         payment = processor.create_payment(purchase, payment_method, return_url=return_url, cancel_url=cancel_url)
 

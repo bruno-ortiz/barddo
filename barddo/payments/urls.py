@@ -7,5 +7,5 @@ urlpatterns = patterns(
     '',
     url(r'^payments/create$', CreatePayment.as_view(), name='payments.create'),
 
-    url(r'^other/payment/urls$', include('payments.paypal.urls')),
+    url(r'^', include('payments.paypal.urls')),
 )

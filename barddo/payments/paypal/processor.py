@@ -67,7 +67,7 @@ class PaypalProcessor(object):
     @staticmethod
     def __create_items(purchase):
         items = []
-        for i in purchase.items:
+        for i in purchase.items.all():
             item = {'name': i.work.title, 'price': i.price, 'currency': 'USD', 'quantity': 1}  # TODO: detect the currency from the user
             items.append(item)
         return items
