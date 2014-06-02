@@ -34,7 +34,7 @@ class PaypalProcessor(object):
                 "cancel_url": kwargs.get('cancel_url')
             },
             "transactions": [{"item_list": {"items": items},
-                              "amount": {"total": purchase.total,
+                              "amount": {"total": str(purchase.total),
                                          "currency": "USD"},  # TODO: detect the currency from the user
                               "description": "Purchase {}".format(purchase.id)}]
         })
@@ -68,6 +68,6 @@ class PaypalProcessor(object):
     def __create_items(purchase):
         items = []
         for i in purchase.items.all():
-            item = {'name': i.work.title, 'price': i.price, 'currency': 'USD', 'quantity': 1}  # TODO: detect the currency from the user
+            item = {'name': i.work.title, 'price': str(i.price), 'currency': 'USD', 'quantity': '1'}  # TODO: detect the currency from the user
             items.append(item)
         return items
