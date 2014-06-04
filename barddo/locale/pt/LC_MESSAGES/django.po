@@ -964,15 +964,15 @@ msgid "Work Information"
 msgstr "Informações da Obra"
 
 #: core/templates/modals/collection_detail.html:64
-msgid "Title:"
+msgid "Title"
 msgstr "Título"
 
 #: core/templates/modals/collection_detail.html:73
-msgid "Number:"
+msgid "Number"
 msgstr "Número"
 
 #: core/templates/modals/collection_detail.html:82
-msgid "Summary:"
+msgid "Summary"
 msgstr "Sumário"
 
 #: core/templates/modals/collection_detail.html:100

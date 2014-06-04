@@ -288,7 +288,7 @@ class Work(models.Model):
         return unicode(self.collection) + u" - " + self.title + u" #" + unicode(self.unit_count)
 
     class Meta:
-        unique_together = (("collection", "unit_count"))
+        unique_together = ("collection", "unit_count")
         index_together = [["title", "summary"], ]
 
         # TODO: work tags

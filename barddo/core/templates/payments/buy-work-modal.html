@@ -1,33 +1,41 @@
 {% load i18n %}
 
 <div class="modal fade" id="buyWorkModal" tabindex="-1" role="dialog" aria-labelledby="buyWorkLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="buyWorkLabel">{% trans "You dont have this comic, yet!" %}</h4>
-            </div>
-            <div class="modal-body">
-                <img src="{{ work.cover.url }}" class="pull-left"/>
-                <span class="pull-left">{{ work.title }}</span>
-
-                <p class="pull-left">{{ work.summary }}</p>
-
-                <span class="bolder blue pull-left">{{ work.price }}</span>
-
-                <form id="paymentForm" class="form-horizontal" role="form" action="{% url "payments.create" %}">
-                    <div class="checkbox">
-                        <label>
-                            <input name="form-field-checkbox" type="checkbox" class="ace">
-                            <span class="lbl"> {% trans "I agree with the terms of use!" %}</span>
-                            <input type="hidden" name="work_id" value="{{ work.id }}">
-                        </label>
+            <div class="modal-body no-padding">
+                <div class="row">
+                    <div class="row col-lg-6">
+                        <div class="height-auto pull-left">
+                            <img src="{{ work.cover.url }}" class="work-image-thumb"/>
+                        </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Close" %}</button>
-                <button id="joinButton" type="button" class="btn disabled btn-primary">{% trans "Pay with paypal" %}</button>
+                    <div class="col-lg-6 no-padding-right">
+                        <button type="button" class="custom-close close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <div class="text-center" style="border-bottom: 1px solid rgba(71, 71, 82, 0.26);">
+                            <h3 class="bolder margin-top-10">{{ work.title }}</h3>
+                        </div>
+                        <div class="padding-lr-10 margin-top-10">
+                            <label class="bolder">{% trans "Summary" %}:</label>
+
+                            <p class="work-summary-height">{{ work.summary }}</p>
+                        </div>
+                        <div class="padding-lr-10">
+                            <label class="bolder">{% trans "Price" %}:</label>
+                            <span class="bolder blue">${{ work.price }}</span>
+                        </div>
+                        <form id="paymentForm" class="form-horizontal" role="form" action="{% url "payments.create" %}">
+                            <div class="checkbox no-padding-left">
+                                <label>
+                                    <input name="form-field-checkbox" type="checkbox" class="ace">
+                                    <span class="lbl"> {% trans "I agree with the terms of use!" %}</span>
+                                    <input type="hidden" name="work_id" value="{{ work.id }}">
+                                </label>
+                            </div>
+                        </form>
+                        <button id="joinButton" type="button" class="btn disabled btn-primary btn-block margin-top-10">{% trans "Buy with paypal" %}</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

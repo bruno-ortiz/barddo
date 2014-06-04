@@ -243,3 +243,31 @@ footer {
     cursor: pointer;
     cursor: hand;
 }
+
+.padding-lr-10 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.custom-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding-top: 5px !important;
+    font-size: 30px;
+}
+
+.margin-top-10 {
+    margin-top: 10px !important;
+}
+
+.work-summary-height {
+    overflow: auto;
+    max-height: 95px;
+    height: 95px;
+}
+
+.work-image-thumb {
+    max-height: 315px !important;
+    max-width: 275px !important;
+}
