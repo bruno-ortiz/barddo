@@ -27,7 +27,7 @@ DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 # ######### END DEBUG CONFIGURATION
 
-########## MANAGER CONFIGURATION
+# ######### MANAGER CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
     ('Israel Crisanto', 'israel.crisanto@gmail.com'),
@@ -38,7 +38,7 @@ ADMINS = (
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
-########## END MANAGER CONFIGURATION
+# ######### END MANAGER CONFIGURATION
 
 ########## DATABASE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
@@ -178,6 +178,7 @@ TEMPLATE_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'shards', 'templates')),
     path.normpath(path.join(SITE_ROOT, 'publishing', 'templates')),
     path.normpath(path.join(SITE_ROOT, 'accounts', 'templates')),
+    path.normpath(path.join(SITE_ROOT, 'payments', 'templates')),
 )
 ########## END TEMPLATE CONFIGURATION
 

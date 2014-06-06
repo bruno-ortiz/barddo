@@ -24,7 +24,7 @@
                             <label class="bolder">{% trans "Price" %}:</label>
                             <span class="bolder blue">${{ work.price }}</span>
                         </div>
-                        <form id="paymentForm" class="form-horizontal" role="form" action="{% url "payments.create" %}">
+                        <form id="paymentForm" class="form-horizontal" role="form" action="{% url "payment.create" %}">
                             <div class="checkbox no-padding-left">
                                 <label>
                                     <input name="form-field-checkbox" type="checkbox" class="ace">

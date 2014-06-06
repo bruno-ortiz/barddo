@@ -4,7 +4,6 @@ import os
 import datetime
 
 from django.views.generic import View
-
 from django.http import HttpResponse
 from django.shortcuts import redirect
 
@@ -258,28 +257,13 @@ remove_work_page = RemoveWorkPageView.as_view()
 class AboutUsView(ProfileAwareView):
     template_name = 'docs/about-us.html'
 
-    def get_context_data(self, **kwargs):
-        context = {}
-        context.update(kwargs)
-        return super(AboutUsView, self).get_context_data(**context)
-
 
 class TermsView(ProfileAwareView):
     template_name = 'docs/terms.html'
 
-    def get_context_data(self, **kwargs):
-        context = {}
-        context.update(kwargs)
-        return super(TermsView, self).get_context_data(**context)
-
 
 class HelpView(ProfileAwareView):
     template_name = 'docs/help.html'
-
-    def get_context_data(self, **kwargs):
-        context = {}
-        context.update(kwargs)
-        return super(HelpView, self).get_context_data(**context)
 
 
 class WorkPageView(ProfileAwareView):

@@ -20,14 +20,14 @@
 
                 <div class="barddo-nav-search pull-left" id="barddo-nav-search">
                     <form class="form-search" action="{% url 'search.result' %}" method="get">
-                                <span class="input-icon">
-                                    <input type="text"
-                                           placeholder="{% trans "Search people, collections, mangas, HQs etc..." %}"
-                                           class="barddo-nav-search-input"
-                                           name="t"
-                                           id="barddo-nav-search-input" autocomplete="off"/>
-                                    <i class="icon-search barddo-nav-search-icon"></i>
-                                </span>
+                        <span class="input-icon">
+                            <input type="text"
+                                   placeholder="{% trans "Search people, collections, mangas, HQs etc..." %}"
+                                   class="barddo-nav-search-input"
+                                   name="t"
+                                   id="barddo-nav-search-input" autocomplete="off"/>
+                            <i class="icon-search barddo-nav-search-icon"></i>
+                        </span>
                     </form>
                 </div>
 
@@ -73,7 +73,8 @@
                             <li class="dropdown light-blue hidden-xs">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <img class="nav-user-photo" src="{{ MEDIA_URL }}{{ avatar }}" alt="{% trans "User Photo" %}"/>
-                                    <span class="user-info"><small>{% trans "Welcome," %}</small>
+                                    <span class="user-info">
+                                        <small>{% trans "Welcome," %}</small>
                                         {{ username }}</span>
                                     <i class="icon-caret-down"></i>
                                 </a>
@@ -108,12 +109,13 @@
         <!-- /.container-fluid -->
 
     </nav>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(document).on("click", ".login-required", function () {
-                $('#loginModal').modal('show');
+    {% if not user.is_authenticated %}
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(document).on("click", ".login-required", function () {
+                    $('#loginModal').modal('show');
+                });
             });
-        });
-    </script>
+        </script>
+    {% endif %}
 {% endblock %}

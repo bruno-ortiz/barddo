@@ -3,7 +3,7 @@ import datetime
 from django.core.urlresolvers import reverse
 from django.views.generic import View
 
-from accounts.views import LoginRequiredMixin
+from accounts.views import LoginRequiredMixin, ProfileAwareView
 from core.models import Work
 from payments.models import Item, Purchase, PurchaseStatus, PaymentMethod
 from payments.processor import PaymentProcessor
@@ -41,3 +41,7 @@ class CreatePayment(LoginRequiredMixin, View):
 
         request.session['payment_id'] = payment.code
         return processor.execute_payment(payment)
+
+
+class PaymentDoesNotExist(LoginRequiredMixin, ProfileAwareView):
+    template_name = 'no_payments.html'
