@@ -1,0 +1,25 @@
+{% extends 'main_template.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="{% url "core.index" %}">{% trans "Home" %}</a>
+        </li>
+        <li class="active">{% trans "Thanks" %}</li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="page-content">
+        <div class="center">
+            <img src="{% static "images/art/happy-face.png" %}" style="padding-top: 50px"/>
+
+            <h1 class="red">{% trans "Thank you for your purchase!" %}</h1>
+
+            <h2>{% trans "Enjoy your reading!" %}</h2>
+        </div>
+    </div>
+{% endblock %}

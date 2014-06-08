@@ -10,6 +10,7 @@ from django.shortcuts import redirect
 from .models import Collection, Work
 from .exceptions import InvalidFileUploadError, ChangeOnObjectNotOwnedError
 from accounts.views import ProfileAwareView, LoginRequiredMixin
+from payments.models import Item
 from publishing.views import publisher_landpage
 from rating.models import Rating, user_likes
 
@@ -29,8 +30,13 @@ class IndexView(ProfileAwareView):
         new_works = self.get_new_works(barddo_user)
         rising_works = self.get_rising_works(barddo_user)
         trending_works = self.get_trending_works(barddo_user)
-        context = {"next_url": next_url, "new_works": new_works, "rising_works": rising_works,
+        context = {"next_url": next_url,
+                   "new_works": new_works,
+                   "rising_works": rising_works,
                    "trending_works": trending_works}
+        if barddo_user:
+            owned_works = self.get_owned_works(barddo_user)
+            context['owned_works'] = owned_works
         return super(IndexView, self).get(request, **context)
 
     def get_new_works(self, user):
@@ -58,6 +64,10 @@ class IndexView(ProfileAwareView):
 
     def get_relative_date(self, delta):
         return datetime.datetime.now() + datetime.timedelta(days=delta)
+
+    def get_owned_works(self, barddo_user):
+        items = Item.objects.owned_by(barddo_user)
+        return map(lambda item: item.work, items)
 
 
 index = IndexView.as_view()

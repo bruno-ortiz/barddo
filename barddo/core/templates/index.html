@@ -34,6 +34,13 @@
                     <i class="icon icon icon-th-large"></i> {% trans "New" %}
                 </a>
             </li>
+            {% if user.is_authenticated %}
+                <li>
+                    <a href="#filter" data-option-value=".collection-owned">
+                        <i class="icon icon icon-th-large"></i> {% trans "Owned" %}
+                    </a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 
@@ -98,6 +105,11 @@
                         {% for work in trending_works %}
                             {% work_element work "collection-trending" %}
                         {% endfor %}
+                        {% if user.is_authenticated %}
+                            {% for work in owned_works %}
+                                {% work_element work "collection-owned" %}
+                            {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -200,7 +212,7 @@
                 template: '<div class="popover work-popover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
             });
 
-            $(".boxcontainer").on("mouseenter",function () {
+            $(".boxcontainer").on("mouseenter", function () {
                 var _this = this;
                 var work_id = $(this).closest('div[data-work-id]').attr('data-work-id');
                 $(".vote", _this).popover("show");

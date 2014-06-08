@@ -15,13 +15,14 @@ from easy_thumbnails.files import get_thumbnailer
 from django.core.urlresolvers import reverse
 
 from accounts.models import BarddoUser
+from payments.models import FINISHED_PURCHASE_ID
 from rating.models import Rating
 from search.search_manager import SearchManager
 
 
-class RatingManager(Manager):
+class WorkManager(Manager):
     def get_queryset(self):
-        return RatingQuerySet(self.model, using=self._db)
+        return WorkQuerySet(self.model, using=self._db)
 
     def total_likes(self):
         return self.get_queryset().total_likes()
@@ -30,10 +31,13 @@ class RatingManager(Manager):
         return self.get_queryset().liked_by(user)
 
     def liked_after(self, date):
-        return self.liked_after(date)
+        return self.get_queryset().liked_after(date)
+
+    def owned_by(self, user):
+        return self.get_queryset().filter(Q(items__purchase__status=FINISHED_PURCHASE_ID, items__purchase__buyer=user) | Q(author=user)).distinct()
 
 
-class RatingQuerySet(QuerySet):
+class WorkQuerySet(QuerySet):
     def total_likes(self):
         total_likes = Rating.objects.filter(like=True).annotate(work_likes=Count("like")) \
             .values("work_likes").extra(where=["core_work.id = rating_rating.work_id"]).query
@@ -106,7 +110,7 @@ class Collection(models.Model):
     author = models.ForeignKey(BarddoUser, null=False, db_index=True)
     cover = models.ImageField(_('Cover Art'), upload_to=get_collection_cover_path, blank=True, null=True)
 
-    objects = RatingManager()
+    objects = WorkManager()
     search_manager = SearchManager()
 
     def get_total_works(self):
@@ -181,7 +185,7 @@ class Work(models.Model):
     total_pages = models.SmallIntegerField(_('Total Pages'))
     publish_date = models.DateTimeField(_('Publish Date'), db_index=True)
 
-    objects = RatingManager()
+    objects = WorkManager()
     search_manager = SearchManager()
 
     def is_free(self):

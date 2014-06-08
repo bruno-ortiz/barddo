@@ -45,3 +45,7 @@ class CreatePayment(LoginRequiredMixin, View):
 
 class PaymentDoesNotExist(LoginRequiredMixin, ProfileAwareView):
     template_name = 'no_payments.html'
+
+
+class PaymentThanks(LoginRequiredMixin, ProfileAwareView):
+    template_name = 'thanks.html'

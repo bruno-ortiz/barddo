@@ -1,7 +1,7 @@
+# coding=utf-8
 import datetime
 
 from django.conf import settings
-
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
@@ -30,8 +30,8 @@ class ExecutePayment(LoginRequiredMixin, TemplateResponseMixin, View):
                 purchase = payment.purchase
                 purchase.status = PurchaseStatus.objects.get(pk=FINISHED_PURCHASE_ID)
                 purchase.save()
-                payment.save()
-                return HttpResponseRedirect(reverse('core.index'))
+                payment.save()  # TODO: Precisa mesmo? se não precisar remover no proximo commit
+                return HttpResponseRedirect(reverse('payment.thanks'))  # TODO: redirecionar pra uma paginas melhor?
             else:
                 context = {'payment_error': _('It was not possible to confirm your payment')}
                 return super(ExecutePayment, self).render_to_response(context, template_name='payment_error.html')

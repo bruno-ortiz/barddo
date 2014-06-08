@@ -42,5 +42,5 @@ class Item(models.Model):
         unique_together = ('purchase', 'work')
 
     purchase = models.ForeignKey(Purchase, related_name='items')
-    work = models.ForeignKey('core.Work')
+    work = models.ForeignKey('core.Work', related_name='items')
     price = models.DecimalField(max_digits=6, decimal_places=2)
