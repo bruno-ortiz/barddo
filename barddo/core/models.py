@@ -15,7 +15,7 @@ from easy_thumbnails.files import get_thumbnailer
 from django.core.urlresolvers import reverse
 
 from accounts.models import BarddoUser
-from payments.models import FINISHED_PURCHASE_ID
+from payments.models import FINISHED_PURCHASE_ID, Purchase
 from rating.models import Rating
 from search.search_manager import SearchManager
 
@@ -190,6 +190,9 @@ class Work(models.Model):
 
     def is_free(self):
         return self.price == 0.0
+
+    def is_owned_by(self, user):
+        return Purchase.objects.is_owned_by(self,user)
 
     def get_absolute_url(self):
         """

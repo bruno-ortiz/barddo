@@ -23,13 +23,13 @@ class PurchaseStatus(models.Model):
 
 
 class PurchaseManager(models.Manager):
-    def is_owned_by(self, work_id, user):
-        return self.get_queryset().filter(buyer=user, status=FINISHED_PURCHASE_ID, items__work=work_id).exists()
+    def is_owned_by(self, work, user):
+        return self.get_queryset().filter(buyer=user, status=FINISHED_PURCHASE_ID, items__work=work).exists()
 
 
 class Purchase(models.Model):
     date = models.DateField(db_index=True)
-    total = models.DecimalField(max_digits=10, decimal_places=2)
+    total = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
     payment = models.OneToOneField(Payment, null=True)
     buyer = models.ForeignKey(AUTH_USER)
     status = models.ForeignKey(PurchaseStatus)

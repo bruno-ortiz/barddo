@@ -27,11 +27,11 @@ class ExecutePayment(LoginRequiredMixin, TemplateResponseMixin, View):
             if paypal_payment.execute({"payer_id": payer_id}):
                 payment = Payment.objects.get(code=payment_id)
                 payment.settled_date = datetime.datetime.now()
+                payment.save()
                 purchase = payment.purchase
                 purchase.status = PurchaseStatus.objects.get(pk=FINISHED_PURCHASE_ID)
                 purchase.save()
-                payment.save()  # TODO: Precisa mesmo? se não precisar remover no proximo commit
-                return HttpResponseRedirect(reverse('payment.thanks'))  # TODO: redirecionar pra uma paginas melhor?
+                return HttpResponseRedirect(reverse('payment.thanks'))
             else:
                 context = {'payment_error': _('It was not possible to confirm your payment')}
                 return super(ExecutePayment, self).render_to_response(context, template_name='payment_error.html')

@@ -4,7 +4,6 @@ from django.views.generic import View
 from django.views.generic.base import TemplateResponseMixin
 from django.db.models import Max
 
-from payments.models import Purchase
 from shards.decorators import register_shard
 from .forms import CollectionForm, WorkForm, CoverOnlyWorkForm
 from .models import Collection, Work
@@ -16,10 +15,14 @@ class ReaderShard(TemplateResponseMixin, View):
         Render a simple reader.
     """
 
+    @staticmethod
+    def can_read(user, work):
+        return work.is_free() or work.is_owned_by(user) or user.is_staff or work.author == user
+
     def post(self, request, work_id, *args, **kwargs):
         work = Work.objects.get(pk=work_id)
         context = {}
-        if work.is_free() or Purchase.objects.is_owned_by(work_id, request.user):
+        if self.can_read(request.user, work):
             self.template_name = 'reader/reader-modal.html'
         else:
             self.template_name = 'payments/buy-work-modal.html'

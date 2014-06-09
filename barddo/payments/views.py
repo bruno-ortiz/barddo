@@ -1,7 +1,10 @@
+# coding=utf-8
 import datetime
 
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
 from django.views.generic import View
+from django.views.generic.base import TemplateResponseMixin
 
 from accounts.views import LoginRequiredMixin, ProfileAwareView
 from core.models import Work
@@ -9,17 +12,23 @@ from payments.models import Item, Purchase, PurchaseStatus, PaymentMethod
 from payments.processor import PaymentProcessor
 
 
-class CreatePayment(LoginRequiredMixin, View):
+class CreatePayment(LoginRequiredMixin, TemplateResponseMixin, View):
     PENDING_ID = 1
     PAYPAL_METHOD_ID = 1
 
     def get(self, request):
         work_ids = request.GET.getlist('work_id', [])
         works = Work.objects.filter(id__in=work_ids)
-
         user = request.user
+        for work in works:
+            if work.is_owned_by(user):
+                # FIXME: Essa validação é temporaria, o certo é quando tivermos um carrinho ter uma pagina de confirmação da compra
+                # FIXME: onde essas validações serão feitas permitindo o usuário alterar o carrinho antes de finalizar a compra.
+                self.template_name = 'payment_error.html'
+                context = {'payment_error': _('You already owns this HQ!')}
+                return super(CreatePayment, self).render_to_response(context)
         pending_status = PurchaseStatus.objects.get(pk=self.PENDING_ID)
-        purchase = Purchase(date=datetime.datetime.now(), buyer=user, status=pending_status, total=0.0)
+        purchase = Purchase(date=datetime.datetime.now(), buyer=user, status=pending_status)
         purchase.save()
 
         item_list = []
@@ -40,6 +49,7 @@ class CreatePayment(LoginRequiredMixin, View):
         payment = processor.create_payment(purchase, payment_method, return_url=return_url, cancel_url=cancel_url)
 
         request.session['payment_id'] = payment.code
+        request.session['work_ids'] = work_ids
         return processor.execute_payment(payment)
 
 
@@ -49,3 +59,7 @@ class PaymentDoesNotExist(LoginRequiredMixin, ProfileAwareView):
 
 class PaymentThanks(LoginRequiredMixin, ProfileAwareView):
     template_name = 'thanks.html'
+
+    def get(self, request, *args, **kwargs):
+        kwargs['work_ids'] = request.session['work_ids']
+        return super(PaymentThanks, self).get(request, *args, **kwargs)
