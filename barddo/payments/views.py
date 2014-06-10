@@ -25,7 +25,7 @@ class CreatePayment(LoginRequiredMixin, TemplateResponseMixin, View):
                 # FIXME: Essa validação é temporaria, o certo é quando tivermos um carrinho ter uma pagina de confirmação da compra
                 # FIXME: onde essas validações serão feitas permitindo o usuário alterar o carrinho antes de finalizar a compra.
                 self.template_name = 'payment_error.html'
-                context = {'payment_error': _('You already owns this HQ!')}
+                context = {'payment_error': _('You own this comic book!')}
                 return super(CreatePayment, self).render_to_response(context)
         pending_status = PurchaseStatus.objects.get(pk=self.PENDING_ID)
         purchase = Purchase(date=datetime.datetime.now(), buyer=user, status=pending_status)

@@ -20,7 +20,7 @@
             <h1 class="red">{% trans "Thank you for your purchase!" %}</h1>
 
             {% for work_id in work_ids %}
-                <h2><a href="{% url "core.work.detail" work_id %}">{% trans "Click here to see the item!" %}</a></h2>
+                <h2><a href="{% url "core.work.detail" work_id %}">{% trans "Click here to see the comic!" %}</a></h2>
                 {# TODO: melhorar esse layout quando possuir multiplos items #}
             {% endfor %}
 

@@ -47,7 +47,7 @@ class PaypalProcessor(object):
             payment.save()
 
             return payment
-        raise PaymentError(_("We are sorry but you're payment couldn't be created!"))
+        raise PaymentError(_("We are sorry but your payment could not be processed!"))
 
     def execute_payment(self, payment):
         """
