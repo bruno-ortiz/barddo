@@ -190,6 +190,7 @@ MIDDLEWARE_CLASSES = (
     'accounts.middleware.LocaleMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'barddo.middleware.XsSharing'
 )
 ########## END MIDDLEWARE CONFIGURATION
 
@@ -235,6 +236,8 @@ THIRD_PARTY_APPS = (
     'django_bitly',
     'redis_metrics',
     'djcelery',
+    'rest_framework',
+    'rest_framework.authtoken',
 )
 
 # Apps specific for this project go here.
@@ -249,6 +252,7 @@ LOCAL_APPS = (
     'follow',
     'feed',
     'share',
+    'api',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -447,3 +451,24 @@ REDIS_METRICS_SOCKET_CONNECTION_POOL = None
 BROKER_URL = 'amqp://guest:guest@localhost//'  # unsecure, for now
 #### End of Celery Settings
 
+
+
+REST_FRAMEWORK = {
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+
+    # Use hyperlinked styles by default.
+    # Only used if the `serializer_class` attribute is not set on a view.
+    'DEFAULT_MODEL_SERIALIZER_CLASS':
+        'rest_framework.serializers.HyperlinkedModelSerializer',
+
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+
+    'PAGINATE_BY': 25
+}
