@@ -32,9 +32,11 @@ TEMPLATE_DEBUG = DEBUG
 ADMINS = (
     ('Israel Crisanto', 'israel.crisanto@gmail.com'),
     ('Bruno Ortiz', 'brunortiz11@gmail.com'),
-    ('Jose Almada', 'jovial1991@hotmail.com'),
-    ('Rafael Ortiz', 'rafa_ortiz11@hotmail.com')
+   # ('Jose Almada', 'jovial1991@hotmail.com'),
+   ('Rafael Ortiz', 'rafa_ortiz11@hotmail.com')
 )
+
+DEFAULT_FROM_EMAIL = 'israel.crisanto@gmail.com'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS

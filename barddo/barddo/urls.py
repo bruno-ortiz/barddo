@@ -33,7 +33,7 @@ urlpatterns = patterns(
     url(r'^i18n/', include('django.conf.urls.i18n')),
 
     # Custom Metrics
-    # url(r'^metrics/', staff_member_required(include('redis_metrics.urls'))), # Enable when secure
+    url(r'^metrics/', include('redis_metrics.urls')), # Enable when secure
 )
 
 urlpatterns += staticfiles_urlpatterns()
