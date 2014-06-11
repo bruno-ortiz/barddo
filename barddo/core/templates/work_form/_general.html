@@ -70,7 +70,8 @@
     <div class="col-xs-12 col-sm-9">
         <div>
             <div id="priceslider"></div>
-            <span id="current_price" class="blue no-border bolder pull-right">0.0</span> {# TODO: Tratar moeda local #}
+            <span id="current_price" class="blue no-border bolder pull-right">0.0</span>{# TODO: Tratar moeda local #}
+            <span class="blue bolder pull-right">R$</span>
             <input type="hidden" id="{{ work_form.price.auto_id }}" name="price" value="0.0">
         </div>
     </div>
@@ -119,7 +120,7 @@
             step: 0.10,
             slide: function (e, ui) {
                 $({{ work_form.price.auto_id }}).val(ui.value);
-                $('#current_price').html(ui.value)
+                $('#current_price').html(ui.value.toFixed(1))
             }
         });
     });

@@ -2,6 +2,7 @@
 import datetime
 
 from django.conf import settings
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
@@ -33,7 +34,7 @@ class ExecutePayment(LoginRequiredMixin, TemplateResponseMixin, View):
                 purchase.save()
                 return HttpResponseRedirect(reverse('payment.thanks'))
             else:
-                context = {'payment_error': _('It was not possible to confirm your payment')}
-                return super(ExecutePayment, self).render_to_response(context, template_name='payment_error.html')
+                messages.error(request, _('It was not possible to confirm your payment'))
+                return HttpResponseRedirect(reverse('payment.error'))
         else:
             return HttpResponseRedirect(reverse('payment.does.not.exist'))

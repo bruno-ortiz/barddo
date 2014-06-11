@@ -4,6 +4,8 @@ from django.views.generic import View
 from django.views.generic.base import TemplateResponseMixin
 from django.db.models import Max
 
+from core.signals import work_read
+
 from shards.decorators import register_shard
 from .forms import CollectionForm, WorkForm, CoverOnlyWorkForm
 from .models import Collection, Work
@@ -24,6 +26,7 @@ class ReaderShard(TemplateResponseMixin, View):
         context = {}
         if self.can_read(request.user, work):
             self.template_name = 'reader/reader-modal.html'
+            work_read.send(request.user, work=work)
         else:
             self.template_name = 'payments/buy-work-modal.html'
         context["work"] = work

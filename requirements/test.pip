@@ -21,4 +21,4 @@ fabric
 mysql-python
 django-jenkins
 mock
-paypalrestsdk
+paypalrestsdk=1.1.0

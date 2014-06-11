@@ -40,7 +40,7 @@ ADMINS = (
 MANAGERS = ADMINS
 # ######### END MANAGER CONFIGURATION
 
-########## DATABASE CONFIGURATION
+# ######### DATABASE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 # DATABASES = {
 #     'default': {
@@ -451,3 +451,4 @@ REDIS_METRICS_SOCKET_CONNECTION_POOL = None
 BROKER_URL = 'amqp://guest:guest@localhost//'  # unsecure, for now
 #### End of Celery Settings
 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'

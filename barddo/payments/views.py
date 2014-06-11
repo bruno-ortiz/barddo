@@ -1,10 +1,12 @@
 # coding=utf-8
 import datetime
 
+from django.contrib import messages
+
 from django.core.urlresolvers import reverse
+from django.http.response import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from django.views.generic import View
-from django.views.generic.base import TemplateResponseMixin
 
 from accounts.views import LoginRequiredMixin, ProfileAwareView
 from core.models import Work
@@ -12,7 +14,7 @@ from payments.models import Item, Purchase, PurchaseStatus, PaymentMethod
 from payments.processor import PaymentProcessor
 
 
-class CreatePayment(LoginRequiredMixin, TemplateResponseMixin, View):
+class CreatePayment(LoginRequiredMixin, View):
     PENDING_ID = 1
     PAYPAL_METHOD_ID = 1
 
@@ -24,9 +26,8 @@ class CreatePayment(LoginRequiredMixin, TemplateResponseMixin, View):
             if work.is_owned_by(user):
                 # FIXME: Essa validação é temporaria, o certo é quando tivermos um carrinho ter uma pagina de confirmação da compra
                 # FIXME: onde essas validações serão feitas permitindo o usuário alterar o carrinho antes de finalizar a compra.
-                self.template_name = 'payment_error.html'
-                context = {'payment_error': _('You own this comic book!')}
-                return super(CreatePayment, self).render_to_response(context)
+                messages.error(request, _('You own this comic book!'))
+                return HttpResponseRedirect(reverse('payment.error'))
         pending_status = PurchaseStatus.objects.get(pk=self.PENDING_ID)
         purchase = Purchase(date=datetime.datetime.now(), buyer=user, status=pending_status)
         purchase.save()
@@ -46,7 +47,7 @@ class CreatePayment(LoginRequiredMixin, TemplateResponseMixin, View):
         payment_method = PaymentMethod.objects.get(pk=self.PAYPAL_METHOD_ID)
         return_url = request.build_absolute_uri(reverse('payments.paypal.execute'))
         cancel_url = request.build_absolute_uri(reverse('core.index'))
-        payment = processor.create_payment(purchase, payment_method, return_url=return_url, cancel_url=cancel_url)
+        payment = processor.create_payment(purchase, payment_method, request=request, return_url=return_url, cancel_url=cancel_url)
 
         request.session['payment_id'] = payment.code
         request.session['work_ids'] = work_ids
@@ -55,6 +56,10 @@ class CreatePayment(LoginRequiredMixin, TemplateResponseMixin, View):
 
 class PaymentDoesNotExist(LoginRequiredMixin, ProfileAwareView):
     template_name = 'no_payments.html'
+
+
+class PaymentErrorView(LoginRequiredMixin, ProfileAwareView):
+    template_name = 'payment_error.html'
 
 
 class PaymentThanks(LoginRequiredMixin, ProfileAwareView):

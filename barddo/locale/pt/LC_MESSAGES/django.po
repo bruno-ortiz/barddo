@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Barddo Main Site\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-09 22:16-0300\n"
+"POT-Creation-Date: 2014-06-10 23:41-0300\n"
 "PO-Revision-Date: 2014-05-25 23:45-0300\n"
 "Last-Translator: Israel Crisanto <israel.crisanto@gmail.com>\n"
 "Language-Team: Barddo Team <israel.crisanto@gmail.com>\n"
@@ -1061,7 +1061,7 @@ msgstr "Qual o nome da sua obra?"
 msgid "What happens?"
 msgstr "O que acontece?"
 
-#: core/templates/work_form/_general.html:91
+#: core/templates/work_form/_general.html:92
 msgid "Who is the author"
 msgstr "Quem é o autor?"
 
@@ -1214,16 +1214,19 @@ msgstr "Método de pagamento"
 msgid "Purchase Status"
 msgstr "Status da compra"
 
-#: payments/views.py:28
-#, fuzzy
-msgid "You own this comic book!!"
+#: payments/views.py:29
+msgid "You own this comic book!"
 msgstr "Você já possui esta HQ!"
 
-#: payments/paypal/processor.py:50
+#: payments/paypal/processor.py:52
 msgid "We are sorry but your payment could not be processed!"
 msgstr "Nós sentimos muito mas seu pagamento não pôde ser precessado!"
 
-#: payments/paypal/views.py:36
+#: payments/paypal/processor.py:66
+msgid "Sorry, but an error occurred with paypal, we will verify immediately!"
+msgstr "Desculpe, mas um erro ocorreu com o paypal, iremos verificar imediatamente!"
+
+#: payments/paypal/views.py:37
 msgid "It was not possible to confirm your payment"
 msgstr "Não foi possível confirmar o seu pagamento"
 
@@ -1241,8 +1244,7 @@ msgid "If you think that this is an error, please"
 msgstr "Se você acha que isso é um erro, por favor"
 
 #: payments/templates/no_payments.html:22
-#: payments/templates/payment_error.html:23
-#, fuzzy
+#: payments/templates/payment_error.html:30
 msgid "contact us"
 msgstr "Entre em contato conosco"
 
@@ -1250,8 +1252,7 @@ msgstr "Entre em contato conosco"
 msgid "Sorry! An error occurred while processing your payment!"
 msgstr "Desculpe! Ocorreu um erro ao processar o seu pagamento!"
 
-#: payments/templates/payment_error.html:23
-#, fuzzy
+#: payments/templates/payment_error.html:30
 msgid "Please"
 msgstr "Por favor"
 

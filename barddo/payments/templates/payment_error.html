@@ -18,8 +18,15 @@
             <img src="{% static "images/art/sad-face.png" %}" style="padding-top: 50px"/>
 
             <h1 class="red bolder">{% trans "Sorry! An error occurred while processing your payment!" %}</h1>
-
-            <h3>{{ payment_error }}</h3>
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li>
+                            <h3>{{ message }}</h3>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
             <h4>{% trans "Please" %} <a id="contact-us" href="#">{% trans "contact us" %}!</a></h4>
         </div>
     </div>
