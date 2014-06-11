@@ -9,8 +9,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
+from accounts.models import BarddoUser
 from feed.models import UserFeed
-from .serializers import UserFeedSerializer
+from .serializers import UserFeedSerializer, UserFriendsSerializer, SimpleWorkSerializer
+from follow.models import Follow
+from core.models import Work
 
 
 class UserFeedViewSet(viewsets.ReadOnlyModelViewSet):
@@ -27,6 +30,40 @@ class UserFeedViewSet(viewsets.ReadOnlyModelViewSet):
         queryset = UserFeed.objects.feed_for_user(request.user)
         user = get_object_or_404(queryset, pk=pk)
         serializer = UserFeedSerializer(user)
+        return Response(serializer.data)
+
+
+class UserFriendsViewSet(viewsets.ReadOnlyModelViewSet):
+    model = BarddoUser
+    serializer_class = UserFriendsSerializer
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request):
+        queryset = Follow.objects.following(request.user, BarddoUser)
+        serializer = UserFriendsSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = Follow.objects.following(request.user, BarddoUser)
+        user = get_object_or_404(queryset, pk=pk)
+        serializer = UserFriendsSerializer(user)
+        return Response(serializer.data)
+
+
+class FavoritesViewSet(viewsets.ReadOnlyModelViewSet):
+    model = Work
+    serializer_class = SimpleWorkSerializer
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request):
+        queryset = Work.objects.liked_by(request.user)
+        serializer = SimpleWorkSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = Work.objects.liked_by(request.user)
+        work = get_object_or_404(queryset, pk=pk)
+        serializer = SimpleWorkSerializer(work)
         return Response(serializer.data)
 
 
