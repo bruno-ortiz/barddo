@@ -5,9 +5,9 @@ from django.http import HttpResponse
 from social.apps.django_app.utils import strategy
 from rest_framework.authtoken.models import Token
 from rest_framework import viewsets
+from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
 
 from accounts.models import BarddoUser
 from feed.models import UserFeed
@@ -17,66 +17,82 @@ from core.models import Work
 
 
 class UserFeedViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    Viewset for handling current user feed actions
+    """
     model = UserFeed
     serializer_class = UserFeedSerializer
     permission_classes = [IsAuthenticated]
 
     def list(self, request):
+        """
+        List every feed action from authenticated user
+        """
         queryset = UserFeed.objects.feed_for_user(request.user)
         serializer = UserFeedSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        queryset = UserFeed.objects.feed_for_user(request.user)
-        user = get_object_or_404(queryset, pk=pk)
-        serializer = UserFeedSerializer(user)
-        return Response(serializer.data)
+        """
+        Disable single item retrieve
+        """
+        return Response("Call not allowed", status=status.HTTP_404_NOT_FOUND)
 
 
 class UserFriendsViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    Viewset for handling current user followees
+    """
     model = BarddoUser
     serializer_class = UserFriendsSerializer
     permission_classes = [IsAuthenticated]
 
     def list(self, request):
+        """
+        List every followee from authenticated user
+        """
         queryset = Follow.objects.following(request.user, BarddoUser)
         serializer = UserFriendsSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        queryset = Follow.objects.following(request.user, BarddoUser)
-        user = get_object_or_404(queryset, pk=pk)
-        serializer = UserFriendsSerializer(user)
-        return Response(serializer.data)
+        """
+        Disable single item retrieve
+        """
+        return Response("Call not allowed", status=status.HTTP_404_NOT_FOUND)
 
 
 class FavoritesViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    Viewset for handling user favorite works via rest
+    """
     model = Work
     serializer_class = SimpleWorkSerializer
     permission_classes = [IsAuthenticated]
 
     def list(self, request):
+        """
+        List every favorite work
+        """
         queryset = Work.objects.liked_by(request.user)
         serializer = SimpleWorkSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        queryset = Work.objects.liked_by(request.user)
-        work = get_object_or_404(queryset, pk=pk)
-        serializer = SimpleWorkSerializer(work)
-        return Response(serializer.data)
+        """
+        Disable single item retrieve
+        """
+        return Response("Call not allowed", status=status.HTTP_404_NOT_FOUND)
 
-
-# Define an URL entry to point to this view, call it passing the
-# access_token parameter like ?access_token=<token>. The URL entry must
-# contain the backend, like this:
-#
-#   url(r'^register-by-token/(?P<backend>[^/]+)/$',
-#       'register_by_access_token')
 
 @strategy('social:complete')
 def register_by_access_token(request, backend):
-    # This view expects an access_token GET parameter
+    """
+    Handle social network registration and login, call it passing the
+    access_token parameter like ?access_token=<token>.
+
+    The URL entry must contain the backend
+    """
     social_token = request.GET.get('access_token')
     backend = request.strategy.backend
     user = backend.do_auth(social_token)
