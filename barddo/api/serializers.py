@@ -58,3 +58,19 @@ class SimpleWorkSerializer(ModelSerializer):
 
     class Meta:
         model = Work
+        fields = ('id', 'title', 'author', 'cover')
+
+
+class LikedWorkSerializer(SimpleWorkSerializer):
+    """
+    Serializer for a few fields on user favorite works, user for work list
+    """
+
+    liked = SerializerMethodField("was_liked_by_user")
+
+    def was_liked_by_user(self, work):
+        return work.liked == 1
+
+    class Meta:
+        model = Work
+        fields = ('id', 'title', 'author', 'cover', 'liked')

@@ -6,14 +6,76 @@ from social.apps.django_app.utils import strategy
 from rest_framework.authtoken.models import Token
 from rest_framework import viewsets
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from django.utils.html import escape
 
 from accounts.models import BarddoUser
 from feed.models import UserFeed
-from .serializers import UserFeedSerializer, UserFriendsSerializer, SimpleWorkSerializer
+from .serializers import UserFeedSerializer, UserFriendsSerializer, SimpleWorkSerializer, LikedWorkSerializer
 from follow.models import Follow
 from core.models import Work
+from core.views import IndexView
+from search.views import SearchResultView
+
+
+class WorkSearchViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    Viewset for handling current user feed actions
+    """
+    model = Work
+    serializer_class = SimpleWorkSerializer
+    permission_classes = [AllowAny]
+
+    def list(self, request):
+        """
+        Work search
+        """
+        delegate_view = SearchResultView()
+        query = delegate_view.parse_search_criteria(escape(self.request.QUERY_PARAMS.get('q', None)))
+        result = {}
+
+        if query:
+            queryset = delegate_view.search_in_works(query)
+            result = SimpleWorkSerializer(queryset, many=True).data
+
+        return Response(result)
+
+
+class WorksViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    Viewset for handling current user feed actions
+    """
+    model = Work
+    serializer_class = SimpleWorkSerializer
+    permission_classes = [AllowAny]
+
+    def list(self, request):
+        """
+        List every work displayed on main page
+        """
+        queryset = IndexView().get_new_works(request.user)
+        new_works = LikedWorkSerializer(queryset, many=True).data
+
+        queryset = IndexView().get_rising_works(request.user)
+        rising_works = LikedWorkSerializer(queryset, many=True).data
+
+        queryset = IndexView().get_trending_works(request.user)
+        trending_works = LikedWorkSerializer(queryset, many=True).data
+
+        result = {
+            'rising': rising_works,
+            'trending': trending_works,
+            'new': new_works
+        }
+
+        return Response(result)
+
+    def retrieve(self, request, pk=None):
+        """
+        Disable single item retrieve
+        """
+        return Response("Call not allowed", status=status.HTTP_404_NOT_FOUND)
 
 
 class UserFeedViewSet(viewsets.ReadOnlyModelViewSet):
