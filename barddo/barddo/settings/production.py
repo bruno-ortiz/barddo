@@ -16,10 +16,10 @@ def get_env_setting(setting):
         error_msg = "Set the %s env variable" % setting
         raise ImproperlyConfigured(error_msg)
 
-########## HOST CONFIGURATION
+# ######### HOST CONFIGURATION
 # See: https://docs.djangoproject.com/en/1.5/releases/1.5/#allowed-hosts-required-in-production
 ALLOWED_HOSTS = ['.barddo.com', 'barddo.com', '127.0.0.1:8000']
-########## END HOST CONFIGURATION
+# ######### END HOST CONFIGURATION
 
 
 ########## EMAIL CONFIGURATION
@@ -100,3 +100,10 @@ REDIS_METRICS_DB = 0
 REDIS_METRICS_PASSWORD = "batatinha_quando_nasce_espalha_a_rama_pelo_chao"
 REDIS_METRICS_SOCKET_TIMEOUT = None
 REDIS_METRICS_SOCKET_CONNECTION_POOL = None
+
+##
+#Paypal
+##
+PAYPAL_MODE = 'live'
+PAYPAL_CLIENT_ID = 'Aa6cixDo7JJG5m4QAqy3VINZA6orEcCE2JfAzmJrMCfvhIHxVC1dDABRlAM5'
+PAYPAL_CLIENT_SECRET = 'EG2JiBD08TCzAyOnQgW_loVIu_BtiQIM9dtVge7G3vhtv6DpkAyTeq7uSgUA'
