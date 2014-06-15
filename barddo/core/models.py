@@ -15,13 +15,14 @@ from easy_thumbnails.files import get_thumbnailer
 from django.core.urlresolvers import reverse
 
 from accounts.models import BarddoUser
+from payments.models import FINISHED_PURCHASE_ID, Purchase
 from rating.models import Rating
 from search.search_manager import SearchManager
 
 
-class RatingManager(Manager):
+class WorkManager(Manager):
     def get_queryset(self):
-        return RatingQuerySet(self.model, using=self._db)
+        return WorkQuerySet(self.model, using=self._db)
 
     def total_likes(self):
         return self.get_queryset().total_likes()
@@ -30,10 +31,13 @@ class RatingManager(Manager):
         return self.get_queryset().liked_by(user)
 
     def liked_after(self, date):
-        return self.liked_after(date)
+        return self.get_queryset().liked_after(date)
+
+    def owned_by(self, user):
+        return self.get_queryset().filter(Q(items__purchase__status=FINISHED_PURCHASE_ID, items__purchase__buyer=user) | Q(author=user)).distinct()
 
 
-class RatingQuerySet(QuerySet):
+class WorkQuerySet(QuerySet):
     def total_likes(self):
         total_likes = Rating.objects.filter(like=True).annotate(work_likes=Count("like")) \
             .values("work_likes").extra(where=["core_work.id = rating_rating.work_id"]).query
@@ -106,7 +110,7 @@ class Collection(models.Model):
     author = models.ForeignKey(BarddoUser, null=False, db_index=True)
     cover = models.ImageField(_('Cover Art'), upload_to=get_collection_cover_path, blank=True, null=True)
 
-    objects = RatingManager()
+    objects = WorkManager()
     search_manager = SearchManager()
 
     def get_total_works(self):
@@ -175,12 +179,20 @@ class Work(models.Model):
 
     author = models.ForeignKey(BarddoUser, related_name='author_works', db_index=True)
 
+    price = models.DecimalField(max_digits=6, decimal_places=2, db_index=True, default=0.0)
+
     unit_count = models.IntegerField(_('Item Number'), db_index=True)
     total_pages = models.SmallIntegerField(_('Total Pages'))
     publish_date = models.DateTimeField(_('Publish Date'), db_index=True)
 
-    objects = RatingManager()
+    objects = WorkManager()
     search_manager = SearchManager()
+
+    def is_free(self):
+        return self.price == 0.0
+
+    def is_owned_by(self, user):
+        return Purchase.objects.is_owned_by(self,user)
 
     def get_absolute_url(self):
         """
@@ -283,7 +295,7 @@ class Work(models.Model):
         return unicode(self.collection) + u" - " + self.title + u" #" + unicode(self.unit_count)
 
     class Meta:
-        unique_together = (("collection", "unit_count"))
+        unique_together = ("collection", "unit_count")
         index_together = [["title", "summary"], ]
 
         # TODO: work tags

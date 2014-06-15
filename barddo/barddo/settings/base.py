@@ -27,7 +27,7 @@ DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 # ######### END DEBUG CONFIGURATION
 
-########## MANAGER CONFIGURATION
+# ######### MANAGER CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
     ('Israel Crisanto', 'israel.crisanto@gmail.com'),
@@ -38,9 +38,9 @@ ADMINS = (
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
-########## END MANAGER CONFIGURATION
+# ######### END MANAGER CONFIGURATION
 
-########## DATABASE CONFIGURATION
+# ######### DATABASE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 # DATABASES = {
 #     'default': {
@@ -144,6 +144,7 @@ FIXTURE_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'core', 'fixtures')),
     path.normpath(path.join(SITE_ROOT, 'publishing', 'fixtures')),
     path.normpath(path.join(SITE_ROOT, 'accounts', 'fixtures')),
+    path.normpath(path.join(SITE_ROOT, 'payments', 'fixtures')),
 )
 ########## END FIXTURE CONFIGURATION
 
@@ -177,6 +178,7 @@ TEMPLATE_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'shards', 'templates')),
     path.normpath(path.join(SITE_ROOT, 'publishing', 'templates')),
     path.normpath(path.join(SITE_ROOT, 'accounts', 'templates')),
+    path.normpath(path.join(SITE_ROOT, 'payments', 'templates')),
 )
 ########## END TEMPLATE CONFIGURATION
 
@@ -235,6 +237,7 @@ THIRD_PARTY_APPS = (
     'django_bitly',
     'redis_metrics',
     'djcelery',
+    'paypalrestsdk',
 )
 
 # Apps specific for this project go here.
@@ -247,6 +250,7 @@ LOCAL_APPS = (
     'rating',
     'search',
     'follow',
+    'payments',
     'feed',
     'share',
 )
@@ -447,3 +451,4 @@ REDIS_METRICS_SOCKET_CONNECTION_POOL = None
 BROKER_URL = 'amqp://guest:guest@localhost//'  # unsecure, for now
 #### End of Celery Settings
 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
