@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer, DateTimeField, CharField, SerializerMethodField, IntegerField
+from rest_framework.serializers import ModelSerializer, DateTimeField, CharField, SerializerMethodField, IntegerField, Serializer
 from django.contrib.sites.models import Site
 
 from feed.models import UserFeed
@@ -59,6 +59,47 @@ class SimpleWorkSerializer(ModelSerializer):
     class Meta:
         model = Work
         fields = ('id', 'title', 'author', 'cover')
+
+
+class WorkPagesSerializer(Serializer):
+    """
+    Serializer for a few fields on user favorite works, user for work list
+    """
+    summary = SerializerMethodField("get_pages")
+
+    def get_pages(self, work):
+        """
+        Get work pages full url in sequence order
+        """
+        current_site = Site.objects.get_current()
+        page_list = ["http://{}{}".format(current_site, entry['url']) for entry in work.load_work_pages()]
+
+        return page_list
+
+
+class CompleteWorkSerializer(SimpleWorkSerializer):
+    """
+    Serializer for a few fields on user favorite works, user for work list
+    """
+    summary = CharField(source="summary", read_only=True)
+    publish_date = DateTimeField(source="publish_date", read_only=True)
+    pages_count = SerializerMethodField("get_pages_count")
+
+    def get_pages_count(self, work):
+        return len(work.load_work_pages())
+
+    def get_pages(self, work):
+        """
+        Get work pages full url in sequence order
+        """
+        current_site = Site.objects.get_current()
+        page_list = ["http://{}{}".format(current_site, entry['url']) for entry in work.load_work_pages()]
+
+        return page_list
+
+    class Meta:
+        model = Work
+        fields = ('id', 'title', 'author', 'cover', 'summary', 'publish_date', 'pages_count')
 
 
 class LikedWorkSerializer(SimpleWorkSerializer):
