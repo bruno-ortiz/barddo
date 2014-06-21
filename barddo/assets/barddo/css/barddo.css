@@ -210,11 +210,15 @@ footer {
 }
 
 .profile-users .user img {
-    max-width: 64px;
-    width: 64px;
-    max-height: 64px;
-    height: 64px;
+    max-width: 85px;
+    width: 85px;
+    max-height: 85px;
+    height: 85px;
     border-radius: 0;
+}
+
+.profile-users .memberdiv {
+    width: 175px;
 }
 
 .g-signin {
