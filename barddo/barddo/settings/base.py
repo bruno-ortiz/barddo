@@ -144,6 +144,7 @@ FIXTURE_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'core', 'fixtures')),
     path.normpath(path.join(SITE_ROOT, 'publishing', 'fixtures')),
     path.normpath(path.join(SITE_ROOT, 'accounts', 'fixtures')),
+    path.normpath(path.join(SITE_ROOT, 'payments', 'fixtures')),
 )
 ########## END FIXTURE CONFIGURATION
 
@@ -177,6 +178,7 @@ TEMPLATE_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'shards', 'templates')),
     path.normpath(path.join(SITE_ROOT, 'publishing', 'templates')),
     path.normpath(path.join(SITE_ROOT, 'accounts', 'templates')),
+    path.normpath(path.join(SITE_ROOT, 'payments', 'templates')),
 )
 ########## END TEMPLATE CONFIGURATION
 
@@ -238,6 +240,7 @@ THIRD_PARTY_APPS = (
     'djcelery',
     'rest_framework',
     'rest_framework.authtoken',
+    'paypalrestsdk',
 )
 
 # Apps specific for this project go here.
@@ -250,6 +253,7 @@ LOCAL_APPS = (
     'rating',
     'search',
     'follow',
+    'payments',
     'feed',
     'share',
     'api',
@@ -451,7 +455,7 @@ REDIS_METRICS_SOCKET_CONNECTION_POOL = None
 BROKER_URL = 'amqp://guest:guest@localhost//'  # unsecure, for now
 #### End of Celery Settings
 
-
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 REST_FRAMEWORK = {
 

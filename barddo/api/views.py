@@ -3,6 +3,7 @@ import json
 import Image
 from django.contrib.auth import login
 from django.http import HttpResponse
+from django.conf import settings
 from social.apps.django_app.utils import strategy
 from rest_framework.authtoken.models import Token
 from rest_framework import viewsets
@@ -191,18 +192,30 @@ class PageRetrieve(APIView):
     #authentication_classes = (TokenAuthentication,) # TODO: enable authentication mode
     permission_classes = (AllowAny, )
 
+    @staticmethod
+    def can_read(user, work):
+        return work.is_free() or work.is_owned_by(user) or user.is_staff or work.author == user
+
     def get(self, request, work_id, page_number):
         work = Work.objects.get(pk=int(work_id))
 
-        # TODO: verify access permissions
+        if not self.can_read(request.user, work):
+            with open(os.path.join(settings.MEDIA_ROOT, 'system', 'not_found_page.png'), "rb") as f:
+                return HttpResponse(f.read(), mimetype="image/png")
 
-        # TODO: verify page number
+        if int(page_number) >= len(work.image_files()):
+            with open(os.path.join(settings.MEDIA_ROOT, 'system', 'not_found_page.png'), "rb") as f:
+                return HttpResponse(f.read(), mimetype="image/png")
+
         try:
             image_file = work.image_files()[int(page_number)]
             full_path = os.path.join(work.media_path(), image_file)
+
+            # TODO: use python magic to detect mimetype
             with open(full_path, "rb") as f:
-                return HttpResponse(f.read(), mimetype="image/jpeg")
+                return HttpResponse(f.read(), mimetype="image/png")
         except IOError:
+            # Fallback
             red = Image.new('RGBA', (1, 1), (255, 0, 0, 0))
             response = HttpResponse(mimetype="image/jpeg")
             red.save(response, "JPEG")

@@ -1,0 +1,57 @@
+{% load i18n %}
+
+<div class="modal fade" id="buyWorkModal" tabindex="-1" role="dialog" aria-labelledby="buyWorkLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body no-padding">
+                <div class="row">
+                    <div class="row col-lg-6">
+                        <div class="height-auto pull-left">
+                            <img src="{{ work.cover.url }}" class="work-image-thumb"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 no-padding-right">
+                        <button type="button" class="custom-close close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <div class="text-center" style="border-bottom: 1px solid rgba(71, 71, 82, 0.26);">
+                            <h3 class="bolder margin-top-10">{{ work.title }}</h3>
+                        </div>
+                        <div class="padding-lr-10 margin-top-10">
+                            <label class="bolder">{% trans "Summary" %}:</label>
+
+                            <p class="work-summary-height">{{ work.summary }}</p>
+                        </div>
+                        <div class="padding-lr-10">
+                            <label class="bolder">{% trans "Price" %}:</label>
+                            <span class="bolder blue">R${{ work.price }}</span>
+                        </div>
+                        <form id="paymentForm" class="form-horizontal" role="form" action="{% url "payment.create" %}">
+                            {% csrf_token %}
+                            <div class="checkbox no-padding-left">
+                                <label>
+                                    <input name="form-field-checkbox" type="checkbox" class="ace">
+                                    <span class="lbl"> {% trans "I agree with the terms of use!" %}</span>
+                                    <input type="hidden" name="work_id" value="{{ work.id }}">
+                                </label>
+                            </div>
+                        </form>
+                        <button id="joinButton" type="button" class="btn disabled btn-primary btn-block margin-top-10">{% trans "Pay with paypal" %}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $("input[type=checkbox]").on("click", function () {
+        var $joinButton = $("#joinButton");
+        if ($joinButton.hasClass("disabled")) {
+            $joinButton.removeClass("disabled");
+        } else {
+            $joinButton.addClass("disabled");
+        }
+    });
+
+    $("#joinButton").on("click", function () {
+        $('#paymentForm').submit()
+    });
+</script>

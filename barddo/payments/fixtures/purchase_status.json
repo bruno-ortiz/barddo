@@ -1,0 +1,16 @@
+[
+    {
+        "model": "payments.PurchaseStatus",
+        "pk": 1,
+        "fields": {
+            "name": "Pending"
+        }
+    },
+    {
+        "model": "payments.PurchaseStatus",
+        "pk": 2,
+        "fields": {
+            "name": "Finished"
+        }
+    }
+]
