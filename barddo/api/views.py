@@ -1,4 +1,5 @@
 import json
+import os
 
 import Image
 from django.contrib.auth import login
@@ -182,9 +183,6 @@ class FavoritesViewSet(viewsets.ReadOnlyModelViewSet):
         return Response("Call not allowed", status=status.HTTP_404_NOT_FOUND)
 
 
-import os
-
-
 class PageRetrieve(APIView):
     """
     Work pages retrieving
@@ -192,6 +190,7 @@ class PageRetrieve(APIView):
     #authentication_classes = (TokenAuthentication,) # TODO: enable authentication mode
     permission_classes = (AllowAny, )
 
+    # TODO: centralize this validation
     @staticmethod
     def can_read(user, work):
         return work.is_free() or work.is_owned_by(user) or user.is_staff or work.author == user
