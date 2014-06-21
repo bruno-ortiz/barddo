@@ -4,7 +4,6 @@ import os
 import datetime
 
 from django.views.generic import View
-
 from django.http import HttpResponse
 from django.shortcuts import redirect
 
@@ -30,8 +29,13 @@ class IndexView(ProfileAwareView):
         new_works = self.get_new_works(barddo_user)
         rising_works = self.get_rising_works(barddo_user)
         trending_works = self.get_trending_works(barddo_user)
-        context = {"next_url": next_url, "new_works": new_works, "rising_works": rising_works,
+        context = {"next_url": next_url,
+                   "new_works": new_works,
+                   "rising_works": rising_works,
                    "trending_works": trending_works}
+        if barddo_user:
+            owned_works = self.get_owned_works(barddo_user)
+            context['owned_works'] = owned_works
         return super(IndexView, self).get(request, **context)
 
     def get_new_works(self, user):
@@ -59,6 +63,9 @@ class IndexView(ProfileAwareView):
 
     def get_relative_date(self, delta):
         return datetime.datetime.now() + datetime.timedelta(days=delta)
+
+    def get_owned_works(self, barddo_user):
+        return Work.objects.owned_by(barddo_user)
 
 
 index = IndexView.as_view()
@@ -94,7 +101,7 @@ artist_dashboard = ArtistDashboardView.as_view()
 
 
 class CollectionDetailView(LoginRequiredMixin, ProfileAwareView):
-    template_name = 'collection_detail.html'
+    template_name = 'modals/collection_detail.html'
 
     def get(self, request, collection_id, *args, **kwargs):
         collection = Collection.objects.get(id=collection_id)
@@ -258,28 +265,13 @@ remove_work_page = RemoveWorkPageView.as_view()
 class AboutUsView(ProfileAwareView):
     template_name = 'docs/about-us.html'
 
-    def get_context_data(self, **kwargs):
-        context = {}
-        context.update(kwargs)
-        return super(AboutUsView, self).get_context_data(**context)
-
 
 class TermsView(ProfileAwareView):
     template_name = 'docs/terms.html'
 
-    def get_context_data(self, **kwargs):
-        context = {}
-        context.update(kwargs)
-        return super(TermsView, self).get_context_data(**context)
-
 
 class HelpView(ProfileAwareView):
     template_name = 'docs/help.html'
-
-    def get_context_data(self, **kwargs):
-        context = {}
-        context.update(kwargs)
-        return super(HelpView, self).get_context_data(**context)
 
 
 class WorkPageView(ProfileAwareView):

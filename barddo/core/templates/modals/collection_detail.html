@@ -39,12 +39,12 @@
                     <div id="general-{{ collection.id }}" class="tab-pane in active">
                         <div class="row">
                             <div class="col-xs-12 col-sm-5 center" id="change-cover">
-                            <span class="profile-picture">
-                                <img class="editable img-responsive" alt="Work Cover" src="{{ current_work.cover|thumbnail_url:"big_cover" }}"/>
-                            </span>
-                            <span class="cover-subtitle">
-                                <i class="icon-pencil"></i> {% trans "Click to change" %}
-                            </span>
+                                <span class="profile-picture">
+                                    <img class="editable img-responsive" alt="Work Cover" src="{{ current_work.cover|thumbnail_url:"big_cover" }}"/>
+                                </span>
+                                <span class="cover-subtitle">
+                                    <i class="icon-pencil"></i> {% trans "Click to change" %}
+                                </span>
                             </div>
 
                             <div id="dialog-message" class="hide cover-edit">
@@ -61,29 +61,29 @@
                                         <i class="icon-edit"></i> {% trans "Work Information" %}
                                     </div>
                                     <div class="profile-info-row">
-                                        <div class="profile-info-name"> {% trans "Title:" %}</div>
+                                        <div class="profile-info-name"> {% trans "Title" %}:</div>
 
                                         <div class="profile-info-value">
-                                        <span class="editable"
-                                              id="id_title">{{ current_work.title }}</span>
+                                            <span class="editable"
+                                                  id="id_title">{{ current_work.title }}</span>
                                         </div>
                                     </div>
 
                                     <div class="profile-info-row">
-                                        <div class="profile-info-name"> {% trans "Number:" %}</div>
+                                        <div class="profile-info-name"> {% trans "Number" %}:</div>
 
                                         <div class="profile-info-value">
-                                        <span class="editable"
-                                              id="id_unit_count">{{ current_work.unit_count }}</span>
+                                            <span class="editable"
+                                                  id="id_unit_count">{{ current_work.unit_count }}</span>
                                         </div>
                                     </div>
 
                                     <div class="profile-info-row">
-                                        <div class="profile-info-name"> {% trans "Summary:" %}</div>
+                                        <div class="profile-info-name"> {% trans "Summary" %}:</div>
 
                                         <div class="profile-info-value">
-                                        <span class="editable"
-                                              id="id_summary">{{ current_work.summary }}</span>
+                                            <span class="editable"
+                                                  id="id_summary">{{ current_work.summary }}</span>
                                         </div>
                                     </div>
                                 </div>

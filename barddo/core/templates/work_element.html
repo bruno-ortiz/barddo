@@ -42,7 +42,7 @@
                              alt="{% trans "Artist Photo" %}"/>
                         <span>{{ work.author.first_name }}</span>
                     </div>
-                    <div class="col-sm-9 break-all">
+                    <div class="col-sm-9">
                         <p>{{ work.summary }}</p>
                     </div>
 
@@ -56,6 +56,13 @@
             </div>
 
             <div class="clearfix"></div>
+            <div class="pull-left">
+                {% if work.is_free %}
+                    <span class="bolder green">Free!</span>
+                {% else %}
+                    <span class="bolder blue">R${{ work.price }}</span>{# TODO: Tratar currency #}
+                {% endif %}
+            </div>
             <div class="pull-right popup-buttons">
                 {% if user.is_authenticated %}
                     <button data-work-id="{{ work.id }}" type="button" class="btn-reader btn btn-minier btn-success">
