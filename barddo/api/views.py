@@ -11,7 +11,6 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.utils.html import escape
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
-
 from rest_framework.response import Response
 
 from accounts.models import BarddoUser
@@ -66,23 +65,6 @@ class CompleteWorkViewSet(viewsets.ReadOnlyModelViewSet):
             result = SimpleWorkSerializer(queryset, many=True).data
 
         return Response(result)
-
-    def retrieve(self, request, pk=None):
-        """
-        Single work data retrieve
-        """
-        queryset = Work.objects.all()
-        work = get_object_or_404(queryset, pk=pk)
-        serializer = CompleteWorkSerializer(work)
-        return Response(serializer.data)
-
-
-class WorkPagesViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    Viewset for handling current user feed actions
-    """
-    permission_classes = [AllowAny]
-
 
     def retrieve(self, request, pk=None):
         """
@@ -203,7 +185,10 @@ import os
 
 
 class PageRetrieve(APIView):
-    #authentication_classes = (TokenAuthentication,)
+    """
+    Work pages retrieving
+    """
+    #authentication_classes = (TokenAuthentication,) # TODO: enable authentication mode
     permission_classes = (AllowAny, )
 
     def get(self, request, work_id, page_number):
