@@ -41,21 +41,21 @@ class IndexView(ProfileAwareView):
     def get_new_works(self, user):
         limit = self.get_relative_date(self.LAST_WEEK)
 
-        return Work.objects.select_related("collection").total_likes(). \
+        return Work.objects.select_related("collection", "author", "author__profile").total_likes(). \
             liked_by(user).filter(publish_date__gte=limit).order_by("-publish_date")
 
     def get_rising_works(self, user):
         limit = self.get_relative_date(self.LAST_WEEK)
 
         # TODO: Rever o distinct
-        return Work.objects.select_related("collection").total_likes(). \
+        return Work.objects.select_related("collection", "author", "author__profile").total_likes(). \
             liked_by(user).liked_after(limit).distinct().order_by("-total_likes")
 
     def get_trending_works(self, user):
         limit = self.get_relative_date(self.LAST_MONTH)
 
         # TODO: Rever o distinct
-        return Work.objects.select_related("collection").total_likes(). \
+        return Work.objects.select_related("collection", "author", "author__profile").total_likes(). \
             liked_by(user).liked_after(limit).distinct().order_by("-total_likes")
 
     def get_barddo_user(self, user):
