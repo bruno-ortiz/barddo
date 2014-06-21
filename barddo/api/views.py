@@ -1,7 +1,7 @@
 import json
 import os
 
-import Image
+from PIL import Image
 from django.contrib.auth import login
 from django.http import HttpResponse
 from django.conf import settings
