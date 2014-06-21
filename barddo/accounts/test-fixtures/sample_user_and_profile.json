@@ -16,7 +16,8 @@
             "user": 1,
             "gender": "M",
             "country": "Brazil",
-            "birth_date": "1990-02-15"
+            "birth_date": "1990-02-15",
+            "avatar": "/media/barddo_avatar/barddo-avatar.jpg"
         }
     },
 
@@ -37,7 +38,30 @@
             "user": 2,
             "gender": "M",
             "country": "Brazil",
-            "birth_date": "1990-02-15"
+            "birth_date": "1990-02-15",
+            "avatar": "/media/barddo_avatar/barddo-avatar.jpg"
+        }
+    },
+
+    {
+        "model": "accounts.BarddoUser",
+        "pk": 3,
+        "fields": {
+            "username": "Wolverine",
+            "password": "sha1$1hvX9MDMto9N$8270872c6738077195fe5bd0387752441aa734af",
+            "is_active": true,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "accounts.BarddoUserProfile",
+        "pk": 3,
+        "fields": {
+            "user": 3,
+            "gender": "M",
+            "country": "Brazil",
+            "birth_date": "1989-02-15",
+            "avatar": "/media/barddo_avatar/barddo-avatar.jpg"
         }
     }
 ]

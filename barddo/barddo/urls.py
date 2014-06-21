@@ -25,6 +25,9 @@ urlpatterns = patterns(
     url(r'^', include('search.urls')),
     url(r'^', include('payments.urls')),
 
+
+    url(r'^api/', include('api.urls')),
+
     # Third Party URLs
     url(r'^admin/', include(admin.site.urls)),
     url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
