@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.db.models.query import QuerySet
 from django.db.models import Q
 from polymorphic import PolymorphicModel
+from django.contrib.sites.models import Site
 
 
 class FeedManager(models.Manager):
@@ -51,7 +52,8 @@ class JoinAction(FeedAction):
 
 class FollowAction(FeedAction):
     def get_picture(self):
-        return '<img class="pull-left" alt="avatar" src="{}"/>'.format(self.target.profile.avatar.url)
+        current_site = Site.objects.get_current()
+        return '<img class="pull-left" alt="avatar" src="http://{}{}"/>'.format(current_site, self.target.profile.avatar.url)
 
     def get_message(self, user):
         return _('<a class="user" href="{}">{}</a> started to follow <a class="user" href="{}">{}</a>.').format(user.user_url(), user.first_name, self.target.user_url(), self.target.first_name)
@@ -59,7 +61,8 @@ class FollowAction(FeedAction):
 
 class UnFollowAction(FeedAction):
     def get_picture(self):
-        return '<img class="pull-left" alt="avatar" src="{}"/>'.format(self.target.profile.avatar.url)
+        current_site = Site.objects.get_current()
+        return '<img class="pull-left" alt="avatar" src="http://{}{}"/>'.format(current_site, self.target.profile.avatar.url)
 
     def get_message(self, user):
         return _('<a class="user" href="{}">{}</a> stopped to follow <a class="user" href="{}">{}</a>.').format(user.user_url(), user.first_name, self.target.user_url(), self.target.first_name)

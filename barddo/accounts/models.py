@@ -1,7 +1,6 @@
 import datetime
 
 from django.contrib.auth.backends import ModelBackend
-
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.contrib.contenttypes.generic import GenericRelation
 from django.core.urlresolvers import reverse

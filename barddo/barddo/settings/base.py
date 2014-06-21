@@ -27,7 +27,7 @@ DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 # ######### END DEBUG CONFIGURATION
 
-# ######### MANAGER CONFIGURATION
+########## MANAGER CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
     ('Israel Crisanto', 'israel.crisanto@gmail.com'),
@@ -38,9 +38,9 @@ ADMINS = (
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
-# ######### END MANAGER CONFIGURATION
+########## END MANAGER CONFIGURATION
 
-# ######### DATABASE CONFIGURATION
+########## DATABASE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 # DATABASES = {
 #     'default': {
@@ -192,6 +192,7 @@ MIDDLEWARE_CLASSES = (
     'accounts.middleware.LocaleMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'barddo.middleware.XsSharing'
 )
 ########## END MIDDLEWARE CONFIGURATION
 
@@ -237,6 +238,8 @@ THIRD_PARTY_APPS = (
     'django_bitly',
     'redis_metrics',
     'djcelery',
+    'rest_framework',
+    'rest_framework.authtoken',
     'paypalrestsdk',
 )
 
@@ -253,6 +256,7 @@ LOCAL_APPS = (
     'payments',
     'feed',
     'share',
+    'api',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -452,3 +456,23 @@ BROKER_URL = 'amqp://guest:guest@localhost//'  # unsecure, for now
 #### End of Celery Settings
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
+REST_FRAMEWORK = {
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+
+    # Use hyperlinked styles by default.
+    # Only used if the `serializer_class` attribute is not set on a view.
+    'DEFAULT_MODEL_SERIALIZER_CLASS':
+        'rest_framework.serializers.HyperlinkedModelSerializer',
+
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+
+    'PAGINATE_BY': 25
+}

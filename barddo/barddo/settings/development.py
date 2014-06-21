@@ -1,9 +1,8 @@
 """Development settings and globals."""
 from base import *
 
-# ######### DEBUG CONFIGURATION
+########## DEBUG CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
-
 DEBUG = True
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
@@ -85,3 +84,10 @@ COMPRESS_ENABLED = True
 PAYPAL_MODE = 'sandbox'
 PAYPAL_CLIENT_ID = 'Af7rihD_C7HrZHSpkaTweMnq9ytxfRCaOwB1db2_LYcBWIu8V9UWsfnaveSW'
 PAYPAL_CLIENT_SECRET = 'EPzfrRBZLH5FH7Dtvaakm0_PC-R4oNjBOplIocAyT9yLyN_S-wPla5qLSQkc'
+
+##
+# Cross Site API
+##
+XS_SHARING_ALLOWED_ORIGINS = '*'
+XS_SHARING_ALLOWED_METHODS = "POST, GET, OPTIONS, PUT, DELETE"
+XS_SHARING_ALLOWED_HEADERS = "Authorization"
