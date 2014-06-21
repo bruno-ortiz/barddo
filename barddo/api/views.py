@@ -198,7 +198,7 @@ class PageRetrieve(APIView):
     def get(self, request, work_id, page_number):
         work = Work.objects.get(pk=int(work_id))
 
-        if not self.can_read(request.user, work):
+        if not PageRetrieve.can_read(request.user, work):
             with open(os.path.join(settings.MEDIA_ROOT, 'system', 'not_found_page.png'), "rb") as f:
                 return HttpResponse(f.read(), mimetype="image/png")
 
