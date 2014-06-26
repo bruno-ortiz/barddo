@@ -37,8 +37,8 @@
                             <h3>{% trans "Barddo for Artists" %}!</h3>
                             <button id="joinBarddoButton"
                                     class="{% if barddo_publisher %} disabled {% endif %}btn btn-orange btn-lg">
-                                {% if not barddo_publisher %}{% trans "Join the Barddo publisher" %}{% else %}
-                                    {% trans "You are a Barddo editor!" %}{% endif %}
+                                {% if not barddo_publisher %}{% trans "I want to publish in Barddo!" %}{% else %}
+                                    {% trans "You are a Barddo publisher!" %}{% endif %}
                             </button>
                             <p class="text-left">
                                 {% blocktrans %}
@@ -62,9 +62,7 @@
 
                                 <p class="shot-para">
                                     {% blocktrans %}
-                                        T"Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                        incididunt ut labore et dolore magna aliqua.
-                                        Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                                        With barddo you publish once and readers read anywhere, either on the computer or on their mobile devices.
                                     {% endblocktrans %}
                                 </p>
                                 <hr>
@@ -75,18 +73,23 @@
                                             <h4><i class="icon-mobile-phone tblue"></i> {% trans "Mobile" %}</h4>
 
                                             <p>
-
                                                 {% blocktrans %}
-                                                    T"Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                                    incididunt ut labore et dolore magna aliqua.
-                                                {% endblocktrans %}</p>
+                                                    Barddo's mobile app are ready to be used in today's most famous platforms
+                                                    such as IOS, Android, Windows Phone and FirefoxOS.
+                                                {% endblocktrans %}
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-xs-6">
                                         <div class="shot-content-body">
                                             <h4><i class="icon-desktop tblue"></i> {% trans "Web" %}</h4>
 
-                                            <p>{% trans "Lorem ipsum dolor sit amet, consectetur adipisicing elit, incididunt ut labore et dolore magna aliqua." %}</p>
+                                            <p>
+                                                {% blocktrans %}
+                                                    The website will continue to receive improvements, so the readers can have the best experience buying and
+                                                    reading your comics.
+                                                {% endblocktrans %}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -107,9 +110,7 @@
 
                                 <p class="shot-para">
                                     {% blocktrans %}
-                                        T"Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                        incididunt ut labore et dolore magna aliqua.
-                                        Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                                        With Barddo you can sell your comics, why not earn some money doing things that you love!
                                     {% endblocktrans %}
                                 </p>
                                 <hr>
@@ -117,21 +118,26 @@
                                 <div class="row">
                                     <div class="col-md-6 col-xs-6">
                                         <div class="shot-content-body">
-                                            <h4><i class="icon-money tblue"></i> {% trans "Money" %}</h4>
+                                            <h4><i class="icon-money tblue"></i> {% trans "Price" %}</h4>
 
                                             <p>
-
                                                 {% blocktrans %}
-                                                    T"Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                                    incididunt ut labore et dolore magna aliqua.
-                                                {% endblocktrans %}</p>
+                                                    You say the price, it is important for us that the creator of the comic have the freedom to choose the worth
+                                                    of their own work!
+                                                {% endblocktrans %}
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-xs-6">
                                         <div class="shot-content-body">
-                                            <h4><i class="icon-dollar tblue"></i> {% trans "Cash" %}</h4>
+                                            <h4><i class="icon-dollar tblue"></i> {% trans "Share" context "Monetize" %}</h4>
 
-                                            <p>{% trans "Lorem ipsum dolor sit amet, consectetur adipisicing elit, incididunt ut labore et dolore magna aliqua." %}</p>
+                                            <p>
+                                                {% blocktrans %}
+                                                    As service providers we will keep a small share from this value, it is important for us to be able to
+                                                    keep the service running!
+                                                {% endblocktrans %}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
