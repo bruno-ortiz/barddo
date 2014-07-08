@@ -7,18 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Barddo Main Site\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-10 23:41-0300\n"
-"PO-Revision-Date: 2014-05-25 23:45-0300\n"
-"Last-Translator: Israel Crisanto <israel.crisanto@gmail.com>\n"
+"POT-Creation-Date: 2014-06-26 22:05-0300\n"
+"PO-Revision-Date: 2014-06-26 22:40-0300\n"
+"Last-Translator: Bruno Ortiz <brunortiz11@gmail.com>\n"
 "Language-Team: Barddo Team <israel.crisanto@gmail.com>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 1.5.4\n"
 
-#: accounts/models.py:131
+#: accounts/models.py:130
 msgid "Brazil"
 msgstr "Brasil"
 
@@ -53,7 +53,7 @@ msgstr "Sinto muito, um erro ocorreu:"
 #: core/templates/work_page/work_page.html:25
 #: payments/templates/no_payments.html:9
 #: payments/templates/payment_error.html:9 payments/templates/thanks.html:9
-#: publishing/templates/publisher_landpage.html:20
+#: publishing/templates/publisher_landpage.html:21
 msgid "Home"
 msgstr "Início"
 
@@ -498,23 +498,24 @@ msgstr ""
 msgid ""
 "\n"
 "                                The <span class=\"highlight\">Barddo</span> "
-"is a system of <span class=\"highlight\">online publications focused on "
-"Independent Artists</span>.\n"
+"is a system of\n"
+"                                <span class=\"highlight\">online "
+"publications focused on Independent Artists</span>.\n"
 "                                With it, any artist, from <span class="
 "\"highlight\">any style</span>, can offer their works for readers to "
 "evaluate.\n"
 "                            "
 msgstr ""
 "\n"
-"                                O <span class=\"highlight\">Barddo</span> ié "
+"                                O <span class=\"highlight\">Barddo</span> é "
 "um sistema de <span class=\"highlight\">publicações on-line focado em "
 "artistas independentes</span>.\n"
-"                                Nele qualquer artista, de<span class="
+"                                Nele qualquer artista, de <span class="
 "\"highlight\">qualquer estilo</span>, pode disponibilizar suas obras para "
 "que os leitores avaliem.\n"
 "                            "
 
-#: core/templates/docs/about-us.html:56
+#: core/templates/docs/about-us.html:57
 msgid ""
 "\n"
 "                                The idea is simple, the artist publish his "
@@ -534,7 +535,7 @@ msgstr ""
 "obras recebem.\n"
 "                            "
 
-#: core/templates/docs/about-us.html:64
+#: core/templates/docs/about-us.html:65
 msgid ""
 "\n"
 "                                And so, without discarding what exists "
@@ -560,25 +561,25 @@ msgstr ""
 "\"> sem intermediários</span>.\n"
 "                            "
 
-#: core/templates/docs/about-us.html:74
+#: core/templates/docs/about-us.html:75
 msgid "Imagine that!"
 msgstr "Imagine Só!"
 
-#: core/templates/docs/about-us.html:81
+#: core/templates/docs/about-us.html:82
 msgid "Why?"
 msgstr "Por quê?"
 
-#: core/templates/docs/about-us.html:86
+#: core/templates/docs/about-us.html:87
 msgid ""
 "\n"
-"                                Unlike current current model, in which\n"
+"                                Unlike current model, in which\n"
 "                                some companies and individuals determine "
 "what is good enough for publication and\n"
 "                                influence the course of the published "
 "works,\n"
 "                                we believe that there's <span class="
 "\"highlight\">no one better\n"
-"                            than the readers themselves to decide the "
+"                                than the readers themselves to decide the "
 "success of a publication </span>.\n"
 "                            "
 msgstr ""
@@ -593,7 +594,7 @@ msgstr ""
 "sucesso de uma publicação</span>.\n"
 "                            "
 
-#: core/templates/docs/about-us.html:96
+#: core/templates/docs/about-us.html:97
 msgid ""
 "\n"
 "                                The big difference about <span class="
@@ -613,38 +614,38 @@ msgstr ""
 "com os leitores</span>.\n"
 "                            "
 
-#: core/templates/docs/about-us.html:114
+#: core/templates/docs/about-us.html:115
 msgid "The Team"
 msgstr "A Equipe"
 
-#: core/templates/docs/about-us.html:119
+#: core/templates/docs/about-us.html:120
 msgid "Meet the people involved in creating this idea!"
 msgstr "Conheça os envolvidos na criação nesta ideia!"
 
-#: core/templates/docs/about-us.html:133
+#: core/templates/docs/about-us.html:134
 msgid "Handymonkey"
 msgstr "Macaquinho Faz-Tudo"
 
-#: core/templates/docs/about-us.html:135
+#: core/templates/docs/about-us.html:136
 msgid ""
 "Dream of a world where online publications will be more common than physical."
 msgstr ""
 "Sonha com um mundo em que publicações online serão mais comuns do que as "
 "físicas."
 
-#: core/templates/docs/about-us.html:148
+#: core/templates/docs/about-us.html:149
 msgid "Developer and technology lover"
 msgstr "Desenvolvedor e amante de tecnologia"
 
-#: core/templates/docs/about-us.html:151
+#: core/templates/docs/about-us.html:152
 msgid "One of the creators of the project, manga addicted."
 msgstr "Um dos idealizadores do projeto, viciado em mangás."
 
-#: core/templates/docs/about-us.html:165
+#: core/templates/docs/about-us.html:166
 msgid "Designer"
 msgstr "Designer"
 
-#: core/templates/docs/about-us.html:167
+#: core/templates/docs/about-us.html:168
 msgid ""
 "Fond of manual illustration and digital painting, games addict, take care "
 "the project artistic part."
@@ -652,11 +653,11 @@ msgstr ""
 "Apaixonado por ilustração manual e pintura digital, viciado em games cuida "
 "da parte artística do projeto."
 
-#: core/templates/docs/about-us.html:180
+#: core/templates/docs/about-us.html:181
 msgid "Developer"
 msgstr "Desenvolvedor"
 
-#: core/templates/docs/about-us.html:182
+#: core/templates/docs/about-us.html:183
 msgid ""
 "Collector Electronic gadgets, one day will see the Barddo on mobile devices "
 "over the world!"
@@ -664,11 +665,11 @@ msgstr ""
 "Colecionador de gadgets eletrônicos, um dia verá o Barddo em dispositivos "
 "pelo mundo inteiro!"
 
-#: core/templates/docs/about-us.html:196
+#: core/templates/docs/about-us.html:197
 msgid "Contact"
 msgstr "Contato"
 
-#: core/templates/docs/about-us.html:201
+#: core/templates/docs/about-us.html:202
 msgid ""
 "\n"
 "                                Any questions, criticism or suggestion, you "
@@ -686,7 +687,7 @@ msgstr ""
 "\">contact@barddo.com</span></a>.\n"
 "                            "
 
-#: core/templates/docs/about-us.html:207
+#: core/templates/docs/about-us.html:208
 msgid ""
 "\n"
 "                                If you prefer, you can also find us on "
@@ -802,6 +803,7 @@ msgstr ""
 "                            "
 
 #: core/templates/help/modal-discover.html:99
+#: publishing/templates/publisher_landpage.html:73
 msgid "Mobile"
 msgstr "Mobile"
 
@@ -822,6 +824,7 @@ msgstr ""
 "                                        "
 
 #: core/templates/help/modal-discover.html:111
+#: publishing/templates/publisher_landpage.html:85
 msgid "Web"
 msgstr "Web"
 
@@ -1007,15 +1010,16 @@ msgid "Upload your new cover bellow"
 msgstr "Escolha a nova capa abaixo"
 
 #: core/templates/payments/buy-work-modal.html:24
+#: publishing/templates/publisher_landpage.html:121
 msgid "Price"
 msgstr "Preço"
 
-#: core/templates/payments/buy-work-modal.html:31
+#: core/templates/payments/buy-work-modal.html:32
 #: publishing/templates/join_barddo_modal.html:17
 msgid "I agree with the terms of use!"
 msgstr "Eu concordo com os termos de uso!"
 
-#: core/templates/payments/buy-work-modal.html:36
+#: core/templates/payments/buy-work-modal.html:37
 msgid "Pay with paypal"
 msgstr "Pague com paypal"
 
@@ -1130,13 +1134,13 @@ msgstr "Voto descadastrado!"
 msgid "Work voted!"
 msgstr "Voto cadastrado!"
 
-#: feed/models.py:49
+#: feed/models.py:50
 msgid ""
 "<b>Barddo</b> welcomes <a class=\"user\" href=\"{}\">{}</a>! Aho! Aho! Aho!"
 msgstr ""
 "<b>Barddo</b> saúda <a class=\"user\" href=\"{}\">{}</a>! Aho! Aho! Aho!"
 
-#: feed/models.py:57
+#: feed/models.py:59
 msgid ""
 "<a class=\"user\" href=\"{}\">{}</a> started to follow <a class=\"user\" "
 "href=\"{}\">{}</a>."
@@ -1144,7 +1148,7 @@ msgstr ""
 "<a class=\"user\" href=\"{}\">{}</a> começou a seguir <a class=\"user\" href="
 "\"{}\">{}</a>."
 
-#: feed/models.py:65
+#: feed/models.py:68
 msgid ""
 "<a class=\"user\" href=\"{}\">{}</a> stopped to follow <a class=\"user\" "
 "href=\"{}\">{}</a>."
@@ -1224,7 +1228,8 @@ msgstr "Nós sentimos muito mas seu pagamento não pôde ser precessado!"
 
 #: payments/paypal/processor.py:66
 msgid "Sorry, but an error occurred with paypal, we will verify immediately!"
-msgstr "Desculpe, mas um erro ocorreu com o paypal, iremos verificar imediatamente!"
+msgstr ""
+"Desculpe, mas um erro ocorreu com o paypal, iremos verificar imediatamente!"
 
 #: payments/paypal/views.py:37
 msgid "It was not possible to confirm your payment"
@@ -1337,29 +1342,140 @@ msgstr "Por favor, leia nossos"
 msgid "Join"
 msgstr "Participar"
 
-#: publishing/templates/publisher_landpage.html:22
+#: publishing/templates/publisher_landpage.html:23
 msgid "Publisher"
 msgstr "Editora"
 
-#: publishing/templates/publisher_landpage.html:54
-msgid "Join us!"
-msgstr "Junte-se a nós!"
+#: publishing/templates/publisher_landpage.html:37
+msgid "Barddo for Artists"
+msgstr "Barddo para Artistas"
 
-#: publishing/templates/publisher_landpage.html:56
-msgid "Create your own publishing group or Join the Barddo publisher!"
-msgstr "Crie seu próprio grupo de publicação ou entre no grupo do Barddo!"
+#: publishing/templates/publisher_landpage.html:40
+msgid "I want to publish in Barddo!"
+msgstr "Eu quero publicar no Barddo!"
 
-#: publishing/templates/publisher_landpage.html:62
-msgid "Join the Barddo publisher"
-msgstr "Entrar no grupo de publicação do Barddo"
+#: publishing/templates/publisher_landpage.html:41
+msgid "You are a Barddo publisher!"
+msgstr "Você já é um publicador!"
 
-#: publishing/templates/publisher_landpage.html:63
-msgid "You are a Barddo editor!"
-msgstr "Você já é um editor!"
+#: publishing/templates/publisher_landpage.html:44
+msgid ""
+"\n"
+"                                    Welcome!\n"
+"                                    Are you an independent artist that wants "
+"to share your creations with the world? You're in the right place!\n"
+"                                    Barddo will help you to achieve all of "
+"your goals as an artist.\n"
+"                                "
+msgstr ""
+"\n"
+"                                     Bem vindo!\n"
+"                                     Você é um artista independente que quer "
+"compartilhar suas criações com o mundo? Você está no lugar certo!\n"
+"                                     Barddo irá ajuda-lo a atingir todos os "
+"seus objetivos como um artista.\n"
+"                                        "
 
-#: publishing/templates/publisher_landpage.html:68
-msgid "Create a publishing group"
-msgstr "Criar um grupo de publicação"
+#: publishing/templates/publisher_landpage.html:61
+msgid "Mobility"
+msgstr "Mobilidade"
+
+#: publishing/templates/publisher_landpage.html:64
+msgid ""
+"\n"
+"                                        With barddo you publish once and "
+"readers read anywhere, either on the computer or on their mobile devices.\n"
+"                                    "
+msgstr ""
+"\n"
+"                                          Com o barddo você publica uma vez "
+"e os leitores leêm em qualquer lugar, seja no computador ou em seus "
+"dispositivos móveis.\n"
+"                                        "
+
+#: publishing/templates/publisher_landpage.html:76
+msgid ""
+"\n"
+"                                                    Barddo's mobile app are "
+"ready to be used in today's most famous platforms\n"
+"                                                    such as IOS, Android, "
+"Windows Phone and FirefoxOS.\n"
+"                                                "
+msgstr ""
+"\n"
+"                                           O aplicativo móvel do Barddo está "
+"pronto para ser usado nas plataformas mais famosas da atualidade\n"
+"                                            como o IOS, Android, WIndows "
+"Phone e FirefoxOS.\n"
+"                                        "
+
+#: publishing/templates/publisher_landpage.html:88
+msgid ""
+"\n"
+"                                                    The website will "
+"continue to receive improvements so the readers can have the best "
+"experience buying and\n"
+"                                                    reading your comics.\n"
+"                                                "
+msgstr ""
+"\n"
+"                                            O site continuará a receber "
+"melhorias para que os leitores possam ter a melhor experiencia comprando e\n"
+"                                            lendo seus quadrinhos.\n"
+"                                        "
+
+#: publishing/templates/publisher_landpage.html:109
+msgid "Monetize your comic"
+msgstr "Monetize o seu quadrinho"
+
+#: publishing/templates/publisher_landpage.html:112
+msgid ""
+"\n"
+"                                        With Barddo you can sell your "
+"comics, why not earn some money doing things that you love!\n"
+"                                    "
+msgstr ""
+"\n"
+"                                       Com o Barddo você pode vender seus "
+"quadrinhos, por que não ganhar algum dinheiro fazendo coisas que você ama!\n"
+"                                        "
+
+#: publishing/templates/publisher_landpage.html:124
+msgid ""
+"\n"
+"                                                    You say the price! it is "
+"important for us that the creator of the comic have the freedom to choose "
+"the worth\n"
+"                                                    of their own work!\n"
+"                                                "
+msgstr ""
+"\n"
+"                                            Você diz o preço! É importante "
+"para nós que o criador do quadrinho tenha a liberdade de escolher o valor\n"
+"                                            de seu próprio trabalho!\n"
+"                                        "
+
+#: publishing/templates/publisher_landpage.html:133
+msgctxt "Monetize"
+msgid "Share"
+msgstr "Divisão"
+
+#: publishing/templates/publisher_landpage.html:136
+msgid ""
+"\n"
+"                                                    As service providers we "
+"will keep a small share from this value, it is important for us to be able "
+"to\n"
+"                                                    keep the service "
+"running!\n"
+"                                                "
+msgstr ""
+"\n"
+"                                            Como provedores do serviço nós "
+"iremos ficar com uma pequena parte desse valor, isto é importante para que "
+"possamos\n"
+"                                            manter o serviço funcionando!\n"
+"                                        "
 
 #: search/views.py:36
 msgid "No results found for your query."
@@ -1412,6 +1528,15 @@ msgstr "Área de publicação"
 #: templates/main_template/navbar.html:90
 msgid "Logout"
 msgstr "Sair"
+
+#~ msgid "Join us!"
+#~ msgstr "Junte-se a nós!"
+
+#~ msgid "Create your own publishing group or Join the Barddo publisher!"
+#~ msgstr "Crie seu próprio grupo de publicação ou entre no grupo do Barddo!"
+
+#~ msgid "Join the Barddo publisher"
+#~ msgstr "Entrar no grupo de publicação do Barddo"
 
 #~ msgid "Statistics"
 #~ msgstr "Estatísticas"

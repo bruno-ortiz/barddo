@@ -31,7 +31,8 @@
 
 .ace-nav .nav-user-photo {
     border-radius: 0;
-    border: 1px solid #FFF;
+    border: none;
+    max-height: 47px;
 }
 
 .datepicker, .datepicker-dropdown {
