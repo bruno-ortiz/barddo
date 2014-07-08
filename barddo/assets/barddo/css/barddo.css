@@ -218,6 +218,14 @@ footer {
     border-radius: 0;
 }
 
+.profile-users .user img {
+    max-width: 85px;
+    width: 85px;
+    max-height: 85px;
+    height: 85px;
+    border-radius: 0;
+}
+
 .profile-users .memberdiv {
     width: 175px;
 }
