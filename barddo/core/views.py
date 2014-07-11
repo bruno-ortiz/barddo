@@ -19,6 +19,8 @@ class IndexView(ProfileAwareView):
 
     LAST_MONTH = -30
 
+    LAST_YEAR = -365
+
     template_name = 'index.html'
 
     def get(self, request, *args, **kwargs):
@@ -39,20 +41,23 @@ class IndexView(ProfileAwareView):
         return super(IndexView, self).get(request, **context)
 
     def get_new_works(self, user):
-        limit = self.get_relative_date(self.LAST_WEEK)
+        # TODO: quando tivermos fluxo constante, limitar o que é exibido
+        limit = self.get_relative_date(self.LAST_YEAR)
 
         return Work.objects.select_related("collection", "author", "author__profile").total_likes(). \
             liked_by(user).filter(publish_date__gte=limit).order_by("-publish_date")
 
     def get_rising_works(self, user):
-        limit = self.get_relative_date(self.LAST_WEEK)
+        # TODO: quando tivermos fluxo constante, limitar o que é exibido
+        limit = self.get_relative_date(self.LAST_YEAR)
 
         # TODO: Rever o distinct
         return Work.objects.select_related("collection", "author", "author__profile").total_likes(). \
             liked_by(user).liked_after(limit).distinct().order_by("-total_likes")
 
     def get_trending_works(self, user):
-        limit = self.get_relative_date(self.LAST_MONTH)
+        # TODO: quando tivermos fluxo constante, limitar o que é exibido
+        limit = self.get_relative_date(self.LAST_YEAR)
 
         # TODO: Rever o distinct
         return Work.objects.select_related("collection", "author", "author__profile").total_likes(). \
