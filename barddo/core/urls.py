@@ -42,7 +42,7 @@ urlpatterns = patterns(
         TermsView.as_view(),
         name='core.terms'),
 
-    url(r'^work/(?P<work_id>\d+)$',
+    url(r'^work/(?P<work_id>\d+)/?.*$',
         WorkPageView.as_view(),
         name='core.work.detail')
 )
