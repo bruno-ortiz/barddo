@@ -9,7 +9,7 @@
             <img src="{{ work.cover|thumbnail_url:"big_cover" }}" alt="">
         </div>
 
-        <div class="roll" style="cursor: -webkit-zoom-in;" onclick="window.location.href = '{% url "core.work.detail" work.id %}';">
+        <div class="roll" style="cursor: -webkit-zoom-in;" onclick="window.location.href = '{% url "core.work.detail" work.id %}/{{ work.collection.slug }}';">
             <div class="wrapcaption">
                 {% if work.liked %}
                     <a class="vote liked captionicons" data-work-id="{{ work.id }}" href="projectdetail.html">
@@ -68,14 +68,14 @@
                     <button data-work-id="{{ work.id }}" type="button" class="btn-reader btn btn-minier btn-success">
                         <i class="icon-zoom-in"></i> {% trans "Read Now!" %}
                     </button>
-                    <a href="{% url "core.work.detail" work.id %}" class="btn btn-minier btn-info">
+                    <a href="{% url "core.work.detail" work.id %}/{{ work.collection.slug }}" class="btn btn-minier btn-info">
                         <i class="icon-book"></i> {% trans "Details" %}
                     </a>
                 {% else %}
                     <button type="button" class="login-required btn btn-minier btn-success">
                         <i class="icon-zoom-in"></i> {% trans "Read Now!" %}
                     </button>
-                    <a href="{% url "core.work.detail" work.id %}" class="btn btn-minier btn-info">
+                    <a href="{% url "core.work.detail" work.id %}/{{ work.collection.slug }}" class="btn btn-minier btn-info">
                         <i class="icon-book"></i> {% trans "Details" %}
                     </a>
                 {% endif %}
