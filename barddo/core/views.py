@@ -44,24 +44,27 @@ class IndexView(ProfileAwareView):
         # TODO: quando tivermos fluxo constante, limitar o que é exibido
         limit = self.get_relative_date(self.LAST_YEAR)
 
-        return Work.objects.select_related("collection", "author", "author__profile").total_likes(). \
-            liked_by(user).filter(publish_date__gte=limit).order_by("-publish_date")
+        new_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).filter(publish_date__gte=limit). \
+            order_by("-publish_date")
+        return self.__filter_works_with_pages(new_works)
 
     def get_rising_works(self, user):
         # TODO: quando tivermos fluxo constante, limitar o que é exibido
         limit = self.get_relative_date(self.LAST_YEAR)
 
         # TODO: Rever o distinct
-        return Work.objects.select_related("collection", "author", "author__profile").total_likes(). \
-            liked_by(user).liked_after(limit).distinct().order_by("-total_likes")
+        rising_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).liked_after(limit).distinct(). \
+            order_by("-total_likes")
+        return self.__filter_works_with_pages(rising_works)
 
     def get_trending_works(self, user):
         # TODO: quando tivermos fluxo constante, limitar o que é exibido
         limit = self.get_relative_date(self.LAST_YEAR)
 
         # TODO: Rever o distinct
-        return Work.objects.select_related("collection", "author", "author__profile").total_likes(). \
-            liked_by(user).liked_after(limit).distinct().order_by("-total_likes")
+        trending_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).liked_after(limit).distinct(). \
+            order_by("-total_likes")
+        return self.__filter_works_with_pages(trending_works)
 
     def get_barddo_user(self, user):
         return user if user.is_authenticated() else None
@@ -71,6 +74,10 @@ class IndexView(ProfileAwareView):
 
     def get_owned_works(self, barddo_user):
         return Work.objects.owned_by(barddo_user)
+
+    def __filter_works_with_pages(self, works):
+        # TODO: REMOVER quando tivermos controle de páginas pelo banco
+        return filter(lambda work: work.has_pages(), works)
 
 
 index = IndexView.as_view()
