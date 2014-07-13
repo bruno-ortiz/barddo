@@ -191,8 +191,11 @@ class Work(models.Model):
     def is_free(self):
         return self.price == 0.0
 
+    def has_pages(self):
+        return bool(self.load_work_pages())
+
     def is_owned_by(self, user):
-        return Purchase.objects.is_owned_by(self,user)
+        return Purchase.objects.is_owned_by(self, user)
 
     def get_absolute_url(self):
         """
