@@ -27,25 +27,24 @@ DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 # ######### END DEBUG CONFIGURATION
 
-########## MANAGER CONFIGURATION
+# ######### MANAGER CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
     ('Israel Crisanto', 'israel.crisanto@gmail.com'),
     ('Bruno Ortiz', 'brunortiz11@gmail.com'),
-   # ('Jose Almada', 'jovial1991@hotmail.com'),
-   ('Rafael Ortiz', 'rafa_ortiz11@hotmail.com')
+    ('Rafael Ortiz', 'rafa_ortiz11@hotmail.com')
 )
 
-DEFAULT_FROM_EMAIL = 'israel.crisanto@gmail.com'
+DEFAULT_FROM_EMAIL = 'contact@barddo.com'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
-########## END MANAGER CONFIGURATION
+# ######### END MANAGER CONFIGURATION
 
-########## DATABASE CONFIGURATION
+# ######### DATABASE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 # DATABASES = {
-#     'default': {
+# 'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #         'NAME': 'barddo_dev',
 #         'USER': 'postgres',
@@ -100,6 +99,9 @@ MEDIA_ROOT = path.normpath(path.join(SITE_ROOT, 'media'))
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'
+
+# Documents folder
+DOCUMENTS_ROOT = path.normpath(path.join(SITE_ROOT, 'documents'))
 ########## END MEDIA CONFIGURATION
 
 ########## STATIC FILE CONFIGURATION

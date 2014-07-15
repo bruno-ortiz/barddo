@@ -21,6 +21,10 @@ fabric
 mysql-python
 django-analytical==0.17.1
 django-polymorphic==0.5.5
-paypalrestsdk=1.1.0
-django-redis-metrics==0.7.1
+paypalrestsdk==1.1.0
+django-redis-metrics==0.7.2
 djangorestframework==2.3.10
+Markdown==2.4.1
+celery==3.1.11
+django-celery==3.1.10
+django-bitly==0.7

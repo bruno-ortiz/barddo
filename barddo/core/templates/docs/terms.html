@@ -1,9 +1,10 @@
 {% extends 'main_template.html' %}
 {% load static %}
 {% load i18n %}
+{% load document %}
 
 {% block header %}
-    <link rel="stylesheet" href="{% static "css/uncompressed/cards.css" %}"/>
+    <link rel="stylesheet" href="{% static "barddo/css/barddo.documents.css" %}"/>
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -19,8 +20,62 @@
     <div class="page-content">
         <div class="row">
             <div class="col-sm-12">
-                <img src="{% static "images/art/worker.png" %}" style="max-width: 300px;"/>
+                <div class="tabbable tabs-left">
+                    <ul class="nav nav-tabs" id="myTab2">
+                        <li class="active">
+                            <a data-toggle="tab" id="tos-link" href="#tos">{% trans "Terms of Use" %}</a>
+                        </li>
+
+                        <li>
+                            <a data-toggle="tab" id="tos-paid-content-link" href="#tos-paid-content">{% trans "Terms of Use for Paid Content" %}</a>
+                        </li>
+
+                        <li>
+                            <a data-toggle="tab" id="tos-paid-services-link" href="#tos-paid-services">{% trans "Terms of Use for Paid Services" %}</a>
+                        </li>
+
+                        <li>
+                            <a data-toggle="tab" id=" guidelines-link" href="#guidelines">{% trans "Artists Guidelines" %}</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content document-content">
+                        <div id="tos" class="tab-pane in active">
+                            {% localized_markdown "tos" %}
+                        </div>
+
+                        <div id="guidelines" class="tab-pane">
+                            {% localized_markdown "guidelines" %}
+                        </div>
+
+                        <div id="tos-paid-content" class="tab-pane">
+                            {% localized_markdown "tos-paid-content" %}
+                        </div>
+
+                        <div id="tos-paid-services" class="tab-pane">
+                            {% localized_markdown "tos-paid-services" %}
+                        </div>
+                    </div>
+
+
+                </div>
             </div>
+
         </div>
     </div>
+{% endblock %}
+
+{% block bottom_page %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // just allowing direct reference to the modals
+            if (window.location.hash != "") {
+                $(window.location.hash + "-link").trigger("click");
+            }
+
+            // Enable user direct linking
+            $("a[data-toggle='tab']").on("click", function () {
+                window.location.hash = $(this).attr("href");
+            });
+        });
+    </script>
 {% endblock %}
