@@ -1,6 +1,5 @@
 # coding=utf-8
 import json
-import os
 import datetime
 
 from django.views.generic import View
