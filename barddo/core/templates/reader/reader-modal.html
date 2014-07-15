@@ -11,7 +11,7 @@
                 <ul id="pikame" class="jcarousel-skin-pika">
                     {% for page in work.load_work_pages_without_timestamp %}
                         <li>
-                            <img class="img-responsive" src="{{ page.thumb|thumbnail_url:'reader_thumbs' }}" ref="{{ page.url }}"/>
+                            <img class="img-responsive" src="{{ page.thumb }}" ref="{{ page.url }}"/>
                         </li>
                     {% endfor %}
                 </ul>

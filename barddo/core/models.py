@@ -11,8 +11,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.core.files.images import ImageFile
 from django.db.models import Q
-from easy_thumbnails.files import get_thumbnailer
 from django.core.urlresolvers import reverse
+from easy_thumbnails.files import get_thumbnailer
+from easy_thumbnails.templatetags.thumbnail import thumbnail_url
 
 from accounts.models import BarddoUser
 from payments.models import FINISHED_PURCHASE_ID, Purchase
@@ -284,15 +285,26 @@ class Work(models.Model):
 
         for image_file in files:
             img = ImageFile(open(os.path.join(work_path, image_file), "rb"))
+            thumb_path = os.path.join(work_path, 'thumb', self.__get_thumb_name(image_file))
+            # TODO: Obter thumbs de maneira correta
+            if os.path.exists(thumb_path):
+                thumb_url = settings.MEDIA_URL + thumb_path.replace(settings.MEDIA_ROOT + "/", "")
+            else:
+                thumbnailer = get_thumbnailer(img,
+                                              relative_name=os.path.join("work_data", "%04d" % self.id, 'thumb', image_file))
+                thumb_url = thumbnail_url(thumbnailer, 'reader_thumbs')
             image_files.append({
                 "size": img.size,
                 "url": settings.MEDIA_URL + img.name.replace(settings.MEDIA_ROOT + "/", ""),
                 "name": image_file,
-                "thumb": get_thumbnailer(img,
-                                         relative_name=os.path.join("work_data", "%04d" % self.id, 'thumb', image_file))
+                "thumb": thumb_url
             })
 
         return image_files
+
+    def __get_thumb_name(self, image_name):
+        # TODO: ME PERDOEM POR ESSE PECADO. EU ME REDIMIREI!
+        return "{}.136x136_q85_crop.jpg".format(image_name)
 
     def __unicode__(self):
         return unicode(self.collection) + u" - " + self.title + u" #" + unicode(self.unit_count)
