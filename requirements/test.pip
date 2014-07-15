@@ -22,3 +22,4 @@ mysql-python
 django-jenkins
 mock
 paypalrestsdk=1.1.0
+Markdown==2.4.1
