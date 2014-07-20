@@ -315,5 +315,15 @@ class Work(models.Model):
 
         # TODO: work tags
         # TODO: work categories
-        # TODO: store files by convention
+
+
+def image_storage(instance, filename):
+    return os.path.join(settings.MEDIA_ROOT, "work_data", "%04d" % instance.work.id)
+
+
+class WorkPage(models.Model):
+    sequence = models.PositiveSmallIntegerField()
+    work = models.ForeignKey(Work, related_name='work_pages')
+    image = models.ImageField(upload_to=image_storage)
+
 

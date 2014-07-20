@@ -1,6 +1,7 @@
 # coding=utf-8
 import json
 import datetime
+import os
 
 from django.views.generic import View
 from django.http import HttpResponse
@@ -267,7 +268,6 @@ class RemoveWorkPageView(LoginRequiredMixin, View):
 
 
 remove_work_page = RemoveWorkPageView.as_view()
-
 
 
 # ##
