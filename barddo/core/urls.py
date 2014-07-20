@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 
-from .views import index, AboutUsView, TermsView, HelpView
+from .views import index, AboutUsView, TermsView, HelpView, WorkPageView
 from .views import artist_dashboard, upload_work_page, move_work_page, remove_work_page
 
 
@@ -41,4 +41,8 @@ urlpatterns = patterns(
     url(r'^terms',
         TermsView.as_view(),
         name='core.terms'),
+
+    url(r'^work/(?P<work_id>\d+)/?.*$',
+        WorkPageView.as_view(),
+        name='core.work.detail')
 )

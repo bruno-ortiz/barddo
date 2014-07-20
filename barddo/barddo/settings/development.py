@@ -1,13 +1,13 @@
 """Development settings and globals."""
 from base import *
 
-########## DEBUG CONFIGURATION
+# ######### DEBUG CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = True
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
 TEMPLATE_DEBUG = DEBUG
-########## END DEBUG CONFIGURATION
+# ######### END DEBUG CONFIGURATION
 
 
 ########## EMAIL CONFIGURATION
@@ -64,6 +64,7 @@ DEBUG_TOOLBAR_CONFIG = {
 
 ########## MISC CONFIGURATION
 COMPRESS_OFFLINE = False
+COMPRESS_ENABLED = False
 
 ########## END OF MISC CONFIGURATION
 
@@ -76,6 +77,16 @@ SOCIAL_AUTH_FACEBOOK_SECRET = '3b9439528f2bd7cce28f25f8948f03fe'
 SOCIAL_AUTH_GOOGLE_PLUS_KEY = '1010521892059-tf5leugg86ib3t2vsa2g4sbqm04lkj43.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_PLUS_SECRET = 'VWrV9x7s6Xxsr058StR6G09Q'
 
-FIXTURE_DIRS += (path.normpath(path.join(SITE_ROOT, 'accounts', 'test-fixtures')),)
+##
+#Paypal
+##
+PAYPAL_MODE = 'sandbox'
+PAYPAL_CLIENT_ID = 'Af7rihD_C7HrZHSpkaTweMnq9ytxfRCaOwB1db2_LYcBWIu8V9UWsfnaveSW'
+PAYPAL_CLIENT_SECRET = 'EPzfrRBZLH5FH7Dtvaakm0_PC-R4oNjBOplIocAyT9yLyN_S-wPla5qLSQkc'
 
-COMPRESS_ENABLED = True
+##
+# Cross Site API
+##
+XS_SHARING_ALLOWED_ORIGINS = '*'
+XS_SHARING_ALLOWED_METHODS = "POST, GET, OPTIONS, PUT, DELETE"
+XS_SHARING_ALLOWED_HEADERS = "Authorization"

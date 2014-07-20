@@ -29,13 +29,9 @@ class Migration(SchemaMigration):
         # Detect if application supports fulltext search on given backend
         if not db.dry_run and db.backend_name == "mysql":
             try:
-                db.execute(
-                    "CREATE FULLTEXT INDEX fix_accounts_barddouser ON accounts_barddouser (username, first_name, last_name)")
+                db.execute("CREATE FULLTEXT INDEX fix_accounts_barddouser ON accounts_barddouser (username, first_name, last_name)")
             except Warning:
                 pass
-                #db.execute("CREATE FULLTEXT INDEX fix_accounts_barddouser_username ON accounts_barddouser (username)")
-                #db.execute("CREATE FULLTEXT INDEX fix_accounts_barddouser_first_name ON accounts_barddouser (first_name)")
-                #db.execute("CREATE FULLTEXT INDEX fix_accounts_barddouser_last_name ON accounts_barddouser (last_name)")
         else:
             # Adding index on 'BarddoUser', fields ['username', 'first_name', 'last_name']
             db.create_index(u'accounts_barddouser', ['username', 'first_name', 'last_name'])
@@ -61,7 +57,7 @@ class Migration(SchemaMigration):
         # Adding model 'BarddoUserProfile'
         db.create_table(u'accounts_barddouserprofile', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.OneToOneField')(related_name='user_profile', unique=True,
+            ('user', self.gf('django.db.models.fields.related.OneToOneField')(related_name='profile', unique=True,
                                                                               to=orm['accounts.BarddoUser'])),
             ('avatar', self.gf('django.db.models.fields.files.ImageField')(max_length=100)),
             ('birth_date', self.gf('django.db.models.fields.DateField')(default=datetime.datetime(2014, 5, 3, 0, 0))),
@@ -117,7 +113,7 @@ class Migration(SchemaMigration):
             'gender': ('django.db.models.fields.CharField', [], {'default': "'M'", 'max_length': '1'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [],
-                     {'related_name': "'user_profile'", 'unique': 'True', 'to': u"orm['accounts.BarddoUser']"})
+                     {'related_name': "'profile'", 'unique': 'True', 'to': u"orm['accounts.BarddoUser']"})
         },
         u'auth.group': {
             'Meta': {'object_name': 'Group'},

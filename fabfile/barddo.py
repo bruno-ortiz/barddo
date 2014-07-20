@@ -26,7 +26,7 @@ def main():
 
 
 @task
-def beta():
+def production():
     env.service = "barddo"
     env.settings = "barddo.settings.production"
     env.project = fabconf['PROJECT_PATH.BETA']
@@ -62,6 +62,7 @@ def deploy():
     cleanup()
     apply_static()
     apply_compress()
+    apply_migrations()
     start_services()
 
     end_time = time.time()
@@ -145,3 +146,10 @@ def apply_migrations():
     print(_green("Applying migrations"))
     with cd(env.app):
         sudo(env.python + ' manage.py migrate --all --settings=' + env.settings, user=env.user)
+
+
+def reset():
+    print(_green("Reseting database"))
+    with cd(env.app):
+        sudo(env.python + ' manage.py reset_db --settings=' + env.settings, user=env.user)
+        sudo(env.python + ' manage.py syncdb --settings=' + env.settings, user=env.user)

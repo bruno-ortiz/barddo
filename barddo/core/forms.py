@@ -42,4 +42,12 @@ class WorkForm(ModelForm):
 
     class Meta:
         model = Work
-        fields = ['title', 'author', 'summary', 'unit_count', 'collection', 'cover', 'publish_date']
+        fields = ['title', 'author', 'summary', 'unit_count', 'collection', 'cover', 'price', 'publish_date']
+
+
+class CoverOnlyWorkForm(ModelForm):
+    cover = ImageField(required=True)
+
+    class Meta:
+        model = Work
+        fields = ['id', 'cover']

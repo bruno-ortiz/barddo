@@ -1,16 +1,18 @@
 {% load staticfiles %}
-<!-- TODO: Create an collection icon here to be clear about its concept -->
+{% load i18n %}
 
 <div class="row">
     <div class="col-sm-8">
         <div class="well">
-            <h4 class="green smaller lighter">Heads Up!</h4>
-            A collection is a way to group your work. Are you sure this is what you want?
+            <h4 class="green smaller lighter">{% trans "Heads Up!" %}</h4>
+            {% blocktrans %}
+                A collection is a way to group your work. Are you sure this is what you want?
 
-            <br/><br/>Enter the name of the
-            collection on the form bellow, so we can see if it does not already exist.
+                <br/><br/>Enter the name of the
+                collection on the form bellow, so we can see if it does not already exist.
 
-            <br/><br/>For more information, please read <a href="#">our terms of service</a>.
+                <br/><br/>For more information, please read <a href="#">our terms of service</a>.
+            {% endblocktrans %}
         </div>
     </div>
     <div class="col-sm-4">
@@ -23,7 +25,7 @@
         <div class="col-xs-12 col-sm-12">
             <span class="block input-icon input-icon-right">
                 <input id="collection-name-validation" type="text" id="name" class="width-100"
-                       placeholder="Enter your collection name and wait..." autofocus="true"/>
+                       placeholder="{% trans "Enter your collection name and wait..." %}" autofocus="true"/>
                 <i class="icon-info-sign"></i>
             </span>
         </div>

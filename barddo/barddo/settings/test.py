@@ -24,10 +24,11 @@ PASSWORD_HASHERS = (
 ########## JENKINS TESTS CONFIGURATION
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
 INSTALLED_APPS += (
-    #'django_jenkins',
+    'django_jenkins',
 )
 
-FIXTURE_DIRS += (path.normpath(path.join(SITE_ROOT, 'accounts', 'test-fixtures')),)
+FIXTURE_DIRS += (path.normpath(path.join(SITE_ROOT, 'accounts', 'test-fixtures')),
+                 path.normpath(path.join(SITE_ROOT, 'publishing', 'test-fixtures')))
 
 PROJECT_APPS = LOCAL_APPS
 ########## END OF JENKINS TESTS CONFIGURATION
@@ -50,3 +51,7 @@ SOCIAL_AUTH_GOOGLE_PLUS_SECRET = ''
 ##
 SOUTH_TESTS_MIGRATE = False
 SKIP_SOUTH_TESTS = True
+
+XS_SHARING_ALLOWED_ORIGINS = '*'
+XS_SHARING_ALLOWED_METHODS = "POST, GET, OPTIONS, PUT, DELETE"
+XS_SHARING_ALLOWED_HEADERS = "Authorization"

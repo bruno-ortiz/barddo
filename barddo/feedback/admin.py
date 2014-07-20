@@ -4,7 +4,11 @@ from .models import Feedback
 
 
 class FeedbackAdmin(admin.ModelAdmin):
-    pass
+    """
+    Enabling feedback on the admin
+    """
+    list_display = ('name', 'email', 'feedback', 'date')
+    ordering = ['-date']
 
 
 admin.site.register(Feedback, FeedbackAdmin)

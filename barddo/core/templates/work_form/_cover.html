@@ -1,3 +1,4 @@
+{% load i18n %}
 <div class="center" style="height: 100%">
     <input type="file" id="{{ work_form.cover.auto_id }}" name="{{ work_form.cover.name }}"/>
 
@@ -9,25 +10,23 @@
 
 {% block bottom_page %}
     <script type="text/javascript">
-        jQuery(function ($) {
 
-            var preview = $("#upload-preview");
+        function setup_crop_preview(target, container) {
 
-            $('#' + '{{ work_form.cover.auto_id }}').ace_file_input({
-                no_file: 'Select your work cover...',
-                btn_choose: 'Choose',
-                btn_change: 'Change',
+            var preview = $(container + " #upload-preview");
+
+            $(container + " " + target).ace_file_input({
+                no_file: '{% trans "Select your work cover..." %}',
+                btn_choose: '{% trans "Choose" %}',
+                btn_change: '{% trans "Change" %}',
                 icon_remove: "",
                 droppable: false,
                 onchange: null,
                 thumbnail: false, //| true | largeuhASHUAUHSHUAS
                 whitelist: 'gif|png|jpg|jpeg'
-                //blacklist:'exe|php'
-                //onchange:''
-                //
             }).on('change', function () {
 
-                $("#form-work-next").html("<i class='icon-star'></i> Select a Cover!").prop("disabled", false);
+                $("#form-work-next").html("<i class='icon-star'></i> {% trans "Select a Cover!" %}").prop("disabled", false);
 
                 var input = $(event.currentTarget);
                 var file = input[0].files[0];
@@ -39,7 +38,7 @@
                     }
 
                     // To show a preview, we encode the image as a base64 and use it on the src attr in the img tag
-                    $("#upload-preview").html("");
+                    $(container + " #upload-preview").html("");
                     image_base64 = e.target.result;
                     preview.append("<img id='current-image' src='" + image_base64 + "'/><br/>");
 
@@ -51,7 +50,7 @@
                     // Ie: The image is 5000x5000, but the preview is 1000x1000, then the minimal size should be
                     // calculated as 1000/5000 * MINIMAL_WIDTH
 
-                    var selected_image = $("#current-image");
+                    var selected_image = $(container + " #current-image");
                     var previewWidth = selected_image.width();
                     var previewHeight = selected_image.height();
 
@@ -63,19 +62,18 @@
 
                     if (originalWidth < 261 || originalHeight < 300) {
                         $("#form-work-next").html("<i class='icon-star'></i> Select a Cover!").prop("disabled", true);
-                        $("#current-image").remove()
+                        $(container + " #current-image").remove()
                         alert("Sorry, but the minimal size accepted is 261x300 pixels! Please, select another image! Your was " + tmpImg.width + "px width and " + tmpImg.height + "px height;");
                     } else {
-                        // TODO: minimal sizes on application settings
                         setTimeout(function () {
-                            window.selectedArea = $('#current-image').imgAreaSelect({
+                            window.selectedArea = $(container + ' #current-image').imgAreaSelect({
                                 x1: 0, y1: 0, x2: 261 * widthRatio, y2: 300 * heightRatio,
                                 handles: true,
                                 aspectRatio: '261:300',
                                 show: true,
                                 persistent: true,
                                 instance: true,
-                                parent: "#crop-container",
+                                parent: container + " #crop-container",
                                 zIndex: 9999,
                                 minWidth: 261 * widthRatio,
                                 minHeight: 300 * heightRatio
@@ -85,7 +83,10 @@
                 };
                 reader.readAsDataURL(file);
             });
+        }
 
+        jQuery(function ($) {
+            setup_crop_preview('#' + '{{ work_form.cover.auto_id }}', '#work-form');
         });
     </script>
 {% endblock %}

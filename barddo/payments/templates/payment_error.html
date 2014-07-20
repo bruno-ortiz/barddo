@@ -1,0 +1,47 @@
+{% extends 'main_template.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="{% url "core.index" %}">{% trans "Home" %}</a>
+        </li>
+        <li class="active">{% trans "Payment" %}</li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="page-content">
+        <div class="center">
+            <img src="{% static "images/art/sad-face.png" %}" style="padding-top: 50px"/>
+
+            <h1 class="red bolder">{% trans "Sorry! An error occurred while processing your payment!" %}</h1>
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li>
+                            <h3>{{ message }}</h3>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <h4>{% trans "Please" %} <a id="contact-us" href="#">{% trans "contact us" %}!</a></h4>
+        </div>
+    </div>
+{% endblock %}
+
+{% block page_specific_javascript %}
+
+    <script type="text/javascript">
+        $('#contact-us').on("click", function () {
+            Shards.feedback(function (shard_id, shard_data, parent) {
+                $(shard_id).remove();
+                $(parent).append(shard_data);
+                $(shard_id).modal('show');
+            });
+        });
+
+    </script>
+{% endblock %}

@@ -1,6 +1,7 @@
 {% load staticfiles %}
 {% load compress %}
-<a id="feedbackButton" class="btn btn-danger feedback-button hidden-xs hidden-sm"><i class="icon-envelope-alt"></i>Feedback</a>
+{% load i18n %}
+<a id="feedbackButton" class="btn btn-danger feedback-button hidden-xs hidden-sm"><i class="icon-envelope-alt"></i>{% trans "Feedback" %}</a>
 
 {% compress js %}
     <script src="{% static "js/barddo.feedback.button.js" %}"></script>

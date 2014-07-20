@@ -3,17 +3,20 @@
 {% load shards_templatetags %}
 
 {% block base_js_imports %}
-    <script src="{% static "js/jquery-ui-1.10.3.custom.min.js" %}"></script>
-    <script src="{% static "js/jquery.ui.touch-punch.min.js" %}"></script>
-    <script src="{% static "js/jquery.slimscroll.min.js" %}"></script>
-    <script src="{% static "js/jquery.gritter.min.js" %}"></script>
 
-    <script src="{% static "js/typeahead-bs2.min.js" %}"></script>
+    <!-- jQuery -->
+        <script src="{% static "js/jquery-ui-1.10.3.custom.min.js" %}"></script>
+        <script src="{% static "js/jquery.ui.touch-punch.min.js" %}"></script>
+        <script src="{% static "js/jquery.slimscroll.min.js" %}"></script>
+        <script src="{% static "js/jquery.gritter.min.js" %}"></script>
 
-    <!-- ace settings handler -->
-    <script src="{% static "js/ace.min.js" %}"></script>
-    <script src="{% static "js/ace-extra.min.js" %}"></script>
-    <script src="{% static "js/ace-elements.min.js" %}"></script>
+    <!-- TypeAhead -->
+        <script src="{% static "typeahead/js/typeahead.js" %}"></script>
+
+    <!-- Ace -->
+        <script src="{% static "ace/js/ace.js" %}"></script>
+        <script src="{% static "ace/js/ace-extra.js" %}"></script>
+        <script src="{% static "ace/js/ace-elements.js" %}"></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -24,12 +27,11 @@
     {% dajaxice_js_import 'nocsrf' %}
     <script type="text/javascript" src="{% static "dajax/jquery.dajax.core.js" %}"></script>
 
-    <!--[if lte IE 8]>
-        <script src="{% static "js/excanvas.min.js" %}"></script>
-    <![endif]-->
+    <!--[if lte IE 8]><script src="{% static "js/excanvas.min.js" %}"></script><![endif]-->
 
-    <script src="{% static "js/barddo/scroll.js" %}"></script>
-    <script src="{% static "js/barddo/utils.js" %}"></script>
+    <!-- Barddo -->
+        <script src="{% static "barddo/js/scroll.js" %}"></script>
+        <script src="{% static "barddo/js/utils.js" %}"></script>
 
     {% shards_js_import %}
 {% endblock %}

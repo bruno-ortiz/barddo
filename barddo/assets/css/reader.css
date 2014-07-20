@@ -1,0 +1,53 @@
+@import url('base.css');
+
+.jcarousel-skin-pika .jcarousel-item-horizontal {
+    margin-right: 10px;
+}
+
+.pika-stage img {
+    max-height: 900px;
+}
+
+.jcarousel-prev {
+    width: 28px;
+    height: 43px;
+    background: url("../barddo/img/prev.png") top left no-repeat;
+    display: block;
+    position: absolute;
+    top: 65px;
+    left: 0;
+    cursor: pointer;
+    filter: alpha(opacity=60);
+    opacity: 0.6;
+}
+
+.jcarousel-next {
+    width: 28px;
+    height: 43px;
+    background: url("../barddo/img/next.png") top left no-repeat;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 65px;
+    cursor: pointer;
+    filter: alpha(opacity=60);
+    opacity: 0.6;
+}
+
+.jcarousel-skin-pika {
+    position: relative;
+    margin-top: 46px;
+    margin-bottom: -20px;
+}
+
+.jcarousel-container {
+    position: absolute !important;
+    background: rgba(0, 0, 0, 0.7);
+    bottom: 16px;
+    left: 3px;
+    padding: 15px 20px;
+    height: 1px;
+    z-index: 10;
+    overflow: hidden;
+    max-width: 100%;
+}

@@ -4,9 +4,10 @@
 {% load collection_result %}
 {% load work_result %}
 {% load person_result %}
+{% load i18n %}
 
 {% block header %}
-    <link rel="stylesheet" href="{% static "css/uncompressed/barddo.gallery.css" %}"/>
+    <link rel="stylesheet" href="{% static "barddo/css/barddo.gallery.css" %}"/>
     <link rel="stylesheet" href="{% static "css/result_page.css" %}"/>
 {% endblock %}
 
@@ -17,21 +18,21 @@
                 {% if collections.count > 0 %}
                     <li>
                         <a href="#filter" class="selected" data-option-value=".result_collection">
-                            <i class="icon icon-book"></i> Collections
+                            <i class="icon icon-book"></i> {% trans "Collections" %}
                         </a>
                     </li>
                 {% endif %}
                 {% if works.count > 0 %}
                     <li>
                         <a href="#filter" data-option-value=".result_work">
-                            <i class="icon icon-file"></i> Works
+                            <i class="icon icon-file"></i> {% trans "Works" %}
                         </a>
                     </li>
                 {% endif %}
                 {% if people.count > 0 %}
                     <li>
                         <a href="#filter" data-option-value=".result_person">
-                            <i class="icon icon-user"></i> People
+                            <i class="icon icon-user"></i> {% trans "People" %}
                         </a>
                     </li>
                 {% endif %}

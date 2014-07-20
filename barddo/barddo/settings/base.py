@@ -1,8 +1,10 @@
+# -*- coding: utf-8 -*
 from os import path
 import sys
 from os.path import dirname, abspath, basename
 
-########## PATH CONFIGURATION
+
+# ######### PATH CONFIGURATION
 # Absolute filesystem path to the Django project directory:
 DJANGO_ROOT = dirname(dirname(abspath(__file__)))
 
@@ -15,30 +17,34 @@ SITE_NAME = basename(DJANGO_ROOT)
 # Add our project to our pythonpath, this way we don't need to type our project
 # name in our dotted import paths:
 sys.path.append(DJANGO_ROOT)
-########## END PATH CONFIGURATION
+# ######### END PATH CONFIGURATION
 
-########## DEBUG CONFIGURATION
+# ######### DEBUG CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = False
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
 TEMPLATE_DEBUG = DEBUG
-########## END DEBUG CONFIGURATION
+# ######### END DEBUG CONFIGURATION
 
-########## MANAGER CONFIGURATION
+# ######### MANAGER CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
-    ('Barddo Team', 'barddoteam@gmail.com'),
+    ('Israel Crisanto', 'israel.crisanto@gmail.com'),
+    ('Bruno Ortiz', 'brunortiz11@gmail.com'),
+    ('Rafael Ortiz', 'rafa_ortiz11@hotmail.com')
 )
+
+DEFAULT_FROM_EMAIL = 'contact@barddo.com'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
-########## END MANAGER CONFIGURATION
+# ######### END MANAGER CONFIGURATION
 
-########## DATABASE CONFIGURATION
+# ######### DATABASE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 # DATABASES = {
-#     'default': {
+# 'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #         'NAME': 'barddo_dev',
 #         'USER': 'postgres',
@@ -58,7 +64,16 @@ TIME_ZONE = 'America/Sao_Paulo'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
+
+LANGUAGES = (
+    ('pt', 'Português'),
+    ('en', 'English'),
+)
+
+LOCALE_PATHS = (
+    path.normpath(path.join(SITE_ROOT, 'locale')),
+)
 
 SITE_ID = 1
 
@@ -84,6 +99,9 @@ MEDIA_ROOT = path.normpath(path.join(SITE_ROOT, 'media'))
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'
+
+# Documents folder
+DOCUMENTS_ROOT = path.normpath(path.join(SITE_ROOT, 'documents'))
 ########## END MEDIA CONFIGURATION
 
 ########## STATIC FILE CONFIGURATION
@@ -98,6 +116,7 @@ STATICFILES_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'assets')),
     path.normpath(path.join(SITE_ROOT, 'feedback', 'assets')),
     path.normpath(path.join(SITE_ROOT, 'search', 'assets')),
+    path.normpath(path.join(SITE_ROOT, 'core', 'assets')),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
@@ -129,6 +148,7 @@ FIXTURE_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'core', 'fixtures')),
     path.normpath(path.join(SITE_ROOT, 'publishing', 'fixtures')),
     path.normpath(path.join(SITE_ROOT, 'accounts', 'fixtures')),
+    path.normpath(path.join(SITE_ROOT, 'payments', 'fixtures')),
 )
 ########## END FIXTURE CONFIGURATION
 
@@ -144,6 +164,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request',
     'django.core.context_processors.csrf',
+    'social.apps.django_app.context_processors.backends',
+    'social.apps.django_app.context_processors.login_redirect',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
@@ -160,6 +182,7 @@ TEMPLATE_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'shards', 'templates')),
     path.normpath(path.join(SITE_ROOT, 'publishing', 'templates')),
     path.normpath(path.join(SITE_ROOT, 'accounts', 'templates')),
+    path.normpath(path.join(SITE_ROOT, 'payments', 'templates')),
 )
 ########## END TEMPLATE CONFIGURATION
 
@@ -170,8 +193,10 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'accounts.middleware.LocaleMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'barddo.middleware.XsSharing'
 )
 ########## END MIDDLEWARE CONFIGURATION
 
@@ -211,7 +236,15 @@ THIRD_PARTY_APPS = (
     'social.apps.django_app.default',
     'endless_pagination',
     'imagekit',
-    'easy_thumbnails'
+    'easy_thumbnails',
+    'analytical',
+    'polymorphic',
+    'django_bitly',
+    'redis_metrics',
+    'djcelery',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'paypalrestsdk',
 )
 
 # Apps specific for this project go here.
@@ -223,6 +256,11 @@ LOCAL_APPS = (
     'publishing',
     'rating',
     'search',
+    'follow',
+    'payments',
+    'feed',
+    'share',
+    'api',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -264,16 +302,23 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
         },
+        'file': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'verbose',
+            'filename': '/tmp/barddo.log',
+            'maxBytes': 1024000,
+            'backupCount': 3,
+        },
     },
     'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
+        'django': {
+            'handlers': ['console', 'file', 'mail_admins'],
             'level': 'ERROR',
             'propagate': True,
         },
 
         'dajaxice': {
-            'handlers': ['console', 'mail_admins'],
+            'handlers': ['console', 'file', 'mail_admins'],
             'level': 'INFO',
             'propagate': True,
         },
@@ -332,17 +377,20 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.social_auth.associate_user',
     'social.pipeline.social_auth.load_extra_data',
     'social.pipeline.user.user_details',
+    'accounts.pipelines.create_user_profile',
     'accounts.pipelines.get_avatar',
     'accounts.pipelines.get_birth_date',
     'accounts.pipelines.get_gender',
     'accounts.pipelines.get_country',
+    'accounts.pipelines.get_language',
+    'accounts.pipelines.post_user_creation',
 )
 
 SOCIAL_AUTH_LOGIN_URL = '/'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
-SOCIAL_AUTH_LOGIN_ERROR_URL = '/login-error'
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/login-error'  # TODO: handle that
 
-FACEBOOK_EXTENDED_PERMISSIONS = ['email', 'user_about_me', 'user_birthday', 'user_location']
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_about_me', 'user_birthday', 'user_location']
 
 ########## Image crop settings
 THUMBNAIL_ALIASES = {
@@ -354,3 +402,81 @@ THUMBNAIL_ALIASES = {
 }
 
 ########## End of image crop settings
+
+########## Analytics Services Settigns
+# Disabled tracking ips
+ANALYTICAL_INTERNAL_IPS = ['0.0.0.0', '127.0.0.1', 'localhost']
+
+# Do the best to identify users on tracking tools that can handle this
+ANALYTICAL_AUTO_IDENTIFY = True
+
+# Url: http://clicky.com/
+# Description: A real time analytics site
+# Type: free tier
+CLICKY_SITE_ID = '100737229'
+
+# Url: https://www.crazyegg.com
+# Description: A PAID heat map, we are on trial, started ad 17/05/2014 and ends at 17/06/2014
+# Type: Paid Yearly
+CRAZY_EGG_ACCOUNT_NUMBER = '00230100'
+
+# Url: https://www.google.com/analytics
+# Description: Google Analytics Services
+# Type: free tier
+GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-50511116-2'
+GOOGLE_ANALYTICS_SITE_SPEED = True
+
+# Url: https://www.woopra.com
+# Description: Another real time analytics, but better at showing what the user is doing
+# Type: trial
+WOOPRA_DOMAIN = 'barddo.com'
+########## End of analytics Services Settigns
+
+LOGIN_URL = "/"
+LOGOUT_URL = "/logout"
+
+#### Bitly Settings
+
+BITLY_LOGIN = "icrisanto"
+
+BITLY_API_KEY = "R_c5a307706efef2c2881a88a748120435"
+
+#### End of Bitly Settings
+
+#### Metrics Settings
+
+REDIS_METRICS_HOST = 'localhost'
+REDIS_METRICS_PORT = 6379
+REDIS_METRICS_DB = 0
+REDIS_METRICS_PASSWORD = None
+REDIS_METRICS_SOCKET_TIMEOUT = None
+REDIS_METRICS_SOCKET_CONNECTION_POOL = None
+
+### End of Metrics Settings
+
+
+#### Celery Settings
+BROKER_URL = 'amqp://guest:guest@localhost//'  # unsecure, for now
+#### End of Celery Settings
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
+REST_FRAMEWORK = {
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+
+    # Use hyperlinked styles by default.
+    # Only used if the `serializer_class` attribute is not set on a view.
+    'DEFAULT_MODEL_SERIALIZER_CLASS':
+        'rest_framework.serializers.HyperlinkedModelSerializer',
+
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+
+    'PAGINATE_BY': 25
+}

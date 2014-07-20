@@ -9,9 +9,6 @@ from core.models import Collection, Work
 from rating.models import Rating
 
 
-__author__ = 'jovial'
-
-
 class SearchResultView(ProfileAwareView):
     """
     Handle the search result page
@@ -36,7 +33,7 @@ class SearchResultView(ProfileAwareView):
             if len(collections) == 0 and len(works) == 0 and len(people) == 0:
                 context = self.get_context_data(**{
                     "user": request.user,
-                    "error": _(u"Não foi encontrado nenhum resultado para sua busca."),
+                    "error": _(u"No results found for your query."),
                     "success": False
                 })
             else:
@@ -50,7 +47,7 @@ class SearchResultView(ProfileAwareView):
         else:
             context = self.get_context_data(**{
                 "user": request.user,
-                "error": _(u"Pesquisa inválida."),
+                "error": _(u"Invalid search."),
                 "success": False
             })
 
@@ -89,8 +86,9 @@ class SearchResultView(ProfileAwareView):
         Just search relevant works with given query, other information are required on result,
         like if the user liked a work or not
         """
-        sub_query = Rating.objects.annotate(Count('id')).values('id__count') \
-            .extra(where=["core_work.id = rating_rating.work_id"]).filter(like=True).query
+        sub_query = Rating.objects.filter(like=True).annotate(Count('id')).values('id__count') \
+            .extra(where=["core_work.id = rating_rating.work_id"]).query
+        sub_query.group_by = []
 
         return Work.search_manager.search_ordered(query_text, ("title", "summary")).extra(
             select={"like_count": sub_query})

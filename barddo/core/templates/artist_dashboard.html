@@ -3,70 +3,65 @@
 {% load static %}
 {% load compress %}
 {% load thumbnail %}
+{% load i18n %}
 
 {% block header %}
     <link rel="stylesheet" href="{% static "css/datepicker.css" %}"/>
-    <link rel="stylesheet" href="{% static "css/uncompressed/barddo.dashboard.css" %}"/>
+    <link rel="stylesheet" href="{% static "barddo/css/barddo.dashboard.css" %}"/>
     <link rel="stylesheet" href="{% static "css/crop/imgareaselect-animated.css" %}"/>
     <link rel="stylesheet" href="{% static "css/dropzone.css" %}"/>
     <link rel="stylesheet" href="{% static "css/select2.css" %}"/>
-
-    <link rel="stylesheet" href="{% static "css/jquery-ui-1.10.3.custom.min.css" %}"/>
     <link rel="stylesheet" href="{% static "css/bootstrap-editable.css" %}"/>
-
 {% endblock %}
 
 {% block breadcrumbs %}
-    <!-- TODO: extract this logic to a template tag, so the breadcrumbs are calculated by the system -->
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
-            <a href="{% url "core.index" %}">Home</a>
+            <a href="{% url "core.index" %}">{% trans "Home" %}</a>
         </li>
-        <li class="active">Dashboard</li>
-    </ul><!-- .breadcrumb -->
+        <li class="active">{% trans "Dashboard" %}</li>
+    </ul>
 {% endblock %}
 
 {% block sidebar %}
     <div class="sidebar menu-min" id="sidebar">
-
         <ul class="side-bar nav nav-list">
             <li class="active">
                 <a href="#">
                     <i class="icon-dashboard"></i>
-                    <span class="menu-text"> Dashboard </span>
+                    <span class="menu-text"> {% trans "Dashboard" %}</span>
                 </a>
             </li>
 
             <li>
                 <a href="#new-collection-wizard">
                     <i class="icon-book"></i>
-                    <span class="menu-text"> Create a Collection</span>
+                    <span class="menu-text"> {% trans "Create a Collection" %}</span>
                 </a>
             </li>
 
-            <li>
-                <a href="#">
-                    <i class="icon-bar-chart"></i>
-                    <span class="menu-text"> Statistics</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="#">
-                    <i class="icon-bookmark"></i>
-                    <span class="menu-text"> Bookmarks</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="#">
-                    <i class="icon-archive"></i>
-                    <span class="menu-text"> Archived Items</span>
-                </a>
-            </li>
+            {#            <li>#}
+            {#                <a href="#">#}
+            {#                    <i class="icon-bar-chart"></i>#}
+            {#                    <span class="menu-text"> {% trans "Statistics" %}</span>#}
+            {#                </a>#}
+            {#            </li>#}
+            {##}
+            {#            <li>#}
+            {#                <a href="#">#}
+            {#                    <i class="icon-bookmark"></i>#}
+            {#                    <span class="menu-text"> {% trans "Bookmarks" %}</span>#}
+            {#                </a>#}
+            {#            </li>#}
+            {##}
+            {#            <li>#}
+            {#                <a href="#">#}
+            {#                    <i class="icon-archive"></i>#}
+            {#                    <span class="menu-text"> {% trans "Archived Items" %}</span>#}
+            {#                </a>#}
+            {#            </li>#}
         </ul>
-        <!-- /.nav-list -->
     </div>
 {% endblock %}
 
@@ -76,10 +71,11 @@
             <div class="row" style="padding-top: 25px;">
                 <div class="col-sm-12">
                     <div class="center">
-                        <h3 class="red">Uh Oh!</h3>
-                        Looks like you don't have any <span class="red">collections</span> yet! But do not fear, this
-                        is something easy to
-                        fix!
+                        <h3 class="red">{% trans "Uh Oh!" %}</h3>
+                        {% blocktrans %}
+                            Looks like you don't have any <span class="red">collections</span> yet! But do not fear, this
+                            is something easy to fix!
+                        {% endblocktrans %}
                         <br/><br/>
                         <img src="{% static "images/art/empty-face.png" %}"/>
                     </div>
@@ -88,8 +84,7 @@
             <div class="row" style="padding-top: 50px;">
                 <div class="col-sm-6 col-sm-offset-3">
                     <a id="collection-wizard-link" href="#new-collection-wizard"
-                       class="btn btn-danger btn-block btn-lg"><i class="icon-plus"></i> Create an awesome new
-                        collection, now!
+                       class="btn btn-danger btn-block btn-lg"><i class="icon-plus"></i> {% trans "Create an awesome new collection, now!" %}
                     </a>
                 </div>
             </div>
@@ -101,7 +96,7 @@
                         <div class="widget-header widget-header-flat">
                             <h4 class="lighter">
                                 <i class="icon-star orange"></i>
-                                My Collections ({{ collections|length }})
+                                {% trans "My Collections" %} ({{ collections|length }})
                             </h4>
 
                         </div>
@@ -119,7 +114,7 @@
                                                                  alt="">
                                                         {% else %}
                                                             <img src="{% static "images/default-cover.jpg" %}"
-                                                                 alt="Create a work for this collection!">
+                                                                 alt="{% trans "Create a work for this collection!" %}">
                                                         {% endif %}
                                                     </div>
 
@@ -128,14 +123,14 @@
                                                             <a href="#new-work-wizard"
                                                                data-id="{{ collection.id }}"
                                                                class="btn btn-block btn-info"><i
-                                                                    class="icon-plus-sign"></i> Add a Work</a>
+                                                                    class="icon-plus-sign"></i> {% trans "Add a Work" %}</a>
 
 
                                                             {% if collection.get_total_works != 0 %}
                                                                 <a href="#"
                                                                    class="collection-view btn btn-block btn-danger"
                                                                    data-id="{{ collection.id }}"><i
-                                                                        class="icon-edit"></i> Edit Collection</a>
+                                                                        class="icon-edit"></i> {% trans "Edit Collection" %}</a>
                                                             {% endif %}
                                                         </div>
                                                     </div>
@@ -152,7 +147,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- /widget-main -->
                     </div>
                 </div>
             </div>
@@ -168,27 +162,23 @@
         <script src="{% static "js/date-time/bootstrap-datepicker.min.js" %}"></script>
         <script src="{% static "js/bootstrap-tag.min.js" %}"></script>
         {% dajaxice_js_import 'nocsrf' %}
-
-        <script type="text/javascript" src="{% static "js/barddo/pages/collection.create.js" %}"></script>
-
+        <script type="text/javascript" src="{% static "barddo/js/pages/collection.create.js" %}"></script>
         <script src="{% static "js/uncompressed/dropzone.js" %}"></script>
         <script src="{% static "js/uncompressed/select2.js" %}"></script>
         <script src="{% static "js/uncompressed/x-editable/bootstrap-editable.js" %}"></script>
         <script src="{% static "js/uncompressed/x-editable/ace-editable.js" %}"></script>
+        <script src="{% static "js/jquery.Jcrop.min.js" %}"></script>
+        <script src="{% static "js/jquery.imgareaselect.min.js" %}"></script>
+        <script src="{% static "js/jquery.nestable.min.js" %}"></script>
+        <script src="{% static "js/jquery.form.min.js" %}"></script>
+        <script src="{% static "barddo/js/pages/dashboard.js" %}"></script>
+        <script src="{% static "js/jquery-ui-1.10.4.modal.js" %}"></script>
+        {#        <script src="{% static "js/jquery.ui.touch-punch.min.js" %}"></script>#}
     {% endcompress %}
-    <script src="{% static "js/jquery.Jcrop.min.js" %}"></script>
-    <script src="{% static "js/jquery.imgareaselect.min.js" %}"></script>
-
-
-    <script src="{% static "js/jquery.nestable.min.js" %}"></script>
-    <script src="{% static "js/jquery.form.min.js" %}"></script>
-
-    <script src="{% static "js/barddo/pages/dashboard.js" %}"></script>
 {% endblock %}
 
 {% block bottom_page %}
     <script type="text/javascript">
-
         // Workaround to handle form validation in an asynchronous way
         var formValid = false;
 
@@ -260,8 +250,6 @@
             });
 
             // TODO: change text to internationalized
-
-
             $('#new-work-button').on('click', function () {
                 $('#new-collection-wizard').modal('hide');
             });
@@ -423,6 +411,5 @@
                 }, {"collection_id": collection_id});
             });
         });
-
     </script>
 {% endblock %}

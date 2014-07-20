@@ -1,4 +1,5 @@
 {% load thumbnail %}
+{% load i18n %}
 {% csrf_token %}
 <div class="row">
     <div class="col-sm-12">
@@ -21,14 +22,14 @@
                     <li class="active">
                         <a data-toggle="tab" href="#general-{{ collection.id }}">
                             <i class="blue icon-info-sign bigger-120"></i>
-                            General
+                            {% trans "General" %}
                         </a>
                     </li>
 
                     <li>
                         <a data-toggle="tab" href="#files-{{ collection.id }}">
                             <i class="green icon-picture bigger-120"></i>
-                            Pages
+                            {% trans "Pages" %}
                         </a>
                     </li>
 
@@ -37,63 +38,76 @@
                 <div class="tab-content no-border padding-24">
                     <div id="general-{{ collection.id }}" class="tab-pane in active">
                         <div class="row">
-                            <div class="col-xs-12 col-sm-5 center">
-                            <span class="profile-picture">
-                                <img class="editable img-responsive" alt="Work Cover"
-                                     src="{{ current_work.cover|thumbnail_url:"big_cover" }}"/>
-                            </span>
-                                <span class="cover-subtitle"><i
-                                        class="icon-pencil"></i> Click to change</span>
+                            <div class="col-xs-12 col-sm-5 center" id="change-cover">
+                                <span class="profile-picture">
+                                    <img class="editable img-responsive" alt="Work Cover" src="{{ current_work.cover|thumbnail_url:"big_cover" }}"/>
+                                </span>
+                                <span class="cover-subtitle">
+                                    <i class="icon-pencil"></i> {% trans "Click to change" %}
+                                </span>
                             </div>
-                            <!-- /span -->
+
+                            <div id="dialog-message" class="hide cover-edit">
+                                <form id="edit-cover-form" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" id="id" name="id" value="{{ current_work.id }}"/>
+                                    {% include "work_form/_cover.html" %}
+                                </form>
+                            </div>
 
                             <div class="col-xs-12 col-sm-7">
                                 <div id="collection-editable" class="profile-user-info profile-user-info-striped">
                                     <div class="table-header center">
-                                        <i class="icon-edit"></i> Work Information
+                                        <i class="icon-edit"></i> {% trans "Work Information" %}
                                     </div>
                                     <div class="profile-info-row">
-                                        <div class="profile-info-name"> Title:</div>
+                                        <div class="profile-info-name"> {% trans "Title" %}:</div>
 
                                         <div class="profile-info-value">
-                                        <span class="editable"
-                                              id="id_title">{{ current_work.title }}</span>
+                                            <span class="editable"
+                                                  id="id_title">{{ current_work.title }}</span>
                                         </div>
                                     </div>
 
                                     <div class="profile-info-row">
-                                        <div class="profile-info-name"> Number:</div>
+                                        <div class="profile-info-name"> {% trans "Number" %}:</div>
 
                                         <div class="profile-info-value">
-                                        <span class="editable"
-                                              id="id_unit_count">{{ current_work.unit_count }}</span>
+                                            <span class="editable"
+                                                  id="id_unit_count">{{ current_work.unit_count }}</span>
                                         </div>
                                     </div>
 
                                     <div class="profile-info-row">
-                                        <div class="profile-info-name"> Summary:</div>
+                                        <div class="profile-info-name"> {% trans "Summary" %}:</div>
 
                                         <div class="profile-info-value">
-                                        <span class="editable"
-                                              id="id_summary">{{ current_work.summary }}</span>
+                                            <span class="editable"
+                                                  id="id_summary">{{ current_work.summary }}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- /span -->
                         </div>
-                        <!-- /row-fluid -->
-
                     </div>
 
                     <div id="files-{{ collection.id }}" class="tab-pane">
+                        <div class="alert alert-block alert-success">
+                            <p>
+                                <strong>
+                                    <i class="icon-ok"></i>
+                                </strong>
+                                {% trans "Add new pages dropping your files or clicking on the space bellow. You can reorder the pages by just dragging them." %}
+                            </p>
+                        </div>
+
                         <div class="profile-feed row-fluid">
                             <form id="edit-work-upload" action="/work/page/upload" data-id="{{ current_work.id }}"
                                   class="dropzone">
                                 <div class="work-action-overlay center"><i
                                         class="icon-spinner icon-spin white icon-2x"></i>
-                                    <span>Please Wait</span>
-                                    <span class="subtitle">Sending changes to the server</span>
+                                    <span>{% trans "Please Wait" %}</span>
+                                    <span class="subtitle">{% trans "Sending changes to the server..." %}</span>
                                 </div>
 
                                 {% csrf_token %}
@@ -110,7 +124,6 @@
                             </form>
                         </div>
                     </div>
-                    <!-- /#feed -->
                 </div>
             </div>
         </div>
@@ -119,7 +132,100 @@
 
 
 <script type="text/javascript">
+
+    function gritter_feedback(msg) {
+        $.gritter.add({
+            title: msg,
+            sticky: false,
+            time: '4000',
+            class_name: 'gritter-info'
+        });
+    }
+
+    function gritter_error(msg) {
+        $.gritter.add({
+            title: msg,
+            sticky: false,
+            time: '2000',
+            class_name: 'gritter-error'
+        });
+    }
+
+    function callback_edit_cover_ok(id, img) {
+        $("#change-cover img").attr('src', img);
+        $("#dialog-message").dialog("close");
+        gritter_feedback('{% trans "Cover changed!" %}')
+    }
+
+    function callback_edit_cover_error() {
+        gritter_error('{% trans "Failed to change cover!" %}')
+    }
+
     $(document).ready(function () {
+        //override dialog's title function to allow for HTML titles
+        $.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
+            _title: function (title) {
+                var $title = this.options.title || '&nbsp;'
+                if (("title_html" in this.options) && this.options.title_html == true)
+                    title.html($title);
+                else title.text($title);
+            }
+        }));
+
+        $("#change-cover").on('click', function (e) {
+            e.preventDefault();
+
+            setup_crop_preview('#' + '{{ work_form.cover.auto_id }}', '#edit-cover-form');
+
+            var dialog = $("#dialog-message").removeClass('hide').dialog({
+                modal: true,
+                title: "<div class='widget-header widget-header-small'><h4 class='smaller'><i class='icon-picture'></i> {% trans "Upload your new cover bellow" %}</h4></div>",
+                title_html: true,
+                width: '70%',
+                buttons: [
+                    {
+                        text: "Cancel",
+                        "class": "btn btn-xs",
+                        click: function () {
+                            $(this).dialog("close");
+                        }
+                    },
+                    {
+                        text: "OK",
+                        "class": "btn btn-primary btn-xs",
+                        click: function () {
+                            var crop = window.selectedArea.getSelection(true);
+
+                            var options = {
+                                success: Dajax.process,  // post-submit callback
+
+                                // other available options:
+                                url: "/dajaxice/core.change_work_cover/",         // override for form's 'action' attribute
+                                type: "post",        // 'get' or 'post', override for form's 'method' attribute
+                                data: {
+                                    'crop_x': crop.x1,
+                                    'crop_y': crop.y1,
+                                    'crop_w': crop.x2 - crop.x1,
+                                    'crop_h': crop.y2 - crop.y1,
+                                    'width': $('#edit-cover-form #current-image').width(),
+                                    'height': $('#edit-cover-form #current-image').height()
+                                }
+                            };
+
+                            $('#edit-cover-form').ajaxSubmit(options);
+                        }
+                    }
+                ]
+            });
+
+
+            /**
+             dialog.data( "uiDialog" )._title = function(title) {
+                title.html( this.options.title );
+            };
+             **/
+        });
+
         //editables on first profile page
         $.fn.editable.defaults.mode = 'inline';
         $.fn.editableform.loading = "<div class='editableform-loading'><i class='light-blue icon-2x icon-spinner icon-spin'></i></div>";

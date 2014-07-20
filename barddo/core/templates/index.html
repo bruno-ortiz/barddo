@@ -2,13 +2,16 @@
 {% load staticfiles %}
 {% load compress %}
 {% load work_element %}
+{% load i18n %}
 
 {% block header %}
-    <link rel="stylesheet" href="{% static "css/uncompressed/barddo.gallery.css" %}"/>
-    <link rel="stylesheet" href="{% static "css/bottom.css" %}"/>
+    <link rel="stylesheet" href="{% static "barddo/css/barddo.gallery.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/reader.css" %}"/>
 
     <link rel="stylesheet" href="{% static "css/uncompressed/barddo.banner.css" %}"/>
     <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="{% static "custom-modal/css/style.css" %}"/>
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -16,46 +19,53 @@
         <ul id="filters" class="option-set clearfix" data-option-key="filter">
             <li>
                 <a href="#filter" class="selected" data-option-value=".collection-trending">
-                    <i class="icon icon-comments"></i> Trending
+                    <i class="icon icon-comments"></i> {% trans "Trending" %}
                 </a>
             </li>
 
             <li>
                 <a href="#filter" data-option-value=".collection-rising">
-                    <i class="icon icon-circle-arrow-up"></i> Rising
+                    <i class="icon icon-circle-arrow-up"></i> {% trans "Rising" %}
                 </a>
             </li>
 
             <li>
                 <a href="#filter" data-option-value=".collection-new">
-                    <i class="icon icon icon-th-large"></i> New
+                    <i class="icon icon icon-th-large"></i> {% trans "New" %}
                 </a>
             </li>
+            {% if user.is_authenticated %}
+                <li>
+                    <a href="#filter" data-option-value=".collection-owned">
+                        <i class="icon icon icon-th-large"></i> {% trans "Owned" %}
+                    </a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 
 
-    <ul class="discover navbar-right">
+    <ul class="discover navbar-right hidden-xs">
         <li class="dropdown">
             <a href="#" id="discover-drop" role="button" class="dropdown-toggle red"
-               data-toggle="dropdown">Descubra o Barddo
+               data-toggle="dropdown">{% trans "Discover the Barddo" %}
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="discover-drop">
                 <li role="presentation">
                     <a id="btn-discover" role="menuitem" tabindex="-1" href="#">
-                        <img src="{% static "images/banner/discover.png" %}" class="image pull-left"/>
-                        <span class="call">Descubra</span>
-                        <span class="description">Publicar, compartilhar e encontrar mangás e HQs nunca foi tão simples!</span>
+                        <img src="{% static "images/banner/discover-blue.png" %}" class="image pull-left"/>
+                        <span class="call">{% trans "Discover" %}</span>
+                        <span class="description">{% trans "Publish, share and find comics has never been so easy!" %}</span>
                     </a>
                 </li>
                 <li class="divider"></li>
 
                 <li role="presentation">
                     <a id="btn-understand" role="menuitem" tabindex="-1" href="#">
-                        <img src="{% static "images/banner/understand.png" %}" class="image pull-left"/>
-                        <span class="call">Entenda</span>
-                        <span class="description">Tudo que você precisa saber sobre o Barddo está aqui!</span>
+                        <img src="{% static "images/banner/understand-blue.png" %}" class="image pull-left"/>
+                        <span class="call">{% trans "Understand" %}</span>
+                        <span class="description">{% trans "All you need to know about Barddo are here!" %}</span>
                     </a>
                 </li>
 
@@ -63,26 +73,22 @@
 
                 <li role="presentation">
                     <a id="btn-enjoy" role="menuitem" tabindex="-1" href="#">
-                        <img src="{% static "images/banner/enjoy.png" %}" class="image pull-left"/>
+                        <img src="{% static "images/banner/enjoy-blue.png" %}" class="image pull-left"/>
 
                         <div>
-                            <span class="call">Aproveite</span>
-                            <span class="description">Relaxe, leia, compartilhe, indique e ajude artistas a ter o destque que merecem!</span>
+                            <span class="call">{% trans "Enjoy" %}</span>
+                            <span class="description">{% trans "Relax, read, share and help artists to have the highlight they deserve!" %}</span>
                         </div>
                     </a>
                 </li>
             </ul>
         </li>
     </ul>
-
-
 {% endblock %}
 
 {% block content %}
     <div class="page-content">
         <div class="row">
-            <!-- PAGE CONTENT BEGINS -->
-
             <div id="collection-content" class="col-lg-12  col-md-12 col-sm-12 col-xs-12 collections-wrap">
                 <div class="row">
                     <div class="portfolio" style="display: none">
@@ -97,11 +103,15 @@
                         {% for work in trending_works %}
                             {% work_element work "collection-trending" %}
                         {% endfor %}
+                        {% if user.is_authenticated %}
+                            {% for work in owned_works %}
+                                {% work_element work "collection-owned" %}
+                            {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
-        <!-- /.row -->
     </div>
 
 
@@ -111,20 +121,24 @@
     {% compress js %}
         <script src="{% static "js/jquery.isotope.min.js" %}"></script>
         <script src="{% static "js/portfolio.js" %}"></script>
-        <script type="text/javascript" src="{% static "js/barddo/pages/gallery.js" %}"></script>
+        <script src="{% static "js/uncompressed/jquery.cookie.js" %}"></script>
+        <script type="text/javascript" src="{% static "barddo/js/pages/gallery.js" %}"></script>
     {% endcompress %}
 {% endblock %}
 
 {% block bottom_page %}
     <script type="text/javascript">
         $(document).ready(function () {
+            // Help modals shards
             $("#btn-discover").on("click", function () {
+
                 Shards.modal.help.discover(function (shard_id, shard_data, parent) {
                     $(shard_id).remove();
                     $(parent).append(shard_data);
                     $(shard_id).modal('show');
                 });
             });
+
 
             $("#btn-understand").on("click", function () {
                 Shards.modal.help.understand(function (shard_id, shard_data, parent) {
@@ -141,6 +155,25 @@
                     $(shard_id).modal('show');
                 });
             });
+
+            // just allowing direct reference to the modals
+            if (window.location.hash == "#discover") {
+                $("#btn-discover").trigger("click");
+            }
+
+            if (window.location.hash == "#understand") {
+                $("#btn-understand").trigger("click");
+            }
+
+            if (window.location.hash == "#enjoy") {
+                $("#btn-enjoy").trigger("click");
+            }
+
+            // Shows the first popup if the user is a first time
+            if (!$.cookie("is_first_visit")) {
+                $.cookie('is_first_visit', 'nope', { expires: 365, path: '/' });
+                $("#btn-discover").trigger("click");
+            }
 
 
             {% if next_url %}
@@ -177,12 +210,14 @@
                 template: '<div class="popover work-popover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
             });
 
-            $(".boxcontainer").on("mouseenter",function () {
+            $(".boxcontainer").on("mouseenter", function () {
                 var _this = this;
                 var work_id = $(this).closest('div[data-work-id]').attr('data-work-id');
                 $(".vote", _this).popover("show");
 
-                $(".popover").on("mouseleave", function (e) {
+                $(".popover").mouseenter(function () {
+                    clearTimeout($(this).data('timeoutId'));
+                }).mouseleave(function () {
                     var $boxcontainer = $(".boxcontainer:hover");
                     if ($boxcontainer.length) {
                         var new_work_id = $boxcontainer.closest('div[data-work-id]').attr('data-work-id');
@@ -199,11 +234,12 @@
                 onPopupHover = true;
             }).on("mouseleave", function () {
                 var _this = this;
-                if (!$(".popover:hover").length) {
-                    onPopupHover = false;
+                onPopupHover = false;
+                var timeoutId = setTimeout(function () {
                     $(".vote", _this).popover("hide");
                     $(".roll", _this).css("opacity", 0);
-                }
+                }, 50);
+                $('.popover').data('timeoutId', timeoutId);
             });
             {% if user.is_authenticated %}
                 $(document).on("click", ".popover-content button.btn-reader", function () {

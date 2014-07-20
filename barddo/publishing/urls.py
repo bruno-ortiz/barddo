@@ -3,8 +3,6 @@ from django.conf.urls import patterns, url
 from .views import publisher_landpage, JoinBarddoModal, CountriesAjaxView, CreateGroupModal
 
 
-__author__ = 'bruno'
-
 urlpatterns = patterns(
     '',
     url(r'publisher$', publisher_landpage, name='publishing.landpage'),

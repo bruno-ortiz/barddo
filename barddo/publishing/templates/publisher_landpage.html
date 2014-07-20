@@ -7,69 +7,151 @@
 
 {% block header %}
     {% compress css %}
-        <link rel="stylesheet" href="{% static "css/uncompressed/bootstrap-tagsinput.css" %}"/>
+        <link rel="stylesheet" href="{% static "bootstrap-tagsinput/css/bootstrap-tagsinput.css" %}"/>
+        <link rel="stylesheet" href="{% static "custom-modal/css/style.css" %}"/>
         <link rel="stylesheet" href="{% static "css/select2.css" %}"/>
-        <link rel="stylesheet" href="{% static "css/uncompressed/barddo.publisher.css" %}"/>
+        <link rel="stylesheet" href="{% static "barddo/css/barddo.publisher.css" %}"/>
     {% endcompress %}
 {% endblock %}
 
 {% block breadcrumbs %}
-    <!-- TODO: extract this logic to a template tag, so the breadcrumbs are calculated by the system -->
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
-            <a href="{% url "core.index" %}">Home</a>
+            <a href="{% url "core.index" %}">{% trans "Home" %}</a>
         </li>
-        <li class="active">Publisher</li>
-    </ul><!-- .breadcrumb -->
+        <li class="active">{% trans "Publisher" %}</li>
+    </ul>
 {% endblock %}
 
 {% block content %}
-    <div class="page-content">
-        <div id="carousel-publisher" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ol class="carousel-indicators">
-                <li data-target="#carousel-publisher" data-slide-to="0" class="active"></li>
-                <li data-target="#carousel-publisher" data-slide-to="1"></li>
-                <li data-target="#carousel-publisher" data-slide-to="2"></li>
-            </ol>
-
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner">
-                <div class="item active">
-                    <img class="img-responsive" src="{% static "img/01-editor.png" %}">
-                </div>
-                <div class="item">
-                    <img class="img-responsive" src="{% static "img/02-editor.png" %}">
-                </div>
-                <div class="item">
-                    <img class="img-responsive" src="{% static "img/03-editor.png" %}">
+    <div class="page-content no-padding">
+        <div class="features block">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5 col-xs-12 sketch">
+                        <img src="{% static "barddo/img/sketch.png" %}">
+                    </div>
+                    <div class="col-md-7 col-xs-12">
+                        <div class="page-title text-center">
+                            <h3>{% trans "Barddo for Artists" %}!</h3>
+                            <button id="joinBarddoButton"
+                                    class="{% if barddo_publisher %} disabled {% endif %}btn btn-orange btn-lg">
+                                {% if not barddo_publisher %}{% trans "I want to publish in Barddo!" %}{% else %}
+                                    {% trans "You are a Barddo publisher!" %}{% endif %}
+                            </button>
+                            <p class="text-left">
+                                {% blocktrans %}
+                                    Welcome!
+                                    Are you an independent artist that wants to share your creations with the world? You're in the right place!
+                                    Barddo will help you to achieve all of your goals as an artist.
+                                {% endblocktrans %}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <!-- Controls -->
-            <a class="left carousel-control" href="#carousel-publisher" data-slide="prev">
-                <span class="icon-chevron-left center-chevron"></span>
-            </a>
-            <a class="right carousel-control" href="#carousel-publisher" data-slide="next">
-                <span class="icon-chevron-right center-chevron"></span>
-            </a>
         </div>
-        <h1 class="red text-center">{% trans "Join us!" %}</h1>
+        <div class="shots block">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="col-md-8">
+                            <div class="shotcontent second">
+                                <h3>{% trans "Mobility" %}</h3>
 
-        <h3 class="text-center">{% trans "Create your own publishing group or Join the Barddo publisher!" %}</h3>
+                                <p class="shot-para">
+                                    {% blocktrans %}
+                                        With barddo you publish once and readers read anywhere, either on the computer or on their mobile devices.
+                                    {% endblocktrans %}
+                                </p>
+                                <hr>
 
-        <div class="row">
-            <div class="col-sm-6 col-lg-6">
-                <button id="joinBarddoButton"
-                        class="{% if barddo_publisher %} disabled {% endif %}btn btn-danger btn-lg btn-block pull-down50">
-                    {% if not barddo_publisher %}{% trans "Join the Barddo publisher" %}{% else %}
-                        {% trans "You are a Barddo editor!" %}{% endif %}
-                </button>
-            </div>
-            <div class="col-sm-6 col-lg-6">
-                <button id="createGroupButton"
-                        class="btn btn-primary btn-lg btn-block pull-down50">{% trans "Create a publishing group" %}</button>
+                                <div class="row">
+                                    <div class="col-md-6 col-xs-6">
+                                        <div class="shot-content-body">
+                                            <h4><i class="icon-mobile-phone tblue"></i> {% trans "Mobile" %}</h4>
+
+                                            <p>
+                                                {% blocktrans %}
+                                                    Barddo's mobile app are ready to be used in today's most famous platforms
+                                                    such as IOS, Android, Windows Phone and FirefoxOS.
+                                                {% endblocktrans %}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-6">
+                                        <div class="shot-content-body">
+                                            <h4><i class="icon-desktop tblue"></i> {% trans "Web" %}</h4>
+
+                                            <p>
+                                                {% blocktrans %}
+                                                    The website will continue to receive improvements so the readers can have the best experience buying and
+                                                    reading your comics.
+                                                {% endblocktrans %}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div style="height: 100px;" class="hidden-xs"></div>
+                            <div class="screenshot">
+                                <img src="{% static "img/phone-barddo-04.png" %}" alt="image"
+                                     class="img-responsive"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="col-md-8">
+                            <div class="shotcontent second">
+                                <h3>{% trans "Monetize your comic" %}</h3>
+
+                                <p class="shot-para">
+                                    {% blocktrans %}
+                                        With Barddo you can sell your comics, why not earn some money doing things that you love!
+                                    {% endblocktrans %}
+                                </p>
+                                <hr>
+
+                                <div class="row">
+                                    <div class="col-md-6 col-xs-6">
+                                        <div class="shot-content-body">
+                                            <h4><i class="icon-money tblue"></i> {% trans "Price" %}</h4>
+
+                                            <p>
+                                                {% blocktrans %}
+                                                    You say the price! it is important for us that the creator of the comic have the freedom to choose the worth
+                                                    of their own work!
+                                                {% endblocktrans %}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-6">
+                                        <div class="shot-content-body">
+                                            <h4><i class="icon-dollar tblue"></i> {% trans "Share" context "Monetize" %}</h4>
+
+                                            <p>
+                                                {% blocktrans %}
+                                                    As service providers we will keep a small share from this value, it is important for us to be able to
+                                                    keep the service running!
+                                                {% endblocktrans %}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div style="height: 100px;" class="hidden-xs"></div>
+                            <div class="screenshot">
+                                <img src="{% static "barddo/img/cifrao.png" %}" alt="image"
+                                     class="img-responsive"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -78,8 +160,8 @@
 
 {% block page_specific_javascript %}
     {% compress js %}
-        <script src="{% static "js/uncompressed/bootstrap-tagsinput.js" %}"></script>
-        <script src="{% static "js/uncompressed/ace-elements.js" %}"></script>
+        <script src="{% static "bootstrap-tagsinput/js/bootstrap-tagsinput.js" %}"></script>
+        <script src="{% static "ace/js/ace-elements.js" %}"></script>
         <script src="{% static "js/jquery.form.min.js" %}"></script>
         <script src="{% static "js/uncompressed/select2.js" %}"></script>
     {% endcompress %}
@@ -90,14 +172,6 @@
         $(document).ready(function () {
             $("#joinBarddoButton").on("click", function () {
                 Shards.join.barddo(function (shard_id, shard_data, parent) {
-                    $(shard_id).remove();
-                    $(parent).append(shard_data);
-                    $(shard_id).modal('show');
-                });
-            });
-
-            $("#createGroupButton").on("click", function () {
-                Shards.create.group(function (shard_id, shard_data, parent) {
                     $(shard_id).remove();
                     $(parent).append(shard_data);
                     $(shard_id).modal('show');
