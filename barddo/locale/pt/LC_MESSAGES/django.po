@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Barddo Main Site\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-26 22:05-0300\n"
-"PO-Revision-Date: 2014-06-26 22:40-0300\n"
-"Last-Translator: Bruno Ortiz <brunortiz11@gmail.com>\n"
+"POT-Creation-Date: 2014-07-15 09:50-0300\n"
+"PO-Revision-Date: 2014-07-15 09:52-0300\n"
+"Last-Translator: Israel Crisanto <israel.crisanto@gmail.com>\n"
 "Language-Team: Barddo Team <israel.crisanto@gmail.com>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.6.4\n"
 
 #: accounts/models.py:130
 msgid "Brazil"
@@ -49,7 +49,7 @@ msgstr "Sinto muito, um erro ocorreu:"
 
 #: accounts/templates/profile.html:16 core/templates/artist_dashboard.html:21
 #: core/templates/docs/about-us.html:13 core/templates/docs/help.html:13
-#: core/templates/docs/terms.html:13
+#: core/templates/docs/terms.html:14
 #: core/templates/work_page/work_page.html:25
 #: payments/templates/no_payments.html:9
 #: payments/templates/payment_error.html:9 payments/templates/thanks.html:9
@@ -178,67 +178,67 @@ msgstr "Avatar de %(name)s"
 msgid "You are not the owner of this work!"
 msgstr "Você não é o dono desta obra!"
 
-#: core/models.py:68
+#: core/models.py:69
 msgid "Description"
 msgstr "Descrição"
 
-#: core/models.py:95
+#: core/models.py:96
 msgid "On Going"
 msgstr "Em Andamento"
 
-#: core/models.py:96
+#: core/models.py:97
 msgid "Completed"
 msgstr "Completo"
 
-#: core/models.py:97
+#: core/models.py:98
 msgid "Stopped"
 msgstr "Paralizado"
 
-#: core/models.py:100
+#: core/models.py:101
 msgid "Collection Name"
 msgstr "Nome da Coleção"
 
-#: core/models.py:101 core/models.py:177
+#: core/models.py:102 core/models.py:178
 #: core/templates/modals/collection_detail.html:82
 #: core/templates/payments/buy-work-modal.html:19
 #: core/templates/work_page/work_page.html:120
 msgid "Summary"
 msgstr "Sumário"
 
-#: core/models.py:103
+#: core/models.py:104
 msgid "Slug"
 msgstr "Slug"
 
-#: core/models.py:104
+#: core/models.py:105
 msgid "Status"
 msgstr "Estado"
 
-#: core/models.py:107
+#: core/models.py:108
 msgid "Start Date"
 msgstr "Data de Início"
 
-#: core/models.py:108
+#: core/models.py:109
 msgid "End Date"
 msgstr "Data de Fim"
 
-#: core/models.py:111 core/models.py:178
+#: core/models.py:112 core/models.py:179
 msgid "Cover Art"
 msgstr "Arte de Capa"
 
-#: core/models.py:176 core/templates/modals/collection_detail.html:64
+#: core/models.py:177 core/templates/modals/collection_detail.html:64
 #: core/templates/work_page/work_page.html:112
 msgid "Title"
 msgstr "Título"
 
-#: core/models.py:184
+#: core/models.py:185
 msgid "Item Number"
 msgstr "Número"
 
-#: core/models.py:185
+#: core/models.py:186
 msgid "Total Pages"
 msgstr "Total de Páginas"
 
-#: core/models.py:186
+#: core/models.py:187
 msgid "Publish Date"
 msgstr "Data de Publicação"
 
@@ -707,9 +707,22 @@ msgstr ""
 msgid "Help"
 msgstr "Ajuda"
 
-#: core/templates/docs/terms.html:15
+#: core/templates/docs/terms.html:16 core/templates/docs/terms.html.py:26
+#: templates/main_template/footer.html:11
 msgid "Terms of Use"
 msgstr "Termos de Uso"
+
+#: core/templates/docs/terms.html:30
+msgid "Terms of Use for Paid Content"
+msgstr "Termos de Uso para Conteúdo Pago"
+
+#: core/templates/docs/terms.html:34
+msgid "Terms of Use for Paid Services"
+msgstr "Termos de Uso para Serviços Pagos"
+
+#: core/templates/docs/terms.html:38
+msgid "Artists Guidelines"
+msgstr "Diretrizes de Publicação"
 
 #: core/templates/help/modal-discover.html:20
 msgid ""
@@ -1413,8 +1426,8 @@ msgstr ""
 msgid ""
 "\n"
 "                                                    The website will "
-"continue to receive improvements so the readers can have the best "
-"experience buying and\n"
+"continue to receive improvements so the readers can have the best experience "
+"buying and\n"
 "                                                    reading your comics.\n"
 "                                                "
 msgstr ""

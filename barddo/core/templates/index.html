@@ -5,13 +5,15 @@
 {% load i18n %}
 
 {% block header %}
-    <link rel="stylesheet" href="{% static "barddo/css/barddo.gallery.css" %}"/>
-    <link rel="stylesheet" href="{% static "css/reader.css" %}"/>
+    {% compress css %}
+        <link rel="stylesheet" href="{% static "barddo/css/barddo.gallery.css" %}"/>
+        <link rel="stylesheet" href="{% static "css/reader.css" %}"/>
 
-    <link rel="stylesheet" href="{% static "css/uncompressed/barddo.banner.css" %}"/>
+        <link rel="stylesheet" href="{% static "css/uncompressed/barddo.banner.css" %}"/>
+
+        <link rel="stylesheet" href="{% static "custom-modal/css/style.css" %}"/>
+    {% endcompress %}
     <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
-
-    <link rel="stylesheet" href="{% static "custom-modal/css/style.css" %}"/>
 {% endblock %}
 
 {% block breadcrumbs %}
