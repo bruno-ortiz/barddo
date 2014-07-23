@@ -22,7 +22,7 @@ ALLOWED_HOSTS = ['.barddo.com', 'barddo.com', '127.0.0.1:8000']
 # ######### END HOST CONFIGURATION
 
 
-########## EMAIL CONFIGURATION
+# ######### EMAIL CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
@@ -88,6 +88,7 @@ TEMPLATE_DEBUG = DEBUG
 ##
 #OAuth apps
 ##
+FACEBOOK_APP_NAME = 'barddo'
 SOCIAL_AUTH_FACEBOOK_KEY = '1375067126097037'
 SOCIAL_AUTH_FACEBOOK_SECRET = '1be5226a3b8fa841b35e178baf026b01'
 

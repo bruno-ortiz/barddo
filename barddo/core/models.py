@@ -172,7 +172,7 @@ class Work(models.Model):
 
     ALLOWED_EXTENSIONS = ['jpg', 'bmp', 'png', 'gif']
 
-    collection = models.ForeignKey(Collection)
+    collection = models.ForeignKey(Collection, related_name="works")
 
     title = models.CharField(_('Title'), max_length=250, db_index=True)
     summary = models.TextField(_('Summary'))

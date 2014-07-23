@@ -45,7 +45,7 @@ MANAGERS = ADMINS
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 # DATABASES = {
 # 'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+# 'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #         'NAME': 'barddo_dev',
 #         'USER': 'postgres',
 #         'PASSWORD': 'postgres',
@@ -429,7 +429,7 @@ GOOGLE_ANALYTICS_SITE_SPEED = True
 # Url: https://www.woopra.com
 # Description: Another real time analytics, but better at showing what the user is doing
 # Type: trial
-WOOPRA_DOMAIN = 'barddo.com'
+#WOOPRA_DOMAIN = 'barddo.com'
 ########## End of analytics Services Settigns
 
 LOGIN_URL = "/"

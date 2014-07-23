@@ -2,10 +2,11 @@
 {% load compress %}
 {% load i18n %}
 {% load analytical %}
+{% load social_share %}
 
 <!DOCTYPE html>
-<html lang="en">
-<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
+<html lang="en" itemscope itemtype="http://schema.org/Product">
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# barddo-dev: http://ogp.me/ns/fb/barddo-dev#">
     {% analytical_head_top %}
     <meta charset="utf-8"/>
     <title>{% block title %} {% trans "Barddo - Because we like art" %}{% endblock %}</title>
@@ -25,6 +26,8 @@
         <script src="{% static 'js/jquery-2.0.3.min.js' %}"></script>
         <script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
     {% endcompress %}
+
+
 
     {% block header %}
     {% endblock %}
@@ -86,5 +89,7 @@
 </script>
 
 {% analytical_body_bottom %}
+
+{% social_imports %}
 </body>
 </html>

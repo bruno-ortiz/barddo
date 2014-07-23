@@ -90,7 +90,7 @@ class ArtistDashboardView(LoginRequiredMixin, ProfileAwareView):
     template_name = 'artist_dashboard.html'
 
     def get_context_data(self, **kwargs):
-        collections = Collection.objects.filter(author_id=kwargs['user'].id)
+        collections = Collection.objects.select_related("works").filter(author_id=kwargs['user'].id)
 
         context = {
             'collections': collections

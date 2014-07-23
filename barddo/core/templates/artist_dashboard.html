@@ -4,6 +4,7 @@
 {% load compress %}
 {% load thumbnail %}
 {% load i18n %}
+{% load social_share %}
 
 {% block header %}
     <link rel="stylesheet" href="{% static "css/datepicker.css" %}"/>
@@ -34,12 +35,12 @@
                 </a>
             </li>
 
-            <li>
-                <a href="#new-collection-wizard">
-                    <i class="icon-book"></i>
-                    <span class="menu-text"> {% trans "Create a Collection" %}</span>
-                </a>
-            </li>
+            {#            <li>#}
+            {#                <a href="#new-collection-wizard">#}
+            {#                    <i class="icon-book"></i>#}
+            {#                    <span class="menu-text"> {% trans "Create a Collection" %}</span>#}
+            {#                </a>#}
+            {#            </li>#}
 
             {#            <li>#}
             {#                <a href="#">#}
@@ -66,6 +67,30 @@
 {% endblock %}
 
 {% block content %}
+    <div class="features block">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 col-xs-12 sketch">
+                    <img src="{% static "images/art/half-artist.png" %}">
+                </div>
+                <div class="col-md-7 col-xs-12">
+                    <div class="page-title text-center">
+                        <h3>{% trans "The Artist Dashboard" %}</h3>
+                        <button id="joinBarddoButton"
+                                class="btn btn-danger btn-orange btn-lg">
+                            {% trans "Create a new Collection!" %}
+                        </button>
+                        <p class="text-left">
+                            {% blocktrans %}
+                                Welcome to your publishing panel!
+                                Here you can control every aspect of your career on Barddo! Create new collections, upload amazing works, publish any time!
+                            {% endblocktrans %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="page-content">
         {% if not collections %}
             <div class="row" style="padding-top: 25px;">
@@ -90,66 +115,103 @@
             </div>
         {% else %}
 
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="widget-box transparent">
-                        <div class="widget-header widget-header-flat">
-                            <h4 class="lighter">
-                                <i class="icon-star orange"></i>
-                                {% trans "My Collections" %} ({{ collections|length }})
-                            </h4>
+            {% for collection in collections %}
+                {% with collection.works.all as collection_works %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="widget-box transparent">
+                                <div class="widget-header widget-header-flat">
+                                    <h4 class="lighter">
+                                        <i class="icon-book orange"></i>
+                                        {{ collection.name }} - ({{ collection_works|length }} {% trans "trabalhos" %})
+                                    </h4>
 
-                        </div>
+                                    <div class="widget-toolbar no-border">
 
-                        <div class="widget-body">
-                            <div class="widget-main padding-6">
-                                <div class="row">
-                                    <div class="portfolio">
-                                        {% for collection in collections %}
-                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 item collection-great">
-                                                <div class="boxcontainer">
-                                                    <div class="cover-wrap">
-                                                        {% if collection.cover %}
-                                                            <img src="{{ collection.cover|thumbnail_url:"small_cover" }}"
-                                                                 alt="">
-                                                        {% else %}
-                                                            <img src="{% static "images/default-cover.jpg" %}"
-                                                                 alt="{% trans "Create a work for this collection!" %}">
-                                                        {% endif %}
-                                                    </div>
+                                        <a href="#" data-action="collapse">
+                                            <i class="icon-chevron-up"></i>
+                                        </a>
+                                    </div>
 
-                                                    <div class="roll">
-                                                        <div class="wrapcaption dashboard-caption">
-                                                            <a href="#new-work-wizard"
-                                                               data-id="{{ collection.id }}"
-                                                               class="btn btn-block btn-info"><i
-                                                                    class="icon-plus-sign"></i> {% trans "Add a Work" %}</a>
+                                </div>
 
-
-                                                            {% if collection.get_total_works != 0 %}
-                                                                <a href="#"
-                                                                   class="collection-view btn btn-block btn-danger"
-                                                                   data-id="{{ collection.id }}"><i
-                                                                        class="icon-edit"></i> {% trans "Edit Collection" %}</a>
-                                                            {% endif %}
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="work-information">
-                                                        <span class="badge badge-danger pull-right work-number">{{ collection.get_total_works }}</span>
-
-                                                        <h1>{{ collection.name }}</h1>
+                                <div class="widget-body">
+                                    <div class="widget-main padding-6">
+                                        <div class="row">
+                                            <div class="portfolio">
+                                                <div class="col-sm-3 col-xs-12 item collection-great">
+                                                    <div class="boxcontainer create-work">
+                                                        <i class="icon-plus-sign"></i>
+                                                        <span>Add a Work</span>
                                                     </div>
                                                 </div>
+
+                                                {% for work in collection_works %}
+                                                    <div class="col-sm-3 col-xs-12 item collection-great">
+                                                        {% if forloop.counter|divisibleby:2 %}
+                                                            <div class="note success"><i class="icon-ok-sign"></i> Publicado</div>
+                                                        {% else %}
+                                                            <div class="note warning"><i class="icon-exclamation-sign"></i> Pendente</div>
+                                                        {% endif %}
+
+                                                        <div class="boxcontainer">
+                                                            <div class="cover-wrap">
+                                                                {% if work.cover %}
+                                                                    <img src="{{ work.cover|thumbnail_url:"big_cover" }}"
+                                                                         alt="">
+                                                                {% else %}
+                                                                    <img src="{% static "images/default-cover.jpg" %}"
+                                                                         alt="{% trans "Create a work for this collection!" %}">
+                                                                {% endif %}
+                                                            </div>
+
+                                                            <div class="roll">
+                                                                <div class="wrapcaption dashboard-caption">
+                                                                    <a href="#"
+                                                                       data-id="{{ work.id }}"
+                                                                       class="btn btn-block btn-warning"><i
+                                                                            class="icon-zoom-in"></i> {% trans "View Page" %}</a>
+
+                                                                    <a href="#"
+                                                                       data-id="{{ work.id }}"
+                                                                       class="btn btn-block btn-success"><i
+                                                                            class="icon-cloud-upload"></i> {% trans "Publish now!" %}</a>
+
+
+                                                                    {% if collection_works|length != 0 %}
+                                                                        <a href="#"
+                                                                           class="collection-view btn btn-block btn-danger"
+                                                                           data-id="{{ collection.id }}"><i
+                                                                                class="icon-edit"></i> {% trans "Edit Work" %}</a>
+                                                                    {% endif %}
+
+                                                                    <div class="social-share">
+                                                                        <div class="share-caption">Share now with your friends!</div>
+                                                                        {% post_to_facebook work "Facebook" %}
+                                                                        {% post_to_twitter work "Twitter" %}
+                                                                        {% post_to_gplus work "Google+" %}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="work-information">
+                                                                <span class="badge badge-danger pull-right work-number">#{{ work.unit_count }}</span>
+
+                                                                <h1>{{ work.title }}</h1>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                {% endfor %}
                                             </div>
-                                        {% endfor %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                {% endwith %}
+            {% endfor %}
         {% endif %}
     </div>
 {% endblock %}
