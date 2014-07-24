@@ -2,14 +2,15 @@
 import json
 from urllib2 import urlopen, HTTPError, Request
 import datetime
-from PIL import Image
 
+from PIL import Image
 from django.core.files.base import ContentFile
 from django.template.defaultfilters import slugify
 from facepy.graph_api import GraphAPI
 from social.backends import google
 from social.backends.facebook import FacebookOAuth2
 from django.conf import settings
+from django.core.mail import mail_admins
 
 from signals import account_created
 from accounts.models import BarddoUserProfile
@@ -22,6 +23,11 @@ def post_user_creation(backend, user, response, is_new=False, **kwargs):
     if is_new:
         account_created.send(user, user=user)
         # TODO: send a welcome message
+
+        try:
+            mail_admins("[Barddo] New User", "User Name: '{}'. Email: '{}'".format(user.username, user.email))
+        except:
+            pass
 
 
 def create_user_profile(backend, user, response, is_new=False, **kwargs):

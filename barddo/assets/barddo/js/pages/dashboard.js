@@ -157,15 +157,17 @@ function sortable_image_upload(target, preview_container, existing_data) {
 $(document).ready(function () {
     $(".collection-view").on("click", function () {
         var id = $(this).attr("data-id");
-        Shards.modal.collection(function (shard_id, shard_data, parent) {
+
+        Shards.modal.work(function (shard_id, shard_data, parent) {
+            console.log("Work modal loaded: " + shard_id);
             $(shard_id).remove();
             $(parent).append(shard_data);
+            console.log("Work modal loaded on parent: " + parent);
             $(shard_id).modal('show');
 
-            $(shard_id).on("shown.bs.modal", function (e) {
-                $(".work-list-wrapper").trigger('scroll');
-            });
-        }, {"collection_id": id});
+            sortable_image_upload('#edit-work-upload', "#edit-work-files-preview", "#work-file-list li");
+
+        }, {"work_id": id});
     });
 
     sortable_image_upload('#new_work_upload', "#files-preview");

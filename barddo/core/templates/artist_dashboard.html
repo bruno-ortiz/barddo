@@ -76,10 +76,11 @@
                 <div class="col-md-7 col-xs-12">
                     <div class="page-title text-center">
                         <h3>{% trans "The Artist Dashboard" %}</h3>
-                        <button id="joinBarddoButton"
-                                class="btn btn-danger btn-orange btn-lg">
+                        <a id="joinBarddoButton"
+                           class="btn btn-danger btn-orange btn-lg" href="#new-collection-wizard">
                             {% trans "Create a new Collection!" %}
-                        </button>
+                        </a>
+
                         <p class="text-left">
                             {% blocktrans %}
                                 Welcome to your publishing panel!
@@ -122,7 +123,7 @@
                             <div class="widget-box transparent">
                                 <div class="widget-header widget-header-flat">
                                     <h4 class="lighter">
-                                        <i class="icon-book orange"></i>
+                                        <i class="icon-star orange"></i>
                                         {{ collection.name }} - ({{ collection_works|length }} {% trans "trabalhos" %})
                                     </h4>
 
@@ -139,19 +140,23 @@
                                     <div class="widget-main padding-6">
                                         <div class="row">
                                             <div class="portfolio">
-                                                <div class="col-sm-3 col-xs-12 item collection-great">
-                                                    <div class="boxcontainer create-work">
-                                                        <i class="icon-plus-sign"></i>
-                                                        <span>Add a Work</span>
-                                                    </div>
+                                                <div class="col-sm-3 col-xs-12 item collection-great add-work">
+                                                    <a href="#new-work-wizard" data-id="{{ collection.id }}">
+                                                        <div class="boxcontainer create-work">
+
+                                                            <i class="icon-plus-sign"></i>
+                                                            <span>Add a Work</span>
+
+                                                        </div>
+                                                    </a>
                                                 </div>
 
                                                 {% for work in collection_works %}
-                                                    <div class="col-sm-3 col-xs-12 item collection-great">
-                                                        {% if forloop.counter|divisibleby:2 %}
-                                                            <div class="note success"><i class="icon-ok-sign"></i> Publicado</div>
+                                                    <div class="col-sm-3 col-xs-12 item collection-great work-{{ work.id }}">
+                                                        {% if work.is_published %}
+                                                            <div class="note success"><i class="icon-ok-sign"></i> {% trans "Published" %}</div>
                                                         {% else %}
-                                                            <div class="note warning"><i class="icon-exclamation-sign"></i> Pendente</div>
+                                                            <div class="note warning"><i class="icon-exclamation-sign"></i> {% trans "Pending" %}</div>
                                                         {% endif %}
 
                                                         <div class="boxcontainer">
@@ -167,30 +172,47 @@
 
                                                             <div class="roll">
                                                                 <div class="wrapcaption dashboard-caption">
-                                                                    <a href="#"
+                                                                    <a href="{% url "core.work.detail" work.id %}"
                                                                        data-id="{{ work.id }}"
                                                                        class="btn btn-block btn-warning"><i
                                                                             class="icon-zoom-in"></i> {% trans "View Page" %}</a>
 
-                                                                    <a href="#"
-                                                                       data-id="{{ work.id }}"
-                                                                       class="btn btn-block btn-success"><i
-                                                                            class="icon-cloud-upload"></i> {% trans "Publish now!" %}</a>
-
-
-                                                                    {% if collection_works|length != 0 %}
+                                                                    {% if not work.is_published %}
+                                                                        <a href="#publish-work"
+                                                                           data-id="{{ work.id }}"
+                                                                           class="btn btn-block btn-success"><i
+                                                                                class="icon-cloud-upload"></i> {% trans "Publish now!" %}</a>
+                                                                    {% else %}
                                                                         <a href="#"
-                                                                           class="collection-view btn btn-block btn-danger"
-                                                                           data-id="{{ collection.id }}"><i
-                                                                                class="icon-edit"></i> {% trans "Edit Work" %}</a>
+                                                                           class="btn btn-block disabled" onclick="return false;"><i
+                                                                                class="icon-cloud-upload"></i> {% trans "Publish now!" %}</a>
                                                                     {% endif %}
 
-                                                                    <div class="social-share">
-                                                                        <div class="share-caption">Share now with your friends!</div>
-                                                                        {% post_to_facebook work "Facebook" %}
-                                                                        {% post_to_twitter work "Twitter" %}
-                                                                        {% post_to_gplus work "Google+" %}
-                                                                    </div>
+
+                                                                    <a href="#"
+                                                                       class="collection-view btn btn-block btn-danger"
+                                                                       data-id="{{ work.id }}"><i
+                                                                            class="icon-edit"></i> {% trans "Edit Work" %}</a>
+
+                                                                    {% if work.is_published %}
+                                                                        <div class="social-share full">
+                                                                            <div class="share-caption">{% trans 'Share now with your friends!' %}</div>
+                                                                            {% post_to_facebook work "Facebook" %}
+                                                                            {% post_to_twitter work "Twitter" %}
+                                                                            {% post_to_gplus work "Google+" %}
+                                                                        </div>
+                                                                    {% else %}
+                                                                        <div class="social-share full" style="display: none">
+                                                                            <div class="share-caption">{% trans 'Share now with your friends!' %}</div>
+                                                                            {% post_to_facebook work "Facebook" %}
+                                                                            {% post_to_twitter work "Twitter" %}
+                                                                            {% post_to_gplus work "Google+" %}
+                                                                        </div>
+
+                                                                        <div class="social-share help">
+                                                                            <div class="share-caption">{% trans 'You must publish this work to be able to share with your friends.' %}</div>
+                                                                        </div>
+                                                                    {% endif %}
                                                                 </div>
                                                             </div>
 
@@ -241,6 +263,28 @@
 
 {% block bottom_page %}
     <script type="text/javascript">
+
+        function publish_work_callback(work_id) {
+            $.gritter.add({
+                title: '{% trans 'Work published, congratulations! Please consider sharing with your friends!' %}',
+                sticky: false,
+                time: '5000',
+                class_name: 'gritter-info'
+            });
+
+
+            var selector = ".work-" + work_id;
+            $(selector + " a[href='#publish-work']").removeClass('btn-success').addClass('disabled').removeAttr("data-id").attr("href", "#");
+            $(selector + " a[href='#publish-work']").on("click", function (e) {
+                e.preventDefault();
+            });
+
+            $(selector + " .note").removeClass("warning").addClass("success").html('<i class="icon-ok-sign"></i> {% trans "Published" %}');
+
+            $(selector + " .social-share.help").hide();
+            $(selector + " .social-share.full").show();
+        }
+
         // Workaround to handle form validation in an asynchronous way
         var formValid = false;
 
@@ -374,6 +418,17 @@
         }
 
         jQuery(function ($) {
+
+            $('a[href="#publish-work"][data-id]').on('click', function () {
+                var work_id = $(this).attr("data-id");
+
+                $(this).addClass('disabled');
+
+                Dajaxice.core.publish_work(Dajax.process, {
+                    'work_id': work_id
+                });
+            });
+
             $('a[href="#new-work-wizard"][data-id]').on("click", function () {
                 var collection_id = $(this).attr("data-id");
 
@@ -473,5 +528,6 @@
                 }, {"collection_id": collection_id});
             });
         });
+
     </script>
 {% endblock %}
