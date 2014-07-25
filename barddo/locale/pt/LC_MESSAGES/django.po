@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Barddo Main Site\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-24 23:23-0300\n"
-"PO-Revision-Date: 2014-07-24 23:28-0300\n"
+"POT-Creation-Date: 2014-07-24 23:29-0300\n"
+"PO-Revision-Date: 2014-07-24 23:29-0300\n"
 "Last-Translator: Israel Crisanto <israel.crisanto@gmail.com>\n"
 "Language-Team: Barddo Team <israel.crisanto@gmail.com>\n"
 "Language: pt\n"
@@ -339,7 +339,7 @@ msgid "Create an awesome new collection, now!"
 msgstr "Criar uma nova e maravilhosa coleção, agora!"
 
 #: core/templates/artist_dashboard.html:127
-msgid "trabalhos"
+msgid "works "
 msgstr "trabalhos"
 
 #: core/templates/artist_dashboard.html:157
@@ -1580,6 +1580,9 @@ msgstr "Área de publicação"
 #: templates/main_template/navbar.html:90
 msgid "Logout"
 msgstr "Sair"
+
+#~ msgid "trabalhos"
+#~ msgstr "trabalhos"
 
 #~ msgid "My Collections"
 #~ msgstr "Minhas Coleções"
