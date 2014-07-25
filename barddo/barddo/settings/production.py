@@ -45,11 +45,11 @@ EMAIL_SUBJECT_PREFIX = '[%s] ' % SITE_NAME
 EMAIL_USE_TLS = True
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#server-email
-SERVER_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
 # ######### END EMAIL CONFIGURATION
 
 
-########## DATABASE CONFIGURATION
+# ######### DATABASE CONFIGURATION
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.

@@ -33,8 +33,7 @@ ADMINS = (
     ('Barddo', 'contact@barddo.com')
 )
 
-DEFAULT_FROM_EMAIL = 'israel.crisanto@gmail.com'
-SERVER_EMAIL = DEFAULT_FROM_EMAIL
+DEFAULT_FROM_EMAIL = 'contact@barddo.com'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
@@ -52,9 +51,9 @@ MANAGERS = ADMINS
 # 'PORT': '5432',
 # }
 # }
-########## END DATABASE CONFIGURATION
+# ######### END DATABASE CONFIGURATION
 
-########## GENERAL CONFIGURATION
+# ######### GENERAL CONFIGURATION
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
