@@ -9,8 +9,10 @@ from PIL import Image
 from django.forms.models import model_to_dict
 from easy_thumbnails.files import get_thumbnailer
 from django.utils.translation import ugettext as _
+from django.core.mail import mail_admins
 
 from core.models import Collection, Work
+
 from .forms import CollectionForm, WorkForm, CoverOnlyWorkForm
 
 
@@ -118,6 +120,8 @@ def register_a_work(request):
         new_work.collection.save()
 
         ajax.script('callback_create_work_ok(' + str(new_work.id) + ')')
+
+        mail_admins("[Barddo] Nova obra criada: " + new_work.title, "A obra '{}' acaba de ser criada no Barddo por '{}".format(new_work.title, request.user.username))
     else:
         ajax.script('callback_create_work_error()')
         for field, errors in form.errors.items():
@@ -204,3 +208,25 @@ def edit_work_field(request, _id, field, value):
         errors = form.errors[field]
         dajax.script("error_tooltip('#id_%s', '%s');" % (field, "<br />".join(errors)))
     return dajax.json()
+
+
+@login_required
+@dajaxice_register
+def publish_work(request, work_id):
+    """
+    Change work status to published
+    """
+    ajax = Dajax()
+
+    work = Work.objects.get(id=work_id)
+
+    if request.user.is_staff or work.author_id == request.user.id:
+        work.is_published = True
+        work.save()
+        ajax.script("publish_work_callback({});".format(work_id))
+
+        mail_admins("[Barddo] Nova obra publicada: " + work.title, "A obra '{}' acaba de ser publicada no Barddo por '{}".format(work.title, request.user.username))
+    else:
+        ajax.script("alert('Unable to publish work. You are not the onwer.');")
+
+    return ajax.json()
