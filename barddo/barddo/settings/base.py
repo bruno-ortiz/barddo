@@ -30,9 +30,7 @@ TEMPLATE_DEBUG = DEBUG
 # ######### MANAGER CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
-    ('Israel Crisanto', 'israel.crisanto@gmail.com'),
-    ('Bruno Ortiz', 'brunortiz11@gmail.com'),
-    ('Rafael Ortiz', 'rafa_ortiz11@hotmail.com')
+    ('Barddo', 'contact@barddo.com')
 )
 
 DEFAULT_FROM_EMAIL = 'contact@barddo.com'
@@ -46,9 +44,9 @@ MANAGERS = ADMINS
 # DATABASES = {
 # 'default': {
 # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'barddo_dev',
-#         'USER': 'postgres',
-#         'PASSWORD': 'postgres',
+# 'NAME': 'barddo_dev',
+# 'USER': 'postgres',
+# 'PASSWORD': 'postgres',
 #         'HOST': 'localhost',
 #         'PORT': '5432',
 #     }

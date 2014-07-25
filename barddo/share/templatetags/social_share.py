@@ -57,7 +57,7 @@ def _compose_tweet(text, url=None):
     if url is None:
         url = ''
 
-    text = _("Que bacana! Vejam este trabalho no Barddo!\n") + text + "\n"
+    text = _("Wow, nice! See this work on Barddo!\n") + text + "\n"
 
     total_length = len(text) + len(' ') + len(url)
 
@@ -132,6 +132,7 @@ def render_work_opengraph_header(context, work):
     request = context.get('request', MockRequest())
 
     context['facebook_api_key'] = settings.SOCIAL_AUTH_FACEBOOK_KEY
+    context['facebook_app_name'] = settings.FACEBOOK_APP_NAME
     context['work_url'] = _build_url(request, work, True)
     context['work_title'] = work.title
     context['work_image'] = _build_url(request, work.cover)
