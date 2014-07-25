@@ -159,10 +159,8 @@ $(document).ready(function () {
         var id = $(this).attr("data-id");
 
         Shards.modal.work(function (shard_id, shard_data, parent) {
-            console.log("Work modal loaded: " + shard_id);
             $(shard_id).remove();
             $(parent).append(shard_data);
-            console.log("Work modal loaded on parent: " + parent);
             $(shard_id).modal('show');
 
             sortable_image_upload('#edit-work-upload', "#edit-work-files-preview", "#work-file-list li");
