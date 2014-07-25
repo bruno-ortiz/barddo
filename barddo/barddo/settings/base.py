@@ -33,7 +33,7 @@ ADMINS = (
     ('Barddo', 'contact@barddo.com')
 )
 
-DEFAULT_FROM_EMAIL = 'contact@barddo.com'
+DEFAULT_FROM_EMAIL = 'israel.crisanto@gmail.com'
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
@@ -49,8 +49,8 @@ MANAGERS = ADMINS
 # 'USER': 'postgres',
 # 'PASSWORD': 'postgres',
 # 'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
+# 'PORT': '5432',
+# }
 # }
 ########## END DATABASE CONFIGURATION
 
