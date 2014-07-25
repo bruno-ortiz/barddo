@@ -34,6 +34,7 @@ ADMINS = (
 )
 
 DEFAULT_FROM_EMAIL = 'contact@barddo.com'
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
@@ -47,7 +48,7 @@ MANAGERS = ADMINS
 # 'NAME': 'barddo_dev',
 # 'USER': 'postgres',
 # 'PASSWORD': 'postgres',
-#         'HOST': 'localhost',
+# 'HOST': 'localhost',
 #         'PORT': '5432',
 #     }
 # }
