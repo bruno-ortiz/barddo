@@ -30,7 +30,7 @@ TEMPLATE_DEBUG = DEBUG
 # ######### MANAGER CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
-    ('Barddo', 'contact@barddo.com')
+    ('Barddo', 'contact@barddo.com'),
 )
 
 DEFAULT_FROM_EMAIL = 'contact@barddo.com'
@@ -89,9 +89,9 @@ USE_L10N = True
 USE_TZ = True
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
-########## END GENERAL CONFIGURATION
+# ######### END GENERAL CONFIGURATION
 
-########## MEDIA CONFIGURATION
+# ######### MEDIA CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
 MEDIA_ROOT = path.normpath(path.join(SITE_ROOT, 'media'))
 
