@@ -114,9 +114,6 @@ class Collection(models.Model):
     objects = WorkManager()
     search_manager = SearchManager()
 
-    def get_total_works(self):
-        return Work.objects.filter(collection__id=self.id).count()
-
     # TODO: collection tags
     # TODO: collection categories
 
@@ -172,7 +169,7 @@ class Work(models.Model):
 
     ALLOWED_EXTENSIONS = ['jpg', 'bmp', 'png', 'gif']
 
-    collection = models.ForeignKey(Collection)
+    collection = models.ForeignKey(Collection, related_name="works")
 
     title = models.CharField(_('Title'), max_length=250, db_index=True)
     summary = models.TextField(_('Summary'))
@@ -185,6 +182,8 @@ class Work(models.Model):
     unit_count = models.IntegerField(_('Item Number'), db_index=True)
     total_pages = models.SmallIntegerField(_('Total Pages'))
     publish_date = models.DateTimeField(_('Publish Date'), db_index=True)
+
+    is_published = models.BooleanField(_('Is Published?'), db_index=True, default=False)
 
     objects = WorkManager()
     search_manager = SearchManager()

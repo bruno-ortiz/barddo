@@ -5,6 +5,7 @@ from django.db.models import Model
 from django.db.models.fields.files import ImageFieldFile
 from django.template.defaultfilters import urlencode
 from django.conf import settings
+from django.utils.translation import ugettext as _
 
 try:
     from django_bitly.templatetags.bitly import bitlify
@@ -18,6 +19,11 @@ register = template.Library()
 TWITTER_ENDPOINT = 'http://twitter.com/intent/tweet?text=%s'
 FACEBOOK_ENDPOINT = 'http://www.facebook.com/sharer/sharer.php?u=%s'
 GOOGLEPLUS_ENDPOINT = 'https://plus.google.com/share?url=%s'
+
+
+@register.inclusion_tag('social_imports.html')
+def social_imports():
+    return {"facebook_id": settings.SOCIAL_AUTH_FACEBOOK_KEY}
 
 
 def compile_text(context, text):
@@ -50,12 +56,16 @@ def _build_url(request, obj_or_url, force_raw=False):
 def _compose_tweet(text, url=None):
     if url is None:
         url = ''
-    total_lenght = len(text) + len(' ') + len(url)
-    if total_lenght > 140:
+
+    text = _("Wow, nice! See this work on Barddo!\n") + text + "\n"
+
+    total_length = len(text) + len(' ') + len(url)
+
+    if total_length > 140:
         truncated_text = text[:(140 - len(url))] + "…"
     else:
         truncated_text = text
-    return "%s %s" % (truncated_text, url)
+    return truncated_text
 
 
 @register.simple_tag(takes_context=True)
@@ -66,16 +76,18 @@ def post_to_twitter_url(context, text, obj_or_url=None):
     url = _build_url(request, obj_or_url)
 
     tweet = _compose_tweet(text, url)
-    context['tweet_url'] = TWITTER_ENDPOINT % urlencode(tweet)
+    custom_parameters = "&hashtags=barddo"
+    context['tweet_url'] = TWITTER_ENDPOINT % urlencode(tweet) + custom_parameters
     return context
 
 
 @register.inclusion_tag('share/post_to_twitter.html', takes_context=True)
-def post_to_twitter(context, text, obj_or_url=None, link_text='Post to Twitter'):
-    context = post_to_twitter_url(context, text, obj_or_url)
+def post_to_twitter(context, work=None, link_text='Post to Twitter'):
+    text = work.collection.name + " - " + work.title
+    context = post_to_twitter_url(context, text, work)
 
     request = context.get('request', MockRequest())
-    url = _build_url(request, obj_or_url)
+    url = _build_url(request, work, True)
     tweet = _compose_tweet(text, url)
 
     context['link_text'] = link_text
@@ -88,6 +100,7 @@ def post_to_facebook_url(context, obj_or_url=None):
     request = context.get('request', MockRequest())
     url = _build_url(request, obj_or_url)
     context['facebook_url'] = FACEBOOK_ENDPOINT % urlencode(url)
+    context['url'] = _build_url(request, obj_or_url, True)
     return context
 
 
@@ -103,6 +116,7 @@ def post_to_gplus_url(context, obj_or_url=None):
     request = context.get('request', MockRequest())
     url = _build_url(request, obj_or_url)
     context['gplus_url'] = GOOGLEPLUS_ENDPOINT % urlencode(url)
+    context['url'] = _build_url(request, obj_or_url, True)
     return context
 
 
@@ -113,14 +127,17 @@ def post_to_gplus(context, obj_or_url=None, link_text='Post to GooglePlus'):
     return context
 
 
-@register.inclusion_tag('open-graph.html', takes_context=True)
-def render_opengraph_header(context, obj_or_url, title=None, description=None, image=None):
+@register.inclusion_tag('work-open-graph.html', takes_context=True)
+def render_work_opengraph_header(context, work):
     request = context.get('request', MockRequest())
 
     context['facebook_api_key'] = settings.SOCIAL_AUTH_FACEBOOK_KEY
-    context['object_url'] = _build_url(request, obj_or_url, True)
-    context['object_title'] = title if title is not None else obj_or_url
-    context['object_image'] = _build_url(request, image)
-    context['object_description'] = description
+    context['facebook_app_name'] = settings.FACEBOOK_APP_NAME
+    context['work_url'] = _build_url(request, work, True)
+    context['work_title'] = work.title
+    context['work_image'] = _build_url(request, work.cover)
+    context['work_description'] = work.summary
+    context['collection_name'] = work.collection.name
+    context['artist_name'] = work.author.get_full_name()
 
     return context

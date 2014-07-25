@@ -242,10 +242,8 @@ footer {
     margin-left: 10px;
 }
 
-.dropdown.social-share {
-    margin-left: 10px;
-    float: right;
-
+.social-share {
+    float: left;
 }
 
 .cover-edit {
@@ -283,4 +281,12 @@ footer {
 .work-image-thumb {
     max-height: 315px !important;
     max-width: 275px !important;
+}
+
+.fb-share-button, .twitter-share-button {
+    vertical-align: top !important;
+}
+
+.work-users.tabbable {
+    margin: 12px;
 }

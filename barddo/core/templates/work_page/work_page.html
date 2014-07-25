@@ -8,8 +8,7 @@
 {% block title %} Barddo - {{ work.title }} - #{{ work.unit_count }} {% endblock %}
 
 {% block header %}
-    {% trans " - On Barddo" as suffix %}
-    {% render_opengraph_header work work.title|add:suffix work.summary work.cover %}
+    {% render_work_opengraph_header work %}
 
     {% compress css %}
         <link rel="stylesheet" href="{% static "css/reader.css" %}"/>
@@ -144,17 +143,10 @@
                             <div class="space-6"></div>
 
                             <div class="work-buttons clearfix">
-                                <div class="dropdown social-share">
-                                    <a href="#" id="dropdownMenu1" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-                                        <i class="icon-share bigger-110"></i>
-                                        <span class="bigger-110">{% trans "Share" %}</span>
-                                    </a>
-
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                        <li role="presentation">{% post_to_facebook work "Facebook" %}</li>
-                                        <li role="presentation">{% post_to_twitter work.title work "Twitter" %}</li>
-                                        <li role="presentation">{% post_to_gplus work "Google+" %}</li>
-                                    </ul>
+                                <div class="social-share">
+                                    {% post_to_facebook work "Facebook" %}
+                                    {% post_to_twitter work "Twitter" %}
+                                    {% post_to_gplus work "Google+" %}
                                 </div>
 
                                 {% if user.is_authenticated %}
@@ -172,7 +164,7 @@
                             </div>
 
                             <!-- TABS -->
-                            <div class="tabbable">
+                            <div class="work-users tabbable">
                                 <ul class="nav nav-tabs padding-18 tab-color-blue background-blue">
 
                                     <li class="active">
