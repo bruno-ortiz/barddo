@@ -1,15 +1,248 @@
-{% load static %}
-<div id="modal-enjoy" class="modal fade collection-modal" tabindex="-1" role="dialog"
+{% load staticfiles %}
+{% load i18n %}
+<div id="modal-discover" class="modal fade" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog large">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="loginModalLabel">&nbsp;</h4>
+<div class="modal-dialog large">
+<div class="modal-content">
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="loginModalLabel">&nbsp;</h4>
+</div>
+
+<div class="features block">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 col-xs-12">
+                <img src="{% static "img/celularsemfundo.png" %}">
             </div>
-            <div class="modal-body text-center">
-                <img src="{% static "images/art/worker.png" %}" style="max-width: 300px;"/>
+
+            <div class="col-md-7 col-xs-12">
+                <div class="page-title text-center">
+                    a<h3>{% trans "Understand" %}</h3>
+
+                    <p>
+                        {% blocktrans %}
+                            Welcome!
+                            Interested in the project and want more
+                            information Barddo? Keep reading, and please, do not forget that your feedback is
+                            very important for us.
+                        {% endblocktrans %}
+                    </p>
+                </div>
             </div>
+
         </div>
     </div>
+</div>
+
+<div class="modal-body">
+    <div class="shots block">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="screenshot">
+                        <img src="{% static "img/phone-barddo-01.png" %}" alt="image"
+                             class="img-responsive"/>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="shotcontent">
+                        <h3>{% trans "Barddo Project" %}</h3>
+
+                        <p class="shot-para">
+                            {% blocktrans %}
+                                Created with the <span> mission to unite artists and readers </span>, Barddo is a
+                                system designed to be simple and easy to use. A space for independent artists and
+                                companies publish their work and receive feedback directly from readers, directly responsible
+                                by the success of these publications
+                            {% endblocktrans %}
+                        </p>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-6 col-xs-6">
+                                <div class="shot-content-body">
+                                    <h4><i class="icon-cloud-download tblue"></i> {% trans "Cloud Reading" %}</h4>
+
+                                    <p>{% trans "Read your favorite works from anywhere, on any device." %}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-6">
+                                <div class="shot-content-body">
+                                    <h4><i class="icon-cloud-upload tblue"></i> {% trans "Automated publishing" %}</h4>
+
+                                    <p> {% trans "Without excessive bureaucracy, you can publish any work of your own with just a few clicks!" %}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="shotcontent second">
+                        <h3>{% trans "Mobility and Simplicity" %}</h3>
+
+                        <p class="shot-para">
+                            {% blocktrans %}
+                                The Barddo was created with two objectives in mind: simplicity and
+                                mobility. This means that the system is the simplest we could create, and
+                                certainty will be much more over time. Moreover, you can also use it from anywhere:
+                                computer, tablet, mobile...
+                            {% endblocktrans %}
+                        </p>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-6 col-xs-6">
+                                <div class="shot-content-body">
+                                    <h4><i class="icon-mobile-phone tblue"></i> {% trans "Mobile" %}</h4>
+
+                                    <p>
+
+                                        {% blocktrans %}
+                                            We haven't created applications for each mobile platform, yet.
+                                            But this does not prevent you to access and use the Barddo your phone's browser!
+                                        {% endblocktrans %}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-6">
+                                <div class="shot-content-body">
+                                    <h4><i class="icon-desktop tblue"></i> {% trans "Web" %}</h4>
+
+                                    <p>{% trans "The Barddo is OS independent! You can access it using any recent web browser!" %}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div style="height: 100px;" class="hidden-xs"></div>
+                    <div class="screenshot">
+                        <img src="{% static "img/phone-barddo-04.png" %}" alt="image"
+                             class="img-responsive"/>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="screenshot">
+                        <img src="{% static "img/phone-barddo-02.png" %}" alt="image"
+                             class="img-responsive"/>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="shotcontent third">
+                        <h3>{% trans "Anyone can participate." %}</h3>
+
+                        <p class="shot-para">
+                            {% blocktrans %}
+                                A system designed for everyone! Anyone, from any country can register,
+                                read and publish. Moreover, we are integrated with social networks like Facebook, Google Plus and
+                                Twitter to make it possible to share and invite more friends.
+                            {% endblocktrans %}
+                        </p>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-6 col-xs-6">
+                                <div class="shot-content-body">
+                                    <h4><i class="icon-globe tblue"></i> {% trans "Worldwide" %}</h4>
+
+                                    <p>
+                                        {% blocktrans %}
+                                            The Barddo is open to everyone in the world, people of any country can register and use it.
+                                        {% endblocktrans %}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-6">
+                                <div class="shot-content-body">
+                                    <h4><i class="icon-facebook tblue"></i> {% trans "Social Networks" %}</h4>
+
+                                    <p>
+                                        {% blocktrans %}
+                                            Integration with major social networks today.
+                                            Share, talk, invite.
+                                        {% endblocktrans %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-md-offset-0  col-sm-10 col-sm-offset-1">
+                    <div class="shotcontent second">
+                        <h3>{% trans "Your opinion is important!" %}</h3>
+
+                        <div class="row">
+                            <div class="col-md-8 col-sm-12 col-xs-12">
+                                <p class="shot-para">
+                                    {% blocktrans %}
+                                        Your questions and opinions are very important to us! If you have
+                                        something to talk about, we want to hear, we believe that's the only
+                                        way to create a service that let our users happy. You can use
+                                        various means of contact, make your choice and send your message!
+                                    {% endblocktrans %}
+                                </p>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6 col-xs-6">
+                                        <div class="shot-content-body">
+                                            <h4><i class="icon-envelope tblue"></i> {% trans "Email" %}</h4>
+
+                                            <p> {% trans "You can get in contact via email" %} <a
+                                                    href="mailto:contact@barddo.com">contact@barddo.com</a>.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-6">
+                                        <div class="shot-content-body">
+                                            <h4><i class="icon-facebook tblue"></i> {% trans "Facebook" %}</h4>
+
+                                            <p>
+                                                {% blocktrans %}
+                                                    Visit <a href="https://www.facebook.com/thebarddo" target="_blank">our page</a> on Facebook and leave your message.
+                                                {% endblocktrans %}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12 col-xs-12">
+                                <div class="screenshot custom-screenshot">
+                                    <img src="{% static "img/phone-barddo-03.png" %}" alt="image"
+                                         class="img-responsive"/>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <a id="modal-feedback-now" href="#" class="download btn-block text-center btn-danger">
+                            <div class="hidden-xs"><i class="icon-comment"></i> {% trans "Leave your feedback right now!" %}</div>
+                            <div class="visible-xs"><i class="icon-comment"></i> {% trans "Leave your feedback!" %}</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#modal-feedback-now").on("click", function () {
+            $("#modal-discover").modal("hide");
+            $("#feedbackButton").trigger("click");
+        });
+    });
+</script>
 </div>

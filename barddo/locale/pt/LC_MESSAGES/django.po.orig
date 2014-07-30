@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Barddo Main Site\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-29 23:36-0300\n"
-"PO-Revision-Date: 2014-07-29 23:42-0300\n"
+"POT-Creation-Date: 2014-07-29 23:27-0300\n"
+"PO-Revision-Date: 2014-07-29 23:35-0300\n"
 "Last-Translator: Israel Crisanto <israel.crisanto@gmail.com>\n"
 "Language-Team: Barddo Team <israel.crisanto@gmail.com>\n"
 "Language: pt\n"
@@ -1056,14 +1056,10 @@ msgid ""
 "works!\n"
 "                        "
 msgstr ""
-"\n"
-"                            Tudo que você precisa saber para entender como o "
-"Barddo funciona!\n"
-"                        "
 
 #: core/templates/help/modal-understand.html:46
 msgid "Publications without bureaucracy"
-msgstr "Publicações sem burocracia"
+msgstr ""
 
 #: core/templates/help/modal-understand.html:49
 msgid ""
@@ -1073,27 +1069,20 @@ msgid ""
 "in accordance with our Terms of Service, no paperwork and no waiting!\n"
 "                            "
 msgstr ""
-"\n"
-"                                Publicações simples, práticas e rápidas! O "
-"artista decide o que, como e quando publicar, e, contanto que esteja tudo de "
-"acordo com nossos termos de uso, não há burocracia e nem espera!\n"
-"                            "
 
 #: core/templates/help/modal-understand.html:58
 msgid "Without Contracts"
-msgstr "Sem Contratos"
+msgstr ""
 
 #: core/templates/help/modal-understand.html:60
 msgid ""
 "To publish, you do not need to wait, just accept our Terms of Service, "
 "publish your work and start sharing!"
 msgstr ""
-"Para publicar, você não precisa esperar, basta aceitar nossos Termos de Uso, "
-"publicar sua obra e começar a compartilhar!"
 
 #: core/templates/help/modal-understand.html:78
 msgid "Benefits for Readers"
-msgstr "Benefícios para Leitores"
+msgstr ""
 
 #: core/templates/help/modal-understand.html:81
 msgid ""
@@ -1104,19 +1093,14 @@ msgid ""
 "                                they deserve.\n"
 "                            "
 msgstr ""
-"\n"
-"                                Contato direto com obras originais, acesso a "
-"obras gratuitas, leitura onde o leitor preferir. Facilidade de contato com o "
-"artista, e a possibilidade de ajudar os artistas favoritos a alcançarem o "
-"sucesso que merecem,\n"
-"                                de forma direta e simples.\n"
-"                            "
 
 #: core/templates/help/modal-understand.html:91
+#, fuzzy
 msgid "The Best"
-msgstr "Os Melhores"
+msgstr "A Equipe"
 
 #: core/templates/help/modal-understand.html:95
+#, fuzzy
 msgid ""
 "\n"
 "                                            Users define what is good "
@@ -1124,25 +1108,24 @@ msgid ""
 "                                        "
 msgstr ""
 "\n"
-"                                           Os usuários definem o que é bom "
-"através de uma mecânica simples, e de efetividade conhecida.\n"
+"                                           O Barddo é aberto para o mundo "
+"inteiro, pessoas de qualquer país poderão se cadastrar e utilizá-lo.\n"
 "                                        "
 
 #: core/templates/help/modal-understand.html:102
 msgid "Easy to Join"
-msgstr "Fácil de participar"
+msgstr ""
 
 #: core/templates/help/modal-understand.html:104
 msgid ""
 "System sign-in is fast, with just a few clicks you join us and enjoy all the "
 "advantages the Barddo offers."
 msgstr ""
-"O cadastro é rápido, com apenas alguns cliques você se cadastra e desfruta "
-"de todas as vantagens que o Barddo oferece."
 
 #: core/templates/help/modal-understand.html:128
+#, fuzzy
 msgid "Benefits for Artists"
-msgstr "Benefícios para Artistas"
+msgstr "Barddo para Artistas"
 
 #: core/templates/help/modal-understand.html:131
 msgid ""
@@ -1154,20 +1137,14 @@ msgid ""
 "directly on their websites.\n"
 "                            "
 msgstr ""
-"\n"
-"                                Publicações simples! O artista define o "
-"preço e até mesmo se deve ser gratuíto ou não. Estatísticas de uso, "
-"relatórios de ganhos. Acesso das obras em todo o planeta, independente de "
-"publicações físicas.\n"
-"                                Widgets para que os artistas publiquem suas "
-"obras diretamente em seus sites.\n"
-"                            "
 
 #: core/templates/help/modal-understand.html:141
+#, fuzzy
 msgid "World-wide"
-msgstr "Acesso Mundial"
+msgstr "Mundial"
 
 #: core/templates/help/modal-understand.html:144
+#, fuzzy
 msgid ""
 "\n"
 "                                            The Barddo is accessed all over "
@@ -1176,16 +1153,16 @@ msgid ""
 "                                        "
 msgstr ""
 "\n"
-"                                           O Barddo é acessado pelo mundo "
-"inteiro, e está em mais de um idioma. As obras publicadas poderão ser vistas "
-"por leitores dos quatro cantos do mundo.\n"
+"                                           O Barddo é aberto para o mundo "
+"inteiro, pessoas de qualquer país poderão se cadastrar e utilizá-lo.\n"
 "                                        "
 
 #: core/templates/help/modal-understand.html:152
 msgid "Marketing"
-msgstr "Marketing"
+msgstr ""
 
 #: core/templates/help/modal-understand.html:155
+#, fuzzy
 msgid ""
 "\n"
 "                                            The artist has Barddo staff to "
@@ -1194,16 +1171,16 @@ msgid ""
 "                                        "
 msgstr ""
 "\n"
-"                                           O artista conta com a equipe do "
-"Barddo para ajuda-lo a dar visibilidade ao seu trabalho. Enquanto ele "
-"compartilha com os amigos, nós compartilhamos nas redes sociais.\n"
+"                                           O Barddo é aberto para o mundo "
+"inteiro, pessoas de qualquer país poderão se cadastrar e utilizá-lo.\n"
 "                                        "
 
 #: core/templates/help/modal-understand.html:170
 msgid "Direct channel between artists and readers"
-msgstr "Canal aberto entre artistas e leitores"
+msgstr ""
 
 #: core/templates/help/modal-understand.html:173
+#, fuzzy
 msgid ""
 "\n"
 "                                        Greater contact between artists and "
@@ -1212,24 +1189,23 @@ msgid ""
 "                                    "
 msgstr ""
 "\n"
-"                                          Maior contato entre artistas e "
-"leitores, feedback direto, sem intermediários e sem ruído. Os dois são os "
-"únicos responsáveis pelo sucesso da aplicação.\n"
+"                                          Com o barddo você publica uma vez "
+"e os leitores leêm em qualquer lugar, seja no computador ou em seus "
+"dispositivos móveis.\n"
 "                                        "
 
 #: core/templates/help/modal-understand.html:181
 msgid "Direct Messages"
-msgstr "Mensagens Diretas"
+msgstr ""
 
 #: core/templates/help/modal-understand.html:183
 msgid ""
 "Contact your favorite artists, give suggestions, tell them why you liked (or "
 "not) their publications!"
 msgstr ""
-"Entre em contato com seus artistas favoritos, dê sugestões, diga por que "
-"gostou da obra ou por que não gostou!"
 
 #: core/templates/help/modal-understand.html:189
+#, fuzzy
 msgid "Social Networking"
 msgstr "Redes Sociais"
 
