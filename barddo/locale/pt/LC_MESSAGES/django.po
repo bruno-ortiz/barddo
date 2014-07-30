@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Barddo Main Site\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-29 23:36-0300\n"
-"PO-Revision-Date: 2014-07-29 23:42-0300\n"
+"POT-Creation-Date: 2014-07-30 00:45-0300\n"
+"PO-Revision-Date: 2014-07-30 00:49-0300\n"
 "Last-Translator: Israel Crisanto <israel.crisanto@gmail.com>\n"
 "Language-Team: Barddo Team <israel.crisanto@gmail.com>\n"
 "Language: pt\n"
@@ -116,8 +116,7 @@ msgid "Gender"
 msgstr "Gênero"
 
 #: accounts/templates/profile.html:154
-#: core/templates/help/modal-discover.html:195
-#: core/templates/help/modal-enjoy.html:197 feedback/models.py:10
+#: core/templates/help/modal-discover.html:195 feedback/models.py:10
 msgid "Email"
 msgstr "Email"
 
@@ -414,8 +413,7 @@ msgstr "Descubra"
 msgid "Publish, share and find comics has never been so easy!"
 msgstr "Publicar, compartilhar e encontrar quadrinhos nunca foi tão fácil!"
 
-#: core/templates/index.html:69 core/templates/help/modal-enjoy.html:21
-#: core/templates/help/modal-understand.html:17
+#: core/templates/index.html:69 core/templates/help/modal-understand.html:17
 msgid "Understand"
 msgstr "Entenda"
 
@@ -423,7 +421,7 @@ msgstr "Entenda"
 msgid "All you need to know about Barddo are here!"
 msgstr "Tudo que você precisa saber sobre o Barddo está aqui!"
 
-#: core/templates/index.html:81
+#: core/templates/index.html:81 core/templates/help/modal-enjoy.html:17
 msgid "Enjoy"
 msgstr "Aproveite"
 
@@ -782,7 +780,6 @@ msgid "Artists Guidelines"
 msgstr "Diretrizes de Publicação"
 
 #: core/templates/help/modal-discover.html:20
-#: core/templates/help/modal-enjoy.html:24
 msgid ""
 "\n"
 "                            Welcome!\n"
@@ -801,13 +798,11 @@ msgstr ""
 "                        "
 
 #: core/templates/help/modal-discover.html:48
-#: core/templates/help/modal-enjoy.html:50
 #: templates/main_template/footer.html:14
 msgid "Barddo Project"
 msgstr "Projeto Barddo"
 
 #: core/templates/help/modal-discover.html:51
-#: core/templates/help/modal-enjoy.html:53
 msgid ""
 "\n"
 "                                Created with the <span> mission to unite "
@@ -830,23 +825,19 @@ msgstr ""
 "                            "
 
 #: core/templates/help/modal-discover.html:63
-#: core/templates/help/modal-enjoy.html:65
 msgid "Cloud Reading"
 msgstr "Leitura na Nuvem"
 
 #: core/templates/help/modal-discover.html:65
-#: core/templates/help/modal-enjoy.html:67
 msgid "Read your favorite works from anywhere, on any device."
 msgstr "Leia suas obras favoritas de qualquer lugar, em qualquer dispositivo."
 
 #: core/templates/help/modal-discover.html:70
-#: core/templates/help/modal-enjoy.html:72
 #: core/templates/help/modal-understand.html:65
 msgid "Automated publishing"
 msgstr "Publicações automatizadas"
 
 #: core/templates/help/modal-discover.html:72
-#: core/templates/help/modal-enjoy.html:74
 #: core/templates/help/modal-understand.html:67
 msgid ""
 "Without excessive bureaucracy, you can publish any work of your own with "
@@ -856,12 +847,10 @@ msgstr ""
 "autoria com apenas alguns cliques!"
 
 #: core/templates/help/modal-discover.html:84
-#: core/templates/help/modal-enjoy.html:86
 msgid "Mobility and Simplicity"
 msgstr "Mobilidade e Simplicidade"
 
 #: core/templates/help/modal-discover.html:87
-#: core/templates/help/modal-enjoy.html:89
 msgid ""
 "\n"
 "                                The Barddo was created with two objectives "
@@ -884,13 +873,11 @@ msgstr ""
 "                            "
 
 #: core/templates/help/modal-discover.html:99
-#: core/templates/help/modal-enjoy.html:101
 #: publishing/templates/publisher_landpage.html:73
 msgid "Mobile"
 msgstr "Mobile"
 
 #: core/templates/help/modal-discover.html:103
-#: core/templates/help/modal-enjoy.html:105
 msgid ""
 "\n"
 "                                            We haven't created applications "
@@ -907,13 +894,11 @@ msgstr ""
 "                                        "
 
 #: core/templates/help/modal-discover.html:111
-#: core/templates/help/modal-enjoy.html:113
 #: publishing/templates/publisher_landpage.html:85
 msgid "Web"
 msgstr "Web"
 
 #: core/templates/help/modal-discover.html:113
-#: core/templates/help/modal-enjoy.html:115
 msgid ""
 "The Barddo is OS independent! You can access it using any recent web browser!"
 msgstr ""
@@ -921,12 +906,10 @@ msgstr ""
 "qualquer navegador recente!"
 
 #: core/templates/help/modal-discover.html:137
-#: core/templates/help/modal-enjoy.html:139
 msgid "Anyone can participate."
 msgstr "Qualquer um pode participar."
 
 #: core/templates/help/modal-discover.html:140
-#: core/templates/help/modal-enjoy.html:142
 msgid ""
 "\n"
 "                                A system designed for everyone! Anyone, from "
@@ -947,12 +930,10 @@ msgstr ""
 "                            "
 
 #: core/templates/help/modal-discover.html:151
-#: core/templates/help/modal-enjoy.html:153
 msgid "Worldwide"
 msgstr "Mundial"
 
 #: core/templates/help/modal-discover.html:154
-#: core/templates/help/modal-enjoy.html:156
 msgid ""
 "\n"
 "                                            The Barddo is open to everyone "
@@ -965,12 +946,10 @@ msgstr ""
 "                                        "
 
 #: core/templates/help/modal-discover.html:162
-#: core/templates/help/modal-enjoy.html:164
 msgid "Social Networks"
 msgstr "Redes Sociais"
 
 #: core/templates/help/modal-discover.html:165
-#: core/templates/help/modal-enjoy.html:167
 msgid ""
 "\n"
 "                                            Integration with major social "
@@ -985,12 +964,10 @@ msgstr ""
 "                                        "
 
 #: core/templates/help/modal-discover.html:179
-#: core/templates/help/modal-enjoy.html:181
 msgid "Your opinion is important!"
 msgstr "Sua opinião é importante!"
 
 #: core/templates/help/modal-discover.html:184
-#: core/templates/help/modal-enjoy.html:186
 msgid ""
 "\n"
 "                                        Your questions and opinions are very "
@@ -1015,17 +992,14 @@ msgstr ""
 "                                    "
 
 #: core/templates/help/modal-discover.html:197
-#: core/templates/help/modal-enjoy.html:199
 msgid "You can get in contact via email"
 msgstr "Você pode entrar em contado através do email"
 
 #: core/templates/help/modal-discover.html:204
-#: core/templates/help/modal-enjoy.html:206
 msgid "Facebook"
 msgstr "Facebook"
 
 #: core/templates/help/modal-discover.html:207
-#: core/templates/help/modal-enjoy.html:209
 msgid ""
 "\n"
 "                                                    Visit <a href=\"https://"
@@ -1040,14 +1014,121 @@ msgstr ""
 "                                                "
 
 #: core/templates/help/modal-discover.html:224
-#: core/templates/help/modal-enjoy.html:226
 msgid "Leave your feedback right now!"
 msgstr "Deixe seu feedback agora mesmo!"
 
 #: core/templates/help/modal-discover.html:225
-#: core/templates/help/modal-enjoy.html:227
 msgid "Leave your feedback!"
 msgstr "Deixe seu feedback!"
+
+#: core/templates/help/modal-enjoy.html:20
+msgid "Learn how Barddo will help you have fun and enjoy what's good!"
+msgstr ""
+"Saiba como o Barddo vai ajuda-lo a se divertir e aproveitar o que há de bom!"
+
+#: core/templates/help/modal-enjoy.html:44
+msgid "Always Connected!"
+msgstr "Sempre Conectado!"
+
+#: core/templates/help/modal-enjoy.html:47
+msgid ""
+"\n"
+"                                            Share your favorite comics on "
+"Twitter, Facebook or Google+! Through social networks, follow what your "
+"friends are reading, recommend your favorite comics and much more!\n"
+"                                        "
+msgstr ""
+"\n"
+"                                           Compartilhe suas obras favoritas "
+"no Twitter, Facebook ou Google+! Através das redes sociais, acompanhe os "
+"quadrinhos que seus amigos estão lendo, recomende suas obras favoritas e "
+"muito mais!\n"
+"                                        "
+
+#: core/templates/help/modal-enjoy.html:59
+msgid "Artist's Dashboard"
+msgstr "Dashboard do Artista"
+
+#: core/templates/help/modal-enjoy.html:62
+msgid ""
+"\n"
+"                                            Know exactly what is happening "
+"with you publishings. Who liked, your messages and much more! Expand your "
+"reader's network, share your published works with your friends! The sky\n"
+"                                            is the limit!\n"
+"                                        "
+msgstr ""
+"\n"
+"                                            Acompanhe e saiba exatamente o "
+"que está acontecendo com suas obras. Quem curtiu, quais mensagens recebeu e "
+"muito mais! Amplie seu network de leitores, compartilhe suas obras "
+"publicadas com seus amigos!\n"
+"                                            O céu é o limite!\n"
+"                                        "
+
+#: core/templates/help/modal-enjoy.html:88
+msgid "User's Library"
+msgstr "Biblioteca do Usuário"
+
+#: core/templates/help/modal-enjoy.html:91
+msgid ""
+"\n"
+"                                            Users can bookmark the best "
+"stories and artists, which can be found in his \"Library\", as well as the "
+"works purchased. Everything for later access: anywhere, anytime.\n"
+"                                        "
+msgstr ""
+"\n"
+"                                           O usuário pode favoritar as "
+"melhores histórias e artistas, que poderão ser encontrados na Biblioteca do "
+"Usuário, assim como as obras compradas para acesso posterior, de qualquer "
+"lugar.\n"
+"                                        "
+
+#: core/templates/help/modal-enjoy.html:104
+msgid "Classic & Original Content"
+msgstr "Conteúdo Clássico & Original"
+
+#: core/templates/help/modal-enjoy.html:107
+msgid ""
+"\n"
+"                                                    One of the ideas that "
+"give life to Barddo is the focus on independent artists, which, in our point "
+"of view, does not receive enough recognition from major publishing\n"
+"                                                    houses,\n"
+"                                                    but we also believe that "
+"readers want the great classics, already established works that we see "
+"everyday, that's why we try to put this type of content here.\n"
+"                                                "
+msgstr ""
+"\n"
+"                                                    Uma das ideias que dão "
+"vida ao Barddo é o foco nos artistas independentes, que, a nosso ver, não "
+"recebem o devido reconhecimento de empresas e grandes editoras, \n"
+"                                                    mas também acreditamos "
+"que os leitores desejam os grandes clássicos, obras já consagradas e que "
+"estão no nosso dia-a-dia,\n"
+"                                                    por isto também "
+"procuramos colocar este conteúdo aqui.\n"
+"                                                "
+
+#: core/templates/help/modal-enjoy.html:115
+msgid ""
+"\n"
+"                                                    We believe that, since "
+"the ones that decides what deserves attention is the reader himself, the "
+"best works (whether independent or from major publishing houses), will\n"
+"                                                    be properly recognized "
+"by readers.\n"
+"                                                "
+msgstr ""
+"\n"
+"                                                    Acreditamos que, como "
+"quem decide o que merece ou não destaque é o próprio leitor, as melhores "
+"obras, sejam elas independentes ou de grandes editoras, serão\n"
+"                                                    devidamente reconhecidas "
+"pelos leitores.\n"
+"                                                "
 
 #: core/templates/help/modal-understand.html:20
 msgid ""

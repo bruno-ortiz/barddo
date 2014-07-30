@@ -1623,3 +1623,16 @@ div.ppt {
 .understand {
     background: #ff3141;
 }
+
+.enjoy {
+    background: #474747;
+}
+
+.enjoy-modal .shots .shotcontent h3 {
+    border-bottom: none;
+}
+
+.enjoy-modal hr {
+    margin-bottom: 60px;
+    margin-top: 60px;
+}
