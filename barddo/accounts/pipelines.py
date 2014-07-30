@@ -25,7 +25,7 @@ def post_user_creation(backend, user, response, is_new=False, **kwargs):
         # TODO: send a welcome message
 
         try:
-            mail_admins("[Barddo] New User", "User Name: '{}'. Email: '{}'".format(user.username, user.email))
+            mail_admins(u"[Barddo] New User", u"User Name: '{}'. Email: '{}'".format(user.username, user.email))
         except:
             pass
 
