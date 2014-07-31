@@ -142,7 +142,7 @@ def get_work_cover_path(instance, filename):
     """
     _, ext = os.path.splitext(filename)
     return os.path.join('covers', 'works',
-                        "{0}{1}".format(md5(filename).hexdigest(), ext))
+                        u"{0}{1}".format(md5(filename.encode('utf-8')).hexdigest(), ext))
 
 
 class Work(models.Model):
