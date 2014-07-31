@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Barddo Main Site\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-24 23:29-0300\n"
-"PO-Revision-Date: 2014-07-24 23:29-0300\n"
+"POT-Creation-Date: 2014-07-30 00:45-0300\n"
+"PO-Revision-Date: 2014-07-30 00:49-0300\n"
 "Last-Translator: Israel Crisanto <israel.crisanto@gmail.com>\n"
 "Language-Team: Barddo Team <israel.crisanto@gmail.com>\n"
 "Language: pt\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 1.6.7\n"
 
 #: accounts/models.py:130
 msgid "Brazil"
@@ -413,7 +413,7 @@ msgstr "Descubra"
 msgid "Publish, share and find comics has never been so easy!"
 msgstr "Publicar, compartilhar e encontrar quadrinhos nunca foi tão fácil!"
 
-#: core/templates/index.html:69
+#: core/templates/index.html:69 core/templates/help/modal-understand.html:17
 msgid "Understand"
 msgstr "Entenda"
 
@@ -421,7 +421,7 @@ msgstr "Entenda"
 msgid "All you need to know about Barddo are here!"
 msgstr "Tudo que você precisa saber sobre o Barddo está aqui!"
 
-#: core/templates/index.html:81
+#: core/templates/index.html:81 core/templates/help/modal-enjoy.html:17
 msgid "Enjoy"
 msgstr "Aproveite"
 
@@ -833,10 +833,12 @@ msgid "Read your favorite works from anywhere, on any device."
 msgstr "Leia suas obras favoritas de qualquer lugar, em qualquer dispositivo."
 
 #: core/templates/help/modal-discover.html:70
+#: core/templates/help/modal-understand.html:65
 msgid "Automated publishing"
 msgstr "Publicações automatizadas"
 
 #: core/templates/help/modal-discover.html:72
+#: core/templates/help/modal-understand.html:67
 msgid ""
 "Without excessive bureaucracy, you can publish any work of your own with "
 "just a few clicks!"
@@ -1018,6 +1020,311 @@ msgstr "Deixe seu feedback agora mesmo!"
 #: core/templates/help/modal-discover.html:225
 msgid "Leave your feedback!"
 msgstr "Deixe seu feedback!"
+
+#: core/templates/help/modal-enjoy.html:20
+msgid "Learn how Barddo will help you have fun and enjoy what's good!"
+msgstr ""
+"Saiba como o Barddo vai ajuda-lo a se divertir e aproveitar o que há de bom!"
+
+#: core/templates/help/modal-enjoy.html:44
+msgid "Always Connected!"
+msgstr "Sempre Conectado!"
+
+#: core/templates/help/modal-enjoy.html:47
+msgid ""
+"\n"
+"                                            Share your favorite comics on "
+"Twitter, Facebook or Google+! Through social networks, follow what your "
+"friends are reading, recommend your favorite comics and much more!\n"
+"                                        "
+msgstr ""
+"\n"
+"                                           Compartilhe suas obras favoritas "
+"no Twitter, Facebook ou Google+! Através das redes sociais, acompanhe os "
+"quadrinhos que seus amigos estão lendo, recomende suas obras favoritas e "
+"muito mais!\n"
+"                                        "
+
+#: core/templates/help/modal-enjoy.html:59
+msgid "Artist's Dashboard"
+msgstr "Dashboard do Artista"
+
+#: core/templates/help/modal-enjoy.html:62
+msgid ""
+"\n"
+"                                            Know exactly what is happening "
+"with you publishings. Who liked, your messages and much more! Expand your "
+"reader's network, share your published works with your friends! The sky\n"
+"                                            is the limit!\n"
+"                                        "
+msgstr ""
+"\n"
+"                                            Acompanhe e saiba exatamente o "
+"que está acontecendo com suas obras. Quem curtiu, quais mensagens recebeu e "
+"muito mais! Amplie seu network de leitores, compartilhe suas obras "
+"publicadas com seus amigos!\n"
+"                                            O céu é o limite!\n"
+"                                        "
+
+#: core/templates/help/modal-enjoy.html:88
+msgid "User's Library"
+msgstr "Biblioteca do Usuário"
+
+#: core/templates/help/modal-enjoy.html:91
+msgid ""
+"\n"
+"                                            Users can bookmark the best "
+"stories and artists, which can be found in his \"Library\", as well as the "
+"works purchased. Everything for later access: anywhere, anytime.\n"
+"                                        "
+msgstr ""
+"\n"
+"                                           O usuário pode favoritar as "
+"melhores histórias e artistas, que poderão ser encontrados na Biblioteca do "
+"Usuário, assim como as obras compradas para acesso posterior, de qualquer "
+"lugar.\n"
+"                                        "
+
+#: core/templates/help/modal-enjoy.html:104
+msgid "Classic & Original Content"
+msgstr "Conteúdo Clássico & Original"
+
+#: core/templates/help/modal-enjoy.html:107
+msgid ""
+"\n"
+"                                                    One of the ideas that "
+"give life to Barddo is the focus on independent artists, which, in our point "
+"of view, does not receive enough recognition from major publishing\n"
+"                                                    houses,\n"
+"                                                    but we also believe that "
+"readers want the great classics, already established works that we see "
+"everyday, that's why we try to put this type of content here.\n"
+"                                                "
+msgstr ""
+"\n"
+"                                                    Uma das ideias que dão "
+"vida ao Barddo é o foco nos artistas independentes, que, a nosso ver, não "
+"recebem o devido reconhecimento de empresas e grandes editoras, \n"
+"                                                    mas também acreditamos "
+"que os leitores desejam os grandes clássicos, obras já consagradas e que "
+"estão no nosso dia-a-dia,\n"
+"                                                    por isto também "
+"procuramos colocar este conteúdo aqui.\n"
+"                                                "
+
+#: core/templates/help/modal-enjoy.html:115
+msgid ""
+"\n"
+"                                                    We believe that, since "
+"the ones that decides what deserves attention is the reader himself, the "
+"best works (whether independent or from major publishing houses), will\n"
+"                                                    be properly recognized "
+"by readers.\n"
+"                                                "
+msgstr ""
+"\n"
+"                                                    Acreditamos que, como "
+"quem decide o que merece ou não destaque é o próprio leitor, as melhores "
+"obras, sejam elas independentes ou de grandes editoras, serão\n"
+"                                                    devidamente reconhecidas "
+"pelos leitores.\n"
+"                                                "
+
+#: core/templates/help/modal-understand.html:20
+msgid ""
+"\n"
+"                            Everything you need to know about how Barddo "
+"works!\n"
+"                        "
+msgstr ""
+"\n"
+"                            Tudo que você precisa saber para entender como o "
+"Barddo funciona!\n"
+"                        "
+
+#: core/templates/help/modal-understand.html:46
+msgid "Publications without bureaucracy"
+msgstr "Publicações sem burocracia"
+
+#: core/templates/help/modal-understand.html:49
+msgid ""
+"\n"
+"                                Simple, practical and fast publishing! The "
+"artist decides what, how and when to publish, and as long as everything is "
+"in accordance with our Terms of Service, no paperwork and no waiting!\n"
+"                            "
+msgstr ""
+"\n"
+"                                Publicações simples, práticas e rápidas! O "
+"artista decide o que, como e quando publicar, e, contanto que esteja tudo de "
+"acordo com nossos termos de uso, não há burocracia e nem espera!\n"
+"                            "
+
+#: core/templates/help/modal-understand.html:58
+msgid "Without Contracts"
+msgstr "Sem Contratos"
+
+#: core/templates/help/modal-understand.html:60
+msgid ""
+"To publish, you do not need to wait, just accept our Terms of Service, "
+"publish your work and start sharing!"
+msgstr ""
+"Para publicar, você não precisa esperar, basta aceitar nossos Termos de Uso, "
+"publicar sua obra e começar a compartilhar!"
+
+#: core/templates/help/modal-understand.html:78
+msgid "Benefits for Readers"
+msgstr "Benefícios para Leitores"
+
+#: core/templates/help/modal-understand.html:81
+msgid ""
+"\n"
+"                                Direct contact with original works (paid and "
+"free), reading where the reader prefers. Direct contact with the artist, and "
+"the possibility of helping your favorite ones to reach the success\n"
+"                                they deserve.\n"
+"                            "
+msgstr ""
+"\n"
+"                                Contato direto com obras originais, acesso a "
+"obras gratuitas, leitura onde o leitor preferir. Facilidade de contato com o "
+"artista, e a possibilidade de ajudar os artistas favoritos a alcançarem o "
+"sucesso que merecem,\n"
+"                                de forma direta e simples.\n"
+"                            "
+
+#: core/templates/help/modal-understand.html:91
+msgid "The Best"
+msgstr "Os Melhores"
+
+#: core/templates/help/modal-understand.html:95
+msgid ""
+"\n"
+"                                            Users define what is good "
+"through simple mechanics, and known effectiveness.\n"
+"                                        "
+msgstr ""
+"\n"
+"                                           Os usuários definem o que é bom "
+"através de uma mecânica simples, e de efetividade conhecida.\n"
+"                                        "
+
+#: core/templates/help/modal-understand.html:102
+msgid "Easy to Join"
+msgstr "Fácil de participar"
+
+#: core/templates/help/modal-understand.html:104
+msgid ""
+"System sign-in is fast, with just a few clicks you join us and enjoy all the "
+"advantages the Barddo offers."
+msgstr ""
+"O cadastro é rápido, com apenas alguns cliques você se cadastra e desfruta "
+"de todas as vantagens que o Barddo oferece."
+
+#: core/templates/help/modal-understand.html:128
+msgid "Benefits for Artists"
+msgstr "Benefícios para Artistas"
+
+#: core/templates/help/modal-understand.html:131
+msgid ""
+"\n"
+"                                Easy Publishing! The artist sets the price "
+"and even if it should be free or not. Usage statistics, earnings reports. "
+"World-wide access, independence from physical publications.\n"
+"                                Widgets for artists to publish their works "
+"directly on their websites.\n"
+"                            "
+msgstr ""
+"\n"
+"                                Publicações simples! O artista define o "
+"preço e até mesmo se deve ser gratuíto ou não. Estatísticas de uso, "
+"relatórios de ganhos. Acesso das obras em todo o planeta, independente de "
+"publicações físicas.\n"
+"                                Widgets para que os artistas publiquem suas "
+"obras diretamente em seus sites.\n"
+"                            "
+
+#: core/templates/help/modal-understand.html:141
+msgid "World-wide"
+msgstr "Acesso Mundial"
+
+#: core/templates/help/modal-understand.html:144
+msgid ""
+"\n"
+"                                            The Barddo is accessed all over "
+"the world, and is in more than one language. Published works can be viewed "
+"by readers from around the world.\n"
+"                                        "
+msgstr ""
+"\n"
+"                                           O Barddo é acessado pelo mundo "
+"inteiro, e está em mais de um idioma. As obras publicadas poderão ser vistas "
+"por leitores dos quatro cantos do mundo.\n"
+"                                        "
+
+#: core/templates/help/modal-understand.html:152
+msgid "Marketing"
+msgstr "Marketing"
+
+#: core/templates/help/modal-understand.html:155
+msgid ""
+"\n"
+"                                            The artist has Barddo staff to "
+"help him give visibility to their work. While he shares with friends, we "
+"share on social networks.\n"
+"                                        "
+msgstr ""
+"\n"
+"                                           O artista conta com a equipe do "
+"Barddo para ajuda-lo a dar visibilidade ao seu trabalho. Enquanto ele "
+"compartilha com os amigos, nós compartilhamos nas redes sociais.\n"
+"                                        "
+
+#: core/templates/help/modal-understand.html:170
+msgid "Direct channel between artists and readers"
+msgstr "Canal aberto entre artistas e leitores"
+
+#: core/templates/help/modal-understand.html:173
+msgid ""
+"\n"
+"                                        Greater contact between artists and "
+"readers, direct feedback, without intermediaries and without noise. The two "
+"are the only ones responsible for successful works.\n"
+"                                    "
+msgstr ""
+"\n"
+"                                          Maior contato entre artistas e "
+"leitores, feedback direto, sem intermediários e sem ruído. Os dois são os "
+"únicos responsáveis pelo sucesso da aplicação.\n"
+"                                        "
+
+#: core/templates/help/modal-understand.html:181
+msgid "Direct Messages"
+msgstr "Mensagens Diretas"
+
+#: core/templates/help/modal-understand.html:183
+msgid ""
+"Contact your favorite artists, give suggestions, tell them why you liked (or "
+"not) their publications!"
+msgstr ""
+"Entre em contato com seus artistas favoritos, dê sugestões, diga por que "
+"gostou da obra ou por que não gostou!"
+
+#: core/templates/help/modal-understand.html:189
+msgid "Social Networking"
+msgstr "Redes Sociais"
+
+#: core/templates/help/modal-understand.html:192
+msgid ""
+"\n"
+"                                                    Join our community on "
+"social networks, say what you think about the project!\n"
+"                                                "
+msgstr ""
+"\n"
+"                                           Participe da nossa comunidade nas "
+"redes sociais, diga o que achou do projeto lá e encontre pessoas parecidas!\n"
+"                                        "
 
 #: core/templates/modals/collection_detail.html:21
 msgid "General"

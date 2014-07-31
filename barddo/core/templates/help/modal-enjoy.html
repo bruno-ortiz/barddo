@@ -1,5 +1,6 @@
-{% load static %}
-<div id="modal-enjoy" class="modal fade collection-modal" tabindex="-1" role="dialog"
+{% load staticfiles %}
+{% load i18n %}
+<div id="modal-discover" class="modal fade enjoy-modal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog large">
         <div class="modal-content">
@@ -7,9 +8,131 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="loginModalLabel">&nbsp;</h4>
             </div>
-            <div class="modal-body text-center">
-                <img src="{% static "images/art/worker.png" %}" style="max-width: 300px;"/>
+
+            <div class="features block enjoy">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 col-xs-12">
+                            <div class="page-title text-center">
+                                <h3>{% trans "Enjoy" %}</h3>
+
+                                <p>
+                                    {% blocktrans %}Learn how Barddo will help you have fun and enjoy what's good!{% endblocktrans %}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-xs-12">
+                            <img src="{% static "barddo/img/modal03/06.png" %}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <div class="shots block">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="screenshot">
+                                    <img src="{% static "barddo/img/modal03/01.png" %}" alt="image"
+                                         class="img-responsive"/>
+                                </div>
+                            </div>
+                            <div class="col-md-8" style="padding-top: 10px;">
+                                <div class="shotcontent">
+                                    <h3>{% trans "Always Connected!" %}</h3>
+
+                                    <p class="shot-para">
+                                        {% blocktrans %}
+                                            Share your favorite comics on Twitter, Facebook or Google+! Through social networks, follow what your friends are reading, recommend your favorite comics and much more!
+                                        {% endblocktrans %}
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="shotcontent second">
+                                    <h3>{% trans "Artist's Dashboard" %}</h3>
+
+                                    <p class="shot-para">
+                                        {% blocktrans %}
+                                            Know exactly what is happening with you publishings. Who liked, your messages and much more! Expand your reader's network, share your published works with your friends! The sky
+                                            is the limit!
+                                        {% endblocktrans %}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="padding-top: 40px;">
+
+                                <div class="screenshot">
+                                    <img src="{% static "barddo/img/modal03/02.png" %}" alt="image"
+                                         class="img-responsive"/>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-4">
+
+                                <div class="screenshot">
+                                    <img src="{% static "barddo/img/modal03/03.png" %}" alt="image"
+                                         class="img-responsive"/>
+                                </div>
+                            </div>
+                            <div class="col-md-8" style="padding-top: 40px">
+                                <div class="shotcontent third">
+                                    <h3>{% trans "User's Library" %}</h3>
+
+                                    <p class="shot-para">
+                                        {% blocktrans %}
+                                            Users can bookmark the best stories and artists, which can be found in his "Library", as well as the works purchased. Everything for later access: anywhere, anytime.
+                                        {% endblocktrans %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12 col-md-offset-0  col-sm-10 col-sm-offset-1">
+                                <div class="shotcontent second">
+                                    <div class="row">
+                                        <div class="col-md-8 col-sm-12 col-xs-12">
+                                            <h3>{% trans "Classic & Original Content" %}</h3>
+
+                                            <p class="shot-para">
+                                                {% blocktrans %}
+                                                    One of the ideas that give life to Barddo is the focus on independent artists, which, in our point of view, does not receive enough recognition from major publishing
+                                                    houses,
+                                                    but we also believe that readers want the great classics, already established works that we see everyday, that's why we try to put this type of content here.
+                                                {% endblocktrans %}
+                                            </p>
+
+                                            <p class="shot-para">
+                                                {% blocktrans %}
+                                                    We believe that, since the ones that decides what deserves attention is the reader himself, the best works (whether independent or from major publishing houses), will
+                                                    be properly recognized by readers.
+                                                {% endblocktrans %}
+                                            </p>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12 col-xs-12">
+                                            <div class="screenshot custom-screenshot">
+                                                <img src="{% static "barddo/img/modal03/04.png" %}" alt="image"
+                                                     class="img-responsive"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
 </div>
