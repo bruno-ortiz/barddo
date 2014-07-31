@@ -30,7 +30,7 @@ TEMPLATE_DEBUG = DEBUG
 # ######### MANAGER CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
-    ('Barddo', 'contact@barddo.com')
+    ('Barddo', 'contact@barddo.com'),
 )
 
 DEFAULT_FROM_EMAIL = 'contact@barddo.com'
@@ -47,13 +47,13 @@ MANAGERS = ADMINS
 # 'NAME': 'barddo_dev',
 # 'USER': 'postgres',
 # 'PASSWORD': 'postgres',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
+# 'HOST': 'localhost',
+# 'PORT': '5432',
 # }
-########## END DATABASE CONFIGURATION
+# }
+# ######### END DATABASE CONFIGURATION
 
-########## GENERAL CONFIGURATION
+# ######### GENERAL CONFIGURATION
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -89,9 +89,9 @@ USE_L10N = True
 USE_TZ = True
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
-########## END GENERAL CONFIGURATION
+# ######### END GENERAL CONFIGURATION
 
-########## MEDIA CONFIGURATION
+# ######### MEDIA CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
 MEDIA_ROOT = path.normpath(path.join(SITE_ROOT, 'media'))
 

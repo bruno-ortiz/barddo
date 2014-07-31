@@ -36,6 +36,6 @@ def send_feedback(request, form_data):
     name = form.cleaned_data.get('name')
     email = form.cleaned_data.get('email')
     msg = form.cleaned_data.get('feedback')
-    mail_admins("[Barddo] Feedback", "Por: '{}({})'. Mensagem: '{}".format(name, email, msg))
+    mail_admins(u"[Barddo] Feedback", u"Por: '{}({})'. Mensagem: '{}".format(name, email, msg))
 
     return ajax.json()
