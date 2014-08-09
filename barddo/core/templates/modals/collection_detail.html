@@ -116,9 +116,9 @@
                                 </div>
                                 <div id="edit-work-files-preview"></div>
                                 <ul style="display: none" id="work-file-list">
-                                    {% for image in current_work.load_work_pages %}
-                                        <li data-size="{{ image.size }}"
-                                            data-url="{{ image.url }}">{{ image.name }}</li>
+                                    {% for page in current_work.pages %}
+                                        <li data-size="{{ page.image.size }}"
+                                            data-url="{{ page.image.url }}">{{ page.readable_name }}</li>
                                     {% endfor %}
                                 </ul>
                             </form>

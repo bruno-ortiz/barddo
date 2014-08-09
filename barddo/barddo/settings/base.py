@@ -45,11 +45,11 @@ MANAGERS = ADMINS
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 # DATABASES = {
 # 'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'barddo_dev',
-#         'USER': 'postgres',
-#         'PASSWORD': 'postgres',
-#         'HOST': 'localhost',
+# 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+# 'NAME': 'barddo_dev',
+# 'USER': 'postgres',
+# 'PASSWORD': 'postgres',
+# 'HOST': 'localhost',
 #         'PORT': '5432',
 #     }
 # }
@@ -397,6 +397,8 @@ THUMBNAIL_ALIASES = {
     '': {
         'big_cover': {'size': (261, 300), 'crop': False},
         'small_cover': {'size': (163, 236), 'crop': False},
+    },
+    'core.WorkPage.image': {
         'reader_thumbs': {'size': (136, 136), 'crop': True},
     },
 }

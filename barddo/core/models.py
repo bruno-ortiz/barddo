@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import hashlib
 import os
 from hashlib import md5
 import time
@@ -9,13 +10,14 @@ from django.db.models.query import QuerySet
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
-from django.core.files.images import ImageFile
 from django.db.models import Q
 from django.core.urlresolvers import reverse
-from easy_thumbnails.files import get_thumbnailer
-from easy_thumbnails.templatetags.thumbnail import thumbnail_url
+from easy_thumbnails.signal_handlers import generate_aliases
+from easy_thumbnails.signals import saved_file
+from south.modelsinspector import add_introspection_rules
 
 from accounts.models import BarddoUser
+from core.exceptions import InvalidFileUploadError
 from payments.models import FINISHED_PURCHASE_ID, Purchase
 from rating.models import Rating
 from search.search_manager import SearchManager
@@ -189,11 +191,15 @@ class Work(models.Model):
     objects = WorkManager()
     search_manager = SearchManager()
 
+    @property
+    def pages(self):
+        return self.work_pages.order_by('sequence')
+
     def is_free(self):
         return self.price == 0.0
 
     def has_pages(self):
-        return bool(self.load_work_pages())
+        return bool(self.work_pages.count())
 
     def is_owned_by(self, user):
         return Purchase.objects.is_owned_by(self, user)
@@ -234,78 +240,6 @@ class Work(models.Model):
             for chunk in file.chunks():
                 destination.write(chunk)
 
-    def load_work_pages(self):
-        """
-        Return a dict with loaded images data to be rendered
-        Example dict: {
-            "size": 123,
-            "url": /media/all/black_flag.png,
-            "name": black_flag.png
-        }
-        """
-        work_path = self.media_path()
-
-        # Sanity directory check
-        if not os.path.exists(work_path):
-            return []
-
-        files = self.image_files()
-
-        timestamp = "%d" % time.time()  # a little hack to avoid browser caching issues
-        image_files = []
-
-        for image_file in files:
-            img = ImageFile(open(os.path.join(work_path, image_file), "rb"))
-            image_files.append({
-                "size": img.size,
-                "url": settings.MEDIA_URL + img.name.replace(settings.MEDIA_ROOT + "/", "") + "?t=" + timestamp,
-                "name": image_file
-            })
-
-        return image_files
-
-    def load_work_pages_without_timestamp(self):
-        """
-        Return a dict with loaded images data to be rendered
-        Example dict: {
-            "size": 123,
-            "url": /media/all/black_flag.png,
-            "name": black_flag.png
-        }
-        """
-        work_path = self.media_path()
-
-        # Sanity directory check
-        if not os.path.exists(work_path):
-            return []
-
-        files = self.image_files()
-
-        image_files = []
-
-        for image_file in files:
-            img = ImageFile(open(os.path.join(work_path, image_file), "rb"))
-            thumb_path = os.path.join(work_path, 'thumb', self.__get_thumb_name(image_file))
-            # TODO: Obter thumbs de maneira correta
-            if os.path.exists(thumb_path):
-                thumb_url = settings.MEDIA_URL + thumb_path.replace(settings.MEDIA_ROOT + "/", "")
-            else:
-                thumbnailer = get_thumbnailer(img,
-                                              relative_name=os.path.join("work_data", "%04d" % self.id, 'thumb', image_file))
-                thumb_url = thumbnail_url(thumbnailer, 'reader_thumbs')
-            image_files.append({
-                "size": img.size,
-                "url": settings.MEDIA_URL + img.name.replace(settings.MEDIA_ROOT + "/", ""),
-                "name": image_file,
-                "thumb": thumb_url
-            })
-
-        return image_files
-
-    def __get_thumb_name(self, image_name):
-        # TODO: ME PERDOEM POR ESSE PECADO. EU ME REDIMIREI!
-        return "{}.136x136_q85_crop.jpg".format(image_name)
-
     def __unicode__(self):
         return unicode(self.collection) + u" - " + self.title + u" #" + unicode(self.unit_count)
 
@@ -318,12 +252,34 @@ class Work(models.Model):
 
 
 def image_storage(instance, filename):
-    return os.path.join(settings.MEDIA_ROOT, "work_data", "%04d" % instance.work.id)
+    file_name, file_extension = os.path.splitext(filename)
+
+    # Black list sanity check
+    if file_extension.lower()[1:] not in Work.ALLOWED_EXTENSIONS:
+        raise InvalidFileUploadError()
+    file_name = hashlib.md5(str(time.time())).hexdigest() + file_extension
+    return os.path.join("work_data", "%04d" % instance.work.id, file_name)
+
+
+add_introspection_rules([], ["^core\.models\.AutoIncrementField"])
+
+
+class AutoIncrementField(models.PositiveIntegerField):
+    def pre_save(self, model_instance, add):
+        if not add:
+            return getattr(model_instance, self.attname)
+        return getattr(model_instance, 'next_page_number')
 
 
 class WorkPage(models.Model):
-    sequence = models.PositiveSmallIntegerField()
-    work = models.ForeignKey(Work, related_name='work_pages')
+    sequence = AutoIncrementField()
+    work = models.ForeignKey(Work, related_name='work_pages', db_index=True)
+    readable_name = models.CharField(max_length=255)
     image = models.ImageField(upload_to=image_storage)
 
+    @property
+    def next_page_number(self):
+        return WorkPage.objects.filter(work=self.work).count()
 
+
+saved_file.connect(generate_aliases)
