@@ -6,3 +6,5 @@ static/
 user_avatar/
 \.sass-cache/
 /media
+/coverage.xml$
+/junit.xml$

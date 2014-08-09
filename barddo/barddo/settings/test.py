@@ -27,6 +27,12 @@ FIXTURE_DIRS += (path.normpath(path.join(SITE_ROOT, 'accounts', 'test-fixtures')
 PROJECT_APPS = LOCAL_APPS
 ########## END OF JENKINS TESTS CONFIGURATION
 
+########## JENKINS TESTS CONFIGURATION
+# See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
+INSTALLED_APPS += (
+    'django_jenkins',
+)
+
 DEBUG = False
 
 ########## MISC CONFIGURATION
