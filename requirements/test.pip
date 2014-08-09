@@ -1,29 +1,7 @@
 ##
-# barddo box development requirements
+#Barddo test Requirements
 ##
-django==1.6.5
-South==0.8.4
-python-social-auth==0.1.23
-django-widget-tweaks==1.3
-django-dajaxice-ng
-django-dajax-ng
-django-endless-pagination
-django-extensions
-lxml
-django-compressor
-django-debug-toolbar
-facepy
-pillow
-easy-thumbnails
-django-imagekit
-pilkit
-fabric
-mysql-python
+-r development.pip
+
 django-jenkins
 mock
-paypalrestsdk==1.1.0
-celery==3.1.11
-django-celery==3.1.10
-django-bitly==0.7
-djangorestframework==2.3.10
-Markdown==2.4.1
