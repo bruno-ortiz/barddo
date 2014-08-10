@@ -2,9 +2,7 @@
 import os
 
 from django.core.files.images import ImageFile
-
 from south.db import db
-
 from south.v2 import SchemaMigration
 
 from core.models import Work, WorkPage
@@ -33,7 +31,6 @@ class Migration(SchemaMigration):
     def backwards(self, orm):
         # Deleting model 'WorkPage'
         db.delete_table(u'core_workpage')
-
 
     models = {
         u'accounts.barddouser': {
@@ -86,22 +83,18 @@ class Migration(SchemaMigration):
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '250'}),
             'start_date': ('django.db.models.fields.DateField', [], {'db_index': 'True'}),
             'status': ('django.db.models.fields.SmallIntegerField', [], {'default': '0', 'db_index': 'True'}),
-            'summary': ('django.db.models.fields.TextField', [], {}),
-            'unit': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.CollectionUnit']"})
-        },
-        u'core.collectionunit': {
-            'Meta': {'object_name': 'CollectionUnit'},
-            'description': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '250'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
+            'summary': ('django.db.models.fields.TextField', [], {})
         },
         u'core.work': {
             'Meta': {'unique_together': "(('collection', 'unit_count'),)", 'object_name': 'Work', 'index_together': "[['title', 'summary']]"},
             'author': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'author_works'", 'to': u"orm['accounts.BarddoUser']"}),
-            'collection': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.Collection']"}),
+            'collection': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'works'", 'to': u"orm['core.Collection']"}),
             'cover': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'is_published': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'db_index': 'True'}),
             'price': ('django.db.models.fields.DecimalField', [], {'default': '0.0', 'max_digits': '6', 'decimal_places': '2', 'db_index': 'True'}),
             'publish_date': ('django.db.models.fields.DateTimeField', [], {'db_index': 'True'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '250'}),
             'summary': ('django.db.models.fields.TextField', [], {}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '250', 'db_index': 'True'}),
             'total_pages': ('django.db.models.fields.SmallIntegerField', [], {}),
