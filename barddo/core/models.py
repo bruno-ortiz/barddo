@@ -5,7 +5,8 @@ from hashlib import md5
 import time
 
 from django.db import models
-from django.db.models import Manager, Count
+from django.db import transaction
+from django.db.models import Manager, Count, F
 from django.db.models.query import QuerySet
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
@@ -158,18 +159,6 @@ class Work(models.Model):
         - Collection is 'One Piece', a work should be 'Chapter 01 - My name is Luffy'
         - Collection artists: "Israel" and "Bruno", being "Israel" author of the 1st volume and "Bruno" the other
         - A work made by two artists: "Israel" the writer and "Bruno", the painter
-
-    Work files will be stored by convention.
-    Eg.
-        - Collection 01
-            - Work 01
-                - Page 01
-                - Page 02
-            - Work 01
-                - Page 01
-                - Page 02
-            ...
-        ...
     """
 
     ALLOWED_EXTENSIONS = ['jpg', 'bmp', 'png', 'gif']
@@ -195,6 +184,46 @@ class Work(models.Model):
     def pages(self):
         return self.work_pages.order_by('sequence')
 
+    def add_page(self, page_file):
+        """
+        Adds a page to this work
+
+        :param page_file: The page file
+        :type page_file: file
+        :return: the created WorkPage
+        :rtype: WorkPage
+        """
+        return WorkPage.objects.create(work=self, image=page_file, readable_name=page_file.name)
+
+    def move_page(self, pos_from, pos_to):
+        """
+        Move uma pagina de posição
+
+        :param pos_from: Posição inicial da página
+        :type pos_from: int
+        :param pos_to:  Posição para a qual a página será movida.
+        :type pos_to: int
+        """
+        with transaction.atomic():
+            page = WorkPage.objects.get(work=self, sequence=pos_from)
+            if pos_from > pos_to:
+                WorkPage.objects.filter(Q(sequence__gte=pos_to) & Q(sequence__lt=pos_from)).update(sequence=F('sequence') + 1)
+            else:
+                WorkPage.objects.filter(Q(sequence__gt=pos_from) & Q(sequence__lte=pos_to)).update(sequence=F('sequence') - 1)
+            page.sequence = pos_to
+            page.save()
+
+    def remove_page(self, page_index):
+        """
+        Remove a página do banco
+
+        :param page_index: Indice da página a ser removida
+        :type page_index: int
+        """
+        with transaction.atomic():
+            WorkPage.objects.get(work=self, sequence=page_index).delete()
+            WorkPage.objects.filter(work=self, sequence__gt=page_index).update(sequence=F('sequence') - 1)
+
     def is_free(self):
         return self.price == 0.0
 
@@ -214,7 +243,7 @@ class Work(models.Model):
         """
         Return true if the given user is the owner of the current work
         """
-        return self.collection.author.id != user.id
+        return self.collection.author.id == user.id or self.author.id == user.id
 
     def media_path(self):
         """

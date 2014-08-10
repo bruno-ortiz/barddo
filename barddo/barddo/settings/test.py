@@ -25,7 +25,7 @@ FIXTURE_DIRS += (path.normpath(path.join(SITE_ROOT, 'accounts', 'test-fixtures')
                  path.normpath(path.join(SITE_ROOT, 'publishing', 'test-fixtures')))
 
 PROJECT_APPS = LOCAL_APPS
-########## END OF JENKINS TESTS CONFIGURATION
+# ######### END OF JENKINS TESTS CONFIGURATION
 
 ########## JENKINS TESTS CONFIGURATION
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
@@ -55,3 +55,5 @@ SKIP_SOUTH_TESTS = True
 XS_SHARING_ALLOWED_ORIGINS = '*'
 XS_SHARING_ALLOWED_METHODS = "POST, GET, OPTIONS, PUT, DELETE"
 XS_SHARING_ALLOWED_HEADERS = "Authorization"
+
+DEFAULT_FILE_STORAGE = 'inmemorystorage.InMemoryStorage'

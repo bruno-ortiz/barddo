@@ -2,13 +2,10 @@
 import json
 import datetime
 
-from django.db import transaction
-from django.db.models import F, Q
 from django.views.generic import View
 from django.http import HttpResponse
 from django.shortcuts import redirect
 
-from core.models import WorkPage
 from .models import Collection, Work
 from .exceptions import ChangeOnObjectNotOwnedError
 from accounts.views import ProfileAwareView, LoginRequiredMixin
@@ -132,6 +129,11 @@ class CollectionDetailView(LoginRequiredMixin, ProfileAwareView):
 collection_detail = CollectionDetailView.as_view()
 
 
+def validate_work_owner(user, work):
+    if not work.is_owner(user):
+        raise ChangeOnObjectNotOwnedError()
+
+
 # ##
 # ## Work sorted upload
 # ##
@@ -144,18 +146,15 @@ class UploadWorkPageView(LoginRequiredMixin, View):
 
         # Check if the user owns the work
         work = Work.objects.select_related("collection").get(id=work_id)
-        if work.is_owner(request.user):
-            raise ChangeOnObjectNotOwnedError()
-
+        validate_work_owner(request.user, work)
         # Handle uploaded file to the server media folder
         _file = request.FILES['file']
-        work_page = WorkPage(work=work, image=_file, readable_name=_file.name)
-        work_page.save()
+        added_page = work.add_page(_file)
         # TODO: create somekind of lock, to handle more than one user editing the same work?
         context = {
             "success": "true",
             "work_id": work.id,
-            "work_page": work_page.sequence
+            "work_page": added_page.sequence
         }
 
         return HttpResponse(json.dumps(context), content_type="application/json")
@@ -164,7 +163,6 @@ class UploadWorkPageView(LoginRequiredMixin, View):
 upload_work_page = UploadWorkPageView.as_view()
 
 
-# TODO: thin views, fat models
 class MoveWorkPageView(LoginRequiredMixin, View):
     def post(self, request, work_id, *args, **kwargs):
         """
@@ -175,21 +173,12 @@ class MoveWorkPageView(LoginRequiredMixin, View):
         """
         # Check if the user owns the work
         work = Work.objects.select_related("collection", "work_pages").get(id=work_id)
-        if work.is_owner(request.user):
-            raise ChangeOnObjectNotOwnedError()
+        validate_work_owner(request.user, work)
 
         pos_from = int(request.REQUEST['position_from'])
         pos_to = int(request.REQUEST['position_to'])
 
-        with transaction.atomic():
-            page = WorkPage.objects.get(work=work, sequence=pos_from)
-            if pos_from > pos_to:
-                WorkPage.objects.filter(Q(sequence__gte=pos_to) & Q(sequence__lt=pos_from)).update(sequence=F('sequence') + 1)
-            else:
-                WorkPage.objects.filter(Q(sequence__gt=pos_from) & Q(sequence__lte=pos_to)).update(sequence=F('sequence') - 1)
-            page.sequence = pos_to
-            page.save()
-
+        work.move_page(pos_from, pos_to)
         # TODO: create somekind of lock, to handle more than one user editing the same work?
         context = {
             "success": "true",
@@ -201,7 +190,6 @@ class MoveWorkPageView(LoginRequiredMixin, View):
 move_work_page = MoveWorkPageView.as_view()
 
 
-# TODO: thin views, fat models
 class RemoveWorkPageView(LoginRequiredMixin, View):
     """
     Remove a page and rename subsequent ones
@@ -211,12 +199,9 @@ class RemoveWorkPageView(LoginRequiredMixin, View):
         # Check if the user owns the work
         page_index = int(page_index)
         work = Work.objects.select_related('collection', 'work_pages').get(id=work_id)
-        if work.is_owner(request.user):
-            raise ChangeOnObjectNotOwnedError()
+        validate_work_owner(request.user, work)
 
-        with transaction.atomic():
-            WorkPage.objects.get(work=work, sequence=page_index).delete()
-            WorkPage.objects.filter(work=work, sequence__gt=page_index).update(sequence=F('sequence') - 1)
+        work.remove_page(page_index)
 
         # TODO: create somekind of lock, to handle more than one user editing the same work?
         context = {
