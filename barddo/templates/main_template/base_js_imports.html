@@ -24,14 +24,15 @@
 		<script src="{% static "js/respond.min.js" %}"></script>
 	<![endif]-->
 
+    <script src="{% static 'js/jquery.imgpreload.js' %}"></script>
+
     {% dajaxice_js_import 'nocsrf' %}
     <script type="text/javascript" src="{% static "dajax/jquery.dajax.core.js" %}"></script>
 
     <!--[if lte IE 8]><script src="{% static "js/excanvas.min.js" %}"></script><![endif]-->
 
     <!-- Barddo -->
-        <script src="{% static "barddo/js/scroll.js" %}"></script>
-        <script src="{% static "barddo/js/utils.js" %}"></script>
-
+    <script src="{% static "barddo/js/scroll.js" %}"></script>
+    <script src="{% static "barddo/js/utils.js" %}"></script>
     {% shards_js_import %}
 {% endblock %}

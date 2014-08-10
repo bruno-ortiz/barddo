@@ -115,6 +115,7 @@ STATICFILES_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'feedback', 'assets')),
     path.normpath(path.join(SITE_ROOT, 'search', 'assets')),
     path.normpath(path.join(SITE_ROOT, 'core', 'assets')),
+    path.normpath(path.join(SITE_ROOT, 'reader', 'assets')),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
@@ -181,6 +182,7 @@ TEMPLATE_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'publishing', 'templates')),
     path.normpath(path.join(SITE_ROOT, 'accounts', 'templates')),
     path.normpath(path.join(SITE_ROOT, 'payments', 'templates')),
+    path.normpath(path.join(SITE_ROOT, 'reader', 'templates')),
 )
 ########## END TEMPLATE CONFIGURATION
 
@@ -259,6 +261,7 @@ LOCAL_APPS = (
     'feed',
     'share',
     'api',
+    'reader'
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
