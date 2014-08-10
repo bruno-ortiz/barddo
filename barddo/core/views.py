@@ -44,7 +44,7 @@ class IndexView(ProfileAwareView):
         # TODO: quando tivermos fluxo constante, limitar o que é exibido
         limit = self.get_relative_date(self.LAST_YEAR)
 
-        new_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).filter(publish_date__gte=limit). \
+        new_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).filter(publish_date__gte=limit, is_published=True). \
             order_by("-publish_date")
         return self.__filter_works_with_pages(new_works)
 
@@ -53,7 +53,7 @@ class IndexView(ProfileAwareView):
         limit = self.get_relative_date(self.LAST_YEAR)
 
         # TODO: Rever o distinct
-        rising_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).liked_after(limit).distinct(). \
+        rising_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).liked_after(limit).filter(is_published=True).distinct(). \
             order_by("-total_likes")
         return self.__filter_works_with_pages(rising_works)
 
@@ -62,7 +62,7 @@ class IndexView(ProfileAwareView):
         limit = self.get_relative_date(self.LAST_YEAR)
 
         # TODO: Rever o distinct
-        trending_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).liked_after(limit).distinct(). \
+        trending_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).liked_after(limit).filter(is_published=True).distinct(). \
             order_by("-total_likes")
         return self.__filter_works_with_pages(trending_works)
 
