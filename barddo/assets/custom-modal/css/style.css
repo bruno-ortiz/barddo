@@ -916,6 +916,7 @@ Designed by : http://responsivewebinc.com
     margin-bottom: 15px !important;
     margin-top: 10px !important;
     color: #df463f;
+    min-height: 93px;
 }
 
 .shots .shotcontent.second h3 {
@@ -1616,5 +1617,22 @@ div.ppt {
 }
 
 .custom-screenshot {
+    margin-top: 60px;
+}
+
+.understand {
+    background: #ff3141;
+}
+
+.enjoy {
+    background: #474747;
+}
+
+.enjoy-modal .shots .shotcontent h3 {
+    border-bottom: none;
+}
+
+.enjoy-modal hr {
+    margin-bottom: 60px;
     margin-top: 60px;
 }

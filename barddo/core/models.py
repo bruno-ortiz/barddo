@@ -61,20 +61,6 @@ class WorkQuerySet(QuerySet):
         return self.filter(Q(like__date__gte=date) | Q(like__isnull=True))
 
 
-class CollectionUnit(models.Model):
-    """
-    A collection can have any type of units types. This entity represents this possibility.
-    Eg.
-        - Chapters
-        - Volumes
-        - Pages
-    """
-    description = models.CharField(_('Description'), max_length=250, unique=True)
-
-    def __unicode__(self):
-        return self.description
-
-
 def get_collection_cover_path(instance, filename):
     """
         Default work cover path
@@ -106,7 +92,6 @@ class Collection(models.Model):
 
     slug = models.SlugField(_('Slug'), max_length=250, db_index=True)
     status = models.SmallIntegerField(_('Status'), choices=STATUS_CHOICES, default=STATUS_ONGOING, db_index=True)
-    unit = models.ForeignKey(CollectionUnit, null=False, blank=False, db_index=True)
 
     start_date = models.DateField(_('Start Date'), blank=False, null=False, db_index=True)
     end_date = models.DateField(_('End Date'), blank=True, null=True)
@@ -116,9 +101,6 @@ class Collection(models.Model):
 
     objects = WorkManager()
     search_manager = SearchManager()
-
-    def get_total_works(self):
-        return Work.objects.filter(collection__id=self.id).count()
 
     # TODO: collection tags
     # TODO: collection categories
@@ -163,9 +145,11 @@ class Work(models.Model):
 
     ALLOWED_EXTENSIONS = ['jpg', 'bmp', 'png', 'gif']
 
-    collection = models.ForeignKey(Collection)
+    collection = models.ForeignKey(Collection, related_name="works")
 
     title = models.CharField(_('Title'), max_length=250, db_index=True)
+    slug = models.SlugField(_('Slug'), max_length=250, db_index=True)
+
     summary = models.TextField(_('Summary'))
     cover = models.ImageField(_('Cover Art'), upload_to=get_work_cover_path)
 
@@ -176,6 +160,8 @@ class Work(models.Model):
     unit_count = models.IntegerField(_('Item Number'), db_index=True)
     total_pages = models.SmallIntegerField(_('Total Pages'))
     publish_date = models.DateTimeField(_('Publish Date'), db_index=True)
+
+    is_published = models.BooleanField(_('Is Published?'), db_index=True, default=False)
 
     objects = WorkManager()
     search_manager = SearchManager()
@@ -271,6 +257,16 @@ class Work(models.Model):
 
     def __unicode__(self):
         return unicode(self.collection) + u" - " + self.title + u" #" + unicode(self.unit_count)
+
+    def save(self, *args, **kwargs):
+        """
+        The work slug is always based on it's first name.
+        This will only create a new slug, there's no need to update with collection name
+        """
+        if not self.id:
+            self.slug = slugify(self.title)
+
+        super(Work, self).save(*args, **kwargs)
 
     class Meta:
         unique_together = ("collection", "unit_count")

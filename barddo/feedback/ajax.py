@@ -4,6 +4,7 @@ from dajax.core import Dajax
 from dajaxice.decorators import dajaxice_register
 from dajaxice.utils import deserialize_form
 from django.utils.translation import ugettext as _
+from django.core.mail import mail_admins
 
 from feedback.forms import FeedbackForm
 
@@ -32,5 +33,9 @@ def send_feedback(request, form_data):
             ajax.script('$("#{}").closest("div.form-group").addClass("has-error")'.format(field))
 
     # TODO: send an email warning us of what's happening
+    name = form.cleaned_data.get('name')
+    email = form.cleaned_data.get('email')
+    msg = form.cleaned_data.get('feedback')
+    mail_admins(u"[Barddo] Feedback", u"Por: '{}({})'. Mensagem: '{}".format(name, email, msg))
 
     return ajax.json()

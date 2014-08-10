@@ -132,30 +132,42 @@
     <script type="text/javascript">
         $(document).ready(function () {
             // Help modals shards
-            $("#btn-discover").on("click", function () {
+            $("#btn-discover").on("click", function (e) {
 
                 Shards.modal.help.discover(function (shard_id, shard_data, parent) {
                     $(shard_id).remove();
                     $(parent).append(shard_data);
                     $(shard_id).modal('show');
                 });
+
+                window.location.hash = "#discover";
+                e.stopPropagation();
+                e.preventDefault();
             });
 
 
-            $("#btn-understand").on("click", function () {
+            $("#btn-understand").on("click", function (e) {
                 Shards.modal.help.understand(function (shard_id, shard_data, parent) {
                     $(shard_id).remove();
                     $(parent).append(shard_data);
                     $(shard_id).modal('show');
                 });
+
+                window.location.hash = "#understand";
+                e.stopPropagation();
+                e.preventDefault();
             });
 
-            $("#btn-enjoy").on("click", function () {
+            $("#btn-enjoy").on("click", function (e) {
                 Shards.modal.help.enjoy(function (shard_id, shard_data, parent) {
                     $(shard_id).remove();
                     $(parent).append(shard_data);
                     $(shard_id).modal('show');
                 });
+
+                window.location.hash = "#enjoy";
+                e.stopPropagation();
+                e.preventDefault();
             });
 
             // just allowing direct reference to the modals
