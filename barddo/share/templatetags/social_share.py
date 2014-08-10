@@ -62,7 +62,7 @@ def _compose_tweet(text, url=None):
     total_length = len(text) + len(' ') + len(url)
 
     if total_length > 140:
-        truncated_text = text[:(140 - len(url))] + u"…"
+        truncated_text = text[:(140 - len(url))] + "…"
     else:
         truncated_text = text
     return truncated_text

@@ -3,7 +3,6 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from dajaxice.core import dajaxice_autodiscover, dajaxice_config
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from reader.views import embeddable_reader
 
 from shards.core import shards_autodiscover
 from barddo.receivers import receivers_autodiscover
@@ -39,10 +38,6 @@ urlpatterns = patterns(
 
     # Custom Metrics
     url(r'^metrics/', include('redis_metrics.urls')), # Enable when secure
-
-    url(r'^embed/reader/(?P<work_id>\d+)$',
-        embeddable_reader,
-        name='reader.embed'),
 )
 
 urlpatterns += staticfiles_urlpatterns()

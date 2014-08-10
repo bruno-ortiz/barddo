@@ -1,3 +1,4 @@
+
 .btn-signin,
 .btn-signin:focus {
     background-color: #2e8965 !important;
@@ -288,38 +289,4 @@ footer {
 
 .work-users.tabbable {
     margin: 12px;
-}
-
-#readerModal .modal-dialog, #readerModal .modal-body {
-    border: 0;
-    padding: 0;
-    margin: 0;
-}
-
-#readerModal .modal-body, #readerModal .modal-content {
-    height: 100%;
-}
-
-#readerModal button.close {
-    position: absolute;
-    color: white;
-    z-index: 99999;
-    top: 0;
-    right: 0;
-    font-size: 28px;
-    padding: 20px 30px;
-    opacity: 0.8;
-}
-
-a.gplus {
-    color: white;
-    font-size: 12px;
-    padding: 1px 5px 1px 5px;
-    border-radius: 2px;
-    display: inline-block;
-}
-
-a.gplus:hover {
-    color: white;
-    text-decoration: none;
 }

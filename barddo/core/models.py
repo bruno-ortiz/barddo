@@ -263,25 +263,6 @@ class Work(models.Model):
 
         return image_files
 
-    def get_thumbnail_url(self):
-        thumb_width, thumb_height = settings.THUMBNAIL_ALIASES['']['reader_thumbs']['size']
-        thumb_images = [thumb["thumb"] for thumb in self.load_work_pages_without_timestamp()]
-
-        from PIL import Image
-
-        sprited_thumbs = Image.new("RGB", (thumb_width, thumb_height * len(thumb_images)))
-        for x in xrange(len(thumb_images)):
-            current_path = thumb_images[x]
-            current_path = current_path.replace(settings.MEDIA_URL, settings.MEDIA_ROOT + '/')
-            current = Image.open(current_path)
-            sprited_thumbs.paste(current, (0, x * thumb_height))
-
-        thumbs_url = os.path.join(settings.MEDIA_ROOT, "sprites", "{}-sprited-thumbs.png".format(self.id))
-        with open(thumbs_url, "wb") as thumb_sprites_file:
-            sprited_thumbs.save(thumb_sprites_file)
-
-        return settings.MEDIA_URL + thumbs_url.replace(settings.MEDIA_ROOT + "/", "")
-
     def load_work_pages_without_timestamp(self):
         """
         Return a dict with loaded images data to be rendered

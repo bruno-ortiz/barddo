@@ -11,8 +11,7 @@
     {% render_work_opengraph_header work %}
 
     {% compress css %}
-        <link rel="stylesheet" href="{% static "wow_book/wow_book.css" %}"/>
-        <link rel="stylesheet" href="{% static "css/core-reader.css" %}"/>
+        <link rel="stylesheet" href="{% static "css/reader.css" %}"/>
     {% endcompress %}
 {% endblock %}
 
@@ -195,16 +194,6 @@
     </div>
 {% endblock %}
 
-{% block page_specific_javascript %}
-    {% compress js %}
-        <script src="{% static 'wow_book/wow_book.min.js' %}"></script>
-        <script src="{% static 'js/jquery.waitforimages.js' %}"></script>
-
-        <script src="{% static "js/core-reader.js" %}"></script>
-        <script src="{% static "js/reader-overlay.js" %}"></script>
-    {% endcompress %}
-{% endblock %}
-
 {% block bottom_page %}
     <script type="text/javascript">
         function user_unvoted_callback() {
@@ -261,11 +250,6 @@
                         $(shard_id).modal('show');
                     }, {"work_id": {{ work.id }}});
                 });
-
-                {# Direct linking to the reader #}
-                if(window.location.hash == "#read") {
-                    $("#read-button").trigger("click");
-                }
             {% endif %}
         });
     </script>
