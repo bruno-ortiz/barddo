@@ -1,21 +1,24 @@
 # -*- coding: utf-8 -*-
+import hashlib
 import os
 from hashlib import md5
 import time
 
 from django.db import models
-from django.db.models import Manager, Count
+from django.db import transaction
+from django.db.models import Manager, Count, F
 from django.db.models.query import QuerySet
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
-from django.core.files.images import ImageFile
 from django.db.models import Q
 from django.core.urlresolvers import reverse
-from easy_thumbnails.files import get_thumbnailer
-from easy_thumbnails.templatetags.thumbnail import thumbnail_url
+from easy_thumbnails.signal_handlers import generate_aliases
+from easy_thumbnails.signals import saved_file
+from south.modelsinspector import add_introspection_rules
 
 from accounts.models import BarddoUser
+from core.exceptions import InvalidFileUploadError
 from payments.models import FINISHED_PURCHASE_ID, Purchase
 from rating.models import Rating
 from search.search_manager import SearchManager
@@ -138,18 +141,6 @@ class Work(models.Model):
         - Collection is 'One Piece', a work should be 'Chapter 01 - My name is Luffy'
         - Collection artists: "Israel" and "Bruno", being "Israel" author of the 1st volume and "Bruno" the other
         - A work made by two artists: "Israel" the writer and "Bruno", the painter
-
-    Work files will be stored by convention.
-    Eg.
-        - Collection 01
-            - Work 01
-                - Page 01
-                - Page 02
-            - Work 01
-                - Page 01
-                - Page 02
-            ...
-        ...
     """
 
     ALLOWED_EXTENSIONS = ['jpg', 'bmp', 'png', 'gif']
@@ -175,11 +166,55 @@ class Work(models.Model):
     objects = WorkManager()
     search_manager = SearchManager()
 
+    @property
+    def pages(self):
+        return self.work_pages.order_by('sequence')
+
+    def add_page(self, page_file):
+        """
+        Adds a page to this work
+
+        :param page_file: The page file
+        :type page_file: file
+        :return: the created WorkPage
+        :rtype: WorkPage
+        """
+        return WorkPage.objects.create(work=self, image=page_file, readable_name=page_file.name)
+
+    def move_page(self, pos_from, pos_to):
+        """
+        Move uma pagina de posição
+
+        :param pos_from: Posição inicial da página
+        :type pos_from: int
+        :param pos_to:  Posição para a qual a página será movida.
+        :type pos_to: int
+        """
+        with transaction.atomic():
+            page = WorkPage.objects.get(work=self, sequence=pos_from)
+            if pos_from > pos_to:
+                WorkPage.objects.filter(Q(sequence__gte=pos_to) & Q(sequence__lt=pos_from)).update(sequence=F('sequence') + 1)
+            else:
+                WorkPage.objects.filter(Q(sequence__gt=pos_from) & Q(sequence__lte=pos_to)).update(sequence=F('sequence') - 1)
+            page.sequence = pos_to
+            page.save()
+
+    def remove_page(self, page_index):
+        """
+        Remove a página do banco
+
+        :param page_index: Indice da página a ser removida
+        :type page_index: int
+        """
+        with transaction.atomic():
+            WorkPage.objects.get(work=self, sequence=page_index).delete()
+            WorkPage.objects.filter(work=self, sequence__gt=page_index).update(sequence=F('sequence') - 1)
+
     def is_free(self):
         return self.price == 0.0
 
     def has_pages(self):
-        return bool(self.load_work_pages())
+        return bool(self.work_pages.count())
 
     def is_owned_by(self, user):
         return Purchase.objects.is_owned_by(self, user)
@@ -194,7 +229,7 @@ class Work(models.Model):
         """
         Return true if the given user is the owner of the current work
         """
-        return self.collection.author.id != user.id
+        return self.collection.author.id == user.id or self.author.id == user.id
 
     def media_path(self):
         """
@@ -220,78 +255,6 @@ class Work(models.Model):
             for chunk in file.chunks():
                 destination.write(chunk)
 
-    def load_work_pages(self):
-        """
-        Return a dict with loaded images data to be rendered
-        Example dict: {
-            "size": 123,
-            "url": /media/all/black_flag.png,
-            "name": black_flag.png
-        }
-        """
-        work_path = self.media_path()
-
-        # Sanity directory check
-        if not os.path.exists(work_path):
-            return []
-
-        files = self.image_files()
-
-        timestamp = "%d" % time.time()  # a little hack to avoid browser caching issues
-        image_files = []
-
-        for image_file in files:
-            img = ImageFile(open(os.path.join(work_path, image_file), "rb"))
-            image_files.append({
-                "size": img.size,
-                "url": settings.MEDIA_URL + img.name.replace(settings.MEDIA_ROOT + "/", "") + "?t=" + timestamp,
-                "name": image_file
-            })
-
-        return image_files
-
-    def load_work_pages_without_timestamp(self):
-        """
-        Return a dict with loaded images data to be rendered
-        Example dict: {
-            "size": 123,
-            "url": /media/all/black_flag.png,
-            "name": black_flag.png
-        }
-        """
-        work_path = self.media_path()
-
-        # Sanity directory check
-        if not os.path.exists(work_path):
-            return []
-
-        files = self.image_files()
-
-        image_files = []
-
-        for image_file in files:
-            img = ImageFile(open(os.path.join(work_path, image_file), "rb"))
-            thumb_path = os.path.join(work_path, 'thumb', self.__get_thumb_name(image_file))
-            # TODO: Obter thumbs de maneira correta
-            if os.path.exists(thumb_path):
-                thumb_url = settings.MEDIA_URL + thumb_path.replace(settings.MEDIA_ROOT + "/", "")
-            else:
-                thumbnailer = get_thumbnailer(img,
-                                              relative_name=os.path.join("work_data", "%04d" % self.id, 'thumb', image_file))
-                thumb_url = thumbnail_url(thumbnailer, 'reader_thumbs')
-            image_files.append({
-                "size": img.size,
-                "url": settings.MEDIA_URL + img.name.replace(settings.MEDIA_ROOT + "/", ""),
-                "name": image_file,
-                "thumb": thumb_url
-            })
-
-        return image_files
-
-    def __get_thumb_name(self, image_name):
-        # TODO: ME PERDOEM POR ESSE PECADO. EU ME REDIMIREI!
-        return "{}.136x136_q85_crop.jpg".format(image_name)
-
     def __unicode__(self):
         return unicode(self.collection) + u" - " + self.title + u" #" + unicode(self.unit_count)
 
@@ -311,5 +274,37 @@ class Work(models.Model):
 
         # TODO: work tags
         # TODO: work categories
-        # TODO: store files by convention
 
+
+def image_storage(instance, filename):
+    file_name, file_extension = os.path.splitext(filename)
+
+    # Black list sanity check
+    if file_extension.lower()[1:] not in Work.ALLOWED_EXTENSIONS:
+        raise InvalidFileUploadError()
+    file_name = hashlib.md5(str(time.time())).hexdigest() + file_extension
+    return os.path.join("work_data", "%04d" % instance.work.id, file_name)
+
+
+add_introspection_rules([], ["^core\.models\.AutoIncrementField"])
+
+
+class AutoIncrementField(models.PositiveIntegerField):
+    def pre_save(self, model_instance, add):
+        if not add:
+            return getattr(model_instance, self.attname)
+        return getattr(model_instance, 'next_page_number')
+
+
+class WorkPage(models.Model):
+    sequence = AutoIncrementField()
+    work = models.ForeignKey(Work, related_name='work_pages', db_index=True)
+    readable_name = models.CharField(max_length=255)
+    image = models.ImageField(upload_to=image_storage)
+
+    @property
+    def next_page_number(self):
+        return WorkPage.objects.filter(work=self.work).count()
+
+
+saved_file.connect(generate_aliases)

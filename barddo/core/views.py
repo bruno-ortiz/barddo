@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 
 from .models import Collection, Work
-from .exceptions import InvalidFileUploadError, ChangeOnObjectNotOwnedError
+from .exceptions import ChangeOnObjectNotOwnedError
 from accounts.views import ProfileAwareView, LoginRequiredMixin
 from publishing.views import publisher_landpage
 from rating.models import Rating, user_likes
@@ -130,43 +130,32 @@ class CollectionDetailView(LoginRequiredMixin, ProfileAwareView):
 collection_detail = CollectionDetailView.as_view()
 
 
+def validate_work_owner(user, work):
+    if not work.is_owner(user):
+        raise ChangeOnObjectNotOwnedError()
+
+
 # ##
 # ## Work sorted upload
 # ##
-
-
 class UploadWorkPageView(LoginRequiredMixin, View):
     def post(self, request, work_id, *args, **kwargs):
         """
             This view will handle a work image upload, one per time, always.
             By convention, the file will be named by it's position on media folder.
         """
-        file_name, file_extension = os.path.splitext(request.FILES['file'].name)
-
-        # Black list sanity check
-        if file_extension.lower()[1:] not in Work.ALLOWED_EXTENSIONS:
-            raise InvalidFileUploadError()
 
         # Check if the user owns the work
         work = Work.objects.select_related("collection").get(id=work_id)
-        if work.is_owner(request.user):
-            raise ChangeOnObjectNotOwnedError()
-
-        # Create the collection work folder if needed
-        work_path = work.media_path()
-        if not os.path.exists(work_path):
-            os.makedirs(work_path)
-
+        validate_work_owner(request.user, work)
         # Handle uploaded file to the server media folder
-        work_content = work.image_files()
-        file_name = ("%03d" % len(work_content)) + file_extension  # TODO: shadow file names?
-        work.handle_uploaded_file(file_name, request.FILES['file'])
-
+        _file = request.FILES['file']
+        added_page = work.add_page(_file)
         # TODO: create somekind of lock, to handle more than one user editing the same work?
         context = {
             "success": "true",
             "work_id": work.id,
-            "work_page": len(work_content)
+            "work_page": added_page.sequence
         }
 
         return HttpResponse(json.dumps(context), content_type="application/json")
@@ -175,7 +164,6 @@ class UploadWorkPageView(LoginRequiredMixin, View):
 upload_work_page = UploadWorkPageView.as_view()
 
 
-# TODO: thin views, fat models
 class MoveWorkPageView(LoginRequiredMixin, View):
     def post(self, request, work_id, *args, **kwargs):
         """
@@ -185,48 +173,24 @@ class MoveWorkPageView(LoginRequiredMixin, View):
             Then the user drag and sort the thumbnail, the files will be sorted exactly the same way.
         """
         # Check if the user owns the work
-        work = Work.objects.select_related("collection").get(id=work_id)
-        if work.is_owner(request.user):
-            raise ChangeOnObjectNotOwnedError()
-
-        work_path = work.media_path()
-        work_content = work.image_files()
+        work = Work.objects.select_related("collection", "work_pages").get(id=work_id)
+        validate_work_owner(request.user, work)
 
         pos_from = int(request.REQUEST['position_from'])
         pos_to = int(request.REQUEST['position_to'])
 
-        start = min(pos_from, pos_to)
-
-        # Rename affected files to avoid name collisions
-        for x in xrange(start, len(work_content)):
-            os.rename(os.path.join(work_path, work_content[x]), os.path.join(work_path, "MOVING_" + work_content[x]))
-
-        # Switch given file position
-        if pos_from > pos_to:
-            work_content.insert(pos_to, work_content[pos_from])
-            del work_content[pos_from + 1]
-        else:
-            work_content.insert(pos_to + 1, work_content[pos_from])
-            del work_content[pos_from]
-
-        # Adjust subsequent file names
-        for x in xrange(start, len(work_content)):
-            _, extension = os.path.splitext(work_content[x])
-            os.rename(os.path.join(work_path, "MOVING_" + work_content[x]),
-                      os.path.join(work_path, "%03d" % x + extension))
-
+        work.move_page(pos_from, pos_to)
         # TODO: create somekind of lock, to handle more than one user editing the same work?
         context = {
             "success": "true",
             "work_id": work.id
         }
-        return HttpResponse(json.dumps(context), content_type="application/json")
+        return HttpResponse(json.dumps(context), content_type='application/json')
 
 
 move_work_page = MoveWorkPageView.as_view()
 
 
-# TODO: thin views, fat models
 class RemoveWorkPageView(LoginRequiredMixin, View):
     """
     Remove a page and rename subsequent ones
@@ -235,40 +199,22 @@ class RemoveWorkPageView(LoginRequiredMixin, View):
     def post(self, request, work_id, page_index, *args, **kwargs):
         # Check if the user owns the work
         page_index = int(page_index)
-        work = Work.objects.select_related("collection").get(id=work_id)
-        if work.is_owner(request.user):
-            raise ChangeOnObjectNotOwnedError()
+        work = Work.objects.select_related('collection', 'work_pages').get(id=work_id)
+        validate_work_owner(request.user, work)
 
-        # Handle uploaded file to the server media folder
-        work_content = work.image_files()
-        work_path = work.media_path()
-
-        # Rename affected files to avoid name collisions
-        for x in xrange(page_index + 1, len(work_content)):
-            os.rename(os.path.join(work_path, work_content[x]), os.path.join(work_path, "MOVING_" + work_content[x]))
-
-        # Remove entry
-        os.remove(os.path.join(work.media_path(), work_content[page_index]))
-        del work_content[page_index]
-
-        # Adjust subsequent file names
-        for x in xrange(page_index, len(work_content)):
-            _, extension = os.path.splitext(work_content[x])
-            os.rename(os.path.join(work_path, "MOVING_" + work_content[x]),
-                      os.path.join(work_path, "%03d" % x + extension))
+        work.remove_page(page_index)
 
         # TODO: create somekind of lock, to handle more than one user editing the same work?
         context = {
             "success": "true",
             "work_id": work.id,
-            "work_page": len(work_content)
+            "work_page": len(work.pages)
         }
 
         return HttpResponse(json.dumps(context), content_type="application/json")
 
 
 remove_work_page = RemoveWorkPageView.as_view()
-
 
 
 # ##
