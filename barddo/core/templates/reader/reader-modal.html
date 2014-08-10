@@ -9,9 +9,9 @@
             </div>
             <div class="modal-body">
                 <ul id="pikame" class="jcarousel-skin-pika">
-                    {% for page in work.load_work_pages_without_timestamp %}
+                    {% for page in work.pages %}
                         <li>
-                            <img class="img-responsive" src="{{ page.thumb }}" ref="{{ page.url }}"/>
+                            <img class="img-responsive" src="{{ page.image|thumbnail_url:'reader_thumbs' }}" ref="{{ page.image.url }}"/>
                         </li>
                     {% endfor %}
                 </ul>

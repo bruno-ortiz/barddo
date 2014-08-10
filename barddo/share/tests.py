@@ -1,15 +1,20 @@
-from django.test import TestCase
+import collections
 
+from django.test import TestCase
 from django.test.client import RequestFactory
 from django.db import models
 
 import templatetags.social_share
-
 from templatetags.social_share import _build_url, post_to_twitter, post_to_facebook, post_to_gplus
+
+
+Colcton = collections.namedtuple("Collection", "name")
 
 
 class SampleModel(models.Model):
     image = models.ImageField(upload_to='images')
+    title = "TEST"
+    collection = Colcton("COLLECTION TITLE")
 
     def get_absolute_url(self):
         return "/some/mock/test/url"
@@ -70,13 +75,13 @@ class TestShareViews(TestCase):
         old_value = templatetags.social_share.DJANGO_BITLY
         try:
             templatetags.social_share.DJANGO_BITLY = True
-            context = post_to_twitter({}, "twitt", sample, "test twitter")
+            context = post_to_twitter({}, sample, "test twitter")
         finally:
             templatetags.social_share.DJANGO_BITLY = old_value
 
         self.assertEqual(context['link_text'], "test twitter")
 
-        self.assertTrue(context['full_text'].startswith('twitt'))
+        self.assertTrue(context['full_text'] != "")
         self.assertTrue(context['tweet_url'].startswith('http://twitter.com/intent/tweet'))
 
     def test_can_render_facebook_url(self):

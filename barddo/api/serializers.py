@@ -72,7 +72,7 @@ class WorkPagesSerializer(Serializer):
         Get work pages full url in sequence order
         """
         current_site = Site.objects.get_current()
-        page_list = ["http://{}{}".format(current_site, entry['url']) for entry in work.load_work_pages()]
+        page_list = ["http://{}{}".format(current_site, entry.image.url) for entry in work.pages]
 
         return page_list
 
@@ -86,14 +86,14 @@ class CompleteWorkSerializer(SimpleWorkSerializer):
     pages_count = SerializerMethodField("get_pages_count")
 
     def get_pages_count(self, work):
-        return len(work.load_work_pages())
+        return work.work_pages.count()
 
     def get_pages(self, work):
         """
         Get work pages full url in sequence order
         """
         current_site = Site.objects.get_current()
-        page_list = ["http://{}{}".format(current_site, entry['url']) for entry in work.load_work_pages()]
+        page_list = ["http://{}{}".format(current_site, entry.image.url) for entry in work.pages]
 
         return page_list
 
