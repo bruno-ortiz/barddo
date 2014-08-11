@@ -16,6 +16,8 @@ from django.core.urlresolvers import reverse
 from easy_thumbnails.signal_handlers import generate_aliases
 from easy_thumbnails.signals import saved_file
 from south.modelsinspector import add_introspection_rules
+from PIL import Image
+from easy_thumbnails.files import get_thumbnailer
 
 from accounts.models import BarddoUser
 from core.exceptions import InvalidFileUploadError
@@ -38,7 +40,8 @@ class WorkManager(Manager):
         return self.get_queryset().liked_after(date)
 
     def owned_by(self, user):
-        return self.get_queryset().filter(Q(items__purchase__status=FINISHED_PURCHASE_ID, items__purchase__buyer=user) | Q(author=user)).distinct()
+        return self.get_queryset().filter(
+            Q(items__purchase__status=FINISHED_PURCHASE_ID, items__purchase__buyer=user) | Q(author=user)).distinct()
 
 
 class WorkQuerySet(QuerySet):
@@ -170,6 +173,25 @@ class Work(models.Model):
     def pages(self):
         return self.work_pages.order_by('sequence')
 
+    def get_best_page_ratio(self):
+        """
+        Determina qual a melhor página para configurar o aspect ratio (width/height) de exibição. Este valor é usado na
+        hora de determinar como redimensionar as imagens exibidas no leitor, caso as imagens não tenham tamanho uniforme
+
+        :rtype: float
+        :return: aspect ratio da página mais alta do trabalho
+        """
+        w, h = 1, 1
+
+        # Escolhe as maiores dimensões, baseando-se sempre na altura, que é o que mais determina
+        # a forma como o quadrinho é exibido no monitor do usuário
+        for page in self.pages:
+            if page.image.height > h:
+                w = page.image.width
+                h = page.image.height
+
+        return str(float(w) / float(h))
+
     def add_page(self, page_file):
         """
         Adds a page to this work
@@ -193,9 +215,11 @@ class Work(models.Model):
         with transaction.atomic():
             page = WorkPage.objects.get(work=self, sequence=pos_from)
             if pos_from > pos_to:
-                WorkPage.objects.filter(Q(sequence__gte=pos_to) & Q(sequence__lt=pos_from)).update(sequence=F('sequence') + 1)
+                WorkPage.objects.filter(Q(sequence__gte=pos_to) & Q(sequence__lt=pos_from)).update(
+                    sequence=F('sequence') + 1)
             else:
-                WorkPage.objects.filter(Q(sequence__gt=pos_from) & Q(sequence__lte=pos_to)).update(sequence=F('sequence') - 1)
+                WorkPage.objects.filter(Q(sequence__gt=pos_from) & Q(sequence__lte=pos_to)).update(
+                    sequence=F('sequence') - 1)
             page.sequence = pos_to
             page.save()
 
@@ -268,12 +292,46 @@ class Work(models.Model):
 
         super(Work, self).save(*args, **kwargs)
 
+    def get_thumbnail_sprite_file(self):
+        """
+        :rtype: str
+        :return: retorna o nome completo do arquivo de thumbs atrelado a este trabalho
+        """
+        return os.path.join(settings.MEDIA_ROOT, "sprites", "{}-sprited-thumbs.png".format(self.id))
+
+    def get_thumbnail_url(self):
+        """
+        Retorna a url do arquivo de thumbs atrelados ao trabalho. Caso ele não exista, um novo será criado.
+
+        Existem sinais que invalidam este arquivo caso alguma página tenha sido alterada ou removida.
+
+        :rtype: str
+        :return: url do arquivo de thumbs
+        """
+        thumbs_url = self.get_thumbnail_sprite_file()
+
+        if not os.path.exists(thumbs_url):
+            thumb_width, thumb_height = settings.THUMBNAIL_ALIASES['core.WorkPage.image']['reader_thumbs']['size']
+            thumb_images = [page.image for page in self.pages]
+
+            sprited_thumbs = Image.new("RGB", (thumb_width, thumb_height * len(thumb_images)))
+            for x in xrange(len(thumb_images)):
+                current_image = get_thumbnailer(thumb_images[x])['reader_thumbs']
+                # current_path = current_path.replace(settings.MEDIA_URL, settings.MEDIA_ROOT + '/')
+                current = Image.open(current_image)
+                sprited_thumbs.paste(current, (0, x * thumb_height))
+
+            with open(thumbs_url, "wb") as thumb_sprites_file:
+                sprited_thumbs.save(thumb_sprites_file)
+
+        return settings.MEDIA_URL + thumbs_url.replace(settings.MEDIA_ROOT + "/", "")
+
     class Meta:
         unique_together = ("collection", "unit_count")
         index_together = [["title", "summary"], ]
 
-        # TODO: work tags
-        # TODO: work categories
+    # TODO: work tags
+    # TODO: work categories
 
 
 def image_storage(instance, filename):

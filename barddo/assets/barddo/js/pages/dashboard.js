@@ -165,6 +165,10 @@ $(document).ready(function () {
 
             sortable_image_upload('#edit-work-upload', "#edit-work-files-preview", "#work-file-list li");
 
+            $(shard_id).on('hidden.bs.modal', function () {
+                $(shard_id).remove();
+            })
+
         }, {"work_id": id});
     });
 
