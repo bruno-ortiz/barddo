@@ -116,11 +116,6 @@
                 $(document).on("click", ".login-required", function () {
                     $('#loginModal').modal('show');
                 });
-
-                $(document).on("click", ".logout", function () {
-                    alert("a");
-                    gapi.auth.signOut();
-                });
             });
         </script>
     {% endif %}

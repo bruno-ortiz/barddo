@@ -34,6 +34,10 @@ def handle_deleted_page(sender, instance, **kwargs):
     thumb = get_thumbnailer(instance.image)
     thumb.delete_thumbnails()
 
+    sprite_file = instance.work.get_thumbnail_sprite_file()
+    if os.path.exists(sprite_file):
+        os.remove(sprite_file)
+
 
 @receiver(post_save, sender=WorkPage)
 def handle_save_or_update_page(sender, instance, **kwargs):
