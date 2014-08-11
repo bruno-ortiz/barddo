@@ -1,5 +1,7 @@
 # coding=utf-8
-from django.db.models.signals import post_delete
+import os
+
+from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 from easy_thumbnails.files import get_thumbnailer
 from redis_metrics import metric
@@ -27,7 +29,17 @@ def handle_work_read(sender, **kwargs):
 @receiver(post_delete, sender=WorkPage)
 def handle_deleted_page(sender, instance, **kwargs):
     """
-        Usado para ajustar os indices das páginas de um trabalho sempre que umá
+    Limpeza dos arquivos gerados automaticamente quando a página for removida
     """
     thumb = get_thumbnailer(instance.image)
     thumb.delete_thumbnails()
+
+
+@receiver(post_save, sender=WorkPage)
+def handle_save_or_update_page(sender, instance, **kwargs):
+    """
+    Limpa o arquivo de cache dos thumbnails para que seja reconstruído quando necessário
+    """
+    sprite_file = instance.work.get_thumbnail_sprite_file()
+    if os.path.exists(sprite_file):
+        os.remove(sprite_file)

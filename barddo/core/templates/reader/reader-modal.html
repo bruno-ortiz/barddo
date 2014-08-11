@@ -4,53 +4,18 @@
 <div class="modal fade fullscreen-modal" id="readerModal" role="dialog" tabindex="-1" aria-labelledby="createGroupLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
             <div class="modal-body">
-                <ul id="pikame" class="jcarousel-skin-pika">
-                    {% for page in work.pages %}
-                        <li>
-                            <img class="img-responsive" src="{{ page.image|thumbnail_url:'reader_thumbs' }}" ref="{{ page.image.url }}"/>
-                        </li>
-                    {% endfor %}
-                </ul>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                <div style="position:relative;overflow: hidden;">{% include "core_reader.html" %}</div>
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="{% static "js/jquery.jcarousel.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/jquery.pikachoose.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/jquery.imgpreload.js" %}"></script>
-    <script type="text/javascript">
+
+     <script type="text/javascript">
         $("#readerModal").ready(function () {
-            $("#pikame").PikaChoose({
-                carousel: true,
-                autoPlay: false,
-                imageChanged: function () {
-                    $('#readerModal').scrollTop(0);
-                }
-            });
-
-            $("#readerModal").keydown(function (e) {
-                if (e.keyCode == '37') {
-                    $('#pikame').data('pikachoose').Prev();
-                } else if (e.keyCode == '39') {
-                    $('#pikame').data('pikachoose').Next();
-                }
-            });
-            var timeout = null;
-            $('.jcarousel-container').mouseenter(function () {
-                if (timeout != null) {
-                    clearTimeout(timeout);
-                }
-                $('.jcarousel-container').animate({height: '173px'});
-            }).mouseleave(function () {
-                timeout = setTimeout(function () {
-                    $('.jcarousel-container').animate({height: '1px'});
-                }, 1000);
-            });
-
-            $('.clip>img').imgpreload();
+            $("#readerModal .modal-dialog").width($(window).width());
+            $("#readerModal .modal-dialog").height($(window).height());
         });
     </script>
 </div>
