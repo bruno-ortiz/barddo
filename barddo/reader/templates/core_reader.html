@@ -1,4 +1,6 @@
 {% load static %}
+{% load i18n %}
+
 <div id="comic-loading">
     <div>
         <img src="{% static "images/logo.png" %}"/><br/>
@@ -9,17 +11,17 @@
 <div id="comic-help">
     <div class="barddo-info">
         <div class="url"><a href="http://barddo.com">http://barddo.com</a></div>
-        <div>Aproximando artistas e leitores!</div>
+        <div>{% trans "Putting artists and readers closer!" %}</div>
     </div>
 
     <div class="navigation-info">
-        <p>Clique ou toque nas laterais das páginas para virá-las!</p>
-        <small class="hidden-sm">Também é possível usar o t eclado e o mouse para mudar páginas e dar zoom.</small>
+        <p>{% trans "Click or touch the sides of the pages to turn them!" %}</p>
+        <small class="hidden-sm">{% trans "You can also use the keyboard and the mouse to change pages and zoom." %}</small>
         <img class="sample" src="{% static "images/pageturn.png" %}"/>
     </div>
 
     <div class="toolbar-info">
-        <p>Use a barra de ferramentas para dar zoom, colocar em tela cheia ou ver a lista de páginas!</p>
+        <p>{% trans "Use the toolbar to zoom in, fullscreen or see the list of pages!" %}</p>
 
         <div class="btn-group btn-group-sm">
             <button type="button" class="btn btn-inverse"><i class="icon-zoom-in"></i></button>
@@ -38,7 +40,7 @@
                 {# Only load the first page from start, others will be load on demand by the wowbook plugin #}
                 {% if forloop.first %}
                     <div class="page">
-                        <img src="{{ page.image.url }}" alt="Work page #{{ forloop.counter }}">
+                        <img src="{{ page.image.url }}" alt="#{{ forloop.counter }}">
                     </div>
                 {% else %}
                     <div class="page" data-image="{{ page.image.url }}">
@@ -86,9 +88,9 @@
             {# Only handle url change when on barddo page (or localhost) and we are not on embed reader url directly #}
             var originalUrl = window.location.href;
             if ((originalUrl.indexOf("barddo.com") >= 0 || originalUrl.indexOf("localhost") >= 0 ) && originalUrl.indexOf("embed/reader") == -1) {
-                window.history.pushState("Barddo Commic", "Comic Viewer", "{{ work.get_absolute_url }}#read");
+                window.history.pushState("{% trans "Barddo Comic" %}", "{% trans "Comic Viewer" %}", "{{ work.get_absolute_url }}#read");
                 $('#readerModal').on('hidden.bs.modal', function () {
-                    window.history.pushState("Barddo Commic", "Comic Viewer", originalUrl);
+                    window.history.pushState("{% trans "Barddo Comic" %}", "{% trans "Comic Viewer" %}", originalUrl);
                 })
             }
 

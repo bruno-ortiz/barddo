@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Barddo Main Site\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-30 00:45-0300\n"
-"PO-Revision-Date: 2014-07-30 00:49-0300\n"
+"POT-Creation-Date: 2014-08-11 00:11-0300\n"
+"PO-Revision-Date: 2014-08-11 00:16-0300\n"
 "Last-Translator: Israel Crisanto <israel.crisanto@gmail.com>\n"
 "Language-Team: Barddo Team <israel.crisanto@gmail.com>\n"
 "Language: pt\n"
@@ -50,14 +50,14 @@ msgstr "Sinto muito, um erro ocorreu:"
 #: accounts/templates/profile.html:16 core/templates/artist_dashboard.html:22
 #: core/templates/docs/about-us.html:13 core/templates/docs/help.html:13
 #: core/templates/docs/terms.html:14
-#: core/templates/work_page/work_page.html:24
+#: core/templates/work_page/work_page.html:25
 #: payments/templates/no_payments.html:9
 #: payments/templates/payment_error.html:9 payments/templates/thanks.html:9
 #: publishing/templates/publisher_landpage.html:21
 msgid "Home"
 msgstr "Início"
 
-#: accounts/templates/profile.html:18 templates/main_template/navbar.html:83
+#: accounts/templates/profile.html:18 templates/main_template/navbar.html:84
 msgid "Profile"
 msgstr "Perfil"
 
@@ -174,75 +174,71 @@ msgstr "Seguindo %(name)s!"
 msgid "%(name)s's avatar"
 msgstr "Avatar de %(name)s"
 
-#: core/ajax.py:148
+#: core/ajax.py:147
 msgid "You are not the owner of this work!"
 msgstr "Você não é o dono desta obra!"
 
-#: core/models.py:69
-msgid "Description"
-msgstr "Descrição"
-
-#: core/models.py:96
+#: core/models.py:88
 msgid "On Going"
 msgstr "Em Andamento"
 
-#: core/models.py:97
+#: core/models.py:89
 msgid "Completed"
 msgstr "Completo"
 
-#: core/models.py:98
+#: core/models.py:90
 msgid "Stopped"
 msgstr "Paralizado"
 
-#: core/models.py:101
+#: core/models.py:93
 msgid "Collection Name"
 msgstr "Nome da Coleção"
 
-#: core/models.py:102 core/models.py:175
+#: core/models.py:94 core/models.py:156
 #: core/templates/modals/collection_detail.html:78
 #: core/templates/payments/buy-work-modal.html:19
-#: core/templates/work_page/work_page.html:119
+#: core/templates/work_page/work_page.html:120
 msgid "Summary"
 msgstr "Sumário"
 
-#: core/models.py:104
+#: core/models.py:96 core/models.py:154
 msgid "Slug"
 msgstr "Slug"
 
-#: core/models.py:105
+#: core/models.py:97
 msgid "Status"
 msgstr "Estado"
 
-#: core/models.py:108
+#: core/models.py:99
 msgid "Start Date"
 msgstr "Data de Início"
 
-#: core/models.py:109
+#: core/models.py:100
 msgid "End Date"
 msgstr "Data de Fim"
 
-#: core/models.py:112 core/models.py:176
+#: core/models.py:103 core/models.py:157
 msgid "Cover Art"
 msgstr "Arte de Capa"
 
-#: core/models.py:174 core/templates/modals/collection_detail.html:60
-#: core/templates/work_page/work_page.html:111
+#: core/models.py:153 core/templates/modals/collection_detail.html:60
+#: core/templates/work_page/work_page.html:112
 msgid "Title"
 msgstr "Título"
 
-#: core/models.py:182
+#: core/models.py:163
 msgid "Item Number"
 msgstr "Número"
 
-#: core/models.py:183
+#: core/models.py:164
 msgid "Total Pages"
 msgstr "Total de Páginas"
 
-#: core/models.py:184
+#: core/models.py:165
 msgid "Publish Date"
 msgstr "Data de Publicação"
 
-#: core/models.py:186
+#: core/models.py:167
 msgid "Is Published?"
 msgstr "Está Publicado?"
 
@@ -344,7 +340,7 @@ msgstr "trabalhos"
 
 #: core/templates/artist_dashboard.html:157
 #: core/templates/artist_dashboard.html:282
-#: core/templates/work_page/work_page.html:127
+#: core/templates/work_page/work_page.html:128
 msgid "Published"
 msgstr "Publicado"
 
@@ -385,47 +381,47 @@ msgstr ""
 "Trabalho publicado, parabéns! Por favor, considere compartilha-lo com seus "
 "amigos."
 
-#: core/templates/index.html:24
+#: core/templates/index.html:26
 msgid "Trending"
 msgstr "Tendências"
 
-#: core/templates/index.html:30
+#: core/templates/index.html:32
 msgid "Rising"
 msgstr "Em Ascenção"
 
-#: core/templates/index.html:36
+#: core/templates/index.html:38
 msgid "New"
 msgstr "Novos"
 
-#: core/templates/index.html:42
+#: core/templates/index.html:44
 msgid "Owned"
 msgstr "Comprado"
 
-#: core/templates/index.html:53
+#: core/templates/index.html:55
 msgid "Discover the Barddo"
 msgstr "Descubra mais sobre o Barddo"
 
-#: core/templates/index.html:60 core/templates/help/modal-discover.html:17
+#: core/templates/index.html:62 core/templates/help/modal-discover.html:17
 msgid "Discover"
 msgstr "Descubra"
 
-#: core/templates/index.html:61
+#: core/templates/index.html:63
 msgid "Publish, share and find comics has never been so easy!"
 msgstr "Publicar, compartilhar e encontrar quadrinhos nunca foi tão fácil!"
 
-#: core/templates/index.html:69 core/templates/help/modal-understand.html:17
+#: core/templates/index.html:71 core/templates/help/modal-understand.html:17
 msgid "Understand"
 msgstr "Entenda"
 
-#: core/templates/index.html:70
+#: core/templates/index.html:72
 msgid "All you need to know about Barddo are here!"
 msgstr "Tudo que você precisa saber sobre o Barddo está aqui!"
 
-#: core/templates/index.html:81 core/templates/help/modal-enjoy.html:17
+#: core/templates/index.html:83 core/templates/help/modal-enjoy.html:17
 msgid "Enjoy"
 msgstr "Aproveite"
 
-#: core/templates/index.html:82
+#: core/templates/index.html:84
 msgid "Relax, read, share and help artists to have the highlight they deserve!"
 msgstr ""
 "Relaxe, leia, compartilhe e ajude artistas a terem o destaque que merecem!"
@@ -435,8 +431,8 @@ msgid "Artist Photo"
 msgstr "Foto do Artista"
 
 #: core/templates/work_element.html:69 core/templates/work_element.html:76
-#: core/templates/work_page/work_page.html:155
-#: core/templates/work_page/work_page.html:160
+#: core/templates/work_page/work_page.html:156
+#: core/templates/work_page/work_page.html:161
 msgid "Read Now!"
 msgstr "Ler Agora!"
 
@@ -460,11 +456,11 @@ msgstr ""
 msgid "Write some meaningful description about this work here..."
 msgstr "Escreva alguma descrição significativa sobre a obra aqui..."
 
-#: core/templates/collection_form/_general_information.html:71
+#: core/templates/collection_form/_general_information.html:60
 msgid "Drop your collection cover here or click to choose"
 msgstr "Arraste a capa da sua coleção para cá, ou clique para escolher"
 
-#: core/templates/collection_form/_general_information.html:80
+#: core/templates/collection_form/_general_information.html:69
 msgid "Select a count unit to use"
 msgstr "Selecione uma unidade para usar"
 
@@ -1440,52 +1436,52 @@ msgstr "Quem é o autor?"
 msgid "Sending changes to the server"
 msgstr "Enviando alterações para o servidor"
 
-#: core/templates/work_page/work_page.html:27
+#: core/templates/work_page/work_page.html:28
 #: search/templates/page_template.html:28
 msgid "Works"
 msgstr "Trabalhos"
 
-#: core/templates/work_page/work_page.html:44
+#: core/templates/work_page/work_page.html:45
 msgid "Work Cover"
 msgstr "Capa da Obra"
 
-#: core/templates/work_page/work_page.html:56
-#: core/templates/work_page/work_page.html:213
+#: core/templates/work_page/work_page.html:57
+#: core/templates/work_page/work_page.html:224
 msgid "Unvote"
 msgstr "Retirar Voto"
 
-#: core/templates/work_page/work_page.html:59
-#: core/templates/work_page/work_page.html:65
-#: core/templates/work_page/work_page.html:81
-#: core/templates/work_page/work_page.html:202
+#: core/templates/work_page/work_page.html:60
+#: core/templates/work_page/work_page.html:66
+#: core/templates/work_page/work_page.html:82
+#: core/templates/work_page/work_page.html:213
 msgid "Vote"
 msgid_plural "Votes"
 msgstr[0] "Votar"
 msgstr[1] "Votos"
 
-#: core/templates/work_page/work_page.html:90
+#: core/templates/work_page/work_page.html:91
 msgid "View"
 msgid_plural "Views"
 msgstr[0] "Visualização"
 msgstr[1] "Visualizações"
 
-#: core/templates/work_page/work_page.html:100
+#: core/templates/work_page/work_page.html:101
 msgid "Report Work"
 msgstr "Denunciar Obra"
 
-#: core/templates/work_page/work_page.html:135
+#: core/templates/work_page/work_page.html:136
 msgid "Author"
 msgstr "Autor"
 
-#: core/templates/work_page/work_page.html:173
+#: core/templates/work_page/work_page.html:174
 msgid "Who Liked"
 msgstr "Quem Gostou"
 
-#: core/templates/work_page/work_page.html:207
+#: core/templates/work_page/work_page.html:218
 msgid "Work unvoted!"
 msgstr "Voto descadastrado!"
 
-#: core/templates/work_page/work_page.html:218
+#: core/templates/work_page/work_page.html:229
 msgid "Work voted!"
 msgstr "Voto cadastrado!"
 
@@ -1832,6 +1828,41 @@ msgstr ""
 "                                            manter o serviço funcionando!\n"
 "                                        "
 
+#: reader/templates/core_reader.html:14
+msgid "Putting artists and readers closer!"
+msgstr "Aproximando artistas e leitores!"
+
+#: reader/templates/core_reader.html:18
+msgid "Click or touch the sides of the pages to turn them!"
+msgstr "Clique ou toque nas páginas para virá-las!"
+
+#: reader/templates/core_reader.html:19
+msgid "You can also use the keyboard and the mouse to change pages and zoom."
+msgstr ""
+"Você também pode usar o teclado e o mouse para mudar as páginas e dar zoom."
+
+#: reader/templates/core_reader.html:24
+msgid "Use the toolbar to zoom in, fullscreen or see the list of pages!"
+msgstr ""
+"Use a barra de ferramentas para dar zoom, entrar em tela cheia ou ver a "
+"lista de páginas!"
+
+#: reader/templates/core_reader.html:91 reader/templates/core_reader.html:93
+msgid "Barddo Comic"
+msgstr "Quadrinhos no Barddo"
+
+#: reader/templates/core_reader.html:91 reader/templates/core_reader.html:93
+msgid "Comic Viewer"
+msgstr "Visualizador de Quadrinhos"
+
+#: reader/templates/embeddable_reader.html:10
+msgid "Barddo Comic Viewer"
+msgstr "Visualizador de Quadrinhos do Barddo"
+
+#: reader/templates/embeddable_reader.html:11
+msgid "Barddo Team"
+msgstr "Equipe Barddo"
+
 #: search/views.py:36
 msgid "No results found for your query."
 msgstr "Nenhum resultado encontrado para sua pesquisa."
@@ -1872,21 +1903,24 @@ msgstr "Procure pessoas, coleções, mangás, quadrinhos etc..."
 msgid "Login"
 msgstr "Entrar"
 
-#: templates/main_template/navbar.html:75
+#: templates/main_template/navbar.html:76
 msgid "User Photo"
 msgstr "Foto do usuário"
 
-#: templates/main_template/navbar.html:77
+#: templates/main_template/navbar.html:78
 msgid "Welcome,"
 msgstr "Bem-vindo,"
 
-#: templates/main_template/navbar.html:86
+#: templates/main_template/navbar.html:87
 msgid "Publisher Area"
 msgstr "Área de publicação"
 
-#: templates/main_template/navbar.html:90
+#: templates/main_template/navbar.html:91
 msgid "Logout"
 msgstr "Sair"
+
+#~ msgid "Description"
+#~ msgstr "Descrição"
 
 #~ msgid "trabalhos"
 #~ msgstr "trabalhos"

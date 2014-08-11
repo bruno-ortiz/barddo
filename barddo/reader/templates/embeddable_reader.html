@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -6,8 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
     <title>Barddo Comic Viewer - {{ work.title }}</title>
-    <meta name="description" content="Barddo Comic Viewer"/>
-    <meta name="author" content="Barddo Team"/>
+    <meta name="description" content="{% trans "Barddo Comic Viewer" %}"/>
+    <meta name="author" content="{% trans "Barddo Team" %}"/>
 
     <!--  Mobile viewport optimized: j.mp/bplateviewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
