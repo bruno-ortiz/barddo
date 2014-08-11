@@ -400,6 +400,7 @@ THUMBNAIL_ALIASES = {
         'small_cover': {'size': (163, 236), 'crop': False},
     },
     'core.WorkPage.image': {
+        'reader_image': {'size': (0, 900), 'crop': False},
         'reader_thumbs': {'size': (136, 136), 'crop': True},
     },
 }

@@ -1,5 +1,6 @@
 {% load static %}
 {% load i18n %}
+{% load thumbnail %}
 
 <div id="comic-loading">
     <div>
@@ -40,10 +41,10 @@
                 {# Only load the first page from start, others will be load on demand by the wowbook plugin #}
                 {% if forloop.first %}
                     <div class="page">
-                        <img src="{{ page.image.url }}" alt="#{{ forloop.counter }}">
+                        <img src="{{ page.image|thumbnail_url:"reader_image" }}" alt="#{{ forloop.counter }}">
                     </div>
                 {% else %}
-                    <div class="page" data-image="{{ page.image.url }}">
+                    <div class="page" data-image="{{ page.image|thumbnail_url:"reader_image" }}">
                         <div class="loading-page">
                             <div>
                                 <img src="{% static "images/logo.png" %}"/><br/>
