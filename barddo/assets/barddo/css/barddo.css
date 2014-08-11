@@ -1,4 +1,3 @@
-
 .btn-signin,
 .btn-signin:focus {
     background-color: #2e8965 !important;
@@ -83,6 +82,7 @@ img {
 
 .work-information {
     padding: 5px;
+    white-space: nowrap;
 }
 
 .work-information h1, .work-information h2 {
@@ -93,6 +93,7 @@ img {
     padding: 5px 10px 5px 10px;
     margin-top: 0;
     margin-bottom: 0;
+    overflow: hidden;
     font-family: "Century Gothic", "Avenir Next", Futura, "URW Gothic L", sans-serif, "Malgun Gothic";
 }
 
@@ -289,4 +290,39 @@ footer {
 
 .work-users.tabbable {
     margin: 12px;
+}
+
+#readerModal .modal-dialog, #readerModal .modal-body {
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
+#readerModal .modal-body, #readerModal .modal-content {
+    height: 100%;
+}
+
+#readerModal button.close {
+    position: absolute;
+    color: white;
+    z-index: 99999;
+    top: 0;
+    right: 0;
+    font-size: 28px;
+    padding: 20px 30px;
+    opacity: 0.8;
+}
+
+a.gplus {
+    color: white !important;
+    font-size: 12px;
+    padding: 1px 5px 1px 5px;
+    border-radius: 2px;
+    display: inline-block;
+    vertical-align: top !important;
+}
+
+a.gplus:hover {
+    color: white;
+    text-decoration: none;
 }

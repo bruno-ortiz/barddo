@@ -19,14 +19,6 @@ class Migration(SchemaMigration):
             ('image', self.gf('django.db.models.fields.files.ImageField')(max_length=100)),
         ))
         db.send_create_signal(u'core', ['WorkPage'])
-        if not db.dry_run:
-            works = Work.objects.all()
-            for work in works:
-                pages = work.image_files()
-                for _file in pages:
-                    page = ImageFile(open(os.path.join(work.media_path(), _file), "rb"))
-                    page_name = page.name.rsplit('/', 1)[1]
-                    WorkPage.objects.create(work=work, image=page, readable_name=page_name)
 
     def backwards(self, orm):
         # Deleting model 'WorkPage'
