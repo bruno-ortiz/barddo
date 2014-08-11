@@ -4,6 +4,16 @@ from core.models import Work
 
 # Create your views here.
 def embeddable_reader(request, work_id):
+    """
+    :type request: HttpRequest
+    :param request: request atual
+
+    :type work_id: int
+    :param work_id: id do trabalho a ser exibido
+
+    :rtype: HttpResponse
+    :return: redirect the user or show the reader page
+    """
     # The user is accessing from outside, for now, disable unless authenticated
     if not request.user.is_authenticated():
         return redirect("core.work.detail", work_id=work_id)

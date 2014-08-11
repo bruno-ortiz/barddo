@@ -52,9 +52,6 @@
                 {% endif %}
             {% endfor %}
             {# The last page will always be a Barddo promotional page #}
-            {#            <div class="page">#}
-            {#                Read more!#}
-            {#            </div>#}
         </div>
     </div>
 
@@ -88,17 +85,20 @@
         $(document).ready(function () {
             {# Only handle url change when on barddo page (or localhost) and we are not on embed reader url directly #}
             var originalUrl = window.location.href;
-            if ((originalUrl.indexOf("barddo.com") >= 0 || originalUrl.indexOf("189.102.122.236") >= 0 ) && originalUrl.indexOf("embed/reader") == -1) {
+            if ((originalUrl.indexOf("barddo.com") >= 0 || originalUrl.indexOf("localhost") >= 0 ) && originalUrl.indexOf("embed/reader") == -1) {
                 window.history.pushState("Barddo Commic", "Comic Viewer", "{{ work.get_absolute_url }}#read");
                 $('#readerModal').on('hidden.bs.modal', function () {
                     window.history.pushState("Barddo Commic", "Comic Viewer", originalUrl);
                 })
             }
 
+            {# Preload our thumbnail image, so the user doesn' need to wait when the reader comes up  #}
             $.imgpreload('{{ work.get_thumbnail_url }}', function () {
             });
 
+            {# For now, only preload the comic first image #}
             $('#comic-container').find(".page:first img").waitForImages(function () {
+                {# Our reader dimensions are set on demand, using javascripts #}
                 setupSizes();
 
                 {# TODO: find a better way to determine then images show be displayed #}

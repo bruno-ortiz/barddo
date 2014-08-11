@@ -82,6 +82,7 @@ img {
 
 .work-information {
     padding: 5px;
+    white-space: nowrap;
 }
 
 .work-information h1, .work-information h2 {
@@ -92,6 +93,7 @@ img {
     padding: 5px 10px 5px 10px;
     margin-top: 0;
     margin-bottom: 0;
+    overflow: hidden;
     font-family: "Century Gothic", "Avenir Next", Futura, "URW Gothic L", sans-serif, "Malgun Gothic";
 }
 
@@ -312,11 +314,12 @@ footer {
 }
 
 a.gplus {
-    color: white;
+    color: white !important;
     font-size: 12px;
     padding: 1px 5px 1px 5px;
     border-radius: 2px;
     display: inline-block;
+    vertical-align: top !important;
 }
 
 a.gplus:hover {

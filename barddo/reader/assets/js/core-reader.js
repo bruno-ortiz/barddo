@@ -1,9 +1,16 @@
+/**
+ * Ajusta os tamanhos das divs de acordo com o tamanho da tela do usuário
+ */
 function setupSizes() {
     $("#comic-container").width($(window).width()).height($(window).height());
     $("#comic-toolbar").width($('#comic').width());
     $("#comic-wrapper").height($("#comic-container").height() - $('#comic-toolbar').height());
 }
 
+/**
+ * Além de setar o tamanho, em alguns casos é necessário dar redraw no leitor, por exemplo, quando o usuário vai
+ * para fullscreen
+ */
 function setupSizesAndRedraw() {
     setupSizes();
     $.wowBook("#comic").responsive();
@@ -12,8 +19,6 @@ function setupSizesAndRedraw() {
 function setup_reader_for(ratio, thumbs_url) {
     var displayHeight = $(window).height();
     var displayWidth = displayHeight * ratio;
-
-    console.log("Coords " + displayWidth.toString() + "," + displayHeight.toString());
 
     $("#comic-wrapper").height($("#comic-container").height() - $('#comic-toolbar').height());
 
@@ -36,7 +41,8 @@ function setup_reader_for(ratio, thumbs_url) {
         thumbnailsPosition: 'bottom',
         thumbnailsParent: "#comic-container",
         zoomStep: 0.5,
-        pageNumbers: false, zoomBoundingBox: "#comic-wrapper",
+        pageNumbers: false,
+        zoomBoundingBox: "#comic-wrapper",
         turnPageDuration: 250,
         controls: {
             zoomIn: '#zoomin',
@@ -49,7 +55,8 @@ function setup_reader_for(ratio, thumbs_url) {
             flipSound: '#flipsound',
             thumbnails: '#thumbs',
             fullscreen: '#fullscreen'
-        },  onFullscreenError: function () {
+        },
+        onFullscreenError: function () {
             var msg = "Fullscreen failed.";
             if (self != top) msg = "This website is blocking full screen mode."
             alert(msg);
@@ -59,7 +66,6 @@ function setup_reader_for(ratio, thumbs_url) {
     $(window).resize(setupSizesAndRedraw);
     $("#fullscreen").on("click", setupSizesAndRedraw);
     setupSizesAndRedraw()
-
 
     $("#comic-wrapper, #comic-toolbar").on("click", function() {
        if($('.wowbook-thumbnails').is(":visible")) {

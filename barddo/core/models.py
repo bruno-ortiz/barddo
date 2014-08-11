@@ -174,6 +174,13 @@ class Work(models.Model):
         return self.work_pages.order_by('sequence')
 
     def get_best_page_ratio(self):
+        """
+        Determina qual a melhor página para configurar o aspect ratio (width/height) de exibição. Este valor é usado na
+        hora de determinar como redimensionar as imagens exibidas no leitor, caso as imagens não tenham tamanho uniforme
+
+        :rtype: float
+        :return: aspect ratio da página mais alta do trabalho
+        """
         w, h = 1, 1
 
         # Escolhe as maiores dimensões, baseando-se sempre na altura, que é o que mais determina
@@ -286,9 +293,21 @@ class Work(models.Model):
         super(Work, self).save(*args, **kwargs)
 
     def get_thumbnail_sprite_file(self):
+        """
+        :rtype: str
+        :return: retorna o nome completo do arquivo de thumbs atrelado a este trabalho
+        """
         return os.path.join(settings.MEDIA_ROOT, "sprites", "{}-sprited-thumbs.png".format(self.id))
 
     def get_thumbnail_url(self):
+        """
+        Retorna a url do arquivo de thumbs atrelados ao trabalho. Caso ele não exista, um novo será criado.
+
+        Existem sinais que invalidam este arquivo caso alguma página tenha sido alterada ou removida.
+
+        :rtype: str
+        :return: url do arquivo de thumbs
+        """
         thumbs_url = self.get_thumbnail_sprite_file()
 
         if not os.path.exists(thumbs_url):
