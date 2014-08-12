@@ -2,17 +2,10 @@
 {% load dajaxice_templatetags %}
 {% load static %}
 {% load compress %}
-{% load thumbnail %}
 {% load i18n %}
-{% load social_share %}
 
 {% block header %}
-    <link rel="stylesheet" href="{% static "css/datepicker.css" %}"/>
     <link rel="stylesheet" href="{% static "barddo/css/barddo.dashboard.css" %}"/>
-    <link rel="stylesheet" href="{% static "css/crop/imgareaselect-animated.css" %}"/>
-    <link rel="stylesheet" href="{% static "css/dropzone.css" %}"/>
-    <link rel="stylesheet" href="{% static "css/select2.css" %}"/>
-    <link rel="stylesheet" href="{% static "css/bootstrap-editable.css" %}"/>
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -154,36 +147,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block page_specific_javascript %}
-    {% compress js %}
-        {#        <script src="{% static "js/fuelux/fuelux.wizard.min.js" %}"></script>#}
-        {#        <script src="{% static "js/fuelux/fuelux.spinner.min.js" %}"></script>#}
-        {#        <script src="{% static "js/jquery.validate.min.js" %}"></script>#}
-        {#        <script src="{% static "js/date-time/bootstrap-datepicker.min.js" %}"></script>#}
-        {#        <script src="{% static "js/bootstrap-tag.min.js" %}"></script>#}
-        {#        {% dajaxice_js_import 'nocsrf' %}#}
-        {#        <script type="text/javascript" src="{% static "barddo/js/pages/collection.create.js" %}"></script>#}
-        {#        <script src="{% static "js/uncompressed/dropzone.js" %}"></script>#}
-        {#        <script src="{% static "js/uncompressed/select2.js" %}"></script>#}
-        {#        <script src="{% static "js/uncompressed/x-editable/bootstrap-editable.js" %}"></script>#}
-        {#        <script src="{% static "js/uncompressed/x-editable/ace-editable.js" %}"></script>#}
-        {#        <script src="{% static "js/jquery.Jcrop.min.js" %}"></script>#}
-        {#        <script src="{% static "js/jquery.imgareaselect.min.js" %}"></script>#}
-        {#        <script src="{% static "js/jquery.nestable.min.js" %}"></script>#}
-        {#        <script src="{% static "js/jquery.form.min.js" %}"></script>#}
-        {#        <script src="{% static "barddo/js/pages/dashboard.js" %}"></script>#}
-        {#        <script src="{% static "js/jquery-ui-1.10.4.modal.js" %}"></script>#}
-        {#        <script src="{% static "js/jquery.ui.touch-punch.min.js" %}"></script>#}
-    {% endcompress %}
-{% endblock %}
-
-{% block bottom_page %}
-    <script type="text/javascript">
-
-        jQuery(function ($) {
-
-        });
-    </script>
 {% endblock %}
