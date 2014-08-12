@@ -8,7 +8,9 @@
         </div>
         <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10 result_info">
             <div class="title">
-                <h2>{{ work.title }}
+
+
+                <h2><a href="{% url 'core.work.detail' work.id %}/{{ work.slug }}">{{ work.title }} </a>
                 <span style="font-size: 14px;font-style: italic;">
                     ({{ work.collection.name }})
                 </span>
