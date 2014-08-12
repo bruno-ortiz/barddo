@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Barddo Main Site\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-11 00:11-0300\n"
-"PO-Revision-Date: 2014-08-11 00:16-0300\n"
+"POT-Creation-Date: 2014-08-12 09:01-0300\n"
+"PO-Revision-Date: 2014-08-12 09:02-0300\n"
 "Last-Translator: Israel Crisanto <israel.crisanto@gmail.com>\n"
 "Language-Team: Barddo Team <israel.crisanto@gmail.com>\n"
 "Language: pt\n"
@@ -178,6 +178,14 @@ msgstr "Avatar de %(name)s"
 msgid "You are not the owner of this work!"
 msgstr "Você não é o dono desta obra!"
 
+#: core/ajax.py:204
+msgid "Value successfuly changed!"
+msgstr "Campo alterado com sucesso!"
+
+#: core/ajax.py:210
+msgid "Error changing value..."
+msgstr "Erro ao alterar campo..."
+
 #: core/models.py:88
 msgid "On Going"
 msgstr "Em Andamento"
@@ -195,7 +203,7 @@ msgid "Collection Name"
 msgstr "Nome da Coleção"
 
 #: core/models.py:94 core/models.py:156
-#: core/templates/modals/collection_detail.html:78
+#: core/templates/modals/work_detail.html:111
 #: core/templates/payments/buy-work-modal.html:19
 #: core/templates/work_page/work_page.html:120
 msgid "Summary"
@@ -221,7 +229,7 @@ msgstr "Data de Fim"
 msgid "Cover Art"
 msgstr "Arte de Capa"
 
-#: core/models.py:153 core/templates/modals/collection_detail.html:60
+#: core/models.py:153 core/templates/modals/work_detail.html:63
 #: core/templates/work_page/work_page.html:112
 msgid "Title"
 msgstr "Título"
@@ -1322,27 +1330,33 @@ msgstr ""
 "redes sociais, diga o que achou do projeto lá e encontre pessoas parecidas!\n"
 "                                        "
 
-#: core/templates/modals/collection_detail.html:21
+#: core/templates/modals/work_detail.html:22
 msgid "General"
 msgstr "Geral"
 
-#: core/templates/modals/collection_detail.html:28
+#: core/templates/modals/work_detail.html:29
 msgid "Pages"
 msgstr "Páginas"
 
-#: core/templates/modals/collection_detail.html:42
+#: core/templates/modals/work_detail.html:44
 msgid "Click to change"
 msgstr "Clique para alterar"
 
-#: core/templates/modals/collection_detail.html:57
+#: core/templates/modals/work_detail.html:60
 msgid "Work Information"
 msgstr "Informações da Obra"
 
-#: core/templates/modals/collection_detail.html:69
+#: core/templates/modals/work_detail.html:72
 msgid "Number"
 msgstr "Número"
 
-#: core/templates/modals/collection_detail.html:96
+#: core/templates/modals/work_detail.html:81
+#: core/templates/payments/buy-work-modal.html:24
+#: publishing/templates/publisher_landpage.html:121
+msgid "Price"
+msgstr "Preço"
+
+#: core/templates/modals/work_detail.html:129
 #: core/templates/work_form/_upload.html:8
 msgid ""
 "Add new pages dropping your files or clicking on the space bellow. You can "
@@ -1351,31 +1365,30 @@ msgstr ""
 "Adicione novas páginas arrastando seus arquivos ou clicando no espaço "
 "abaixo. Também é possível reordenar as páginas simplesmente arrastando-as."
 
-#: core/templates/modals/collection_detail.html:105
+#: core/templates/modals/work_detail.html:139
 #: core/templates/work_form/_upload.html:16
 msgid "Please Wait"
 msgstr "Por favor, aguardr"
 
-#: core/templates/modals/collection_detail.html:106
+#: core/templates/modals/work_detail.html:140
 msgid "Sending changes to the server..."
 msgstr "Enviando alterações para o servidor..."
 
-#: core/templates/modals/collection_detail.html:155
+#: core/templates/modals/work_detail.html:189
 msgid "Cover changed!"
 msgstr "Capa alterada!"
 
-#: core/templates/modals/collection_detail.html:159
+#: core/templates/modals/work_detail.html:193
 msgid "Failed to change cover!"
 msgstr "Falha ao alterar a capa!"
 
-#: core/templates/modals/collection_detail.html:180
+#: core/templates/modals/work_detail.html:220
+msgid "Please, change the work value!"
+msgstr "Por favor, mude o preço da obra."
+
+#: core/templates/modals/work_detail.html:249
 msgid "Upload your new cover bellow"
 msgstr "Escolha a nova capa abaixo"
-
-#: core/templates/payments/buy-work-modal.html:24
-#: publishing/templates/publisher_landpage.html:121
-msgid "Price"
-msgstr "Preço"
 
 #: core/templates/payments/buy-work-modal.html:32
 #: publishing/templates/join_barddo_modal.html:17
@@ -1828,30 +1841,30 @@ msgstr ""
 "                                            manter o serviço funcionando!\n"
 "                                        "
 
-#: reader/templates/core_reader.html:14
+#: reader/templates/core_reader.html:15
 msgid "Putting artists and readers closer!"
 msgstr "Aproximando artistas e leitores!"
 
-#: reader/templates/core_reader.html:18
+#: reader/templates/core_reader.html:19
 msgid "Click or touch the sides of the pages to turn them!"
 msgstr "Clique ou toque nas páginas para virá-las!"
 
-#: reader/templates/core_reader.html:19
+#: reader/templates/core_reader.html:20
 msgid "You can also use the keyboard and the mouse to change pages and zoom."
 msgstr ""
 "Você também pode usar o teclado e o mouse para mudar as páginas e dar zoom."
 
-#: reader/templates/core_reader.html:24
+#: reader/templates/core_reader.html:25
 msgid "Use the toolbar to zoom in, fullscreen or see the list of pages!"
 msgstr ""
 "Use a barra de ferramentas para dar zoom, entrar em tela cheia ou ver a "
 "lista de páginas!"
 
-#: reader/templates/core_reader.html:91 reader/templates/core_reader.html:93
+#: reader/templates/core_reader.html:92 reader/templates/core_reader.html:94
 msgid "Barddo Comic"
 msgstr "Quadrinhos no Barddo"
 
-#: reader/templates/core_reader.html:91 reader/templates/core_reader.html:93
+#: reader/templates/core_reader.html:92 reader/templates/core_reader.html:94
 msgid "Comic Viewer"
 msgstr "Visualizador de Quadrinhos"
 
@@ -1870,10 +1883,6 @@ msgstr "Nenhum resultado encontrado para sua pesquisa."
 #: search/views.py:50
 msgid "Invalid search."
 msgstr "Pesquisa Inválida"
-
-#: search/templates/page_template.html:21
-msgid "Collections"
-msgstr "Coleções"
 
 #: search/templates/page_template.html:35
 msgid "People"
@@ -1918,6 +1927,9 @@ msgstr "Área de publicação"
 #: templates/main_template/navbar.html:91
 msgid "Logout"
 msgstr "Sair"
+
+#~ msgid "Collections"
+#~ msgstr "Coleções"
 
 #~ msgid "Description"
 #~ msgstr "Descrição"
