@@ -28,7 +28,7 @@ class PurchaseManager(models.Manager):
 
 
 class Purchase(models.Model):
-    date = models.DateField(db_index=True)
+    date = models.DateTimeField(db_index=True)
     total = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
     payment = models.OneToOneField(Payment, null=True)
     buyer = models.ForeignKey(AUTH_USER)
@@ -43,4 +43,6 @@ class Item(models.Model):
 
     purchase = models.ForeignKey(Purchase, related_name='items')
     work = models.ForeignKey('core.Work', related_name='items')
+    barddo_share = models.DecimalField(max_digits=6, decimal_places=2)
+    taxes = models.DecimalField(max_digits=6, decimal_places=2)
     price = models.DecimalField(max_digits=6, decimal_places=2)
