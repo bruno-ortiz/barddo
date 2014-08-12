@@ -79,7 +79,7 @@ class SearchResultView(ProfileAwareView):
         Just search relevant collections with given query
         """
         return Collection.search_manager.search_ordered(query_text, ("name", "summary")).annotate(
-            work_count=Count("work"))
+            work_count=Count("works"))
 
     def search_in_works(self, query_text):
         """
