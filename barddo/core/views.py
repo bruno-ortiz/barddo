@@ -12,6 +12,7 @@ from .exceptions import ChangeOnObjectNotOwnedError
 from accounts.views import ProfileAwareView, LoginRequiredMixin
 from publishing.views import publisher_landpage
 from rating.models import Rating, user_likes
+import payments.models as payment
 
 
 class IndexView(ProfileAwareView):
@@ -88,7 +89,7 @@ index = IndexView.as_view()
 
 
 class ArtistDashboardView(LoginRequiredMixin, ProfileAwareView):
-    template_name = 'artist_dashboard.html'
+    template_name = 'dashboard/artist_dashboard.html'
 
     def get_context_data(self, **kwargs):
         collections = Collection.objects.select_related("works").filter(author_id=kwargs['user'].id)
@@ -110,6 +111,36 @@ class ArtistDashboardView(LoginRequiredMixin, ProfileAwareView):
 
 
 artist_dashboard = ArtistDashboardView.as_view()
+
+
+class ArtistStatisticsView(LoginRequiredMixin, ProfileAwareView):
+    template_name = 'dashboard/artist_statistics.html'
+
+    def get_context_data(self, **kwargs):
+        sold_works = payment.Item.objects.select_related('work', "purchase").filter(work__author_id=kwargs['user'].id).order_by("-purchase__date", "-purchase__id")
+        total = sum([item.price - item.taxes for item in sold_works])
+
+        start_date = datetime.date(2014, 01, 01)
+        end_date = datetime.date.today()
+
+        context = {
+            'sold_works': sold_works,
+            'total': total,
+            "start_date": start_date,
+            "end_date": end_date
+        }
+
+        context.update(kwargs)
+        return super(ArtistStatisticsView, self).get_context_data(**context)
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_publisher():
+            return redirect(publisher_landpage)
+
+        context = self.get_context_data(**{'user': request.user})
+        context.update(kwargs)
+
+        return super(ArtistStatisticsView, self).render_to_response(context)
 
 
 class CollectionDetailView(LoginRequiredMixin, ProfileAwareView):

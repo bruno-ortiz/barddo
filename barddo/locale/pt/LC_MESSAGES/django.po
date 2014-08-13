@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Barddo Main Site\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-12 09:01-0300\n"
-"PO-Revision-Date: 2014-08-12 09:02-0300\n"
+"POT-Creation-Date: 2014-08-12 22:23-0300\n"
+"PO-Revision-Date: 2014-08-12 22:26-0300\n"
 "Last-Translator: Israel Crisanto <israel.crisanto@gmail.com>\n"
 "Language-Team: Barddo Team <israel.crisanto@gmail.com>\n"
 "Language: pt\n"
@@ -47,7 +47,9 @@ msgstr "Erro"
 msgid "Sorry an error occured:"
 msgstr "Sinto muito, um erro ocorreu:"
 
-#: accounts/templates/profile.html:16 core/templates/artist_dashboard.html:22
+#: accounts/templates/profile.html:16
+#: core/templates/dashboard/artist_dashboard.html:22
+#: core/templates/dashboard/artist_statistics.html:15
 #: core/templates/docs/about-us.html:13 core/templates/docs/help.html:13
 #: core/templates/docs/terms.html:14
 #: core/templates/work_page/work_page.html:25
@@ -217,11 +219,11 @@ msgstr "Slug"
 msgid "Status"
 msgstr "Estado"
 
-#: core/models.py:99
+#: core/models.py:99 core/templates/dashboard/artist_statistics.html:79
 msgid "Start Date"
 msgstr "Data de Início"
 
-#: core/models.py:100
+#: core/models.py:100 core/templates/dashboard/artist_statistics.html:82
 msgid "End Date"
 msgstr "Data de Fim"
 
@@ -289,105 +291,6 @@ msgstr "Capa"
 #: core/templates/_new_work_modal.html:24
 msgid "Upload Files"
 msgstr "Enviar Arquivos"
-
-#: core/templates/artist_dashboard.html:24
-#: core/templates/artist_dashboard.html:34
-#: templates/main_template/navbar.html:52
-msgid "Dashboard"
-msgstr "Dashboard"
-
-#: core/templates/artist_dashboard.html:78
-msgid "The Artist Dashboard"
-msgstr "O Dashboard do Artista"
-
-#: core/templates/artist_dashboard.html:81
-msgid "Create a new Collection!"
-msgstr "Criar uma nova Coleção"
-
-#: core/templates/artist_dashboard.html:85
-msgid ""
-"\n"
-"                                Welcome to your publishing panel!\n"
-"                                Here you can control every aspect of your "
-"career on Barddo! Create new collections, upload amazing works, publish any "
-"time!\n"
-"                            "
-msgstr ""
-"\n"
-"                                Bem-vindo ao seu painel de publicacões\n"
-"                                Aqui é possível controlar tudo relacionado à "
-"sua carreira no Barddo! Crie novas coleções, envie obras sensacionais, "
-"publique a qualquer momento!\n"
-"                             "
-
-#: core/templates/artist_dashboard.html:100
-msgid "Uh Oh!"
-msgstr "Oh, não!"
-
-#: core/templates/artist_dashboard.html:101
-msgid ""
-"\n"
-"                            Looks like you don't have any <span class=\"red"
-"\">collections</span> yet! But do not fear, this\n"
-"                            is something easy to fix!\n"
-"                        "
-msgstr ""
-"\n"
-"                            Parece que você não tem nenhuma <span class=\"red"
-"\">coleção</span> ainda! Mas não tema, isto\n"
-"é algo simples de resolver!\n"
-"                        "
-
-#: core/templates/artist_dashboard.html:113
-msgid "Create an awesome new collection, now!"
-msgstr "Criar uma nova e maravilhosa coleção, agora!"
-
-#: core/templates/artist_dashboard.html:127
-msgid "works "
-msgstr "trabalhos"
-
-#: core/templates/artist_dashboard.html:157
-#: core/templates/artist_dashboard.html:282
-#: core/templates/work_page/work_page.html:128
-msgid "Published"
-msgstr "Publicado"
-
-#: core/templates/artist_dashboard.html:159
-msgid "Pending"
-msgstr "Pendente"
-
-#: core/templates/artist_dashboard.html:169
-msgid "Create a work for this collection!"
-msgstr "Adicionar uma Obra a esta coleção"
-
-#: core/templates/artist_dashboard.html:178
-msgid "View Page"
-msgstr "Ver Página"
-
-#: core/templates/artist_dashboard.html:184
-#: core/templates/artist_dashboard.html:188
-msgid "Publish now!"
-msgstr "Publicar!"
-
-#: core/templates/artist_dashboard.html:195
-msgid "Edit Work"
-msgstr "Editar Obra"
-
-#: core/templates/artist_dashboard.html:199
-#: core/templates/artist_dashboard.html:206
-msgid "Share now with your friends!"
-msgstr "Compartilhe com seus amigos!"
-
-#: core/templates/artist_dashboard.html:213
-msgid "You must publish this work to be able to share with your friends."
-msgstr "É necessário publicar este trabalho antes de compartilhá-lo."
-
-#: core/templates/artist_dashboard.html:269
-msgid ""
-"Work published, congratulations! Please consider sharing with your friends!"
-msgstr ""
-"Trabalho publicado, parabéns! Por favor, considere compartilha-lo com seus "
-"amigos."
 
 #: core/templates/index.html:26
 msgid "Trending"
@@ -505,6 +408,189 @@ msgstr ""
 #: core/templates/collection_form/_name_validation.html:28
 msgid "Enter your collection name and wait..."
 msgstr "Digite o nome da sua coleção e aguarde..."
+
+#: core/templates/dashboard/artist_dashboard.html:24
+#: core/templates/dashboard/artist_dashboard.html:34
+#: core/templates/dashboard/artist_statistics.html:17
+#: core/templates/dashboard/artist_statistics.html:27
+#: templates/main_template/navbar.html:52
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: core/templates/dashboard/artist_dashboard.html:41
+#: core/templates/dashboard/artist_statistics.html:34
+msgid "Statistics"
+msgstr "Estatísticas"
+
+#: core/templates/dashboard/artist_dashboard.html:57
+msgid "The Artist Dashboard"
+msgstr "O Dashboard do Artista"
+
+#: core/templates/dashboard/artist_dashboard.html:60
+msgid "Create a new Collection!"
+msgstr "Criar uma nova Coleção"
+
+#: core/templates/dashboard/artist_dashboard.html:64
+#, fuzzy
+msgid ""
+"\n"
+"                                Welcome to your publishing panel!\n"
+"                                Here you can control every aspect of your "
+"career on Barddo! Create new collections,\n"
+"                                upload amazing works, publish any time!\n"
+"                            "
+msgstr ""
+"\n"
+"                                Bem-vindo ao seu painel de publicacões\n"
+"                                Aqui é possível controlar tudo relacionado à "
+"sua carreira no Barddo! Crie novas coleções, envie obras sensacionais, "
+"publique a qualquer momento!\n"
+"                             "
+
+#: core/templates/dashboard/artist_dashboard.html:80
+msgid "Uh Oh!"
+msgstr "Oh, não!"
+
+#: core/templates/dashboard/artist_dashboard.html:81
+#, fuzzy
+msgid ""
+"\n"
+"                            Looks like you don't have any <span class=\"red"
+"\">collections</span> yet! But do not fear,\n"
+"                            this\n"
+"                            is something easy to fix!\n"
+"                        "
+msgstr ""
+"\n"
+"                            Parece que você não tem nenhuma <span class=\"red"
+"\">coleção</span> ainda! Mas não tema, isto\n"
+"é algo simples de resolver!\n"
+"                        "
+
+#: core/templates/dashboard/artist_dashboard.html:95
+msgid "Create an awesome new collection, now!"
+msgstr "Criar uma nova e maravilhosa coleção, agora!"
+
+#: core/templates/dashboard/artist_dashboard.html:109
+msgid "works "
+msgstr "trabalhos"
+
+#: core/templates/dashboard/artist_dashboard.html:140
+#: core/templates/dashboard/artist_dashboard.html:274
+#: core/templates/work_page/work_page.html:128
+msgid "Published"
+msgstr "Publicado"
+
+#: core/templates/dashboard/artist_dashboard.html:144
+msgid "Pending"
+msgstr "Pendente"
+
+#: core/templates/dashboard/artist_dashboard.html:155
+msgid "Create a work for this collection!"
+msgstr "Adicionar uma Obra a esta coleção"
+
+#: core/templates/dashboard/artist_dashboard.html:164
+msgid "View Page"
+msgstr "Ver Página"
+
+#: core/templates/dashboard/artist_dashboard.html:171
+#: core/templates/dashboard/artist_dashboard.html:177
+msgid "Publish now!"
+msgstr "Publicar!"
+
+#: core/templates/dashboard/artist_dashboard.html:185
+msgid "Edit Work"
+msgstr "Editar Obra"
+
+#: core/templates/dashboard/artist_dashboard.html:190
+#: core/templates/dashboard/artist_dashboard.html:198
+msgid "Share now with your friends!"
+msgstr "Compartilhe com seus amigos!"
+
+#: core/templates/dashboard/artist_dashboard.html:205
+msgid "You must publish this work to be able to share with your friends."
+msgstr "É necessário publicar este trabalho antes de compartilhá-lo."
+
+#: core/templates/dashboard/artist_dashboard.html:261
+msgid ""
+"Work published, congratulations! Please consider sharing with your friends!"
+msgstr ""
+"Trabalho publicado, parabéns! Por favor, considere compartilha-lo com seus "
+"amigos."
+
+#: core/templates/dashboard/artist_statistics.html:50
+msgid "The Artist Statistics"
+msgstr "Estatísticas do Artista"
+
+#: core/templates/dashboard/artist_statistics.html:53
+msgid ""
+"\n"
+"                                Here you can see how your work is going. "
+"Soon we will add more views and other\n"
+"                                statistics.\n"
+"                            "
+msgstr ""
+"\n"
+"                                            Aqui você pode ver como seu "
+"trabalho está evoluindo. Em breve adicionaremos mais detalhes e \n"
+"                                            outras estatísticas.\n"
+"                                        "
+
+#: core/templates/dashboard/artist_statistics.html:60
+msgid ""
+"\n"
+"                                If you need some other data, please contact "
+"us!\n"
+"                            "
+msgstr ""
+"\n"
+"                            Caso precise de outras informações aqui, por "
+"favor nos avise!\n"
+"                        "
+
+#: core/templates/dashboard/artist_statistics.html:75
+msgid "User Shopping History"
+msgstr "Histórico de Compras dos Leitores"
+
+#: core/templates/dashboard/artist_statistics.html:99
+msgid "Oops!"
+msgstr "Opa!"
+
+#: core/templates/dashboard/artist_statistics.html:100
+msgid ""
+"You have no purchases yet! Do you think we can do something about this? Get "
+"in touch!"
+msgstr ""
+"Ninguém comprou seus trabalhos ainda! Acha que podemos fazer alguma coisa "
+"para ajudar? Entre em contato!"
+
+#: core/templates/dashboard/artist_statistics.html:108
+msgid "Date"
+msgstr "Data"
+
+#: core/templates/dashboard/artist_statistics.html:109
+msgid "Work"
+msgstr "Trabalho"
+
+#: core/templates/dashboard/artist_statistics.html:110
+msgid "Reader"
+msgstr "Leitor"
+
+#: core/templates/dashboard/artist_statistics.html:111
+msgid "Other Taxes"
+msgstr "Outras Taxas"
+
+#: core/templates/dashboard/artist_statistics.html:143
+msgid "Total amount"
+msgstr "Valor total"
+
+#: core/templates/dashboard/artist_statistics.html:151
+msgid ""
+"Thank you for choosing Barddo services. Please contact us if you have any "
+"questions."
+msgstr ""
+"Obrigado por escolher os serviços do Barddo. Por favor, entre em contato "
+"caso tenha alguma dúvida."
 
 #: core/templates/docs/about-us.html:15 templates/main_template/footer.html:10
 msgid "About Us"
@@ -1382,11 +1468,11 @@ msgstr "Capa alterada!"
 msgid "Failed to change cover!"
 msgstr "Falha ao alterar a capa!"
 
-#: core/templates/modals/work_detail.html:220
+#: core/templates/modals/work_detail.html:221
 msgid "Please, change the work value!"
 msgstr "Por favor, mude o preço da obra."
 
-#: core/templates/modals/work_detail.html:249
+#: core/templates/modals/work_detail.html:250
 msgid "Upload your new cover bellow"
 msgstr "Escolha a nova capa abaixo"
 
@@ -1963,9 +2049,6 @@ msgstr "Sair"
 
 #~ msgid "Join the Barddo publisher"
 #~ msgstr "Entrar no grupo de publicação do Barddo"
-
-#~ msgid "Statistics"
-#~ msgstr "Estatísticas"
 
 #~ msgid "Bookmarks"
 #~ msgstr "Favoritos"
