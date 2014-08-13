@@ -11,8 +11,10 @@ from .models import Collection, Work
 from .exceptions import ChangeOnObjectNotOwnedError
 from accounts.views import ProfileAwareView, LoginRequiredMixin
 from publishing.views import publisher_landpage
+from publishing.models import FINISHED_PURCHASE_ID
 from rating.models import Rating, user_likes
 import payments.models as payment
+
 
 
 class IndexView(ProfileAwareView):
@@ -117,7 +119,9 @@ class ArtistStatisticsView(LoginRequiredMixin, ProfileAwareView):
     template_name = 'dashboard/artist_statistics.html'
 
     def get_context_data(self, **kwargs):
-        sold_works = payment.Item.objects.select_related('work', "purchase").filter(work__author_id=kwargs['user'].id).order_by("-purchase__date", "-purchase__id")
+        sold_works = payment.Item.objects.select_related('work', "purchase").filter(
+            work__author_id=kwargs['user'].id, purchase__status=FINISHED_PURCHASE_ID
+        ).order_by("-purchase__date", "-purchase__id")
         total = sum([item.price - item.taxes for item in sold_works])
 
         start_date = datetime.date(2014, 01, 01)
