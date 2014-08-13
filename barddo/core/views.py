@@ -118,7 +118,7 @@ class ArtistStatisticsView(LoginRequiredMixin, ProfileAwareView):
 
     def get_context_data(self, **kwargs):
         sold_works = payment.Item.objects.select_related('work', "purchase").filter(work__author_id=kwargs['user'].id).order_by("-purchase__date", "-purchase__id")
-        total = sum([item.price - item.barddo_share - item.taxes for item in sold_works])
+        total = sum([item.price - item.taxes for item in sold_works])
 
         start_date = datetime.date(2014, 01, 01)
         end_date = datetime.date.today()

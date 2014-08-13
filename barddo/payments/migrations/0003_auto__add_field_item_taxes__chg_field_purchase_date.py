@@ -8,11 +8,6 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'Item.barddo_share'
-        db.add_column(u'payments_item', 'barddo_share',
-                      self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=6, decimal_places=2),
-                      keep_default=False)
-
         # Adding field 'Item.taxes'
         db.add_column(u'payments_item', 'taxes',
                       self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=6, decimal_places=2),
@@ -23,9 +18,6 @@ class Migration(SchemaMigration):
         db.alter_column(u'payments_purchase', 'date', self.gf('django.db.models.fields.DateTimeField')())
 
     def backwards(self, orm):
-        # Deleting field 'Item.barddo_share'
-        db.delete_column(u'payments_item', 'barddo_share')
-
         # Deleting field 'Item.taxes'
         db.delete_column(u'payments_item', 'taxes')
 
@@ -99,7 +91,6 @@ class Migration(SchemaMigration):
         },
         u'payments.item': {
             'Meta': {'unique_together': "(('purchase', 'work'),)", 'object_name': 'Item'},
-            'barddo_share': ('django.db.models.fields.DecimalField', [], {'max_digits': '6', 'decimal_places': '2'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'price': ('django.db.models.fields.DecimalField', [], {'max_digits': '6', 'decimal_places': '2'}),
             'purchase': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'items'", 'to': u"orm['payments.Purchase']"}),
