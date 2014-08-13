@@ -11,7 +11,7 @@ from .models import Collection, Work
 from .exceptions import ChangeOnObjectNotOwnedError
 from accounts.views import ProfileAwareView, LoginRequiredMixin
 from publishing.views import publisher_landpage
-from publishing.models import FINISHED_PURCHASE_ID
+from payments.models import FINISHED_PURCHASE_ID
 from rating.models import Rating, user_likes
 import payments.models as payment
 
