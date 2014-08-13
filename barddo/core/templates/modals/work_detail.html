@@ -7,7 +7,8 @@
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="loginModalLabel"><i class="icon-th-large"></i> {{ collection.name }} - {{ current_work.title }}</h4>
+            <h4 class="modal-title" id="loginModalLabel"><i class="icon-th-large"></i> {{ collection.name }}
+                - {{ current_work.title }}</h4>
         </div>
         <div class="modal-body">
             <div class="row">
@@ -36,7 +37,8 @@
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-5 center" id="change-cover">
                                 <span class="profile-picture">
-                                    <img class="editable img-responsive" alt="Work Cover" src="{{ current_work.cover|thumbnail_url:"big_cover" }}"/>
+                                    <img class="editable img-responsive" alt="Work Cover"
+                                         src="{{ current_work.cover|thumbnail_url:"big_cover" }}"/>
                                 </span>
                                 <span class="cover-subtitle">
                                     <i class="icon-pencil"></i> {% trans "Click to change" %}
@@ -52,7 +54,8 @@
                                         </div>
 
                                         <div class="col-xs-12 col-sm-7">
-                                            <div id="collection-editable" class="profile-user-info profile-user-info-striped">
+                                            <div id="collection-editable"
+                                                 class="profile-user-info profile-user-info-striped">
                                                 <div class="table-header center">
                                                     <i class="icon-edit"></i> {% trans "Work Information" %}
                                                 </div>
@@ -71,6 +74,36 @@
                                                     <div class="profile-info-value">
                                             <span class="editable"
                                                   id="id_unit_count">{{ current_work.unit_count }}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="profile-info-row">
+                                                    <div class="profile-info-name"> {% trans "Price" %}:</div>
+
+                                                    <div class="profile-info-value">
+                                                        <div class="row">
+                                                            <div class="col-sm-9">
+                                                                <div id="priceslider"></div>
+                                                            <span id="current_price"
+                                                                  class="blue no-border bolder pull-right">{{ current_work.price }}</span>{# TODO: Tratar moeda local #}
+                                                                <span class="blue bolder pull-right">R$</span>
+                                                                <input type="hidden" id="work_price" name="price"
+                                                                       value="{{ current_work.price }}">
+
+
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <button id="change-price"
+                                                                        class="btn btn-primary btn-xs"><i
+                                                                        class="icon-ok"></i>
+                                                                </button>
+
+                                                                <button id="reset-price"
+                                                                        class="btn btn-danger btn-xs"><i
+                                                                        class="icon-remove"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -98,7 +131,8 @@
                                     </div>
 
                                     <div class="profile-feed row-fluid">
-                                        <form id="edit-work-upload" action="/work/page/upload" data-id="{{ current_work.id }}"
+                                        <form id="edit-work-upload" action="/work/page/upload"
+                                              data-id="{{ current_work.id }}"
                                               class="dropzone">
                                             <div class="work-action-overlay center"><i
                                                     class="icon-spinner icon-spin white icon-2x"></i>
@@ -160,6 +194,42 @@
     }
 
     $(document).ready(function () {
+        var current_work_price = parseFloat("{{ current_work.price }}");
+
+        $('#priceslider').slider({
+            max: 30.00,
+            min: 0.00,
+            step: 0.10,
+            value: parseFloat("{{ current_work.price }}"),
+            slide: function (e, ui) {
+                $("#work_price").val(ui.value);
+                $('#current_price').html(ui.value.toFixed(1))
+            }
+        });
+
+        $("#reset-price").on("click", function () {
+            $("#priceslider").slider('value', current_work_price);
+            $('#current_price').html(current_work_price)
+            $("#work_price").val(current_work_price);
+        });
+
+        $("#change-price").on("click", function () {
+            // In brazil localization, there's a ',' on price format
+            var newPrice = parseFloat($('#current_price').html());
+
+            if(newPrice == current_work_price) {
+                gritter_error("{% trans "Please, change the work value!" %}");
+                return;
+            }
+
+            Dajaxice.core.edit_work_field(Dajax.process, {
+                        '_id': {{ current_work.id }},
+                        'field': 'price',
+                        'value': newPrice});
+
+            current_work_price = newPrice;
+        });
+
         //override dialog's title function to allow for HTML titles
         $.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
             _title: function (title) {
