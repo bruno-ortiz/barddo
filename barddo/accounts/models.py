@@ -128,3 +128,11 @@ class BarddoUserProfile(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default=GENDER_MALE)
     language = models.CharField(max_length=5, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE)
     country = models.CharField(max_length=30, default=_('Brazil'))
+
+
+class BankAccount(models.Model):
+    favored_name = models.CharField(_('Favoured Name'), max_length=100, db_index=True)
+    cpf = models.CharField(_('Social Security'), max_length=15, db_index=True)
+    bank_code = models.CharField(_('Bank Code'), max_length=5)
+    agency = models.CharField(_('Agency'), max_length=8)
+    account = models.CharField(_('Bank Account'), max_length=10)

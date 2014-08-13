@@ -1,6 +1,6 @@
 from django.forms import ModelForm, DateField
 
-from accounts.models import BarddoUser, BarddoUserProfile
+from accounts.models import BarddoUser, BarddoUserProfile, BankAccount
 
 
 class BarddoUserForm(ModelForm):
@@ -23,3 +23,8 @@ class BarddoUserProfileForm(ModelForm):
     class Meta:
         model = BarddoUserProfile
         field = ['birth_date', 'gender', 'country', 'language']
+
+
+class BankAccountForm(ModelForm):
+    class Meta:
+        model = BankAccount

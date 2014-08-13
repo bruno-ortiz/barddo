@@ -27,7 +27,7 @@ class ShardRequest(View):
     Handle all the shards requests
     """
 
-    def dispatch(self, request, name=None):
+    def dispatch(self, request, name=None, **kwargs):
 
         if not name:
             raise Http404
@@ -38,8 +38,9 @@ class ShardRequest(View):
             callable = shards_core.get(name)
 
             try:
-                data = request.POST.dict()
-            except Exception as e:
+                request_method = getattr(request, request.method)
+                data = request_method.dict()
+            except Exception:
                 data = {}
 
             # Call the function. If something goes wrong, handle the Exception
