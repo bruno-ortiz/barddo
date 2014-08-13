@@ -94,7 +94,7 @@ class WorkModalView(TemplateResponseMixin, View):
     """
         Render a work detail modal shard.
     """
-    template_name = 'modals/collection_detail.html'
+    template_name = 'modals/work_detail.html'
 
     def post(self, request, work_id, *args, **kwargs):
         work = Work.objects.select_related("collection").get(id=work_id)

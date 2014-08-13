@@ -35,33 +35,12 @@
                 </a>
             </li>
 
-            {#            <li>#}
-            {#                <a href="#new-collection-wizard">#}
-            {#                    <i class="icon-book"></i>#}
-            {#                    <span class="menu-text"> {% trans "Create a Collection" %}</span>#}
-            {#                </a>#}
-            {#            </li>#}
-
-            {#            <li>#}
-            {#                <a href="#">#}
-            {#                    <i class="icon-bar-chart"></i>#}
-            {#                    <span class="menu-text"> {% trans "Statistics" %}</span>#}
-            {#                </a>#}
-            {#            </li>#}
-            {##}
-            {#            <li>#}
-            {#                <a href="#">#}
-            {#                    <i class="icon-bookmark"></i>#}
-            {#                    <span class="menu-text"> {% trans "Bookmarks" %}</span>#}
-            {#                </a>#}
-            {#            </li>#}
-            {##}
-            {#            <li>#}
-            {#                <a href="#">#}
-            {#                    <i class="icon-archive"></i>#}
-            {#                    <span class="menu-text"> {% trans "Archived Items" %}</span>#}
-            {#                </a>#}
-            {#            </li>#}
+            <li>
+                <a href="{% url "core.statistics" %}">
+                    <i class="icon-bar-chart"></i>
+                    <span class="menu-text"> {% trans "Statistics" %}</span>
+                </a>
+            </li>
         </ul>
     </div>
 {% endblock %}
@@ -84,7 +63,8 @@
                         <p class="text-left">
                             {% blocktrans %}
                                 Welcome to your publishing panel!
-                                Here you can control every aspect of your career on Barddo! Create new collections, upload amazing works, publish any time!
+                                Here you can control every aspect of your career on Barddo! Create new collections,
+                                upload amazing works, publish any time!
                             {% endblocktrans %}
                         </p>
                     </div>
@@ -99,7 +79,8 @@
                     <div class="center">
                         <h3 class="red">{% trans "Uh Oh!" %}</h3>
                         {% blocktrans %}
-                            Looks like you don't have any <span class="red">collections</span> yet! But do not fear, this
+                            Looks like you don't have any <span class="red">collections</span> yet! But do not fear,
+                            this
                             is something easy to fix!
                         {% endblocktrans %}
                         <br/><br/>
@@ -110,7 +91,8 @@
             <div class="row" style="padding-top: 50px;">
                 <div class="col-sm-6 col-sm-offset-3">
                     <a id="collection-wizard-link" href="#new-collection-wizard"
-                       class="btn btn-danger btn-block btn-lg"><i class="icon-plus"></i> {% trans "Create an awesome new collection, now!" %}
+                       class="btn btn-danger btn-block btn-lg"><i
+                            class="icon-plus"></i> {% trans "Create an awesome new collection, now!" %}
                     </a>
                 </div>
             </div>
@@ -154,9 +136,13 @@
                                                 {% for work in collection_works %}
                                                     <div class="col-sm-3 col-xs-12 item collection-great work-{{ work.id }}">
                                                         {% if work.is_published %}
-                                                            <div class="note success"><i class="icon-ok-sign"></i> {% trans "Published" %}</div>
+                                                            <div class="note success"><i
+                                                                    class="icon-ok-sign"></i> {% trans "Published" %}
+                                                            </div>
                                                         {% else %}
-                                                            <div class="note warning"><i class="icon-exclamation-sign"></i> {% trans "Pending" %}</div>
+                                                            <div class="note warning"><i
+                                                                    class="icon-exclamation-sign"></i> {% trans "Pending" %}
+                                                            </div>
                                                         {% endif %}
 
                                                         <div class="boxcontainer">
@@ -175,24 +161,29 @@
                                                                     <a href="{% url "core.work.detail" work.id %}"
                                                                        data-id="{{ work.id }}"
                                                                        class="btn btn-block btn-warning"><i
-                                                                            class="icon-zoom-in"></i> {% trans "View Page" %}</a>
+                                                                            class="icon-zoom-in"></i> {% trans "View Page" %}
+                                                                    </a>
 
                                                                     {% if not work.is_published %}
                                                                         <a href="#publish-work"
                                                                            data-id="{{ work.id }}"
                                                                            class="btn btn-block btn-success"><i
-                                                                                class="icon-cloud-upload"></i> {% trans "Publish now!" %}</a>
+                                                                                class="icon-cloud-upload"></i> {% trans "Publish now!" %}
+                                                                        </a>
                                                                     {% else %}
                                                                         <a href="#"
-                                                                           class="btn btn-block disabled" onclick="return false;"><i
-                                                                                class="icon-cloud-upload"></i> {% trans "Publish now!" %}</a>
+                                                                           class="btn btn-block disabled"
+                                                                           onclick="return false;"><i
+                                                                                class="icon-cloud-upload"></i> {% trans "Publish now!" %}
+                                                                        </a>
                                                                     {% endif %}
 
 
                                                                     <a href="#"
                                                                        class="collection-view btn btn-block btn-danger"
                                                                        data-id="{{ work.id }}"><i
-                                                                            class="icon-edit"></i> {% trans "Edit Work" %}</a>
+                                                                            class="icon-edit"></i> {% trans "Edit Work" %}
+                                                                    </a>
 
                                                                     {% if work.is_published %}
                                                                         <div class="social-share full">
@@ -202,7 +193,8 @@
                                                                             {% post_to_gplus work "Google+" %}
                                                                         </div>
                                                                     {% else %}
-                                                                        <div class="social-share full" style="display: none">
+                                                                        <div class="social-share full"
+                                                                             style="display: none">
                                                                             <div class="share-caption">{% trans 'Share now with your friends!' %}</div>
                                                                             {% post_to_facebook work "Facebook" %}
                                                                             {% post_to_twitter work "Twitter" %}

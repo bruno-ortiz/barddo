@@ -37,7 +37,7 @@ class CreatePayment(LoginRequiredMixin, View):
         for work in works:
             work_price = work.price
             total_price += work_price
-            item_list.append(Item(work=work, price=work_price, purchase=purchase))
+            item_list.append(Item(work=work, price=work_price, purchase=purchase, taxes=0))
 
         Item.objects.bulk_create(item_list)
         purchase.total = total_price
