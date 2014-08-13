@@ -201,11 +201,13 @@ def edit_work_field(request, _id, field, value):
         form.save()
         dajax.remove_css_class('#id_{0}'.format(field), 'field-error')
         dajax.add_css_class('#id_{0}'.format(field), 'field-success')
+        dajax.script("gritter_feedback('{}');".format(_("Value successfuly changed!")))
     else:
         dajax.remove_css_class('#id_{0}'.format(field), 'field-success')
         dajax.add_css_class('#id_{0}'.format(field), 'field-error')
         errors = form.errors[field]
         dajax.script("error_tooltip('#id_%s', '%s');" % (field, "<br />".join(errors)))
+        dajax.script("gritter_error('{}');".format(_("Error changing value...")))
     return dajax.json()
 
 

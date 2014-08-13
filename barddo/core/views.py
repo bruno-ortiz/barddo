@@ -144,7 +144,7 @@ class ArtistStatisticsView(LoginRequiredMixin, ProfileAwareView):
 
 
 class CollectionDetailView(LoginRequiredMixin, ProfileAwareView):
-    template_name = 'modals/collection_detail.html'
+    template_name = 'modals/work_detail.html'
 
     def get(self, request, collection_id, *args, **kwargs):
         collection = Collection.objects.get(id=collection_id)
