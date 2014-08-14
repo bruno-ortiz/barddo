@@ -1,0 +1,74 @@
+{% extends 'main_template.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% load thumbnail %}
+{% load widget_tweaks %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="{% url "core.index" %}">{% trans "Home" %}</a>
+        </li>
+        <li class="active">{% trans "Dashboard" %}</li>
+    </ul>
+{% endblock %}
+
+{% block sidebar %}
+    <div class="sidebar menu-min" id="sidebar">
+        <ul class="side-bar nav nav-list">
+            <li>
+                <a href="#">
+                    <i class="icon-dashboard"></i>
+                    <span class="menu-text"> {% trans "Dashboard" %}</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url "core.statistics" %}">
+                    <i class="icon-bar-chart"></i>
+                    <span class="menu-text"> {% trans "Statistics" %}</span>
+                </a>
+            </li>
+
+            <li class="active">
+                <a href="{% url "core.bank.account" %}">
+                    <i class="icon-money"></i>
+                    <span class="menu-text"> {% trans "Bank Account" %}</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+{% block content %}
+    {% if not has_account %}
+        <div class="alert alert-warning">
+            <strong>{% trans "Oops!" %}</strong>
+            {% trans "You have not registered your bank account!" %}
+            <br>
+        </div>
+    {% endif %}
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="{{ form.favored_name.auto_id }}"
+                   class="col-xs-12 col-sm-3 control-label no-padding-right">{{ form.favored_name.label }}</label>
+
+            <div class="col-xs-12 col-sm-9">
+                <span class="block">
+                    {% render_field form.favored_name class="width-100" %}
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="{{ form.cpf.auto_id }}"
+                   class="col-xs-12 col-sm-3 control-label no-padding-right">{{ form.cpf.label }}</label>
+
+            <div class="col-xs-12 col-sm-9">
+                <span class="block">
+                    {% render_field form.cpf class="width-100" %}
+                </span>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+

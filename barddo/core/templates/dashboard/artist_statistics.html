@@ -34,6 +34,13 @@
                     <span class="menu-text"> {% trans "Statistics" %}</span>
                 </a>
             </li>
+
+            <li>
+                <a href="{% url "core.bank.account" %}">
+                    <i class="icon-money"></i>
+                    <span class="menu-text"> {% trans "Bank Account" %}</span>
+                </a>
+            </li>
         </ul>
     </div>
 {% endblock %}
@@ -96,10 +103,10 @@
                     <div>
                         {% if not sold_works %}
                             <div class="alert alert-warning">
-                            <strong>{% trans "Oops!" %}</strong>
-                            {% trans "You have no purchases yet! Do you think we can do something about this? Get in touch!" %}
-                            <br>
-                        </div>
+                                <strong>{% trans "Oops!" %}</strong>
+                                {% trans "You have no purchases yet! Do you think we can do something about this? Get in touch!" %}
+                                <br>
+                            </div>
                         {% else %}
                             <table class="table table-striped table-bordered">
                                 <thead>

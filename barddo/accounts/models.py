@@ -131,6 +131,7 @@ class BarddoUserProfile(models.Model):
 
 
 class BankAccount(models.Model):
+    user = models.OneToOneField(BarddoUser)
     favored_name = models.CharField(_('Favoured Name'), max_length=100, db_index=True)
     cpf = models.CharField(_('Social Security'), max_length=15, db_index=True)
     bank_code = models.CharField(_('Bank Code'), max_length=5)

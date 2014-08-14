@@ -1,11 +1,14 @@
 # coding=utf-8
 import json
 import datetime
-import os
 
 from django.views.generic import View
 from django.http import HttpResponse
 from django.shortcuts import redirect
+
+from accounts.forms import BankAccountForm
+
+from accounts.models import BankAccount
 
 from .models import Collection, Work
 from .exceptions import ChangeOnObjectNotOwnedError
@@ -45,7 +48,8 @@ class IndexView(ProfileAwareView):
         # TODO: quando tivermos fluxo constante, limitar o que é exibido
         limit = self.get_relative_date(self.LAST_YEAR)
 
-        new_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).filter(publish_date__gte=limit, is_published=True). \
+        new_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).filter(publish_date__gte=limit,
+                                                                                                                               is_published=True). \
             order_by("-publish_date")
         return self.__filter_works_with_pages(new_works)
 
@@ -54,7 +58,8 @@ class IndexView(ProfileAwareView):
         limit = self.get_relative_date(self.LAST_YEAR)
 
         # TODO: Rever o distinct
-        rising_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).liked_after(limit).filter(is_published=True).distinct(). \
+        rising_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).liked_after(limit).filter(
+            is_published=True).distinct(). \
             order_by("-total_likes")
         return self.__filter_works_with_pages(rising_works)
 
@@ -63,7 +68,8 @@ class IndexView(ProfileAwareView):
         limit = self.get_relative_date(self.LAST_YEAR)
 
         # TODO: Rever o distinct
-        trending_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).liked_after(limit).filter(is_published=True).distinct(). \
+        trending_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).liked_after(limit).filter(
+            is_published=True).distinct(). \
             order_by("-total_likes")
         return self.__filter_works_with_pages(trending_works)
 
@@ -104,10 +110,7 @@ class ArtistDashboardView(LoginRequiredMixin, ProfileAwareView):
         if not request.user.is_publisher():
             return redirect(publisher_landpage)
 
-        context = self.get_context_data(**{'user': request.user})
-        context.update(kwargs)
-
-        return super(ArtistDashboardView, self).render_to_response(context)
+        return super(ArtistDashboardView, self).get(request, *args, **kwargs)
 
 
 artist_dashboard = ArtistDashboardView.as_view()
@@ -117,7 +120,8 @@ class ArtistStatisticsView(LoginRequiredMixin, ProfileAwareView):
     template_name = 'dashboard/artist_statistics.html'
 
     def get_context_data(self, **kwargs):
-        sold_works = payment.Item.objects.select_related('work', "purchase").filter(work__author_id=kwargs['user'].id).order_by("-purchase__date", "-purchase__id")
+        sold_works = payment.Item.objects.select_related('work', "purchase").filter(work__author_id=kwargs['user'].id).order_by("-purchase__date",
+                                                                                                                                "-purchase__id")
         total = sum([item.price - item.taxes for item in sold_works])
 
         start_date = datetime.date(2014, 01, 01)
@@ -137,18 +141,33 @@ class ArtistStatisticsView(LoginRequiredMixin, ProfileAwareView):
         if not request.user.is_publisher():
             return redirect(publisher_landpage)
 
-        context = self.get_context_data(**{'user': request.user})
-        context.update(kwargs)
+        return super(ArtistStatisticsView, self).get(request, *args, **kwargs)
 
-        return super(ArtistStatisticsView, self).render_to_response(context)
+
+class ArtistBankAccountView(LoginRequiredMixin, ProfileAwareView):
+    template_name = 'dashboard/bank_account.html'
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_publisher():
+            return redirect(publisher_landpage)
+
+        try:
+            acc = BankAccount.objects.get(user=request.user)
+            form = BankAccountForm(instance=acc)
+            kwargs['has_account'] = True
+        except BankAccount.DoesNotExist:
+            kwargs['has_account'] = False
+            form = BankAccountForm()
+        kwargs['form'] = form
+        return super(ArtistBankAccountView, self).get(request, *args, **kwargs)
 
 
 class CollectionDetailView(LoginRequiredMixin, ProfileAwareView):
     template_name = 'modals/work_detail.html'
 
-    def get(self, request, collection_id, *args, **kwargs):
-        collection = Collection.objects.get(id=collection_id)
-        works = Work.objects.filter(collection_id=collection_id)
+    def get(self, request, *args, **kwargs):
+        collection = Collection.objects.get(id=kwargs['collection_id'])
+        works = Work.objects.filter(collection_id=kwargs['collection_id'])
 
         context = {
             'collection': collection,
@@ -266,15 +285,15 @@ class HelpView(ProfileAwareView):
 class WorkPageView(ProfileAwareView):
     template_name = 'work_page/work_page.html'
 
-    def get(self, request, work_id, *args, **kwargs):
-        work = Work.objects.get(id=work_id)
-        voters = Rating.objects.filter(work__id=work_id).select_related("user")
+    def get(self, request, *args, **kwargs):
+        work = Work.objects.get(id=kwargs['work_id'])
+        voters = Rating.objects.filter(work__id=kwargs['work_id']).select_related("user")
 
-        this_work_view_slug = "work_views_{}".format(work_id)
+        this_work_view_slug = "work_views_{}".format(kwargs['work_id'])
 
         context = self.get_context_data(**{'user': request.user})
         context["work"] = work
-        context["voted"] = user_likes(request.user, work_id) if request.user.is_authenticated() else False
+        context["voted"] = user_likes(request.user, kwargs['work_id']) if request.user.is_authenticated() else False
         context["voters"] = voters
 
         from redis_metrics.models import R
