@@ -554,3 +554,7 @@
 .add-work a:hover {
     text-decoration: none;
 }
+
+.sketch {
+    margin-top: 65px;
+}

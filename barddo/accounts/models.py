@@ -134,6 +134,6 @@ class BankAccount(models.Model):
     user = models.OneToOneField(BarddoUser)
     favored_name = models.CharField(_('Favoured Name'), max_length=100, db_index=True)
     cpf = models.CharField(_('Social Security'), max_length=15, db_index=True)
-    bank_code = models.CharField(_('Bank Code'), max_length=5)
+    bank_code = models.CharField(_('Bank Code'), max_length=10)
     agency = models.CharField(_('Agency'), max_length=8)
-    account = models.CharField(_('Bank Account'), max_length=10)
+    account = models.CharField(_('Account'), max_length=10)

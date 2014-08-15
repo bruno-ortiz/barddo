@@ -431,7 +431,6 @@ msgid "Create a new Collection!"
 msgstr "Criar uma nova Coleção"
 
 #: core/templates/dashboard/artist_dashboard.html:64
-#, fuzzy
 msgid ""
 "\n"
 "                                Welcome to your publishing panel!\n"
@@ -452,7 +451,6 @@ msgid "Uh Oh!"
 msgstr "Oh, não!"
 
 #: core/templates/dashboard/artist_dashboard.html:81
-#, fuzzy
 msgid ""
 "\n"
 "                            Looks like you don't have any <span class=\"red"
