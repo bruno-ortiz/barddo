@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Barddo Main Site\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-12 22:23-0300\n"
-"PO-Revision-Date: 2014-08-12 22:26-0300\n"
+"POT-Creation-Date: 2014-08-15 01:01-0300\n"
+"PO-Revision-Date: 2014-08-15 01:02-0300\n"
 "Last-Translator: Israel Crisanto <israel.crisanto@gmail.com>\n"
 "Language-Team: Barddo Team <israel.crisanto@gmail.com>\n"
 "Language: pt\n"
@@ -431,7 +431,6 @@ msgid "Create a new Collection!"
 msgstr "Criar uma nova Coleção"
 
 #: core/templates/dashboard/artist_dashboard.html:64
-#, fuzzy
 msgid ""
 "\n"
 "                                Welcome to your publishing panel!\n"
@@ -452,7 +451,6 @@ msgid "Uh Oh!"
 msgstr "Oh, não!"
 
 #: core/templates/dashboard/artist_dashboard.html:81
-#, fuzzy
 msgid ""
 "\n"
 "                            Looks like you don't have any <span class=\"red"
@@ -1927,30 +1925,42 @@ msgstr ""
 "                                            manter o serviço funcionando!\n"
 "                                        "
 
-#: reader/templates/core_reader.html:15
+#: reader/templates/core_reader.html:16
 msgid "Putting artists and readers closer!"
 msgstr "Aproximando artistas e leitores!"
 
-#: reader/templates/core_reader.html:19
+#: reader/templates/core_reader.html:20
 msgid "Click or touch the sides of the pages to turn them!"
 msgstr "Clique ou toque nas páginas para virá-las!"
 
-#: reader/templates/core_reader.html:20
+#: reader/templates/core_reader.html:21
 msgid "You can also use the keyboard and the mouse to change pages and zoom."
 msgstr ""
 "Você também pode usar o teclado e o mouse para mudar as páginas e dar zoom."
 
-#: reader/templates/core_reader.html:25
+#: reader/templates/core_reader.html:26
 msgid "Use the toolbar to zoom in, fullscreen or see the list of pages!"
 msgstr ""
 "Use a barra de ferramentas para dar zoom, entrar em tela cheia ou ver a "
 "lista de páginas!"
 
-#: reader/templates/core_reader.html:92 reader/templates/core_reader.html:94
+#: reader/templates/core_reader.html:66
+msgid "Share if you liked!"
+msgstr "Compartilhe com seus amigos!"
+
+#: reader/templates/core_reader.html:77
+msgid "See other works!"
+msgstr "Conheça outras obras!"
+
+#: reader/templates/core_reader.html:116
+msgid "Again"
+msgstr "Novamente"
+
+#: reader/templates/core_reader.html:140 reader/templates/core_reader.html:142
 msgid "Barddo Comic"
 msgstr "Quadrinhos no Barddo"
 
-#: reader/templates/core_reader.html:92 reader/templates/core_reader.html:94
+#: reader/templates/core_reader.html:140 reader/templates/core_reader.html:142
 msgid "Comic Viewer"
 msgstr "Visualizador de Quadrinhos"
 
