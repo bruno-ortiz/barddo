@@ -95,6 +95,11 @@ def post_to_twitter(context, work=None, link_text='Post to Twitter'):
     return context
 
 
+@register.inclusion_tag('share/post_local_twitter.html', takes_context=True)
+def post_to_twitter_fake(context, work=None, link_text='Post to Twitter'):
+    return post_to_twitter(context, work, link_text)
+
+
 @register.simple_tag(takes_context=True)
 def post_to_facebook_url(context, obj_or_url=None):
     request = context.get('request', MockRequest())
@@ -109,6 +114,10 @@ def post_to_facebook(context, obj_or_url=None, link_text='Post to Facebook'):
     context = post_to_facebook_url(context, obj_or_url)
     context['link_text'] = link_text
     return context
+
+@register.inclusion_tag('share/post_local_facebook.html', takes_context=True)
+def post_to_facebook_fake(context, obj_or_url=None, link_text='Post to Facebook'):
+    return post_to_facebook(context, obj_or_url, link_text)
 
 
 @register.simple_tag(takes_context=True)

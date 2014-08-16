@@ -129,10 +129,6 @@
     margin-top: -5px;
 }
 
-/*.wowbook-left {*/
-    /*margin-right: 14px;*/
-/*}*/
-
 /**
  * Overlay Settings
  */
@@ -205,7 +201,6 @@
     display: none;
 }
 
-
 #comic-help .barddo-info {
     position: absolute;
     right: 0;
@@ -257,4 +252,114 @@
 
 #comic-container .loading-page i {
     display: block;
+}
+
+/**
+ * End reading suggestions
+ */
+#comic-container #comic .page.suggestions {
+    background-color: white;
+    padding: 20px;
+}
+
+#comic-container .suggestions img.barddo {
+    max-width: 33.333%;
+}
+
+#comic-container .suggestions {
+    text-align: center;
+}
+
+#comic-container .suggestions .text {
+    font-size: 1.2em;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: rgb(113, 113, 114);
+}
+
+#comic-container .suggestions h2 {
+    font-size: 1.4em;
+    padding: 10px;
+    margin: 0;
+    background-color: #03354c;
+    color: white;
+    font-weight: bold;
+}
+
+#comic-container .social-share {
+    width: 100%;
+    height: 30px;
+}
+
+#comic-container .social-share > div, .social-share > div > span, .social-share > iframe {
+    vertical-align: top !important;
+}
+
+#comic-container .share-caption {
+    color: white;
+    font-size: 14px;
+    padding: 10px;
+}
+
+.suggestions {
+    padding: 0 20px 5px 20px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.work-panel-item {
+    max-width: 33.3333%;
+    width: 33.3333%;
+    float: left;
+}
+
+.work-panel {
+    background-color: black;
+}
+
+.work-panel-line {
+    max-height: 50%;
+}
+
+.work-panel-item a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+#comic-container .btn-facebook, #comic-container .btn-twitter, #comic-container .btn-gplus {
+    color: white;
+    padding: 1px 5px 1px 5px;
+    font-size: 14px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+#comic-container .btn-facebook:hover, #comic-container .btn-twitter:hover, #comic-container .btn-gplus:hover {
+    text-decoration: none;
+}
+
+.work-panel-item:hover {
+    opacity: 0.5;
+}
+
+#read-again {
+    visibility: hidden;
+}
+
+@media only screen
+and (min-width: 1281px) {
+    /* Styles */
+    #comic-container .suggestions .text {
+        font-size: 25px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        color: rgb(113, 113, 114);
+    }
+
+    #comic-container .social-share > a {
+        padding: 10px !important;
+        font-size: 14px  !important;
+    }
 }
