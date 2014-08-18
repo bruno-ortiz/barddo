@@ -3,10 +3,14 @@
 {% load staticfiles %}
 {% load thumbnail %}
 {% load widget_tweaks %}
+{% load compress %}
 
 
 {% block header %}
-    <link rel="stylesheet" href="{% static "barddo/css/barddo.dashboard.css" %}"/>
+    {% compress css %}
+        <link rel="stylesheet" href="{% static "barddo/css/barddo.dashboard.css" %}"/>
+        <link rel="stylesheet" href="{% static "css/select2.css" %}"/>
+    {% endcompress %}
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -90,42 +94,79 @@
                             <br>
                         </div>
                     {% endif %}
-                    <form class="form-horizontal">
-                        <div class="row">
-                            <div class="form-group no-margin-left no-margin-right">
-                                <div class="col-xs-12 col-sm-4">
-                                    <label for="{{ form.favored_name.auto_id }}"
-                                           class="control-label">{{ form.favored_name.label }}</label>
-                                    {% render_field form.favored_name class="width-100" %}
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <form class="form-horizontal">
+                                <div class="row">
+                                    <div class="form-group no-margin-left no-margin-right">
+                                        <div class="col-xs-12 col-sm-8">
+                                            <label for="{{ form.favored_name.auto_id }}"
+                                                   class="control-label">{{ form.favored_name.label }}</label>
+                                            {% render_field form.favored_name class="width-100" %}
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4">
+                                            <label for="{{ form.cpf.auto_id }}"
+                                                   class="control-label">{{ form.cpf.label }}</label>
+                                            {% render_field form.cpf class="width-100" %}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-2">
-                                    <label for="{{ form.cpf.auto_id }}"
-                                           class="control-label">{{ form.cpf.label }}</label>
-                                    {% render_field form.cpf class="width-100" %}
+                                <div class="row">
+                                    <div class="form-group no-margin-left no-margin-right">
+                                        <div class="col-xs-12 col-sm-4">
+                                            <label for="{{ form.bank_code.auto_id }}"
+                                                   class="control-label">{{ form.bank_code.label }}</label>
+                                            {% render_field form.bank_code class="width-100" %}
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4">
+                                            <label for="{{ form.account.auto_id }}"
+                                                   class="control-label">{{ form.account.label }}</label>
+                                            {% render_field form.account class="width-100" %}
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4">
+                                            <label for="{{ form.agency.auto_id }}"
+                                                   class="control-label">{{ form.agency.label }}</label>
+                                            {% render_field form.agency class="width-100" %}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-2">
-                                    <label for="{{ form.bank_code.auto_id }}"
-                                           class="control-label">{{ form.bank_code.label }}</label>
-                                    {% render_field form.bank_code class="width-100" %}
-                                </div>
-                                <div class="col-xs-12 col-sm-2">
-                                    <label for="{{ form.account.auto_id }}"
-                                           class="control-label">{{ form.account.label }}</label>
-                                    {% render_field form.account class="width-100" %}
-                                </div>
-                                <div class="col-xs-12 col-sm-2">
-                                    <label for="{{ form.agency.auto_id }}"
-                                           class="control-label">{{ form.agency.label }}</label>
-                                    {% render_field form.agency class="width-100" %}
-                                </div>
+                            </form>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="alert alert-success">
+                                {% trans "You have not registered your bank account!" %}
+                                <br>
                             </div>
                         </div>
-                    </form>
+                    </div>
                     <div class="hr hr8 hr-double hr-dotted"></div>
 
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block page_specific_javascript %}
+    {% compress js %}
+        <script src="{% static "js/uncompressed/select2.js" %}"></script>
+        <script src="{% static "js/uncompressed/jquery.maskedinput.js" %}"></script>
+    {% endcompress %}
+{% endblock %}
+
+{% block bottom_page %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.getJSON("{% url "bank.codes" %}", function (banks) {
+                $({{ form.bank_code.auto_id }}).select2({
+                    allowClear: true,
+                    placeholder: "{% trans "Select a bank" %}",
+                    data: banks
+                });
+            });
+            $({{ form.cpf.auto_id }}).mask("999.999.999-99");
+        });
+
+    </script>
 {% endblock %}
 
