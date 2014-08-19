@@ -96,7 +96,8 @@
                     {% endif %}
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
-                            <form class="form-horizontal">
+                            <form class="form-horizontal" method="post" action="{% url 'core.bank.account' %}">
+                                {% csrf_token %}
                                 <div class="row">
                                     <div class="form-group no-margin-left no-margin-right">
                                         <div class="col-xs-12 col-sm-8">
@@ -128,6 +129,7 @@
                                                    class="control-label">{{ form.agency.label }}</label>
                                             {% render_field form.agency class="width-100" %}
                                         </div>
+                                        <input type="submit" class="btn btn-primary" value="{% trans "Register" %}">
                                     </div>
                                 </div>
                             </form>

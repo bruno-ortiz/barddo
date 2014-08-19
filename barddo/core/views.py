@@ -6,16 +6,13 @@ from django.views.generic import View
 from django.http import HttpResponse
 from django.shortcuts import redirect
 
-from accounts.forms import BankAccountForm
-
-from accounts.models import BankAccount
-
+from core.utils import validate_work_owner
 from .models import Collection, Work
-from .exceptions import ChangeOnObjectNotOwnedError
 from accounts.views import ProfileAwareView, LoginRequiredMixin
+from payments.forms import BankAccountForm
 from publishing.views import publisher_landpage
 from rating.models import Rating, user_likes
-import payments.models as payment
+from payments.models import BankAccount, Item
 
 
 class IndexView(ProfileAwareView):
@@ -120,8 +117,8 @@ class ArtistStatisticsView(LoginRequiredMixin, ProfileAwareView):
     template_name = 'dashboard/artist_statistics.html'
 
     def get_context_data(self, **kwargs):
-        sold_works = payment.Item.objects.select_related('work', "purchase").filter(work__author_id=kwargs['user'].id).order_by("-purchase__date",
-                                                                                                                                "-purchase__id")
+        sold_works = Item.objects.select_related('work', "purchase").filter(work__author_id=kwargs['user'].id).order_by("-purchase__date",
+                                                                                                                        "-purchase__id")
         total = sum([item.price - item.taxes for item in sold_works])
 
         start_date = datetime.date(2014, 01, 01)
@@ -144,22 +141,44 @@ class ArtistStatisticsView(LoginRequiredMixin, ProfileAwareView):
         return super(ArtistStatisticsView, self).get(request, *args, **kwargs)
 
 
-class ArtistBankAccountView(LoginRequiredMixin, ProfileAwareView):
+class BankAccountMixin(object):
+    def get_bank_account_data(self):
+        data = {}
+        try:
+            acc = BankAccount.objects.get(user=self.request.user)
+            data['bank_account'] = acc
+            data['has_account'] = True
+        except BankAccount.DoesNotExist:
+            data['has_account'] = False
+        return data
+
+
+class ArtistBankAccountView(LoginRequiredMixin, BankAccountMixin, ProfileAwareView):
     template_name = 'dashboard/bank_account.html'
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_publisher():
             return redirect(publisher_landpage)
 
-        try:
-            acc = BankAccount.objects.get(user=request.user)
-            form = BankAccountForm(instance=acc)
-            kwargs['has_account'] = True
-        except BankAccount.DoesNotExist:
-            kwargs['has_account'] = False
+        bank_data = self.get_bank_account_data()
+        if bank_data['has_account']:
+            form = BankAccountForm(instance=bank_data['bank_account'])
+        else:
             form = BankAccountForm()
-        kwargs['form'] = form
-        return super(ArtistBankAccountView, self).get(request, *args, **kwargs)
+        bank_data['form'] = form
+        return super(ArtistBankAccountView, self).get(request, *args, **bank_data)
+
+    def post(self, request):
+        bank_data = self.get_bank_account_data()
+        if bank_data['has_account']:
+            form = BankAccountForm(request.POST, instance=bank_data['bank_account'])
+        else:
+            form = BankAccountForm(request.POST)
+        if form.is_valid():
+            bank_account = form.save(commit=False)
+            bank_account.user = request.user
+            bank_account.save()
+        return super(ArtistBankAccountView, self).get(request, form=form, **bank_data)
 
 
 class CollectionDetailView(LoginRequiredMixin, ProfileAwareView):
@@ -178,11 +197,6 @@ class CollectionDetailView(LoginRequiredMixin, ProfileAwareView):
 
 
 collection_detail = CollectionDetailView.as_view()
-
-
-def validate_work_owner(user, work):
-    if not work.is_owner(user):
-        raise ChangeOnObjectNotOwnedError()
 
 
 # ##
