@@ -62,13 +62,7 @@
 
                         <p class="text-left">
                             {% blocktrans %}
-                                Here you can manage you account data, so we can send you the money from your sold works
-                            {% endblocktrans %}
-                        </p>
-
-                        <p class="text-left">
-                            {% blocktrans %}
-                                If you have any questions, please contact us!
+                                Here you can manage your bank account data, so we can transfer to you the money raised from work sales.
                             {% endblocktrans %}
                         </p>
                     </div>
@@ -81,7 +75,7 @@
             <div class="widget-header widget-header-large">
                 <h3 class="grey lighter pull-left position-relative">
                     <i class="icon-money green"></i>
-                    {% trans "Bank Account register" %}
+                    {% trans "Bank account register" %}
                 </h3>
             </div>
 
@@ -129,15 +123,29 @@
                                                    class="control-label">{{ form.agency.label }}</label>
                                             {% render_field form.agency class="width-100" %}
                                         </div>
-                                        <input type="submit" class="btn btn-primary" value="{% trans "Register" %}">
                                     </div>
+                                </div>
+                                <div class="row">
+                                    {% if not has_account %}
+                                        <input type="submit" class="btn btn-primary account-btn" value="{% trans "Register account" %}">
+                                    {% else %}
+                                        <input type="submit" class="btn btn-primary account-btn" value="{% trans "Update account" %}">
+                                    {% endif %}
                                 </div>
                             </form>
                         </div>
                         <div class="col-xs-12 col-sm-6">
-                            <div class="alert alert-success">
-                                {% trans "You have not registered your bank account!" %}
-                                <br>
+                            <div class="bank-account-messages">
+                                <div class="alert alert-danger width-100">
+                                    {% blocktrans %}
+                                        Please, make sure that your account is registered correctly, or else we will not be able to transfer your money!
+                                    {% endblocktrans %}
+                                    <br>
+                                </div>
+                                <div class="alert alert-success width-100">
+                                    {% trans "If you have any questions, please contact us!" %}
+                                    <br>
+                                </div>
                             </div>
                         </div>
                     </div>

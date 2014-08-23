@@ -77,6 +77,6 @@ class BankCodeProvider(LoginRequiredMixin, View):
     """
 
     def get(self, *args, **kwargs):
-        banks = map(lambda bank: {'id': bank['code'], 'text': bank['name']}, bank_codes)
+        banks = map(lambda bank: {'id': bank['code'], 'text': "{0}-{1}".format(bank['code'], bank['name'])}, bank_codes)
         data = json.dumps(banks)
         return HttpResponse(data, content_type='application/json')

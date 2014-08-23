@@ -558,3 +558,17 @@
 .sketch {
     margin-top: 65px;
 }
+
+.account-btn {
+    float: right;
+    margin-right: 15px;
+    width: 148px;
+}
+
+.bank-account-messages {
+    margin-top: 27px;
+}
+
+.background-green {
+    background-color: #45803a;
+}
