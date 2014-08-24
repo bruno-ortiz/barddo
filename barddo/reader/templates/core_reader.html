@@ -1,6 +1,7 @@
 {% load static %}
 {% load i18n %}
 {% load thumbnail %}
+{% load social_share %}
 
 <div id="comic-loading">
     <div>
@@ -55,6 +56,51 @@
                 {% endif %}
             {% endfor %}
             {# The last page will always be a Barddo promotional page #}
+            <div class="page suggestions">
+                <div class="row center">
+                    <div class="col-xs-12">
+                        <img class="barddo" alt="Barddo"
+                             src="{% static "images/barddo_blue_logo.png" %}"/>
+
+                        <div class="text">
+                            <p>{% trans "Share if you liked!" %}</p>
+                        </div>
+
+                        <div class="social-share">
+                            {% post_to_facebook_fake work "Facebook" %}
+                            {% post_to_twitter_fake work "Twitter" %}
+                            {% post_to_gplus work "Google+" %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row suggestions">
+                    <h2>{% trans "See other works!" %}</h2>
+
+                    <div class="work-panel clearfix">
+                        <div class="work-panel-line">
+                            {% for suggestion in suggestions_first %}
+                                <div class="work-panel-item">
+                                    <a href="{{ suggestion.get_absolute_url }}">
+                                        <img src="{{ suggestion.cover|thumbnail_url:"big_cover" }}"
+                                             alt="{{ suggestion.title }}">
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="work-panel-line">
+                            {% for suggestion in suggestions_second %}
+                                <div class="work-panel-item">
+                                    <a href="{{ suggestion.get_absolute_url }}">
+                                        <img src="{{ suggestion.cover|thumbnail_url:"big_cover" }}"
+                                             alt="{{ suggestion.title }}">
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 
@@ -66,6 +112,8 @@
 
             <div class="textual-links pull-left">
                 <a id="comicInfo" class="btn btn-primary white" href="{{ work.get_absolute_url }}">+ Info</a>
+                <a id='read-again' href="#" type="button" class="btn btn-success"><i class="icon-refresh"></i>
+                    {% trans "Again" %}!</a>
             </div>
 
             <div class="btn-toolbar  pull-right" role="toolbar">
@@ -127,6 +175,12 @@
             $("#comic-information").on("click", function () {
                 $("#comic-information").fadeOut("slow");
             });
+
+            $("#read-again").on("click", function () {
+                var book = $.wowBook("#comic");
+                book.gotoPage(0);
+                $("#read-again").css("visibility", "hidden");
+            })
         });
     </script>
 </div>

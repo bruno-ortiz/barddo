@@ -144,7 +144,7 @@ def change_work_cover(request):
     work = Work.objects.get(pk=id)
 
     if work.author != request.user:
-        ajax.script('gritter_error("{}")'.format(_("You are not the owner of this work!")))
+        ajax.script(u'gritter_error("{}")'.format(_("You are not the owner of this work!")))
         return ajax.json()
 
     form = CoverOnlyWorkForm(request.POST, request.FILES, instance=work)

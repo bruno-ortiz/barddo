@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Barddo Main Site\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-23 00:48-0300\n"
+"POT-Creation-Date: 2014-08-24 18:03-0300\n"
 "PO-Revision-Date: 2014-08-12 22:26-0300\n"
 "Last-Translator: Israel Crisanto <israel.crisanto@gmail.com>\n"
 "Language-Team: Barddo Team <israel.crisanto@gmail.com>\n"
@@ -613,8 +613,9 @@ msgid ""
 "                            "
 msgstr ""
 "\n"
-"                            Aqui você pode gerenciar sua conta bancaria, assim "
-"poderemos transferir para você o dinheiro arrecado com as vendas dos trabalhos!\n"
+"                            Aqui você pode gerenciar sua conta bancaria, "
+"assim poderemos transferir para você o dinheiro arrecado com as vendas dos "
+"trabalhos!\n"
 "                        "
 
 #: core/templates/dashboard/bank_account.html:78
@@ -625,15 +626,15 @@ msgstr "Registro de conta bancária"
 msgid "You have not registered your bank account!"
 msgstr "Você ainda não registrou sua conta bancária"
 
-#: core/templates/dashboard/bank_account.html:130
+#: core/templates/dashboard/bank_account.html:140
 msgid "Register account"
 msgstr "Registrar conta"
 
-#: core/templates/dashboard/bank_account.html:132
+#: core/templates/dashboard/bank_account.html:142
 msgid "Update account"
 msgstr "Atualizar conta"
 
-#: core/templates/dashboard/bank_account.html:140
+#: core/templates/dashboard/bank_account.html:150
 msgid ""
 "\n"
 "                                        Please, make sure that your account "
@@ -642,15 +643,15 @@ msgid ""
 "                                    "
 msgstr ""
 "\n"
-"                                       Por favor, tenha certeza que sua conta "
-"bancária foi registrada corretamente, senão não conseguiremos transferir o seu dinheiro "
-"                                        "
+"                                       Por favor, tenha certeza que sua "
+"conta bancária foi registrada corretamente, senão não conseguiremos "
+"transferir o seu dinheiro                                         "
 
-#: core/templates/dashboard/bank_account.html:146
+#: core/templates/dashboard/bank_account.html:156
 msgid "If you have any questions, please contact us!"
 msgstr "Se você tem quaisquer dúvidas, por favor entre em contato"
 
-#: core/templates/dashboard/bank_account.html:173
+#: core/templates/dashboard/bank_account.html:183
 msgid "Select a bank"
 msgstr "Selecione um banco"
 
@@ -2009,30 +2010,42 @@ msgstr ""
 "                                            manter o serviço funcionando!\n"
 "                                        "
 
-#: reader/templates/core_reader.html:15
+#: reader/templates/core_reader.html:16
 msgid "Putting artists and readers closer!"
 msgstr "Aproximando artistas e leitores!"
 
-#: reader/templates/core_reader.html:19
+#: reader/templates/core_reader.html:20
 msgid "Click or touch the sides of the pages to turn them!"
 msgstr "Clique ou toque nas páginas para virá-las!"
 
-#: reader/templates/core_reader.html:20
+#: reader/templates/core_reader.html:21
 msgid "You can also use the keyboard and the mouse to change pages and zoom."
 msgstr ""
 "Você também pode usar o teclado e o mouse para mudar as páginas e dar zoom."
 
-#: reader/templates/core_reader.html:25
+#: reader/templates/core_reader.html:26
 msgid "Use the toolbar to zoom in, fullscreen or see the list of pages!"
 msgstr ""
 "Use a barra de ferramentas para dar zoom, entrar em tela cheia ou ver a "
 "lista de páginas!"
 
-#: reader/templates/core_reader.html:92 reader/templates/core_reader.html:94
+#: reader/templates/core_reader.html:66
+msgid "Share if you liked!"
+msgstr "Compartilhe com seus amigos!"
+
+#: reader/templates/core_reader.html:77
+msgid "See other works!"
+msgstr "Conheça outras obras!"
+
+#: reader/templates/core_reader.html:116
+msgid "Again"
+msgstr "Novamente"
+
+#: reader/templates/core_reader.html:140 reader/templates/core_reader.html:142
 msgid "Barddo Comic"
 msgstr "Quadrinhos no Barddo"
 
-#: reader/templates/core_reader.html:92 reader/templates/core_reader.html:94
+#: reader/templates/core_reader.html:140 reader/templates/core_reader.html:142
 msgid "Comic Viewer"
 msgstr "Visualizador de Quadrinhos"
 
