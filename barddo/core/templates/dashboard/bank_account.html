@@ -88,6 +88,16 @@
                             <br>
                         </div>
                     {% endif %}
+                    {% if form.errors %}
+                        {% for field in form %}
+                            {% if field.errors %}
+                                <div class="alert alert-danger">
+                                    {{ field.label }}: {{ field.errors.as_text }}
+                                    <br>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
                             <form class="form-horizontal" method="post" action="{% url 'core.bank.account' %}">
