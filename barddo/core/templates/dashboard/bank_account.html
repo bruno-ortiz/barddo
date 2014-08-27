@@ -145,17 +145,22 @@
                             </form>
                         </div>
                         <div class="col-xs-12 col-sm-6">
-                            <div class="bank-account-messages">
-                                <div class="alert alert-danger width-100">
-                                    {% blocktrans %}
-                                        Please, make sure that your account is registered correctly, or else we will not be able to transfer your money!
-                                    {% endblocktrans %}
-                                    <br>
-                                </div>
-                                <div class="alert alert-success width-100">
-                                    {% trans "If you have any questions, please contact us!" %}
-                                    <br>
-                                </div>
+                            <div class="alert alert-danger width-100">
+                                {% blocktrans %}
+                                    Please, make sure that your account is registered correctly, or else we will not be able to transfer your money!
+                                {% endblocktrans %}
+                                <br>
+                            </div>
+                            <div class="alert alert-warning width-100">
+                                {% blocktrans %}
+                                    We are considering here that you are registering your checking account, if you need to register an account of another
+                                    type, please contact us"
+                                {% endblocktrans %}
+                                <br>
+                            </div>
+                            <div class="alert alert-success width-100">
+                                {% trans "If you have any questions, please contact us!" %}
+                                <br>
                             </div>
                         </div>
                     </div>
@@ -185,6 +190,9 @@
                 });
             });
             $({{ form.cpf.auto_id }}).mask("999.999.999-99");
+            $({{ form.account.auto_id }}).keyup(function (e) {
+                this.value = this.value.replace(/[^0-9\-]/, '')
+            });
         });
 
     </script>

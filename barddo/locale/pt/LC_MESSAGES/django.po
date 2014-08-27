@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Barddo Main Site\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-24 18:03-0300\n"
+"POT-Creation-Date: 2014-08-26 23:43-0300\n"
 "PO-Revision-Date: 2014-08-12 22:26-0300\n"
 "Last-Translator: Israel Crisanto <israel.crisanto@gmail.com>\n"
 "Language-Team: Barddo Team <israel.crisanto@gmail.com>\n"
@@ -634,24 +634,37 @@ msgstr "Registrar conta"
 msgid "Update account"
 msgstr "Atualizar conta"
 
-#: core/templates/dashboard/bank_account.html:150
+#: core/templates/dashboard/bank_account.html:149
 msgid ""
 "\n"
-"                                        Please, make sure that your account "
-"is registered correctly, or else we will not be able to transfer your "
-"money!\n"
-"                                    "
+"                                    Please, make sure that your account is "
+"registered correctly, or else we will not be able to transfer your money!\n"
+"                                "
 msgstr ""
 "\n"
 "                                       Por favor, tenha certeza que sua "
 "conta bancária foi registrada corretamente, senão não conseguiremos "
 "transferir o seu dinheiro                                         "
 
-#: core/templates/dashboard/bank_account.html:156
-msgid "If you have any questions, please contact us!"
-msgstr "Se você tem quaisquer dúvidas, por favor entre em contato"
+#: core/templates/dashboard/bank_account.html:155
+msgid ""
+"\n"
+"                                    We are considering here that you are "
+"registering your checking account, if you need to register an account of "
+"another\n"
+"                                    type, please contact us\"\n"
+"                                "
+msgstr ""
+"\n"
+"Nós estamos considerando que você está cadastrando sua conta corrente, se você precisa cadastrar uma conta de outro\n"
+"tipo, por favor entre em contato.\n"
+"                                "
 
-#: core/templates/dashboard/bank_account.html:183
+#: core/templates/dashboard/bank_account.html:162
+msgid "If you have any questions, please contact us!"
+msgstr "Se você tem quaisquer dúvidas, por favor entre em contato!"
+
+#: core/templates/dashboard/bank_account.html:188
 msgid "Select a bank"
 msgstr "Selecione um banco"
 
@@ -1722,6 +1735,21 @@ msgstr "Relacionamento com Seguidor"
 #: follow/models.py:149
 msgid "Following Relationships"
 msgstr "Relacionamento com Seguidores"
+
+#: payments/forms.py:20
+msgid ""
+"Account must contains only numbers or '-' separators and finish with a "
+"number."
+msgstr ""
+"Conta precisa conter apenas números ou o separador '-' e precisa terminas "
+"com um número."
+
+#: payments/forms.py:26
+msgid ""
+"Agency must contains only numbers or '-' separators and finish with a number."
+msgstr ""
+"Agência precisa conter apenas números ou o separador '-' e precisa terminas "
+"com um número."
 
 #: payments/models.py:14
 msgid "Payment Method"
