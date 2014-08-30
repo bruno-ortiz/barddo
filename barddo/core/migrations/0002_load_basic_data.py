@@ -6,9 +6,7 @@ class Migration(DataMigration):
     no_dry_run = True
 
     def forwards(self, orm):
-        from django.core.management import call_command
-
-        call_command("loaddata", "core_basic_data.json")
+        pass
 
     def backwards(self, orm):
         pass

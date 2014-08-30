@@ -1,18 +1,18 @@
 # coding=utf-8
 import json
 import datetime
-import os
 
 from django.views.generic import View
 from django.http import HttpResponse
 from django.shortcuts import redirect
 
+from core.utils import validate_work_owner
 from .models import Collection, Work
-from .exceptions import ChangeOnObjectNotOwnedError
 from accounts.views import ProfileAwareView, LoginRequiredMixin
+from payments.forms import BankAccountForm
 from publishing.views import publisher_landpage
 from rating.models import Rating, user_likes
-import payments.models as payment
+from payments.models import BankAccount, Item
 
 
 class IndexView(ProfileAwareView):
@@ -45,7 +45,8 @@ class IndexView(ProfileAwareView):
         # TODO: quando tivermos fluxo constante, limitar o que é exibido
         limit = self.get_relative_date(self.LAST_YEAR)
 
-        new_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).filter(publish_date__gte=limit, is_published=True). \
+        new_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).filter(publish_date__gte=limit,
+                                                                                                                               is_published=True). \
             order_by("-publish_date")
         return self.__filter_works_with_pages(new_works)
 
@@ -54,7 +55,8 @@ class IndexView(ProfileAwareView):
         limit = self.get_relative_date(self.LAST_YEAR)
 
         # TODO: Rever o distinct
-        rising_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).liked_after(limit).filter(is_published=True).distinct(). \
+        rising_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).liked_after(limit).filter(
+            is_published=True).distinct(). \
             order_by("-total_likes")
         return self.__filter_works_with_pages(rising_works)
 
@@ -63,7 +65,8 @@ class IndexView(ProfileAwareView):
         limit = self.get_relative_date(self.LAST_YEAR)
 
         # TODO: Rever o distinct
-        trending_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).liked_after(limit).filter(is_published=True).distinct(). \
+        trending_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).liked_after(limit).filter(
+            is_published=True).distinct(). \
             order_by("-total_likes")
         return self.__filter_works_with_pages(trending_works)
 
@@ -104,10 +107,7 @@ class ArtistDashboardView(LoginRequiredMixin, ProfileAwareView):
         if not request.user.is_publisher():
             return redirect(publisher_landpage)
 
-        context = self.get_context_data(**{'user': request.user})
-        context.update(kwargs)
-
-        return super(ArtistDashboardView, self).render_to_response(context)
+        return super(ArtistDashboardView, self).get(request, *args, **kwargs)
 
 
 artist_dashboard = ArtistDashboardView.as_view()
@@ -117,7 +117,8 @@ class ArtistStatisticsView(LoginRequiredMixin, ProfileAwareView):
     template_name = 'dashboard/artist_statistics.html'
 
     def get_context_data(self, **kwargs):
-        sold_works = payment.Item.objects.select_related('work', "purchase").filter(work__author_id=kwargs['user'].id).order_by("-purchase__date", "-purchase__id")
+        sold_works = Item.objects.select_related('work', "purchase").filter(work__author_id=kwargs['user'].id).order_by("-purchase__date",
+                                                                                                                        "-purchase__id")
         total = sum([item.price - item.taxes for item in sold_works])
 
         start_date = datetime.date(2014, 01, 01)
@@ -137,18 +138,55 @@ class ArtistStatisticsView(LoginRequiredMixin, ProfileAwareView):
         if not request.user.is_publisher():
             return redirect(publisher_landpage)
 
-        context = self.get_context_data(**{'user': request.user})
-        context.update(kwargs)
+        return super(ArtistStatisticsView, self).get(request, *args, **kwargs)
 
-        return super(ArtistStatisticsView, self).render_to_response(context)
+
+class BankAccountMixin(object):
+    def get_bank_account_data(self):
+        data = {}
+        try:
+            acc = BankAccount.objects.get(user=self.request.user)
+            data['bank_account'] = acc
+            data['has_account'] = True
+        except BankAccount.DoesNotExist:
+            data['has_account'] = False
+        return data
+
+
+class ArtistBankAccountView(LoginRequiredMixin, BankAccountMixin, ProfileAwareView):
+    template_name = 'dashboard/bank_account.html'
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_publisher():
+            return redirect(publisher_landpage)
+
+        bank_data = self.get_bank_account_data()
+        if bank_data['has_account']:
+            form = BankAccountForm(instance=bank_data['bank_account'])
+        else:
+            form = BankAccountForm()
+        bank_data['form'] = form
+        return super(ArtistBankAccountView, self).get(request, *args, **bank_data)
+
+    def post(self, request):
+        bank_data = self.get_bank_account_data()
+        if bank_data['has_account']:
+            form = BankAccountForm(request.POST, instance=bank_data['bank_account'])
+        else:
+            form = BankAccountForm(request.POST)
+        if form.is_valid():
+            bank_account = form.save(commit=False)
+            bank_account.user = request.user
+            bank_account.save()
+        return super(ArtistBankAccountView, self).get(request, form=form, **bank_data)
 
 
 class CollectionDetailView(LoginRequiredMixin, ProfileAwareView):
     template_name = 'modals/work_detail.html'
 
-    def get(self, request, collection_id, *args, **kwargs):
-        collection = Collection.objects.get(id=collection_id)
-        works = Work.objects.filter(collection_id=collection_id)
+    def get(self, request, *args, **kwargs):
+        collection = Collection.objects.get(id=kwargs['collection_id'])
+        works = Work.objects.filter(collection_id=kwargs['collection_id'])
 
         context = {
             'collection': collection,
@@ -159,11 +197,6 @@ class CollectionDetailView(LoginRequiredMixin, ProfileAwareView):
 
 
 collection_detail = CollectionDetailView.as_view()
-
-
-def validate_work_owner(user, work):
-    if not work.is_owner(user):
-        raise ChangeOnObjectNotOwnedError()
 
 
 # ##
@@ -266,15 +299,15 @@ class HelpView(ProfileAwareView):
 class WorkPageView(ProfileAwareView):
     template_name = 'work_page/work_page.html'
 
-    def get(self, request, work_id, *args, **kwargs):
-        work = Work.objects.get(id=work_id)
-        voters = Rating.objects.filter(work__id=work_id).select_related("user")
+    def get(self, request, *args, **kwargs):
+        work = Work.objects.get(id=kwargs['work_id'])
+        voters = Rating.objects.filter(work__id=kwargs['work_id']).select_related("user")
 
-        this_work_view_slug = "work_views_{}".format(work_id)
+        this_work_view_slug = "work_views_{}".format(kwargs['work_id'])
 
         context = self.get_context_data(**{'user': request.user})
         context["work"] = work
-        context["voted"] = user_likes(request.user, work_id) if request.user.is_authenticated() else False
+        context["voted"] = user_likes(request.user, kwargs['work_id']) if request.user.is_authenticated() else False
         context["voters"] = voters
 
         from redis_metrics.models import R

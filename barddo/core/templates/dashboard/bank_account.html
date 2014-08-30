@@ -1,0 +1,200 @@
+{% extends 'main_template.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% load thumbnail %}
+{% load widget_tweaks %}
+{% load compress %}
+
+
+{% block header %}
+    {% compress css %}
+        <link rel="stylesheet" href="{% static "barddo/css/barddo.dashboard.css" %}"/>
+        <link rel="stylesheet" href="{% static "css/select2.css" %}"/>
+    {% endcompress %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="{% url "core.index" %}">{% trans "Home" %}</a>
+        </li>
+        <li class="active">{% trans "Dashboard" %}</li>
+    </ul>
+{% endblock %}
+
+{% block sidebar %}
+    <div class="sidebar menu-min" id="sidebar">
+        <ul class="side-bar nav nav-list">
+            <li>
+                <a href="{% url "core.dashboard" %}">
+                    <i class="icon-dashboard"></i>
+                    <span class="menu-text"> {% trans "Dashboard" %}</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url "core.statistics" %}">
+                    <i class="icon-bar-chart"></i>
+                    <span class="menu-text"> {% trans "Statistics" %}</span>
+                </a>
+            </li>
+
+            <li class="active">
+                <a href="#">
+                    <i class="icon-money"></i>
+                    <span class="menu-text"> {% trans "Bank Account" %}</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+{% block content %}
+    <div class="features block background-green">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 col-xs-12 sketch">
+                    <img src="{% static "images/art/half-artist.png" %}">
+                </div>
+                <div class="col-md-7 col-xs-12">
+                    <div class="page-title text-center">
+                        <h3>{% trans "The Artist Bank Account" %}</h3>
+
+                        <p class="text-left">
+                            {% blocktrans %}
+                                Here you can manage your bank account data, so we can transfer to you the money raised from work sales.
+                            {% endblocktrans %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-content">
+        <div class="widget-box transparent invoice-box">
+            <div class="widget-header widget-header-large">
+                <h3 class="grey lighter pull-left position-relative">
+                    <i class="icon-money green"></i>
+                    {% trans "Bank account register" %}
+                </h3>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main padding-24">
+                    {% if not has_account %}
+                        <div class="alert alert-warning">
+                            <strong>{% trans "Oops!" %}</strong>
+                            {% trans "You have not registered your bank account!" %}
+                            <br>
+                        </div>
+                    {% endif %}
+                    {% if form.errors %}
+                        {% for field in form %}
+                            {% if field.errors %}
+                                <div class="alert alert-danger">
+                                    {{ field.label }}: {{ field.errors.as_text }}
+                                    <br>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <form class="form-horizontal" method="post" action="{% url 'core.bank.account' %}">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="form-group no-margin-left no-margin-right">
+                                        <div class="col-xs-12 col-sm-8">
+                                            <label for="{{ form.favored_name.auto_id }}"
+                                                   class="control-label">{{ form.favored_name.label }}</label>
+                                            {% render_field form.favored_name class="width-100" %}
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4">
+                                            <label for="{{ form.cpf.auto_id }}"
+                                                   class="control-label">{{ form.cpf.label }}</label>
+                                            {% render_field form.cpf class="width-100" %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group no-margin-left no-margin-right">
+                                        <div class="col-xs-12 col-sm-4">
+                                            <label for="{{ form.bank_code.auto_id }}"
+                                                   class="control-label">{{ form.bank_code.label }}</label>
+                                            {% render_field form.bank_code class="width-100" %}
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4">
+                                            <label for="{{ form.account.auto_id }}"
+                                                   class="control-label">{{ form.account.label }}</label>
+                                            {% render_field form.account class="width-100" %}
+                                        </div>
+                                        <div class="col-xs-12 col-sm-4">
+                                            <label for="{{ form.agency.auto_id }}"
+                                                   class="control-label">{{ form.agency.label }}</label>
+                                            {% render_field form.agency class="width-100" %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    {% if not has_account %}
+                                        <input type="submit" class="btn btn-primary account-btn" value="{% trans "Register account" %}">
+                                    {% else %}
+                                        <input type="submit" class="btn btn-primary account-btn" value="{% trans "Update account" %}">
+                                    {% endif %}
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="alert alert-danger width-100">
+                                {% blocktrans %}
+                                    Please, make sure that your account is registered correctly, or else we will not be able to transfer your money!
+                                {% endblocktrans %}
+                                <br>
+                            </div>
+                            <div class="alert alert-warning width-100">
+                                {% blocktrans %}
+                                    We are considering here that you are registering your checking account, if you need to register an account of another
+                                    type, please contact us"
+                                {% endblocktrans %}
+                                <br>
+                            </div>
+                            <div class="alert alert-success width-100">
+                                {% trans "If you have any questions, please contact us!" %}
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hr hr8 hr-double hr-dotted"></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block page_specific_javascript %}
+    {% compress js %}
+        <script src="{% static "js/uncompressed/select2.js" %}"></script>
+        <script src="{% static "js/uncompressed/jquery.maskedinput.js" %}"></script>
+    {% endcompress %}
+{% endblock %}
+
+{% block bottom_page %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.getJSON("{% url "bank.codes" %}", function (banks) {
+                $({{ form.bank_code.auto_id }}).select2({
+                    allowClear: true,
+                    placeholder: "{% trans "Select a bank" %}",
+                    data: banks
+                });
+            });
+            $({{ form.cpf.auto_id }}).mask("999.999.999-99");
+            $({{ form.account.auto_id }}).keyup(function (e) {
+                this.value = this.value.replace(/[^0-9\-]/, '')
+            });
+        });
+
+    </script>
+{% endblock %}
+

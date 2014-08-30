@@ -8,13 +8,13 @@ def register_shard(*args, **kwargs):
 
     # When no argument provided
     if len(args) and not kwargs:
-        callable = args[0]
-        shards_core.register(callable)
-        return callable
+        _callable = args[0]
+        shards_core.register(_callable)
+        return _callable
 
     # When argument provided, we must wrap on another decorator
-    def decorator(callable):
-        shards_core.register(callable, *args, **kwargs)
-        return callable
+    def decorator(_func):
+        shards_core.register(_func, *args, **kwargs)
+        return _func
 
     return decorator

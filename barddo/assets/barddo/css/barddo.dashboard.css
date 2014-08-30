@@ -554,3 +554,17 @@
 .add-work a:hover {
     text-decoration: none;
 }
+
+.sketch {
+    margin-top: 65px;
+}
+
+.account-btn {
+    float: right;
+    margin-right: 15px;
+    width: 148px;
+}
+
+.background-green {
+    background-color: #45803a;
+}
