@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Barddo Main Site\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-12 22:23-0300\n"
+"POT-Creation-Date: 2014-08-26 23:43-0300\n"
 "PO-Revision-Date: 2014-08-12 22:26-0300\n"
 "Last-Translator: Israel Crisanto <israel.crisanto@gmail.com>\n"
 "Language-Team: Barddo Team <israel.crisanto@gmail.com>\n"
@@ -50,6 +50,7 @@ msgstr "Sinto muito, um erro ocorreu:"
 #: accounts/templates/profile.html:16
 #: core/templates/dashboard/artist_dashboard.html:22
 #: core/templates/dashboard/artist_statistics.html:15
+#: core/templates/dashboard/bank_account.html:20
 #: core/templates/docs/about-us.html:13 core/templates/docs/help.html:13
 #: core/templates/docs/terms.html:14
 #: core/templates/work_page/work_page.html:25
@@ -130,40 +131,40 @@ msgstr "Mural de Atividade"
 msgid "Followers"
 msgstr "Seguidores"
 
-#: accounts/templates/profile.html:386
+#: accounts/templates/profile.html:385
 msgid "Change Avatar"
 msgstr "Mudar Avatar"
 
-#: accounts/templates/profile.html:402
+#: accounts/templates/profile.html:401
 msgid "File is not an image!"
 msgstr "O arquivo não é uma imagem!"
 
-#: accounts/templates/profile.html:403
+#: accounts/templates/profile.html:402
 msgid "Please choose a jpg|gif|png image!"
 msgstr "Por favor, escolha uma imagem do tipo jpg, gif ou png!"
 
-#: accounts/templates/profile.html:408
+#: accounts/templates/profile.html:407
 msgid "File is too big!"
 msgstr "O arquivo é muito grande!"
 
-#: accounts/templates/profile.html:409
+#: accounts/templates/profile.html:408
 msgid "Image size should not exceed 100Kb!"
 msgstr "O tamanho da imagem não pode ser maior que 100kb!\t\t"
 
-#: accounts/templates/profile.html:450
+#: accounts/templates/profile.html:449
 msgid "Avatar Updated!"
 msgstr "Avatar atualizado!"
 
-#: accounts/templates/profile.html:451
+#: accounts/templates/profile.html:450
 msgid "Your new avatar is ready!"
 msgstr "Seu novo avatar foi configurado!"
 
-#: accounts/templates/profile.html:483
+#: accounts/templates/profile.html:482
 #, python-format
 msgid "%(name)s unfollowed!"
 msgstr "Deixou de seguir %(name)s!"
 
-#: accounts/templates/profile.html:494
+#: accounts/templates/profile.html:493
 #, python-format
 msgid "Following %(name)s!"
 msgstr "Seguindo %(name)s!"
@@ -219,11 +220,11 @@ msgstr "Slug"
 msgid "Status"
 msgstr "Estado"
 
-#: core/models.py:99 core/templates/dashboard/artist_statistics.html:79
+#: core/models.py:99 core/templates/dashboard/artist_statistics.html:86
 msgid "Start Date"
 msgstr "Data de Início"
 
-#: core/models.py:100 core/templates/dashboard/artist_statistics.html:82
+#: core/models.py:100 core/templates/dashboard/artist_statistics.html:89
 msgid "End Date"
 msgstr "Data de Fim"
 
@@ -413,25 +414,33 @@ msgstr "Digite o nome da sua coleção e aguarde..."
 #: core/templates/dashboard/artist_dashboard.html:34
 #: core/templates/dashboard/artist_statistics.html:17
 #: core/templates/dashboard/artist_statistics.html:27
+#: core/templates/dashboard/bank_account.html:22
+#: core/templates/dashboard/bank_account.html:32
 #: templates/main_template/navbar.html:52
 msgid "Dashboard"
 msgstr "Dashboard"
 
 #: core/templates/dashboard/artist_dashboard.html:41
 #: core/templates/dashboard/artist_statistics.html:34
+#: core/templates/dashboard/bank_account.html:39
 msgid "Statistics"
 msgstr "Estatísticas"
 
-#: core/templates/dashboard/artist_dashboard.html:57
+#: core/templates/dashboard/artist_dashboard.html:47
+#: core/templates/dashboard/artist_statistics.html:41
+#: core/templates/dashboard/bank_account.html:46
+msgid "Bank Account"
+msgstr "Conta Bancária"
+
+#: core/templates/dashboard/artist_dashboard.html:63
 msgid "The Artist Dashboard"
 msgstr "O Dashboard do Artista"
 
-#: core/templates/dashboard/artist_dashboard.html:60
+#: core/templates/dashboard/artist_dashboard.html:66
 msgid "Create a new Collection!"
 msgstr "Criar uma nova Coleção"
 
-#: core/templates/dashboard/artist_dashboard.html:64
-#, fuzzy
+#: core/templates/dashboard/artist_dashboard.html:70
 msgid ""
 "\n"
 "                                Welcome to your publishing panel!\n"
@@ -447,12 +456,11 @@ msgstr ""
 "publique a qualquer momento!\n"
 "                             "
 
-#: core/templates/dashboard/artist_dashboard.html:80
+#: core/templates/dashboard/artist_dashboard.html:86
 msgid "Uh Oh!"
 msgstr "Oh, não!"
 
-#: core/templates/dashboard/artist_dashboard.html:81
-#, fuzzy
+#: core/templates/dashboard/artist_dashboard.html:87
 msgid ""
 "\n"
 "                            Looks like you don't have any <span class=\"red"
@@ -467,62 +475,62 @@ msgstr ""
 "é algo simples de resolver!\n"
 "                        "
 
-#: core/templates/dashboard/artist_dashboard.html:95
+#: core/templates/dashboard/artist_dashboard.html:101
 msgid "Create an awesome new collection, now!"
 msgstr "Criar uma nova e maravilhosa coleção, agora!"
 
-#: core/templates/dashboard/artist_dashboard.html:109
+#: core/templates/dashboard/artist_dashboard.html:115
 msgid "works "
 msgstr "trabalhos"
 
-#: core/templates/dashboard/artist_dashboard.html:140
-#: core/templates/dashboard/artist_dashboard.html:274
+#: core/templates/dashboard/artist_dashboard.html:146
+#: core/templates/dashboard/artist_dashboard.html:280
 #: core/templates/work_page/work_page.html:128
 msgid "Published"
 msgstr "Publicado"
 
-#: core/templates/dashboard/artist_dashboard.html:144
+#: core/templates/dashboard/artist_dashboard.html:150
 msgid "Pending"
 msgstr "Pendente"
 
-#: core/templates/dashboard/artist_dashboard.html:155
+#: core/templates/dashboard/artist_dashboard.html:161
 msgid "Create a work for this collection!"
 msgstr "Adicionar uma Obra a esta coleção"
 
-#: core/templates/dashboard/artist_dashboard.html:164
+#: core/templates/dashboard/artist_dashboard.html:170
 msgid "View Page"
 msgstr "Ver Página"
 
-#: core/templates/dashboard/artist_dashboard.html:171
 #: core/templates/dashboard/artist_dashboard.html:177
+#: core/templates/dashboard/artist_dashboard.html:183
 msgid "Publish now!"
 msgstr "Publicar!"
 
-#: core/templates/dashboard/artist_dashboard.html:185
+#: core/templates/dashboard/artist_dashboard.html:191
 msgid "Edit Work"
 msgstr "Editar Obra"
 
-#: core/templates/dashboard/artist_dashboard.html:190
-#: core/templates/dashboard/artist_dashboard.html:198
+#: core/templates/dashboard/artist_dashboard.html:196
+#: core/templates/dashboard/artist_dashboard.html:204
 msgid "Share now with your friends!"
 msgstr "Compartilhe com seus amigos!"
 
-#: core/templates/dashboard/artist_dashboard.html:205
+#: core/templates/dashboard/artist_dashboard.html:211
 msgid "You must publish this work to be able to share with your friends."
 msgstr "É necessário publicar este trabalho antes de compartilhá-lo."
 
-#: core/templates/dashboard/artist_dashboard.html:261
+#: core/templates/dashboard/artist_dashboard.html:267
 msgid ""
 "Work published, congratulations! Please consider sharing with your friends!"
 msgstr ""
 "Trabalho publicado, parabéns! Por favor, considere compartilha-lo com seus "
 "amigos."
 
-#: core/templates/dashboard/artist_statistics.html:50
+#: core/templates/dashboard/artist_statistics.html:57
 msgid "The Artist Statistics"
 msgstr "Estatísticas do Artista"
 
-#: core/templates/dashboard/artist_statistics.html:53
+#: core/templates/dashboard/artist_statistics.html:60
 msgid ""
 "\n"
 "                                Here you can see how your work is going. "
@@ -536,7 +544,7 @@ msgstr ""
 "                                            outras estatísticas.\n"
 "                                        "
 
-#: core/templates/dashboard/artist_statistics.html:60
+#: core/templates/dashboard/artist_statistics.html:67
 msgid ""
 "\n"
 "                                If you need some other data, please contact "
@@ -548,15 +556,16 @@ msgstr ""
 "favor nos avise!\n"
 "                        "
 
-#: core/templates/dashboard/artist_statistics.html:75
+#: core/templates/dashboard/artist_statistics.html:82
 msgid "User Shopping History"
 msgstr "Histórico de Compras dos Leitores"
 
-#: core/templates/dashboard/artist_statistics.html:99
+#: core/templates/dashboard/artist_statistics.html:106
+#: core/templates/dashboard/bank_account.html:86
 msgid "Oops!"
 msgstr "Opa!"
 
-#: core/templates/dashboard/artist_statistics.html:100
+#: core/templates/dashboard/artist_statistics.html:107
 msgid ""
 "You have no purchases yet! Do you think we can do something about this? Get "
 "in touch!"
@@ -564,33 +573,100 @@ msgstr ""
 "Ninguém comprou seus trabalhos ainda! Acha que podemos fazer alguma coisa "
 "para ajudar? Entre em contato!"
 
-#: core/templates/dashboard/artist_statistics.html:108
+#: core/templates/dashboard/artist_statistics.html:115
 msgid "Date"
 msgstr "Data"
 
-#: core/templates/dashboard/artist_statistics.html:109
+#: core/templates/dashboard/artist_statistics.html:116
 msgid "Work"
 msgstr "Trabalho"
 
-#: core/templates/dashboard/artist_statistics.html:110
+#: core/templates/dashboard/artist_statistics.html:117
 msgid "Reader"
 msgstr "Leitor"
 
-#: core/templates/dashboard/artist_statistics.html:111
+#: core/templates/dashboard/artist_statistics.html:118
 msgid "Other Taxes"
 msgstr "Outras Taxas"
 
-#: core/templates/dashboard/artist_statistics.html:143
+#: core/templates/dashboard/artist_statistics.html:150
 msgid "Total amount"
 msgstr "Valor total"
 
-#: core/templates/dashboard/artist_statistics.html:151
+#: core/templates/dashboard/artist_statistics.html:158
 msgid ""
 "Thank you for choosing Barddo services. Please contact us if you have any "
 "questions."
 msgstr ""
 "Obrigado por escolher os serviços do Barddo. Por favor, entre em contato "
 "caso tenha alguma dúvida."
+
+#: core/templates/dashboard/bank_account.html:61
+msgid "The Artist Bank Account"
+msgstr "A conta bancária do Artista"
+
+#: core/templates/dashboard/bank_account.html:64
+msgid ""
+"\n"
+"                                Here you can manage your bank account data, "
+"so we can transfer to you the money raised from work sales.\n"
+"                            "
+msgstr ""
+"\n"
+"                            Aqui você pode gerenciar sua conta bancaria, "
+"assim poderemos transferir para você o dinheiro arrecado com as vendas dos "
+"trabalhos!\n"
+"                        "
+
+#: core/templates/dashboard/bank_account.html:78
+msgid "Bank account register"
+msgstr "Registro de conta bancária"
+
+#: core/templates/dashboard/bank_account.html:87
+msgid "You have not registered your bank account!"
+msgstr "Você ainda não registrou sua conta bancária"
+
+#: core/templates/dashboard/bank_account.html:140
+msgid "Register account"
+msgstr "Registrar conta"
+
+#: core/templates/dashboard/bank_account.html:142
+msgid "Update account"
+msgstr "Atualizar conta"
+
+#: core/templates/dashboard/bank_account.html:149
+msgid ""
+"\n"
+"                                    Please, make sure that your account is "
+"registered correctly, or else we will not be able to transfer your money!\n"
+"                                "
+msgstr ""
+"\n"
+"                                       Por favor, tenha certeza que sua "
+"conta bancária foi registrada corretamente, senão não conseguiremos "
+"transferir o seu dinheiro                                         "
+
+#: core/templates/dashboard/bank_account.html:155
+msgid ""
+"\n"
+"                                    We are considering here that you are "
+"registering your checking account, if you need to register an account of "
+"another\n"
+"                                    type, please contact us\"\n"
+"                                "
+msgstr ""
+"\n"
+"Nós estamos considerando que você está cadastrando sua conta corrente, se você precisa cadastrar uma conta de outro\n"
+"tipo, por favor entre em contato.\n"
+"                                "
+
+#: core/templates/dashboard/bank_account.html:162
+msgid "If you have any questions, please contact us!"
+msgstr "Se você tem quaisquer dúvidas, por favor entre em contato!"
+
+#: core/templates/dashboard/bank_account.html:188
+msgid "Select a bank"
+msgstr "Selecione um banco"
 
 #: core/templates/docs/about-us.html:15 templates/main_template/footer.html:10
 msgid "About Us"
@@ -1660,15 +1736,50 @@ msgstr "Relacionamento com Seguidor"
 msgid "Following Relationships"
 msgstr "Relacionamento com Seguidores"
 
-#: payments/models.py:11
+#: payments/forms.py:20
+msgid ""
+"Account must contains only numbers or '-' separators and finish with a "
+"number."
+msgstr ""
+"Conta precisa conter apenas números ou o separador '-' e precisa terminas "
+"com um número."
+
+#: payments/forms.py:26
+msgid ""
+"Agency must contains only numbers or '-' separators and finish with a number."
+msgstr ""
+"Agência precisa conter apenas números ou o separador '-' e precisa terminas "
+"com um número."
+
+#: payments/models.py:14
 msgid "Payment Method"
 msgstr "Método de pagamento"
 
-#: payments/models.py:22
+#: payments/models.py:25
 msgid "Purchase Status"
 msgstr "Status da compra"
 
-#: payments/views.py:29
+#: payments/models.py:55
+msgid "Favoured Name"
+msgstr "Nome do favorecido"
+
+#: payments/models.py:56
+msgid "Social Security"
+msgstr "CPF"
+
+#: payments/models.py:57
+msgid "Bank Code"
+msgstr "Código do banco"
+
+#: payments/models.py:58
+msgid "Agency"
+msgstr "Agência"
+
+#: payments/models.py:59
+msgid "Account"
+msgstr "Conta"
+
+#: payments/views.py:30
 msgid "You own this comic book!"
 msgstr "Você já possui esta HQ!"
 
@@ -1927,30 +2038,42 @@ msgstr ""
 "                                            manter o serviço funcionando!\n"
 "                                        "
 
-#: reader/templates/core_reader.html:15
+#: reader/templates/core_reader.html:16
 msgid "Putting artists and readers closer!"
 msgstr "Aproximando artistas e leitores!"
 
-#: reader/templates/core_reader.html:19
+#: reader/templates/core_reader.html:20
 msgid "Click or touch the sides of the pages to turn them!"
 msgstr "Clique ou toque nas páginas para virá-las!"
 
-#: reader/templates/core_reader.html:20
+#: reader/templates/core_reader.html:21
 msgid "You can also use the keyboard and the mouse to change pages and zoom."
 msgstr ""
 "Você também pode usar o teclado e o mouse para mudar as páginas e dar zoom."
 
-#: reader/templates/core_reader.html:25
+#: reader/templates/core_reader.html:26
 msgid "Use the toolbar to zoom in, fullscreen or see the list of pages!"
 msgstr ""
 "Use a barra de ferramentas para dar zoom, entrar em tela cheia ou ver a "
 "lista de páginas!"
 
-#: reader/templates/core_reader.html:92 reader/templates/core_reader.html:94
+#: reader/templates/core_reader.html:66
+msgid "Share if you liked!"
+msgstr "Compartilhe com seus amigos!"
+
+#: reader/templates/core_reader.html:77
+msgid "See other works!"
+msgstr "Conheça outras obras!"
+
+#: reader/templates/core_reader.html:116
+msgid "Again"
+msgstr "Novamente"
+
+#: reader/templates/core_reader.html:140 reader/templates/core_reader.html:142
 msgid "Barddo Comic"
 msgstr "Quadrinhos no Barddo"
 
-#: reader/templates/core_reader.html:92 reader/templates/core_reader.html:94
+#: reader/templates/core_reader.html:140 reader/templates/core_reader.html:142
 msgid "Comic Viewer"
 msgstr "Visualizador de Quadrinhos"
 

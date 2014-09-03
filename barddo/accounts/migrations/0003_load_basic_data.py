@@ -37,12 +37,12 @@ class Migration(DataMigration):
         u'accounts.barddouserprofile': {
             'Meta': {'object_name': 'BarddoUserProfile'},
             'avatar': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
-            'birth_date': ('django.db.models.fields.DateField', [], {'default': 'datetime.datetime(2014, 5, 3, 0, 0)'}),
-            'country': ('django.db.models.fields.CharField', [], {'default': "u'Brazil'", 'max_length': "'30'"}),
+            'birth_date': ('django.db.models.fields.DateField', [], {'default': 'datetime.datetime(2014, 5, 18, 0, 0)'}),
+            'country': ('django.db.models.fields.CharField', [], {'default': "u'Brazil'", 'max_length': '30'}),
             'gender': ('django.db.models.fields.CharField', [], {'default': "'M'", 'max_length': '1'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'user': ('django.db.models.fields.related.OneToOneField', [],
-                     {'related_name': "'profile'", 'unique': 'True', 'to': u"orm['accounts.BarddoUser']"})
+            'language': ('django.db.models.fields.CharField', [], {'default': "'en'", 'max_length': '5'}),
+            'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'profile'", 'unique': 'True', 'to': u"orm['accounts.BarddoUser']"})
         },
         u'auth.group': {
             'Meta': {'object_name': 'Group'},

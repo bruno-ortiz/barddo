@@ -1,15 +1,16 @@
 # coding=utf-8
 import datetime
+import json
 
 from django.contrib import messages
-
 from django.core.urlresolvers import reverse
-from django.http.response import HttpResponseRedirect
+from django.http.response import HttpResponseRedirect, HttpResponse
 from django.utils.translation import ugettext as _
 from django.views.generic import View
 
 from accounts.views import LoginRequiredMixin, ProfileAwareView
 from core.models import Work
+from payments.banks import bank_codes
 from payments.models import Item, Purchase, PurchaseStatus, PaymentMethod
 from payments.processor import PaymentProcessor
 
@@ -68,3 +69,14 @@ class PaymentThanks(LoginRequiredMixin, ProfileAwareView):
     def get(self, request, *args, **kwargs):
         kwargs['work_ids'] = request.session['work_ids']
         return super(PaymentThanks, self).get(request, *args, **kwargs)
+
+
+class BankCodeProvider(LoginRequiredMixin, View):
+    """
+    Provides all bank codes as JSON
+    """
+
+    def get(self, *args, **kwargs):
+        banks = map(lambda bank: {'id': bank['code'], 'text': "{0}-{1}".format(bank['code'], bank['name'])}, bank_codes)
+        data = json.dumps(banks)
+        return HttpResponse(data, content_type='application/json')

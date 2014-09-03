@@ -1,5 +1,7 @@
 from django.conf.urls import patterns, url
 
+from core.views import ArtistBankAccountView
+
 from .views import index, AboutUsView, TermsView, HelpView, WorkPageView, ArtistStatisticsView
 from .views import artist_dashboard, upload_work_page, move_work_page, remove_work_page
 
@@ -17,6 +19,10 @@ urlpatterns = patterns(
     url(r'^dashboard/statistics$',
         ArtistStatisticsView.as_view(),
         name='core.statistics'),
+
+    url(r'^dashboard/bank/account$',
+        ArtistBankAccountView.as_view(),
+        name='core.bank.account'),
 
     url(r'^work/page/upload/(?P<work_id>\d+)$',
         upload_work_page,

@@ -26,13 +26,21 @@ function setup_reader_for(ratio, thumbs_url) {
         width: displayWidth * 2,
         height: displayHeight,
         gutterShadow: true,
-        handleWidth: displayWidth,
+        handleWidth: displayWidth / 2,
+        handleClickDuration: 75,
         updateBrowserURL: false,
         centeredWhenClosed: true,
         curl: false,
         mouseWheel: "zoom",
         bookShadow: false,
         scaleToFit: "#comic-wrapper",
+
+        onShowPage: function(book, page, pageIndex) {
+            if(book.pages.length - 1 == pageIndex) {
+                $("#read-again").css("visibility", "inherit");
+                $(".wowbook-left").addClass("wowbook-disabled");
+            }
+        },
 
         thumbnails: true,
         thumbnailsSprite: thumbs_url,
