@@ -14,6 +14,7 @@ from django.utils.html import escape
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from easy_thumbnails.files import get_thumbnailer
 
 from accounts.models import BarddoUser
 from feed.models import UserFeed
@@ -202,17 +203,14 @@ class PageRetrieve(APIView):
             with open(os.path.join(settings.MEDIA_ROOT, 'system', 'not_found_page.png'), "rb") as f:
                 return HttpResponse(f.read(), mimetype="image/png")
 
-        if int(page_number) >= len(work.image_files()):
+        if int(page_number) >= len(work.pages):
             with open(os.path.join(settings.MEDIA_ROOT, 'system', 'not_found_page.png'), "rb") as f:
                 return HttpResponse(f.read(), mimetype="image/png")
 
         try:
-            image_file = work.image_files()[int(page_number)]
-            full_path = os.path.join(work.media_path(), image_file)
-
+            image_file = get_thumbnailer(work.pages[int(page_number)].image)['reader_image'].file
             # TODO: use python magic to detect mimetype
-            with open(full_path, "rb") as f:
-                return HttpResponse(f.read(), mimetype="image/png")
+            return HttpResponse(image_file.read(), mimetype="image/png")
         except IOError:
             # Fallback
             red = Image.new('RGBA', (1, 1), (255, 0, 0, 0))

@@ -1,5 +1,6 @@
 from rest_framework.serializers import ModelSerializer, DateTimeField, CharField, SerializerMethodField, IntegerField, Serializer
 from django.contrib.sites.models import Site
+from easy_thumbnails.files import get_thumbnailer
 
 from feed.models import UserFeed
 from accounts.models import BarddoUser
@@ -54,7 +55,7 @@ class SimpleWorkSerializer(ModelSerializer):
         Get work cover with full url
         """
         current_site = Site.objects.get_current()
-        return "http://{}{}".format(current_site, work.cover.url)
+        return "http://{}{}".format(current_site, get_thumbnailer(work.cover)['reader_image'].url)
 
     class Meta:
         model = Work
@@ -72,7 +73,7 @@ class WorkPagesSerializer(Serializer):
         Get work pages full url in sequence order
         """
         current_site = Site.objects.get_current()
-        page_list = ["http://{}{}".format(current_site, entry.image.url) for entry in work.pages]
+        page_list = ["http://{}{}".format(current_site, get_thumbnailer(entry.image)['reader_image'].url) for entry in work.pages]
 
         return page_list
 
@@ -93,7 +94,7 @@ class CompleteWorkSerializer(SimpleWorkSerializer):
         Get work pages full url in sequence order
         """
         current_site = Site.objects.get_current()
-        page_list = ["http://{}{}".format(current_site, entry.image.url) for entry in work.pages]
+        page_list = ["http://{}{}".format(current_site, get_thumbnailer(entry.image)['reader_image'].url) for entry in work.pages]
 
         return page_list
 
