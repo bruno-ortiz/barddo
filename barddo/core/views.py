@@ -11,6 +11,7 @@ from .models import Collection, Work
 from accounts.views import ProfileAwareView, LoginRequiredMixin
 from payments.forms import BankAccountForm
 from publishing.views import publisher_landpage
+from payments.models import FINISHED_PURCHASE_ID
 from rating.models import Rating, user_likes
 from payments.models import BankAccount, Item
 
@@ -45,8 +46,9 @@ class IndexView(ProfileAwareView):
         # TODO: quando tivermos fluxo constante, limitar o que é exibido
         limit = self.get_relative_date(self.LAST_YEAR)
 
-        new_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).filter(publish_date__gte=limit,
-                                                                                                                               is_published=True). \
+        new_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(
+            user).filter(publish_date__gte=limit,
+                         is_published=True). \
             order_by("-publish_date")
         return self.__filter_works_with_pages(new_works)
 
@@ -55,7 +57,8 @@ class IndexView(ProfileAwareView):
         limit = self.get_relative_date(self.LAST_YEAR)
 
         # TODO: Rever o distinct
-        rising_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).liked_after(limit).filter(
+        rising_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(
+            user).liked_after(limit).filter(
             is_published=True).distinct(). \
             order_by("-total_likes")
         return self.__filter_works_with_pages(rising_works)
@@ -65,7 +68,8 @@ class IndexView(ProfileAwareView):
         limit = self.get_relative_date(self.LAST_YEAR)
 
         # TODO: Rever o distinct
-        trending_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(user).liked_after(limit).filter(
+        trending_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(
+            user).liked_after(limit).filter(
             is_published=True).distinct(). \
             order_by("-total_likes")
         return self.__filter_works_with_pages(trending_works)
@@ -117,8 +121,10 @@ class ArtistStatisticsView(LoginRequiredMixin, ProfileAwareView):
     template_name = 'dashboard/artist_statistics.html'
 
     def get_context_data(self, **kwargs):
-        sold_works = Item.objects.select_related('work', "purchase").filter(work__author_id=kwargs['user'].id).order_by("-purchase__date",
-                                                                                                                        "-purchase__id")
+        sold_works = Item.objects.select_related('work', "purchase").filter(
+            work__author_id=kwargs['user'].id, purchase__status=FINISHED_PURCHASE_ID
+        ).order_by("-purchase__date", "-purchase__id")
+
         total = sum([item.price - item.taxes for item in sold_works])
 
         start_date = datetime.date(2014, 01, 01)
