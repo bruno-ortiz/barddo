@@ -5,8 +5,10 @@ import datetime
 from django.views.generic import View
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from redis_metrics.models import R
 
 from core.utils import validate_work_owner
+from follow.models import Follow
 from .models import Collection, Work
 from accounts.views import ProfileAwareView, LoginRequiredMixin
 from payments.forms import BankAccountForm
@@ -104,7 +106,7 @@ class ArtistDashboardView(LoginRequiredMixin, ProfileAwareView):
         return super(ArtistDashboardView, self).get_context_data(**context)
 
     def get(self, request, *args, **kwargs):
-        if not request.user.is_publisher():
+        if not request.user.is_publisher:
             return redirect(publisher_landpage)
 
         return super(ArtistDashboardView, self).get(request, *args, **kwargs)
@@ -135,7 +137,7 @@ class ArtistStatisticsView(LoginRequiredMixin, ProfileAwareView):
         return super(ArtistStatisticsView, self).get_context_data(**context)
 
     def get(self, request, *args, **kwargs):
-        if not request.user.is_publisher():
+        if not request.user.is_publisher:
             return redirect(publisher_landpage)
 
         return super(ArtistStatisticsView, self).get(request, *args, **kwargs)
@@ -157,7 +159,7 @@ class ArtistBankAccountView(LoginRequiredMixin, BankAccountMixin, ProfileAwareVi
     template_name = 'dashboard/bank_account.html'
 
     def get(self, request, *args, **kwargs):
-        if not request.user.is_publisher():
+        if not request.user.is_publisher:
             return redirect(publisher_landpage)
 
         bank_data = self.get_bank_account_data()
@@ -179,24 +181,6 @@ class ArtistBankAccountView(LoginRequiredMixin, BankAccountMixin, ProfileAwareVi
             bank_account.user = request.user
             bank_account.save()
         return super(ArtistBankAccountView, self).get(request, form=form, **bank_data)
-
-
-class CollectionDetailView(LoginRequiredMixin, ProfileAwareView):
-    template_name = 'modals/work_detail.html'
-
-    def get(self, request, *args, **kwargs):
-        collection = Collection.objects.get(id=kwargs['collection_id'])
-        works = Work.objects.filter(collection_id=kwargs['collection_id'])
-
-        context = {
-            'collection': collection,
-            'works': works
-        }
-
-        return super(CollectionDetailView, self).render_to_response(context)
-
-
-collection_detail = CollectionDetailView.as_view()
 
 
 # ##
@@ -305,15 +289,27 @@ class WorkPageView(ProfileAwareView):
 
         this_work_view_slug = "work_views_{}".format(kwargs['work_id'])
 
-        context = self.get_context_data(**{'user': request.user})
-        context["work"] = work
-        context["voted"] = user_likes(request.user, kwargs['work_id']) if request.user.is_authenticated() else False
-        context["voters"] = voters
-
-        from redis_metrics.models import R
+        kwargs["work"] = work
+        kwargs["voted"] = user_likes(request.user, kwargs['work_id']) if request.user.is_authenticated() else False
+        kwargs["voters"] = voters
 
         r = R()
-        context["views"] = r.get_metric(this_work_view_slug)['year']
-        context.update(kwargs)
+        kwargs["views"] = r.get_metric(this_work_view_slug)['year']
 
-        return super(WorkPageView, self).render_to_response(context)
+        return super(WorkPageView, self).get(request, args, kwargs)
+
+
+class CollectionPageView(ProfileAwareView):
+    template_name = 'collection_page/collection_page.html'
+
+    def get(self, request, *args, **kwargs):
+        collection = Collection.objects.get(slug=kwargs['collection_slug'])
+        r = R()
+        kwargs["views"] = 0
+        for work in collection.works.all():
+            this_work_view_slug = "work_views_{}".format(work.id)
+            kwargs["views"] += int(r.get_metric(this_work_view_slug)['year'])
+        kwargs['collection'] = collection
+        kwargs['subscribers'] = Follow.objects.followers(collection)
+        kwargs['subscribed'] = Follow.objects.follows(request.user, collection)
+        return super(CollectionPageView, self).get(request, *args, **kwargs)

@@ -1,7 +1,6 @@
 from django.conf.urls import patterns, url
 
-from core.views import ArtistBankAccountView
-
+from core.views import ArtistBankAccountView, CollectionPageView
 from .views import index, AboutUsView, TermsView, HelpView, WorkPageView, ArtistStatisticsView
 from .views import artist_dashboard, upload_work_page, move_work_page, remove_work_page
 
@@ -54,5 +53,10 @@ urlpatterns = patterns(
 
     url(r'^work/(?P<work_id>\d+)/?.*$',
         WorkPageView.as_view(),
-        name='core.work.detail')
+        name='core.work.detail'),
+
+    url(r'^collection/(?P<collection_slug>[\w_-]+)$',
+        CollectionPageView.as_view(),
+        name='core.collection.detail')
+
 )

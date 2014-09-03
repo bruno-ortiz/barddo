@@ -3,7 +3,9 @@ import hashlib
 import os
 from hashlib import md5
 import time
+from PIL import Image
 
+from django.contrib.contenttypes.generic import GenericRelation
 from django.db import models
 from django.db import transaction
 from django.db.models import Manager, Count, F
@@ -16,11 +18,11 @@ from django.core.urlresolvers import reverse
 from easy_thumbnails.signal_handlers import generate_aliases
 from easy_thumbnails.signals import saved_file
 from south.modelsinspector import add_introspection_rules
-from PIL import Image
 from easy_thumbnails.files import get_thumbnailer
 
 from accounts.models import BarddoUser
 from core.exceptions import InvalidFileUploadError
+from follow.models import Follow
 from payments.models import FINISHED_PURCHASE_ID, Purchase
 from rating.models import Rating
 from search.search_manager import SearchManager
@@ -102,6 +104,8 @@ class Collection(models.Model):
     author = models.ForeignKey(BarddoUser, null=False, db_index=True)
     cover = models.ImageField(_('Cover Art'), upload_to=get_collection_cover_path, blank=True, null=True)
 
+    subscribers = GenericRelation(Follow, related_name='subscribers', db_index=True)
+
     objects = WorkManager()
     search_manager = SearchManager()
 
@@ -117,6 +121,12 @@ class Collection(models.Model):
             self.slug = slugify(self.name)
 
         super(Collection, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        """
+        Detail page url
+        """
+        return reverse('core.collection.detail', args=[str(self.slug)])
 
     def __unicode__(self):
         return self.name
@@ -330,8 +340,8 @@ class Work(models.Model):
         unique_together = ("collection", "unit_count")
         index_together = [["title", "summary"], ]
 
-    # TODO: work tags
-    # TODO: work categories
+        # TODO: work tags
+        # TODO: work categories
 
 
 def image_storage(instance, filename):

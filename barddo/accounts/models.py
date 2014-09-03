@@ -1,3 +1,4 @@
+# coding=utf-8
 import datetime
 
 from django.contrib.auth.backends import ModelBackend
@@ -86,13 +87,15 @@ class BarddoUser(AbstractUser):
 
     user_followee = GenericRelation(Follow, related_name='user_followee', db_index=True)
 
+    is_publisher = models.BooleanField(default=False)
+
     objects = BarddoUserManager()
 
     search_manager = SearchManager()
 
-    def is_publisher(self):
+    def is_publisher_legacy(self):
         """
-        A publisher is an artist that joined (or created) a publishing group
+            Não deve ser usado, gera queries desncessarias na base
         """
         owned_publishers = self.publishing_group_owner.all().count()
         num_publishers = self.publishing_group.all().count()

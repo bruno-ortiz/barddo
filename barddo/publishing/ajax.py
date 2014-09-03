@@ -40,6 +40,8 @@ def register_user_in_barddo(request):
     num_users = publishing_group.publishers.filter(pk=request.user.pk).count()
     if not num_users:
         publishing_group.publishers.add(request.user)
+        request.user.is_publisher = True
+        request.user.save()
         ajax.redirect(reverse('core.dashboard'))
     else:
         ajax.script("join_barddo_callback('{}')".format('WTH?!?! Please don\\\'t break the system!'))
