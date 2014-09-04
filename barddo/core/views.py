@@ -308,7 +308,7 @@ class CollectionPageView(ProfileAwareView):
         kwargs["views"] = 0
         for work in collection.works.all():
             this_work_view_slug = "work_views_{}".format(work.id)
-            kwargs["views"] += int(r.get_metric(this_work_view_slug)['year'])
+            kwargs["views"] += int(r.get_metric(this_work_view_slug)['year']) if r.get_metric(this_work_view_slug)['year'] is not None else 0
         kwargs['collection'] = collection
         kwargs['subscribers'] = Follow.objects.followers(collection)
         kwargs['subscribed'] = Follow.objects.follows(request.user, collection)

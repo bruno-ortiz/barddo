@@ -3,9 +3,8 @@ import hashlib
 import os
 from hashlib import md5
 import time
-from PIL import Image
 
-from django.contrib.contenttypes.generic import GenericRelation
+from PIL import Image
 from django.db import models
 from django.db import transaction
 from django.db.models import Manager, Count, F
@@ -22,7 +21,6 @@ from easy_thumbnails.files import get_thumbnailer
 
 from accounts.models import BarddoUser
 from core.exceptions import InvalidFileUploadError
-from follow.models import Follow
 from payments.models import FINISHED_PURCHASE_ID, Purchase
 from rating.models import Rating
 from search.search_manager import SearchManager
@@ -103,8 +101,6 @@ class Collection(models.Model):
 
     author = models.ForeignKey(BarddoUser, null=False, db_index=True)
     cover = models.ImageField(_('Cover Art'), upload_to=get_collection_cover_path, blank=True, null=True)
-
-    subscribers = GenericRelation(Follow, related_name='subscribers', db_index=True)
 
     objects = WorkManager()
     search_manager = SearchManager()

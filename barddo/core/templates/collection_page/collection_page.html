@@ -185,7 +185,7 @@
             function collection_unsubscribed_callback() {
                 var $subscribe = $('#subscribe-button');
                 $subscribe.prop('disabled', false);
-                $subscribe.html(' <i class="icon-plus-sign bigger-120"></i> <span class="bigger-110">follow</span>');
+                $subscribe.html(' <i class="icon-plus-sign bigger-120"></i> <span class="bigger-110">Subscribe</span>');
                 var follower_tag = $('#num-subscribers').find('span').find('span');
                 var num_followers = parseInt(follower_tag.text().trim(), 10);
                 follower_tag.html(num_followers - 1);
@@ -196,7 +196,7 @@
             function collection_subscribed_callback() {
                 var $follow = $('#subscribe-button');
                 $follow.prop('disabled', false);
-                $follow.html(' <i class="icon-minus-sign bigger-120"></i> <span class="bigger-110">Unfollow</span>');
+                $follow.html(' <i class="icon-minus-sign bigger-120"></i> <span class="bigger-110">Unsubscribe</span>');
                 var follower_tag = $('#num-subscribers').find('span').find('span');
                 var num_followers = parseInt(follower_tag.text().trim(), 10);
                 follower_tag.html(num_followers + 1);

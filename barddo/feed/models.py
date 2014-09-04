@@ -1,3 +1,5 @@
+from django.contrib.contenttypes.generic import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
@@ -18,11 +20,14 @@ class FeedManager(models.Manager):
 
 class FeedQuerySet(QuerySet):
     def feed_for_user(self, user):
-        return self.filter(Q(user=user) | Q(action__target=user)).select_related("user_profile").prefetch_related("action__target__profile").order_by("-created")
+        return self.filter(Q(user=user) | Q(action__object_id=user.id)).select_related("user_profile").order_by(
+            "-created")
 
 
 class FeedAction(PolymorphicModel):
-    target = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True)
+    content_type = models.ForeignKey(ContentType, null=True, blank=True)
+    object_id = models.PositiveIntegerField(null=True, blank=True)
+    target = GenericForeignKey('content_type', 'object_id')
 
 
 class UserFeed(models.Model):
@@ -50,13 +55,22 @@ class JoinAction(FeedAction):
         return _('<b>Barddo</b> welcomes <a class="user" href="{}">{}</a>! Aho! Aho! Aho!').format(user.user_url(), user.first_name)
 
 
+class CollectionSubscribeAction(FeedAction):
+    def get_picture(self):
+        return '<i class="pull-left thumbicon icon-key btn-info no-hover"></i>'
+
+    def get_message(self, user):
+        return _('<b>Barddo</b> Subscribes <a class="user" href="{}">{}</a>! Aho! Aho! Aho!').format(user.user_url(), user.first_name)
+
+
 class FollowAction(FeedAction):
     def get_picture(self):
         current_site = Site.objects.get_current()
         return '<img class="pull-left" alt="avatar" src="http://{}{}"/>'.format(current_site, self.target.profile.avatar.url)
 
     def get_message(self, user):
-        return _('<a class="user" href="{}">{}</a> started to follow <a class="user" href="{}">{}</a>.').format(user.user_url(), user.first_name, self.target.user_url(), self.target.first_name)
+        return _('<a class="user" href="{}">{}</a> started to follow <a class="user" href="{}">{}</a>.').format(user.user_url(), user.first_name,
+                                                                                                                self.target.user_url(), self.target.first_name)
 
 
 class UnFollowAction(FeedAction):
@@ -65,4 +79,5 @@ class UnFollowAction(FeedAction):
         return '<img class="pull-left" alt="avatar" src="http://{}{}"/>'.format(current_site, self.target.profile.avatar.url)
 
     def get_message(self, user):
-        return _('<a class="user" href="{}">{}</a> stopped to follow <a class="user" href="{}">{}</a>.').format(user.user_url(), user.first_name, self.target.user_url(), self.target.first_name)
+        return _('<a class="user" href="{}">{}</a> stopped to follow <a class="user" href="{}">{}</a>.').format(user.user_url(), user.first_name,
+                                                                                                                self.target.user_url(), self.target.first_name)
