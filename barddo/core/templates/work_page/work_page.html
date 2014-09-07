@@ -177,8 +177,6 @@
                                 </ul>
 
                                 <div class="tab-content no-border padding-24">
-                                    {% include "work_page/_readers.html" %}
-
                                     {% include "work_page/_likers.html" %}
                                 </div>
                             </div>
@@ -263,7 +261,7 @@
                 });
 
                 {# Direct linking to the reader #}
-                if(window.location.hash == "#read") {
+                if (window.location.hash == "#read") {
                     $("#read-button").trigger("click");
                 }
             {% endif %}

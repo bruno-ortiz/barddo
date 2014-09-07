@@ -296,7 +296,7 @@ class WorkPageView(ProfileAwareView):
         r = R()
         kwargs["views"] = r.get_metric(this_work_view_slug)['year']
 
-        return super(WorkPageView, self).get(request, args, kwargs)
+        return super(WorkPageView, self).get(request, *args, **kwargs)
 
 
 class CollectionPageView(ProfileAwareView):
@@ -306,10 +306,12 @@ class CollectionPageView(ProfileAwareView):
         collection = Collection.objects.get(slug=kwargs['collection_slug'])
         r = R()
         kwargs["views"] = 0
-        for work in collection.works.all():
+        works = collection.works.all()
+        for work in works:
             this_work_view_slug = "work_views_{}".format(work.id)
             kwargs["views"] += int(r.get_metric(this_work_view_slug)['year']) if r.get_metric(this_work_view_slug)['year'] is not None else 0
         kwargs['collection'] = collection
+        kwargs['works'] = works
         kwargs['subscribers'] = Follow.objects.followers(collection)
         kwargs['subscribed'] = Follow.objects.follows(request.user, collection)
         return super(CollectionPageView, self).get(request, *args, **kwargs)

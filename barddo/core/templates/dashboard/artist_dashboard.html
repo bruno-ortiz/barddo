@@ -313,12 +313,12 @@
                     $(parent).append(shard_data);
 
                     $(shard_id + ' .modal-header').ace_wizard()
-                            .on('finished', function (e) {
+                            .on('finished', function () {
                                 $('#new-collection-wizard').modal('hide');
                                 location.reload();
                             })
 
-                            .on('stepclick', function (e) {
+                            .on('stepclick', function () {
                                 return false; //prevent clicking on steps
                             })
 
@@ -361,8 +361,9 @@
 
             //ROLL ON HOVER
             $(function () {
-                $(".roll").css("opacity", "0");
-                $(".roll").hover(function () {
+                var $roll = $(".roll");
+                $roll.css("opacity", "0");
+                $roll.hover(function () {
                             $(this).stop().animate({
                                 opacity: 1
                             }, "slow");
@@ -438,12 +439,12 @@
                     $(shard_id + " #id_collection").val(collection_id);
 
                     $(shard_id + ' .modal-header').ace_wizard()
-                            .on('finished', function (e) {
+                            .on('finished', function () {
                                 $('#new-work-wizard').modal('hide');
                                 location.reload();
                             })
 
-                            .on('stepclick', function (e) {
+                            .on('stepclick', function () {
                                 return false; //prevent clicking on steps
                             })
 
