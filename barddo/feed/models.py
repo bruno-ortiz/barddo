@@ -60,7 +60,9 @@ class CollectionSubscribeAction(FeedAction):
         return '<i class="pull-left thumbicon icon-key btn-info no-hover"></i>'
 
     def get_message(self, user):
-        return _('<a class="user" href="{}">{}</a>Subscribed').format(user.user_url(), user.first_name)
+        return _('<a class="user" href="{0}">{1}</a> Subscribed to <a class="user" href="{2}">{3}</a>').format(user.user_url(), user.first_name,
+                                                                                                               self.target.get_absolute_url(),
+                                                                                                               self.target.name)
 
 
 class FollowAction(FeedAction):
