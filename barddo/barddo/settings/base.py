@@ -100,9 +100,9 @@ MEDIA_URL = '/media/'
 
 # Documents folder
 DOCUMENTS_ROOT = path.normpath(path.join(SITE_ROOT, 'documents'))
-########## END MEDIA CONFIGURATION
+# ######### END MEDIA CONFIGURATION
 
-########## STATIC FILE CONFIGURATION
+# ######### STATIC FILE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
 STATIC_ROOT = path.normpath(path.join(SITE_ROOT, 'static'))
 
@@ -126,7 +126,7 @@ STATICFILES_FINDERS = (
     'dajaxice.finders.DajaxiceFinder',
     'shards.finders.ShardsFinder',
 )
-########## END STATIC FILE CONFIGURATION
+# ######### END STATIC FILE CONFIGURATION
 
 ########## SECRET CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
@@ -245,6 +245,7 @@ THIRD_PARTY_APPS = (
     'rest_framework',
     'rest_framework.authtoken',
     'paypalrestsdk',
+    'notifications'
 )
 
 # Apps specific for this project go here.

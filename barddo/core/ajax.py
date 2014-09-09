@@ -13,6 +13,7 @@ from django.utils.translation import ugettext as _
 from django.core.mail import mail_admins
 
 from core.models import Collection, Work
+from core.tasks import notify_collection_updated
 from follow.models import Follow
 from .forms import CollectionForm, WorkForm, CoverOnlyWorkForm
 
@@ -224,13 +225,17 @@ def publish_work(request, work_id):
 
     work = Work.objects.get(id=work_id)
 
-    if request.user.is_staff or work.author_id == request.user.id:
+    request_user = request.user
+    if request_user.is_staff or work.author_id == request_user.id:
         work.is_published = True
         work.save()
+
+        notify_collection_updated(request_user, work)
+
         ajax.script("publish_work_callback({});".format(work_id))
 
         mail_admins(u"[Barddo] Nova obra publicada: " + work.title,
-                    u"A obra '{}' acaba de ser publicada no Barddo por '{}".format(work.title, request.user.username))
+                    u"A obra '{}' acaba de ser publicada no Barddo por '{}".format(work.title, request_user.username))
     else:
         ajax.script("alert('Unable to publish work. You are not the onwer.');")
 
