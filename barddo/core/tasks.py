@@ -1,5 +1,5 @@
 from celery.app import shared_task
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_noop as _noop
 from notifications import notify
 
 from follow.models import Follow
@@ -9,5 +9,7 @@ from follow.models import Follow
 def notify_collection_updated(owner, work):
     collection = work.collection
     subscribers = Follow.objects.followers(collection)
+    if owner in subscribers:
+        subscribers.remove(owner)
     for subscriber in subscribers:
-        notify.send(owner, recipient=subscriber, verb=_('published'), action_object=work, target=collection)
+        notify.send(owner, recipient=subscriber, verb=_noop('published'), action_object=work, target=collection)

@@ -32,10 +32,15 @@ class LoginRequiredMixin(object):
         return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
 
 
-class UserContextMixin(ContextMixin):
+class ProfileAwareView(ContextMixin, TemplateResponseMixin, View):
     """
-    Mixin to be used on views that need to provide current authenticated user
+    To be used on views that require user profile on it' composition
     """
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**{'user': request.user})
+        context.update(kwargs)
+        return super(ProfileAwareView, self).render_to_response(context)
 
     def get_context_data(self, **kwargs):
         context = {}
@@ -52,18 +57,7 @@ class UserContextMixin(ContextMixin):
             context['plus_scope'] = plus_scope
             context['plus_id'] = plus_id
         context.update(kwargs)
-        return super(UserContextMixin, self).get_context_data(**context)
-
-
-class ProfileAwareView(UserContextMixin, TemplateResponseMixin, View):
-    """
-    To be used on views that require user profile on it' composition
-    """
-
-    def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**{'user': request.user})
-        context.update(kwargs)
-        return super(ProfileAwareView, self).render_to_response(context)
+        return super(ProfileAwareView, self).get_context_data(**context)
 
 
 # #
@@ -108,7 +102,7 @@ class UserProfileView(LoginRequiredMixin, SingleObjectMixin, ProfileAwareView):
         if current_user != profile_user:
             follows = Follow.objects.follows(current_user, profile_user)
             context['follows'] = follows
-        context = UserContextMixin.get_context_data(self, **context)
+        context = ProfileAwareView.get_context_data(self, **context)
         return super(UserProfileView, self).render_to_response(context)
 
 

@@ -41,6 +41,7 @@ class IndexView(ProfileAwareView):
         if barddo_user:
             owned_works = self.get_owned_works(barddo_user)
             context['owned_works'] = owned_works
+            context['notifications'] = barddo_user.notifications.all()
         return super(IndexView, self).get(request, **context)
 
     def get_new_works(self, user):
