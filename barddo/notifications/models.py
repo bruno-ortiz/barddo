@@ -4,19 +4,17 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.db import models
-from model_utils import managers
+from django.utils.translation import ugettext as _
+from polymorphic.manager import PolymorphicManager
 from polymorphic.polymorphic_model import PolymorphicModel
 from polymorphic.query import PolymorphicQuerySet
 
-
-now = datetime.datetime.now
 if getattr(settings, 'USE_TZ'):
-    try:
-        from django.utils import timezone
+    from django.utils import timezone
 
-        now = timezone.now
-    except ImportError:
-        pass
+    now = timezone.now
+else:
+    now = datetime.datetime.now
 
 
 class NotificationQuerySet(PolymorphicQuerySet):
@@ -28,30 +26,27 @@ class NotificationQuerySet(PolymorphicQuerySet):
         """Return only read items in the current queryset"""
         return self.filter(unread=False)
 
-    def mark_all_as_read(self, recipient=None):
+    def mark_all_unread_as_read(self, recipient):
         """Mark as read any unread messages in the current queryset.
         
         Optionally, filter these by recipient first.
         """
-        # We want to filter out read ones, as later we will store 
-        # the time they were marked as read.
-        qs = self.unread()
-        if recipient:
-            qs = qs.filter(recipient=recipient)
-
+        qs = self.unread().filter(recipient=recipient, unread=True)
         qs.update(unread=False)
 
-    def mark_all_as_unread(self, recipient=None):
-        """Mark as unread any read messages in the current queryset.
-        
-        Optionally, filter these by recipient first.
-        """
-        qs = self.read()
 
-        if recipient:
-            qs = qs.filter(recipient=recipient)
+class NotificationManager(PolymorphicManager):
+    def get_queryset(self):
+        return NotificationQuerySet(self.model, using=self._db)
 
-        qs.update(unread=True)
+    def read(self):
+        return self.get_queryset().read()
+
+    def unread(self):
+        return self.get_queryset().unread()
+
+    def mark_all_as_read(self, recipient):
+        self.get_queryset().mark_all_unread_as_read(recipient)
 
 
 class Notification(PolymorphicModel):
@@ -72,7 +67,7 @@ class Notification(PolymorphicModel):
 
     timestamp = models.DateTimeField(default=now)
 
-    objects = managers.PassThroughManager.for_queryset_class(NotificationQuerySet)()
+    objects = NotificationManager()
 
     class Meta:
         ordering = ('-timestamp', )
@@ -95,3 +90,13 @@ class Notification(PolymorphicModel):
         if not self.unread:
             self.unread = True
             self.save()
+
+
+class WorkPublishedNotification(Notification):
+    def message(self):
+        return _("Published {work} on {collection}").format(work=self.action_object.title, collection=self.target.name)
+
+
+class WorkLikedNotification(Notification):
+    def message(self):
+        return _("Likes {work}!").format(work=self.action_object.title)

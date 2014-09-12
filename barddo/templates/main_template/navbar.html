@@ -106,13 +106,12 @@
                                     {% for notification in notifications %}
                                         <li>
                                             <a href="{{ notification.target.get_absolute_url }}">
-                                                <img src="{% get_media_prefix %} {{ notification.actor.profile.avatar }}" class="msg-photo"
+                                                <img src="{% get_media_prefix %}{{ notification.actor.profile.avatar }}" class="msg-photo"
                                                      alt="{{ notification.actor.first_name }} Avatar">
 										<span class="msg-body">
 											<span class="msg-title">
 												<span class="blue">{{ notification.actor.first_name }}:</span>
-												{% blocktrans %}{{ notification.verb }} {{ notification.action_object }} on
-                                                    {{ notification.target }}{% endblocktrans %}
+									            {{ notification.message }}
 											</span>
 
 											<span class="msg-time">

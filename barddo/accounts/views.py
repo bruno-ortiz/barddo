@@ -22,6 +22,9 @@ from feed.models import UserFeed
 # #
 # Mixins
 # #
+from notifications.models import Notification
+
+
 class LoginRequiredMixin(object):
     """
     Mixin to be used on login required views composition
@@ -38,7 +41,8 @@ class ProfileAwareView(ContextMixin, TemplateResponseMixin, View):
     """
 
     def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**{'user': request.user})
+        user = request.user
+        context = self.get_context_data(**{'user': user})
         context.update(kwargs)
         return super(ProfileAwareView, self).render_to_response(context)
 
@@ -51,6 +55,7 @@ class ProfileAwareView(ContextMixin, TemplateResponseMixin, View):
         if user.is_authenticated():
             context['avatar'] = user.profile.avatar
             context['username'] = user.username
+            kwargs['notifications'] = Notification.objects.unread()[:6]
         else:
             plus_scope = ' '.join(GooglePlusAuth.DEFAULT_SCOPE)  # TODO: Mover para um GoogleAuthMixin?
             plus_id = settings.SOCIAL_AUTH_GOOGLE_PLUS_KEY

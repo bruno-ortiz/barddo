@@ -41,7 +41,6 @@ class IndexView(ProfileAwareView):
         if barddo_user:
             owned_works = self.get_owned_works(barddo_user)
             context['owned_works'] = owned_works
-            context['notifications'] = barddo_user.notifications.all()
         return super(IndexView, self).get(request, **context)
 
     def get_new_works(self, user):
@@ -307,7 +306,7 @@ class CollectionPageView(ProfileAwareView):
         collection = Collection.objects.get(slug=kwargs['collection_slug'])
         r = R()
         kwargs["views"] = 0
-        works = collection.works.all()
+        works = collection.works.filter(is_published=True)
         for work in works:
             this_work_view_slug = "work_views_{}".format(work.id)
             kwargs["views"] += int(r.get_metric(this_work_view_slug)['year']) if r.get_metric(this_work_view_slug)['year'] is not None else 0
