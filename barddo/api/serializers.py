@@ -55,7 +55,7 @@ class SimpleWorkSerializer(ModelSerializer):
         Get work cover with full url
         """
         current_site = Site.objects.get_current()
-        return "http://{}{}".format(current_site, get_thumbnailer(work.cover)['reader_image'].url)
+        return "http://{}{}".format(current_site, get_thumbnailer(work.cover)['small_cover'].url)
 
     class Meta:
         model = Work
