@@ -16,12 +16,12 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # ######### END EMAIL CONFIGURATION
 
 
-########## DATABASE CONFIGURATION
+# ######### DATABASE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'barddo_production',
+        'NAME': 'barddo_development',
         'USER': 'barddo',
         'PASSWORD': 'barddo@01',
         'HOST': 'localhost',

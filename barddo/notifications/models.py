@@ -103,9 +103,9 @@ class Notification(PolymorphicModel):
 
 class WorkPublishedNotification(Notification):
     def message(self):
-        return _("{author} published {work} on {collection}").format(author=self.actor.first_name,
-                                                                     work=self.action_object.title,
-                                                                     collection=self.target.name)
+        return _("%(author)s published %(work)s on %(collection)s") % {'author': self.actor.first_name,
+                                                                       'work': self.action_object.title,
+                                                                       'collection': self.target.name}
 
     def picture(self):
         return self.action_object.cover
@@ -116,7 +116,7 @@ class WorkPublishedNotification(Notification):
 
 class WorkLikedNotification(Notification):
     def message(self):
-        return _("{user} likes {work}!").format(user=self.actor.first_name, work=self.action_object.title)
+        return _("%(user)s likes %(work)s!") % {'user': self.actor.first_name, 'work': self.action_object.title}
 
     def picture(self):
         return self.actor.profile.avatar
