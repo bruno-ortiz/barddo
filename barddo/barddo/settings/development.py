@@ -13,7 +13,7 @@ TEMPLATE_DEBUG = DEBUG
 # ######### EMAIL CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-########## END EMAIL CONFIGURATION
+# ######### END EMAIL CONFIGURATION
 
 
 ########## DATABASE CONFIGURATION
@@ -21,7 +21,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'barddo_development',
+        'NAME': 'barddo_production',
         'USER': 'barddo',
         'PASSWORD': 'barddo@01',
         'HOST': 'localhost',

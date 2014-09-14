@@ -4,6 +4,7 @@ import datetime
 from django.db import models
 
 from accounts.models import BarddoUser
+from rating.signals import work_liked
 
 
 class Rating(models.Model):
@@ -33,6 +34,7 @@ def add_like(user, work_id):
         rating = Rating(user=user, work_id=work_id,
                         date=datetime.datetime.now(), like=True)
     rating.save()
+    work_liked.send(user, work_id=work_id)
 
 
 def remove_like(user, work_id):

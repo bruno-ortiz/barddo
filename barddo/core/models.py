@@ -3,8 +3,8 @@ import hashlib
 import os
 from hashlib import md5
 import time
-
 from PIL import Image
+
 from django.db import models
 from django.db import transaction
 from django.db.models import Manager, Count, F

@@ -20,7 +20,7 @@ class FeedManager(models.Manager):
 
 class FeedQuerySet(QuerySet):
     def feed_for_user(self, user):
-        return self.filter(Q(user=user) | Q(action__object_id=user.id)).select_related("user_profile").order_by(
+        return self.filter(Q(user=user) | Q(action__object_id=user.id)).order_by(
             "-created")
 
 

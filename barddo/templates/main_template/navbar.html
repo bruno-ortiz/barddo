@@ -92,20 +92,20 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="green">
+                            <li id="notification_dropdown" class="orange">
                                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                     <i class="icon-warning-sign icon-animated-vertical"></i>
-                                    <span class="badge badge-success">{{ notifications|length }}</span>
+                                    <span class="badge badge-notify">{{ notifications|length }}</span>
                                 </a>
 
                                 <ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
                                     <li class="dropdown-header">
                                         <i class="icon-warning-sign"></i>
-                                        {{ notifications|length }} {% trans "Notifications" %}
+                                        <span>{{ notifications|length }}</span> {% trans "Notifications" %}
                                     </li>
                                     {% for notification in notifications %}
                                         <li>
-                                            <a href="{{ notification.target.get_absolute_url }}">
+                                            <a href="{{ notification.redirect_url }}">
                                                 <img src="{% get_media_prefix %}{{ notification.actor.profile.avatar }}" class="msg-photo"
                                                      alt="{{ notification.actor.first_name }} Avatar">
 										<span class="msg-body">
@@ -116,14 +116,14 @@
 
 											<span class="msg-time">
 												<i class="icon-time"></i>
-												<span>a moment ago</span>
+												<span>{{ notification.timestamp|timesince }}</span>
 											</span>
 										</span>
                                             </a>
                                         </li>
                                     {% endfor %}
                                     <li>
-                                        <a href="#">
+                                        <a href="{{ user.user_url }}#notifications">
                                             See all messages
                                             <i class="icon-arrow-right"></i>
                                         </a>
@@ -147,13 +147,21 @@
         <!-- /.container-fluid -->
 
     </nav>
-    {% if not user.is_authenticated %}
-        <script type="text/javascript">
-            $(document).ready(function () {
+    <script type="text/javascript">
+        function notification_read_callback() {
+            $(".badge-notify").html("0");
+            $("li.dropdown-header span").html("0");
+        }
+        $(document).ready(function () {
+            {% if user.is_authenticated %}
+                $("#notification_dropdown").on("shown.bs.dropdown", function () {
+                    Dajaxice.notifications.mark_notifications_as_read(Dajax.process, {});
+                });
+            {% else %}
                 $(document).on("click", ".login-required", function () {
                     $('#loginModal').modal('show');
                 });
-            });
-        </script>
-    {% endif %}
+            {% endif %}
+        });
+    </script>
 {% endblock %}

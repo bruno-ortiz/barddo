@@ -55,7 +55,7 @@ class ProfileAwareView(ContextMixin, TemplateResponseMixin, View):
         if user.is_authenticated():
             context['avatar'] = user.profile.avatar
             context['username'] = user.username
-            kwargs['notifications'] = Notification.objects.unread()[:6]
+            kwargs['notifications'] = Notification.objects.filter(recipient=user).unread()[:6]
         else:
             plus_scope = ' '.join(GooglePlusAuth.DEFAULT_SCOPE)  # TODO: Mover para um GoogleAuthMixin?
             plus_id = settings.SOCIAL_AUTH_GOOGLE_PLUS_KEY
@@ -103,7 +103,9 @@ class UserProfileView(LoginRequiredMixin, SingleObjectMixin, ProfileAwareView):
                    'editable': self.editable,
                    'following': following,
                    'followers': followers,
-                   'user_feed': UserFeed.objects.feed_for_user(profile_user)}
+                   'user_feed': UserFeed.objects.feed_for_user(profile_user),
+                   'profile_notifications': Notification.objects.prefetch_related('actor', 'action_object', 'target').
+                       filter(recipient=profile_user).all()}
         if current_user != profile_user:
             follows = Follow.objects.follows(current_user, profile_user)
             context['follows'] = follows

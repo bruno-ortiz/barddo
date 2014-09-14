@@ -26,12 +26,12 @@ class NotificationQuerySet(PolymorphicQuerySet):
         """Return only read items in the current queryset"""
         return self.filter(unread=False)
 
-    def mark_all_unread_as_read(self, recipient):
+    def mark_all_as_read(self, recipient, only_unread=True):
         """Mark as read any unread messages in the current queryset.
         
         Optionally, filter these by recipient first.
         """
-        qs = self.unread().filter(recipient=recipient, unread=True)
+        qs = self.unread().filter(recipient=recipient, unread=only_unread)
         qs.update(unread=False)
 
 
@@ -46,7 +46,7 @@ class NotificationManager(PolymorphicManager):
         return self.get_queryset().unread()
 
     def mark_all_as_read(self, recipient):
-        self.get_queryset().mark_all_unread_as_read(recipient)
+        self.get_queryset().mark_all_as_read(recipient)
 
 
 class Notification(PolymorphicModel):
@@ -91,12 +91,35 @@ class Notification(PolymorphicModel):
             self.unread = True
             self.save()
 
+    def picture(self):
+        return NotImplementedError()
+
+    def message(self):
+        return NotImplementedError()
+
+    def redirect_url(self):
+        return '#'
+
 
 class WorkPublishedNotification(Notification):
     def message(self):
-        return _("Published {work} on {collection}").format(work=self.action_object.title, collection=self.target.name)
+        return _("{author} published {work} on {collection}").format(author=self.actor.first_name,
+                                                                     work=self.action_object.title,
+                                                                     collection=self.target.name)
+
+    def picture(self):
+        return self.action_object.cover
+
+    def redirect_url(self):
+        return self.target.get_absolute_url()
 
 
 class WorkLikedNotification(Notification):
     def message(self):
-        return _("Likes {work}!").format(work=self.action_object.title)
+        return _("{user} likes {work}!").format(user=self.actor.first_name, work=self.action_object.title)
+
+    def picture(self):
+        return self.actor.profile.avatar
+
+    def redirect_url(self):
+        return self.actor.user_url()

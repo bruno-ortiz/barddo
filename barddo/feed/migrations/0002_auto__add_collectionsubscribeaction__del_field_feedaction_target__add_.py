@@ -22,9 +22,8 @@ class Migration(SchemaMigration):
                       keep_default=False)
 
         if not db.dry_run:
-            for action in orm.FeedAction.objects.all():
-                action.object_id = action.target.id  # TODO: Essa migração não FUNCIONA! revisar antes de finalizar a tarefa
-                action.save()
+            content_type = orm['contenttypes.ContentType'].objects.get(app_label="accounts", model="barddouser")
+            db.execute("UPDATE feed_feedaction SET content_type_id=%s, object_id=target_id", [content_type.id])
 
         # Deleting field 'FeedAction.target'
         db.delete_column(u'feed_feedaction', 'target_id')

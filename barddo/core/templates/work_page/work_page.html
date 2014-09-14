@@ -133,6 +133,14 @@
                                 </div>
 
                                 <div class="profile-info-row">
+                                    <div class="profile-info-name"> {% trans "Collection" %}</div>
+
+                                    <div class="profile-info-value">
+                                        <span><a href="{{ work.collection.get_absolute_url }}"><i class="icon-folder-close"></i> {{ work.collection.name }}</a></span>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
                                     <div class="profile-info-name"> {% trans "Author" %}</div>
 
                                     <div class="profile-info-value">

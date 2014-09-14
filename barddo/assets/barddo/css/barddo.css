@@ -326,3 +326,30 @@ a.gplus:hover {
     color: white;
     text-decoration: none;
 }
+
+.badge-notify {
+    background-color: white !important;
+    color: #e04f4f;
+}
+
+.ace-nav > li.orange > a {
+    background-color: #e04f4f !important;
+}
+
+.ace-nav > li.orange > a:hover {
+    background-color: #e0392b;
+}
+
+.ace-nav > li.orange > a:focus {
+    background-color: #e0392b !important;
+}
+
+.profile-notification {
+    display: block;
+}
+
+.profile-notification:hover {
+    display: block;
+    text-decoration: none;
+}
+
