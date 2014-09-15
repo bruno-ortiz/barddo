@@ -7,12 +7,15 @@
 {% load social_share %}
 
 {% block header %}
-    <link rel="stylesheet" href="{% static "css/datepicker.css" %}"/>
-    <link rel="stylesheet" href="{% static "barddo/css/barddo.dashboard.css" %}"/>
-    <link rel="stylesheet" href="{% static "css/crop/imgareaselect-animated.css" %}"/>
-    <link rel="stylesheet" href="{% static "css/dropzone.css" %}"/>
-    <link rel="stylesheet" href="{% static "css/select2.css" %}"/>
-    <link rel="stylesheet" href="{% static "css/bootstrap-editable.css" %}"/>
+    {% compress css %}
+        <link rel="stylesheet" href="{% static "css/datepicker.css" %}"/>
+        <link rel="stylesheet" href="{% static "barddo/css/barddo.dashboard.css" %}"/>
+        <link rel="stylesheet" href="{% static "barddo/css/barddo.share.css" %}"/>
+        <link rel="stylesheet" href="{% static "css/crop/imgareaselect-animated.css" %}"/>
+        <link rel="stylesheet" href="{% static "css/dropzone.css" %}"/>
+        <link rel="stylesheet" href="{% static "css/select2.css" %}"/>
+        <link rel="stylesheet" href="{% static "css/bootstrap-editable.css" %}"/>
+    {% endcompress %}
 {% endblock %}
 
 {% block breadcrumbs %}

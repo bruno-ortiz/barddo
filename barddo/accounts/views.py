@@ -37,7 +37,7 @@ class LoginRequiredMixin(object):
 
 class ProfileAwareView(ContextMixin, TemplateResponseMixin, View):
     """
-    To be used on views that require user profile on it' composition
+    To be used on views that require user profile on it's composition
     """
 
     def get(self, request, *args, **kwargs):
@@ -104,8 +104,7 @@ class UserProfileView(LoginRequiredMixin, SingleObjectMixin, ProfileAwareView):
                    'following': following,
                    'followers': followers,
                    'user_feed': UserFeed.objects.feed_for_user(profile_user),
-                   'profile_notifications': Notification.objects.prefetch_related('actor', 'action_object', 'target').
-                       filter(recipient=profile_user).all()}
+                   'profile_notifications': Notification.objects.prefetch_related('actor', 'action_object', 'target').filter(recipient=profile_user).all()}
         if current_user != profile_user:
             follows = Follow.objects.follows(current_user, profile_user)
             context['follows'] = follows

@@ -9,8 +9,9 @@
 
 {% block header %}
     {% render_collection_opengraph_header collection %}
-    <link rel="stylesheet" href="{% static "barddo/css/barddo.dashboard.css" %}"/>{# TODO rever essa parada #}
     {% compress css %}
+        <link rel="stylesheet" href="{% static "barddo/css/barddo.gallery.css" %}"/>
+        <link rel="stylesheet" href="{% static "barddo/css/barddo.share.css" %}"/>
         <link rel="stylesheet" href="{% static "wow_book/wow_book.css" %}"/>
         <link rel="stylesheet" href="{% static "css/core-reader.css" %}"/>
     {% endcompress %}

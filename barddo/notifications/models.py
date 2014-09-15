@@ -72,15 +72,6 @@ class Notification(PolymorphicModel):
     class Meta:
         ordering = ('-timestamp', )
 
-    def timesince(self, _now=None):
-        """
-        Shortcut for the ``django.utils.timesince.timesince`` function of the
-        current timestamp.
-        """
-        from django.utils.timesince import timesince as timesince_
-
-        return timesince_(self.timestamp, _now)
-
     def mark_as_read(self):
         if self.unread:
             self.unread = False

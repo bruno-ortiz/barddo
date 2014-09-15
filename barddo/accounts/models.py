@@ -83,7 +83,7 @@ class BarddoUser(AbstractUser):
     """
     BARDDO_PUBLISHING_GROUP_ID = 1
 
-    is_publisher = models.BooleanField(default=False)
+    is_publisher = models.BooleanField(default=False, db_index=True)
 
     objects = BarddoUserManager()
 
