@@ -166,7 +166,7 @@
 
                             <!-- TABS -->
                             <div class="tabbable">
-                                <ul class="nav nav-tabs padding-18">
+                                <ul id="profile-tabs" class="nav nav-tabs padding-18">
                                     <li class="active">
                                         <a data-toggle="tab" href="#feed">
                                             <i class="orange icon-rss bigger-120"></i>
@@ -187,6 +187,12 @@
                                             {% trans "Followers" %}
                                         </a>
                                     </li>
+                                    <li>
+                                        <a data-toggle="tab" href="#notifications">
+                                            <i class="red icon-warning-sign bigger-120"></i>
+                                            {% trans "Notifications" %}
+                                        </a>
+                                    </li>
                                 </ul>
 
                                 <div class="tab-content no-border padding-24">
@@ -195,6 +201,8 @@
                                     {% include "profile_fragments/_following.html" %}
 
                                     {% include "profile_fragments/_followers.html" %}
+
+                                    {% include "profile_fragments/_notifications.html" %}
                                 </div>
                             </div>
 
@@ -227,6 +235,20 @@
     jQuery(function ($) {
         $("*[data-toggle='tooltip']").tooltip();
 
+        var $profile_tabs = $('#profile-tabs');
+        $profile_tabs.find('a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+
+        // store the currently selected tab in the hash value
+        $("ul.nav-tabs > li > a").on("shown.bs.tab", function (e) {
+            window.location.hash = $(e.target).attr("href").substr(1);
+        });
+
+        // on load of the page: switch to the currently selected tab
+        var hash = window.location.hash;
+        $profile_tabs.find('a[href="' + hash + '"]').tab('show');
     });
 
     {% if  editable %}

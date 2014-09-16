@@ -13,10 +13,10 @@ TEMPLATE_DEBUG = DEBUG
 # ######### EMAIL CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-########## END EMAIL CONFIGURATION
+# ######### END EMAIL CONFIGURATION
 
 
-########## DATABASE CONFIGURATION
+# ######### DATABASE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     'default': {

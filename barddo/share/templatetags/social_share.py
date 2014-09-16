@@ -7,6 +7,9 @@ from django.template.defaultfilters import urlencode
 from django.conf import settings
 from django.utils.translation import ugettext as _
 
+from core.models import Collection
+
+
 try:
     from django_bitly.templatetags.bitly import bitlify
 
@@ -82,13 +85,15 @@ def post_to_twitter_url(context, text, obj_or_url=None):
 
 
 @register.inclusion_tag('share/post_to_twitter.html', takes_context=True)
-def post_to_twitter(context, work=None, link_text='Post to Twitter'):
-    text = work.collection.name + " - " + work.title
-    context = post_to_twitter_url(context, text, work)
-
+def post_to_twitter(context, obj=None, link_text='Post to Twitter'):
+    if isinstance(obj, Collection):
+        text = obj.name
+    else:
+        text = obj.collection.name + " - " + obj.title
+    context = post_to_twitter_url(context, text, obj)
     request = context.get('request', MockRequest())
-    url = _build_url(request, work, True)
-    tweet = _compose_tweet(text, url)
+    url = _build_url(request, obj, True)
+    tweet = _compose_tweet(text, url)  # TODO: Melhorar compose tweet
 
     context['link_text'] = link_text
     context['full_text'] = tweet
@@ -114,6 +119,7 @@ def post_to_facebook(context, obj_or_url=None, link_text='Post to Facebook'):
     context = post_to_facebook_url(context, obj_or_url)
     context['link_text'] = link_text
     return context
+
 
 @register.inclusion_tag('share/post_local_facebook.html', takes_context=True)
 def post_to_facebook_fake(context, obj_or_url=None, link_text='Post to Facebook'):
@@ -150,3 +156,22 @@ def render_work_opengraph_header(context, work):
     context['artist_name'] = work.author.get_full_name()
 
     return context
+
+
+@register.inclusion_tag('collection-open-graph.html', takes_context=True)
+def render_collection_opengraph_header(context, collection):
+    request = context.get('request', MockRequest())
+
+    context['facebook_api_key'] = settings.SOCIAL_AUTH_FACEBOOK_KEY
+    context['facebook_app_name'] = settings.FACEBOOK_APP_NAME
+    context['collection_url'] = _build_url(request, collection, True)
+    context['collection_name'] = collection.name
+    context['collection_cover'] = _build_url(request, collection.cover)
+    context['collection_description'] = collection.summary
+    context['artist_name'] = collection.author.get_full_name()
+
+    return context
+
+
+class UnsupportedTwitterModel(Exception):
+    pass

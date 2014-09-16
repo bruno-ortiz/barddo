@@ -1,0 +1,23 @@
+{% load static %}
+{% load i18n %}
+<div id="notifications" class="tab-pane">
+    <div class="profile-feed row-fluid">
+        <div class="span6">
+            {% for notification in profile_notifications %}
+                <a href="{{ notification.redirect_url }}" class="profile-activity profile-notification clearfix">
+                    <div>
+                        <img class="pull-left" alt="avatar" src="{{ notification.picture.url }}"/>
+                        {{ notification.message }}
+
+                        <div class="time">
+                            <i class="icon-time bigger-110"></i>
+                            {{ notification.timestamp|timesince }}
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="space-12"></div>
+</div>

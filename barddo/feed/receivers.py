@@ -1,6 +1,9 @@
 from django.dispatch import receiver
 
+from accounts.models import BarddoUser
 from accounts.signals import account_created
+from core.models import Collection
+from feed.models import CollectionSubscribeAction
 from follow.signals import start_follow, stop_follow
 from models import UserFeed, JoinAction, FollowAction, UnFollowAction
 
@@ -25,7 +28,10 @@ def handle_follow(sender, **kwargs):
     """
     follower = kwargs.get("follower")
     followed = kwargs.get("followed")
-    UserFeed.objects.create(user=follower, action=FollowAction.objects.create(target=followed))
+    if isinstance(followed, BarddoUser):
+        UserFeed.objects.create(user=follower, action=FollowAction.objects.create(target=followed))
+    elif isinstance(followed, Collection):
+        UserFeed.objects.create(user=follower, action=CollectionSubscribeAction.objects.create(target=followed))
 
 
 @receiver(stop_follow)
@@ -35,4 +41,5 @@ def handle_unfollow(sender, **kwargs):
     """
     follower = kwargs.get("follower")
     followed = kwargs.get("unfollowed")
-    UserFeed.objects.create(user=follower, action=UnFollowAction.objects.create(target=followed))
+    if isinstance(followed, BarddoUser):
+        UserFeed.objects.create(user=follower, action=UnFollowAction.objects.create(target=followed))

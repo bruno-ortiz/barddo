@@ -1,17 +1,20 @@
 # -*- coding: utf-8 -*-
+from PIL import Image
+
 from dajax.core import Dajax
 from dajaxice.decorators import dajaxice_register
 from django.utils.html import escape
 from dajaxice.utils import deserialize_form
 from django.contrib.auth.decorators import login_required
 from pilkit.processors import Crop
-from PIL import Image
 from django.forms.models import model_to_dict
 from easy_thumbnails.files import get_thumbnailer
 from django.utils.translation import ugettext as _
 from django.core.mail import mail_admins
 
 from core.models import Collection, Work
+from core.tasks import notify_collection_updated
+from follow.models import Follow
 from .forms import CollectionForm, WorkForm, CoverOnlyWorkForm
 
 
@@ -120,7 +123,8 @@ def register_a_work(request):
 
         ajax.script('callback_create_work_ok(' + str(new_work.id) + ')')
 
-        mail_admins(u"[Barddo] Nova obra criada: " + new_work.title, u"A obra '{}' acaba de ser criada no Barddo por '{}".format(new_work.title, request.user.username))
+        mail_admins(u"[Barddo] Nova obra criada: " + new_work.title,
+                    u"A obra '{}' acaba de ser criada no Barddo por '{}".format(new_work.title, request.user.username))
     else:
         ajax.script('callback_create_work_error()')
         for field, errors in form.errors.items():
@@ -221,13 +225,40 @@ def publish_work(request, work_id):
 
     work = Work.objects.get(id=work_id)
 
-    if request.user.is_staff or work.author_id == request.user.id:
+    request_user = request.user
+    if request_user.is_staff or work.author_id == request_user.id:
         work.is_published = True
         work.save()
+
+        notify_collection_updated(request_user, work)
+
         ajax.script("publish_work_callback({});".format(work_id))
 
-        mail_admins(u"[Barddo] Nova obra publicada: " + work.title, u"A obra '{}' acaba de ser publicada no Barddo por '{}".format(work.title, request.user.username))
+        mail_admins(u"[Barddo] Nova obra publicada: " + work.title,
+                    u"A obra '{}' acaba de ser publicada no Barddo por '{}".format(work.title, request_user.username))
     else:
         ajax.script("alert('Unable to publish work. You are not the onwer.');")
+
+    return ajax.json()
+
+
+@login_required
+@dajaxice_register
+def toggle_subscription(request, collection_id):
+    """
+    Toggle given user following on request user
+    """
+    ajax = Dajax()
+    current_user = request.user
+    collection = Collection.objects.get(id=collection_id)
+    follows = Follow.objects.follows(current_user, collection)
+
+    if follows:
+        Follow.objects.remove_follower(current_user, collection)
+        ajax.script('collection_unsubscribed_callback()')
+
+    else:
+        Follow.objects.add_follower(current_user, collection)
+        ajax.script('collection_subscribed_callback()')
 
     return ajax.json()

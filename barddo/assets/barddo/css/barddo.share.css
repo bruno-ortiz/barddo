@@ -1,0 +1,14 @@
+.social-share {
+    margin-top: 20px;
+    float: none;
+}
+
+.social-share > div, .social-share > div > span, .social-share > iframe {
+    vertical-align: top !important;
+}
+
+.share-caption {
+    color: white;
+    font-size: 14px;
+    padding: 10px;
+}

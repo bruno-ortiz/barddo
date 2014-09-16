@@ -100,9 +100,9 @@ MEDIA_URL = '/media/'
 
 # Documents folder
 DOCUMENTS_ROOT = path.normpath(path.join(SITE_ROOT, 'documents'))
-########## END MEDIA CONFIGURATION
+# ######### END MEDIA CONFIGURATION
 
-########## STATIC FILE CONFIGURATION
+# ######### STATIC FILE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
 STATIC_ROOT = path.normpath(path.join(SITE_ROOT, 'static'))
 
@@ -126,14 +126,14 @@ STATICFILES_FINDERS = (
     'dajaxice.finders.DajaxiceFinder',
     'shards.finders.ShardsFinder',
 )
-########## END STATIC FILE CONFIGURATION
+# ######### END STATIC FILE CONFIGURATION
 
-########## SECRET CONFIGURATION
+# ######### SECRET CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Note: This key only used for development and testing.
-#SECRET_KEY = r"{{ secret_key }}"
+# SECRET_KEY = r"{{ secret_key }}"
 SECRET_KEY = 'hzwh&w(=(@tib_jt71&v4ypfw&#7dln^=2a^i7(y3nyvuqe%(_'
-########## END SECRET CONFIGURATION
+# ######### END SECRET CONFIGURATION
 
 ########## SITE CONFIGURATION
 # Hosts/domain names that are valid for this site
@@ -261,7 +261,8 @@ LOCAL_APPS = (
     'feed',
     'share',
     'api',
-    'reader'
+    'reader',
+    'notifications',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

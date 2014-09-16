@@ -4,9 +4,6 @@ from dajaxice.decorators import dajaxice_register
 from rating.models import user_likes, add_like, remove_like
 
 
-__author__ = 'jovial'
-
-
 @dajaxice_register
 def toggle_rating(request, work_id):
     user = request.user
