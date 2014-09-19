@@ -100,6 +100,9 @@ class Collection(models.Model):
     end_date = models.DateField(_('End Date'), blank=True, null=True)
 
     author = models.ForeignKey(BarddoUser, null=False, db_index=True)
+
+    author_name = models.CharField(_('Author name'), max_length=100, db_index=True, blank=True, null=True)
+
     cover = models.ImageField(_('Cover Art'), upload_to=get_collection_cover_path, blank=True, null=True)
 
     objects = WorkManager()
@@ -365,6 +368,7 @@ class WorkPage(models.Model):
     work = models.ForeignKey(Work, related_name='work_pages', db_index=True)
     readable_name = models.CharField(max_length=255)
     image = models.ImageField(upload_to=image_storage)
+    url = models.URLField(blank=True, null=True)
 
     @property
     def next_page_number(self):
