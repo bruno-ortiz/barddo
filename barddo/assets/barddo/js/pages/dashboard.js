@@ -65,6 +65,10 @@ function sortable_image_upload(target, preview_container, existing_data) {
 
                 // Add the button to the file preview element.
                 file.previewElement.appendChild(removeButton);
+                if (this.getQueuedFiles().length > 0) {
+                    $('.dz-remove').hide();
+                    $(preview_container).sortable('disable');
+                }
             });
 
             this.on("removedfile", function (file) {
@@ -75,6 +79,11 @@ function sortable_image_upload(target, preview_container, existing_data) {
 
             this.on("processing", function (file) {
                 this.options.url = "/work/page/upload/" + $(target).attr('data-id');
+            });
+
+            this.on("queuecomplete", function (param) {
+                $('.dz-remove').show();
+                $(preview_container).sortable('enable');
             });
 
             if (existing_data != null) {
