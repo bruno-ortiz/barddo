@@ -14,7 +14,7 @@ from .exceptions import AlreadyExistsError
 AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
 
 CACHE_TYPES = {
-    'followers': 'fo-{}',
+    'followers': 'fo-{}-{}',
     'following': 'fl-{}-{}',
 }
 
@@ -52,11 +52,12 @@ class FollowingManager(models.Manager):
 
     def followers(self, obj):
         """ Return a list of all followers """
-        key = cache_key('followers', obj.pk)
+        key = cache_key('followers', obj.pk, obj.__class__.__name__)
         followers = cache.get(key)
 
         if followers is None:
-            qs = Follow.objects.select_related('follower').filter(object_id=obj.pk)
+            follower_classname = obj.__class__.__name__.lower()
+            qs = Follow.objects.select_related('follower').filter(object_id=obj.pk, content_type__model=follower_classname)
             followers = [u.follower for u in qs]
             cache.set(key, followers)
 
@@ -86,7 +87,7 @@ class FollowingManager(models.Manager):
         relation = Follow(follower=follower, followee=followee)
         try:
             relation.save()
-            bust_cache('followers', followee.pk)
+            bust_cache('followers', followee.pk, followee.__class__.__name__)
             bust_cache('following', follower.pk, followee.__class__.__name__)
 
             start_follow.send(self, follower=follower, followed=followee)
@@ -103,7 +104,7 @@ class FollowingManager(models.Manager):
             content_type = ContentType.objects.get_for_model(followee.__class__)
             rel = Follow.objects.get(follower=follower, content_type=content_type, object_id=followee.pk)
             rel.delete()
-            bust_cache('followers', followee.pk)
+            bust_cache('followers', followee.pk, followee.__class__.__name__)
             bust_cache('following', follower.pk, followee.__class__.__name__)
 
             stop_follow.send(self, follower=follower, unfollowed=followee)
@@ -117,7 +118,7 @@ class FollowingManager(models.Manager):
         Does follower follow followee? Smartly uses caches if exists
         """
         followers = cache.get(cache_key('following', follower.pk, followee.__class__.__name__))
-        following = cache.get(cache_key('followers', followee.pk))
+        following = cache.get(cache_key('followers', followee.pk, followee.__class__.__name__))
 
         if followers and followee in followers:
             return True

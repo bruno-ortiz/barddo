@@ -204,6 +204,7 @@
 }
 
 .collection-great {
+    max-height: 315px;
 }
 
 .collection-good {
@@ -378,21 +379,6 @@
     height: 80%;
     margin: 0 auto 0 auto;
     width: 90%;
-}
-
-.social-share {
-    margin-top: 20px;
-    float: none;
-}
-
-.social-share > div, .social-share > div > span, .social-share > iframe {
-    vertical-align: top !important;
-}
-
-.share-caption {
-    color: white;
-    font-size: 14px;
-    padding: 10px;
 }
 
 .features {

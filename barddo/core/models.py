@@ -4,6 +4,7 @@ import os
 from hashlib import md5
 import time
 
+from PIL import Image
 from django.db import models
 from django.db import transaction
 from django.db.models import Manager, Count, F
@@ -16,7 +17,6 @@ from django.core.urlresolvers import reverse
 from easy_thumbnails.signal_handlers import generate_aliases
 from easy_thumbnails.signals import saved_file
 from south.modelsinspector import add_introspection_rules
-from PIL import Image
 from easy_thumbnails.files import get_thumbnailer
 
 from accounts.models import BarddoUser
@@ -118,6 +118,12 @@ class Collection(models.Model):
 
         super(Collection, self).save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        """
+        Detail page url
+        """
+        return reverse('core.collection.detail', args=[str(self.slug)])
+
     def __unicode__(self):
         return self.name
 
@@ -215,10 +221,10 @@ class Work(models.Model):
         with transaction.atomic():
             page = WorkPage.objects.get(work=self, sequence=pos_from)
             if pos_from > pos_to:
-                WorkPage.objects.filter(Q(sequence__gte=pos_to) & Q(sequence__lt=pos_from)).update(
+                WorkPage.objects.filter(Q(sequence__gte=pos_to) & Q(sequence__lt=pos_from), work=self).update(
                     sequence=F('sequence') + 1)
             else:
-                WorkPage.objects.filter(Q(sequence__gt=pos_from) & Q(sequence__lte=pos_to)).update(
+                WorkPage.objects.filter(Q(sequence__gt=pos_from) & Q(sequence__lte=pos_to), work=self).update(
                     sequence=F('sequence') - 1)
             page.sequence = pos_to
             page.save()
@@ -318,7 +324,7 @@ class Work(models.Model):
             for x in xrange(len(thumb_images)):
                 current_image = get_thumbnailer(thumb_images[x])['reader_thumbs']
                 # current_path = current_path.replace(settings.MEDIA_URL, settings.MEDIA_ROOT + '/')
-                current = Image.open(current_image)
+                current = Image.open(current_image.path)
                 sprited_thumbs.paste(current, (0, x * thumb_height))
 
             with open(thumbs_url, "wb") as thumb_sprites_file:
@@ -330,8 +336,8 @@ class Work(models.Model):
         unique_together = ("collection", "unit_count")
         index_together = [["title", "summary"], ]
 
-    # TODO: work tags
-    # TODO: work categories
+        # TODO: work tags
+        # TODO: work categories
 
 
 def image_storage(instance, filename):

@@ -1,8 +1,8 @@
+# coding=utf-8
 import datetime
 
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import AbstractUser, UserManager
-from django.contrib.contenttypes.generic import GenericRelation
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Q
@@ -11,7 +11,6 @@ from django.utils.translation import ugettext as _
 from django.conf import settings
 
 from search.search_manager import SearchManager
-from follow.models import Follow
 
 
 class BarddoUserAuthBackend(ModelBackend):
@@ -84,15 +83,15 @@ class BarddoUser(AbstractUser):
     """
     BARDDO_PUBLISHING_GROUP_ID = 1
 
-    user_followee = GenericRelation(Follow, related_name='user_followee', db_index=True)
+    is_publisher = models.BooleanField(default=False, db_index=True)
 
     objects = BarddoUserManager()
 
     search_manager = SearchManager()
 
-    def is_publisher(self):
+    def is_publisher_legacy(self):
         """
-        A publisher is an artist that joined (or created) a publishing group
+            Não deve ser usado, gera queries desncessarias na base
         """
         owned_publishers = self.publishing_group_owner.all().count()
         num_publishers = self.publishing_group.all().count()

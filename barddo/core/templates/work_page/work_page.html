@@ -133,6 +133,14 @@
                                 </div>
 
                                 <div class="profile-info-row">
+                                    <div class="profile-info-name"> {% trans "Collection" %}</div>
+
+                                    <div class="profile-info-value">
+                                        <span><a href="{{ work.collection.get_absolute_url }}"><i class="icon-folder-close"></i> {{ work.collection.name }}</a></span>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
                                     <div class="profile-info-name"> {% trans "Author" %}</div>
 
                                     <div class="profile-info-value">
@@ -177,8 +185,6 @@
                                 </ul>
 
                                 <div class="tab-content no-border padding-24">
-                                    {% include "work_page/_readers.html" %}
-
                                     {% include "work_page/_likers.html" %}
                                 </div>
                             </div>
@@ -263,7 +269,7 @@
                 });
 
                 {# Direct linking to the reader #}
-                if(window.location.hash == "#read") {
+                if (window.location.hash == "#read") {
                     $("#read-button").trigger("click");
                 }
             {% endif %}

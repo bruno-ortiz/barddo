@@ -22,6 +22,9 @@ from feed.models import UserFeed
 # #
 # Mixins
 # #
+from notifications.models import Notification
+
+
 class LoginRequiredMixin(object):
     """
     Mixin to be used on login required views composition
@@ -32,10 +35,16 @@ class LoginRequiredMixin(object):
         return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
 
 
-class UserContextMixin(ContextMixin):
+class ProfileAwareView(ContextMixin, TemplateResponseMixin, View):
     """
-    Mixin to be used on views that need to provide current authenticated user
+    To be used on views that require user profile on it's composition
     """
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        context = self.get_context_data(**{'user': user})
+        context.update(kwargs)
+        return super(ProfileAwareView, self).render_to_response(context)
 
     def get_context_data(self, **kwargs):
         context = {}
@@ -46,24 +55,14 @@ class UserContextMixin(ContextMixin):
         if user.is_authenticated():
             context['avatar'] = user.profile.avatar
             context['username'] = user.username
+            kwargs['notifications'] = Notification.objects.filter(recipient=user).unread()[:6]
         else:
             plus_scope = ' '.join(GooglePlusAuth.DEFAULT_SCOPE)  # TODO: Mover para um GoogleAuthMixin?
             plus_id = settings.SOCIAL_AUTH_GOOGLE_PLUS_KEY
             context['plus_scope'] = plus_scope
             context['plus_id'] = plus_id
         context.update(kwargs)
-        return super(UserContextMixin, self).get_context_data(**context)
-
-
-class ProfileAwareView(UserContextMixin, TemplateResponseMixin, View):
-    """
-    To be used on views that require user profile on it' composition
-    """
-
-    def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**{'user': request.user})
-        context.update(kwargs)
-        return super(ProfileAwareView, self).render_to_response(context)
+        return super(ProfileAwareView, self).get_context_data(**context)
 
 
 # #
@@ -104,11 +103,12 @@ class UserProfileView(LoginRequiredMixin, SingleObjectMixin, ProfileAwareView):
                    'editable': self.editable,
                    'following': following,
                    'followers': followers,
-                   'user_feed': UserFeed.objects.feed_for_user(profile_user)}
+                   'user_feed': UserFeed.objects.feed_for_user(profile_user),
+                   'profile_notifications': Notification.objects.prefetch_related('actor', 'action_object', 'target').filter(recipient=profile_user).all()}
         if current_user != profile_user:
             follows = Follow.objects.follows(current_user, profile_user)
             context['follows'] = follows
-        context = UserContextMixin.get_context_data(self, **context)
+        context = ProfileAwareView.get_context_data(self, **context)
         return super(UserProfileView, self).render_to_response(context)
 
 

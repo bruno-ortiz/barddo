@@ -14,7 +14,7 @@ django-compressor
 django-debug-toolbar
 facepy
 pillow
-easy-thumbnails==1.5
+easy-thumbnails==2.1
 django-imagekit
 pilkit
 fabric

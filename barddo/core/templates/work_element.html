@@ -12,11 +12,11 @@
         <div class="roll" style="cursor: -webkit-zoom-in;" onclick="window.location.href = '{% url "core.work.detail" work.id %}/{{ work.collection.slug }}';">
             <div class="wrapcaption">
                 {% if work.liked %}
-                    <a class="vote liked captionicons" data-work-id="{{ work.id }}" href="projectdetail.html">
+                    <a class="vote liked captionicons" data-work-id="{{ work.id }}" href="#">
                         <i class="icon-star"></i>
                     </a>
                 {% else %}
-                    <a class="vote liked captionicons" data-work-id="{{ work.id }}" href="projectdetail.html">
+                    <a class="vote liked captionicons" data-work-id="{{ work.id }}" href="#">
                         <i class="icon-star-empty"></i>
                     </a>
                 {% endif %}
