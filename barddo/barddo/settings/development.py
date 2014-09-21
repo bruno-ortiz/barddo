@@ -21,7 +21,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'barddo_production',
+        'NAME': 'barddo_development',
         'USER': 'barddo',
         'PASSWORD': 'barddo@01',
         'HOST': 'localhost',
@@ -38,7 +38,7 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     }
 }
-########## END CACHE CONFIGURATION
+# ######### END CACHE CONFIGURATION
 
 ########## TOOLBAR CONFIGURATION
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
