@@ -15,7 +15,7 @@ gunicorn
 facepy
 Pillow
 BeautifulSoup<4
-easy-thumbnails
+easy-thumbnails==2.1
 django-imagekit
 pilkit
 mysql-python
