@@ -135,11 +135,11 @@ STATICFILES_FINDERS = (
 SECRET_KEY = 'hzwh&w(=(@tib_jt71&v4ypfw&#7dln^=2a^i7(y3nyvuqe%(_'
 # ######### END SECRET CONFIGURATION
 
-########## SITE CONFIGURATION
+# ######### SITE CONFIGURATION
 # Hosts/domain names that are valid for this site
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = []
-########## END SITE CONFIGURATION
+# ######### END SITE CONFIGURATION
 
 ########## FIXTURE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-FIXTURE_DIRS
@@ -484,4 +484,8 @@ REST_FRAMEWORK = {
     ],
 
     'PAGINATE_BY': 25
+}
+
+SOUTH_MIGRATION_MODULES = {
+    'easy_thumbnails': 'easy_thumbnails.south_migrations',
 }
