@@ -319,5 +319,6 @@ class CollectionPageView(ProfileAwareView):
         kwargs['collection'] = collection
         kwargs['works'] = works
         kwargs['subscribers'] = Follow.objects.followers(collection)
-        kwargs['subscribed'] = Follow.objects.follows(request.user, collection)
+        if request.user.is_authenticated():
+            kwargs['subscribed'] = Follow.objects.follows(request.user, collection)
         return super(CollectionPageView, self).get(request, *args, **kwargs)
