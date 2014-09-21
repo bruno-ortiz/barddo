@@ -185,11 +185,17 @@
                                                                        class="btn btn-block btn-warning"><i
                                                                             class="icon-zoom-in"></i> {% trans "View Page" %}
                                                                     </a>
-
-                                                                    <button class="btn btn-block btn-danger btn-read"
-                                                                            data-id="{{ work.id }}"><i
-                                                                            class="icon-edit"></i> {% trans "Read Now!" %}
-                                                                    </button>
+                                                                    {% if user.is_authenticated %}
+                                                                        <button class="btn btn-block btn-danger btn-read"
+                                                                                data-id="{{ work.id }}"><i
+                                                                                class="icon-edit"></i> {% trans "Read Now!" %}
+                                                                        </button>
+                                                                    {% else %}
+                                                                        <button class="btn btn-block btn-danger login-required"
+                                                                                data-id="{{ work.id }}"><i
+                                                                                class="icon-edit"></i> {% trans "Read Now!" %}
+                                                                        </button>
+                                                                    {% endif %}
 
                                                                     <div class="social-share full">
                                                                         <div class="share-caption">{% trans 'Share now with your friends!' %}</div>
@@ -278,20 +284,6 @@
                     $(this).html('<i class="bigger-120 icon-spinner icon-spin white"></i><span class="bigger-110"></span>')
                 });
 
-                //ROLL ON HOVER
-                var $roll = $(".roll");
-                $roll.css("opacity", "0");
-                $roll.hover(function () {
-                            $(this).stop().animate({
-                                opacity: 1
-                            }, "slow");
-                        },
-                        function () {
-                            $(this).stop().animate({
-                                opacity: 0
-                            }, "slow");
-                        });
-
                 $(document).on("click", ".btn-read", function () {
                     var work_id = $(this).attr("data-id");
                     Shards.reader(function (shard_id, shard_data, parent) {
@@ -308,5 +300,20 @@
 
             });
         {% endif %}
+        $(document).ready(function () {
+            //ROLL ON HOVER
+            var $roll = $(".roll");
+            $roll.css("opacity", "0");
+            $roll.hover(function () {
+                        $(this).stop().animate({
+                            opacity: 1
+                        }, "slow");
+                    },
+                    function () {
+                        $(this).stop().animate({
+                            opacity: 0
+                        }, "slow");
+                    });
+        });
     </script>
 {% endblock %}
