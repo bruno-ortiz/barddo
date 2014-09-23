@@ -1,4 +1,10 @@
-from lxml import etree
+# coding=utf-8
+from os.path import expanduser
+import urllib2
+import re
+import pickle
+
+from bs4 import BeautifulSoup
 
 
 BASE_URL = "http://centraldemangas.net{}"
@@ -6,32 +12,122 @@ BASE_URL = "http://centraldemangas.net{}"
 INITIAL_URL = BASE_URL.format("/mangas/list/*")
 
 
-def __get_manga_pages(parsed):
-    pagination_urls = parsed.xpath('//a[contains(@href,"/mangas/list/*/")]/@href')
+def __should_parse(url):
+    return 'informacoes/sinopse' not in url
+
+
+def __get_html(url):
+    url_open = urllib2.urlopen(url)
+    html = url_open.read()
+    url_open.close()
+    return html
+
+
+def __get_manga_pages(soup):
+    pagination_links = soup.find('ul', class_='pagination').find_all('a', href=re.compile(r'.*/mangas/list/*/.*'))
+    pagination_urls = [a['href'] for a in pagination_links]
     manga_urls = []
     for page_url in pagination_urls:
         url = BASE_URL.format(page_url)
-        url_list = etree.parse(url, etree.HTMLParser()).xpath('//table//a[contains(@href,"/mangas/info/")]/@href')
+        html = __get_html(url)
+        manga_soup = BeautifulSoup(html, 'lxml')
+        manga_links = manga_soup.find('table', class_='table').find_all('a', href=re.compile(r".*/mangas/info/.*"))
+        url_list = [a['href'] for a in manga_links]
         manga_urls.extend(url_list)
     return manga_urls
 
 
-def __extract_manga_data(page):
-    url = BASE_URL.format(page)
-    parsed_page = etree.parse(url, etree.HTMLParser())
-    (cover,) = parsed_page.xpath('//div[@class="pull-left"]/img[@class="img-thumbnail"]/@src')
-    name = parsed_page.xpath('//div[@class="page-header"]/h1/text()')[0].strip()
-    data = {'name': name, 'cover': cover}
+def __author_name(soup):
+    try:
+        author = soup.find('h4', text='Autor').find_parent('div', class_='row').find_next_sibling('div').findChild('a').text
+    except Exception as e:
+        print 'Falha ao obter nome do author. Erro: {}'.format(str(e))
+        author = 'Unknown'
+    return author
+
+
+def __tags(soup):
+    try:
+        tags_links = soup.find('h4', text='Gênero').find_parent('div', class_='row').find_next_sibling('div').findChildren('a')
+        tags = [a.text for a in tags_links]
+    except Exception as e:
+        print 'Falha ao obter tags. Erro: {}'.format(str(e))
+        tags = ['unknown']
+    return tags
+
+
+def __status(soup):
+    try:
+        status = soup.find('h4', text='Status').find_parent('div', class_='row').find_next_sibling('div').findChild('a').text
+    except Exception as e:
+        print 'Falha ao obter status. Erro: {}'.format(str(e))
+        status = 'Unknown'
+    return status
+
+
+def __parse_chapters(soup):
+    try:
+        chapter_links = soup.find_all('a', href=re.compile(r'.*/online/.*'))
+        chapter_list = [{'url': a['href'], 'name': a.text} for a in chapter_links]
+        for chapter in chapter_list:
+            url = BASE_URL.format(chapter['url'])
+            html = __get_html(url)
+            r = re.compile(r'.*var\spages.*\[(.*)\]')
+            if r.search(html):
+                print 'Obtendo páginas do capitulos {}'.format(chapter['name'])
+                raw_pages = r.search(html).group(1)
+                pages = raw_pages.replace('\\', '').replace('"', '').split(',')
+            else:
+                pages = []
+            chapter['pages'] = pages
+    except Exception as e:
+        print 'Falha ao obter capitulos. Erro: {}'.format(str(e))
+        chapter_list = []
+    return chapter_list
+
+
+def __extract_manga_data(url):
+    html = __get_html(url)
+    soup = BeautifulSoup(html, 'lxml')
+    cover = soup.find('div', class_="pull-left").find('img', class_='img-thumbnail')['src']
+    name = soup.find('div', class_='page-header').find('h1').contents[0].strip()
+    print 'Obtendo dados de: {}'.format(name)
+    author = __author_name(soup)
+    tags = __tags(soup)
+    status = __status(soup)
+    chapters = __parse_chapters(soup)
+    data = {'name': name,
+            'cover': cover,
+            'author': author,
+            'tags': tags,
+            'status': status,
+            'chapters': chapters}
     return data
 
 
 def extract_data():
-    parsed = etree.parse(INITIAL_URL, etree.HTMLParser())
-    all_pages = __get_manga_pages(parsed)
+    html = __get_html(INITIAL_URL)
+    soup = BeautifulSoup(html, 'lxml')
+    all_pages = __get_manga_pages(soup)
     data = []
     for page in all_pages:
-        manga_data = __extract_manga_data(page)
-        data.append(manga_data)
+        url = BASE_URL.format(page)
+        if __should_parse(url):
+            manga_data = __extract_manga_data(url)
+            data.append(manga_data)
+    data_file = expanduser("~") + '/mangas.pickle'
+    with open(data_file, 'wb') as handle:
+        pickle.dump(data, handle)
+    chapter_count = 0
+    page_count = 0
+    for d in data:
+        chapters = d['chapters']
+        chapter_count += len(chapters)
+        for c in chapters:
+            p = c['pages']
+            page_count += len(p)
+    print 'Capitulos: {}'.format(chapter_count)
+    print 'Páginas: {}'.format(page_count)
     return data
 
 
