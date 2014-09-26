@@ -11,7 +11,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self.stdout.write('\nReseting Database!', make_style(opts=('bold',), fg='red'))
-        call_command('reset_db', interactive=False)
+        call_command('reset_db')
         self.stdout.write('\nExecuting syncdb!', make_style(opts=('bold',), fg='green'))
         call_command('syncdb')
         self.stdout.write('\nMigrating database!', make_style(opts=('bold',), fg='green'))

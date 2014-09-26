@@ -141,7 +141,7 @@ SECRET_KEY = 'hzwh&w(=(@tib_jt71&v4ypfw&#7dln^=2a^i7(y3nyvuqe%(_'
 ALLOWED_HOSTS = []
 # ######### END SITE CONFIGURATION
 
-########## FIXTURE CONFIGURATION
+# ######### FIXTURE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-FIXTURE_DIRS
 FIXTURE_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'core', 'fixtures')),
@@ -149,9 +149,9 @@ FIXTURE_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'accounts', 'fixtures')),
     path.normpath(path.join(SITE_ROOT, 'payments', 'fixtures')),
 )
-########## END FIXTURE CONFIGURATION
+# ######### END FIXTURE CONFIGURATION
 
-########## TEMPLATE CONFIGURATION
+# ######### TEMPLATE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
@@ -184,9 +184,9 @@ TEMPLATE_DIRS = (
     path.normpath(path.join(SITE_ROOT, 'payments', 'templates')),
     path.normpath(path.join(SITE_ROOT, 'reader', 'templates')),
 )
-########## END TEMPLATE CONFIGURATION
+# ######### END TEMPLATE CONFIGURATION
 
-########## MIDDLEWARE CONFIGURATION
+# ######### MIDDLEWARE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#middleware-classes
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -198,12 +198,12 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'barddo.middleware.XsSharing'
 )
-########## END MIDDLEWARE CONFIGURATION
+# ######### END MIDDLEWARE CONFIGURATION
 
-########## URL CONFIGURATION
+# ######### URL CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
 ROOT_URLCONF = '%s.urls' % SITE_NAME
-########## END URL CONFIGURATION
+# ######### END URL CONFIGURATION
 
 ########## APP CONFIGURATION
 DJANGO_APPS = (
@@ -245,6 +245,7 @@ THIRD_PARTY_APPS = (
     'rest_framework',
     'rest_framework.authtoken',
     'paypalrestsdk',
+    'taggit',
 )
 
 # Apps specific for this project go here.
@@ -488,4 +489,5 @@ REST_FRAMEWORK = {
 
 SOUTH_MIGRATION_MODULES = {
     'easy_thumbnails': 'easy_thumbnails.south_migrations',
+    'taggit': 'taggit.south_migrations',
 }

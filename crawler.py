@@ -42,7 +42,7 @@ def __author_name(soup):
         author = soup.find('h4', text='Autor').find_parent('div', class_='row').find_next_sibling('div').findChild('a').text
     except Exception as e:
         print 'Falha ao obter nome do author. Erro: {}'.format(str(e))
-        author = 'Unknown'
+        author = 'Desconhecido'
     return author
 
 
@@ -52,7 +52,7 @@ def __tags(soup):
         tags = [a.text for a in tags_links]
     except Exception as e:
         print 'Falha ao obter tags. Erro: {}'.format(str(e))
-        tags = ['unknown']
+        tags = ['Desconhecido']
     return tags
 
 
@@ -61,8 +61,17 @@ def __status(soup):
         status = soup.find('h4', text='Status').find_parent('div', class_='row').find_next_sibling('div').findChild('a').text
     except Exception as e:
         print 'Falha ao obter status. Erro: {}'.format(str(e))
-        status = 'Unknown'
+        status = 'Desconhecido'
     return status
+
+
+def __sinopse(soup):
+    try:
+        sinopse = soup.find('p').text
+    except Exception as e:
+        print 'Falha ao obter sinopse. Erro: {}'.format(str(e))
+        sinopse = 'Sem sinopse'
+    return sinopse
 
 
 def __parse_chapters(soup):
@@ -95,29 +104,18 @@ def __extract_manga_data(url):
     author = __author_name(soup)
     tags = __tags(soup)
     status = __status(soup)
+    sinopse = __sinopse(soup)
     chapters = __parse_chapters(soup)
-    data = {'name': name,
-            'cover': cover,
+    data = {'cover': cover,
             'author': author,
             'tags': tags,
             'status': status,
+            'sinopse': sinopse,
             'chapters': chapters}
-    return data
+    return name, data
 
 
-def extract_data():
-    html = __get_html(INITIAL_URL)
-    soup = BeautifulSoup(html, 'lxml')
-    all_pages = __get_manga_pages(soup)
-    data = []
-    for page in all_pages:
-        url = BASE_URL.format(page)
-        if __should_parse(url):
-            manga_data = __extract_manga_data(url)
-            data.append(manga_data)
-    data_file = expanduser("~") + '/mangas.pickle'
-    with open(data_file, 'wb') as handle:
-        pickle.dump(data, handle)
+def __count_data(data):
     chapter_count = 0
     page_count = 0
     for d in data:
@@ -128,8 +126,29 @@ def extract_data():
             page_count += len(p)
     print 'Capitulos: {}'.format(chapter_count)
     print 'Páginas: {}'.format(page_count)
+
+
+def extract_data():
+    html = __get_html(INITIAL_URL)
+    soup = BeautifulSoup(html, 'lxml')
+    all_pages = __get_manga_pages(soup)
+    data = {}
+    for page in all_pages:
+        url = BASE_URL.format(page)
+        if __should_parse(url):
+            name, manga_data = __extract_manga_data(url)
+            data[name] = manga_data
+    data_file = expanduser("~") + '/mangas.pickle'
+    with open(data_file, 'wb') as handle:
+        pickle.dump(data, handle)
+    __count_data(data)
     return data
 
 
-if __name__ == '__main__':
-    extract_data()
+def execute(data_file=None):
+    if data_file:
+        with open(data_file, 'rb') as handle:
+            data = pickle.load(handle)
+    else:
+        data = extract_data()
+    return data

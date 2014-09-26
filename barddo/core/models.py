@@ -18,6 +18,7 @@ from easy_thumbnails.signal_handlers import generate_aliases
 from easy_thumbnails.signals import saved_file
 from south.modelsinspector import add_introspection_rules
 from easy_thumbnails.files import get_thumbnailer
+from taggit.managers import TaggableManager
 
 from accounts.models import BarddoUser
 from core.exceptions import InvalidFileUploadError
@@ -101,15 +102,13 @@ class Collection(models.Model):
 
     author = models.ForeignKey(BarddoUser, null=False, db_index=True)
 
-    author_name = models.CharField(_('Author name'), max_length=100, db_index=True, blank=True, null=True)
+    extra_data = models.CharField(_('Extra Data'), max_length=100, db_index=True, blank=True, null=True)  # TODO rever D:
 
     cover = models.ImageField(_('Cover Art'), upload_to=get_collection_cover_path, blank=True, null=True)
 
     objects = WorkManager()
     search_manager = SearchManager()
-
-    # TODO: collection tags
-    # TODO: collection categories
+    tags = TaggableManager()
 
     def save(self, *args, **kwargs):
         """
@@ -368,7 +367,6 @@ class WorkPage(models.Model):
     work = models.ForeignKey(Work, related_name='work_pages', db_index=True)
     readable_name = models.CharField(max_length=255)
     image = models.ImageField(upload_to=image_storage)
-    url = models.URLField(blank=True, null=True)
 
     @property
     def next_page_number(self):
@@ -376,3 +374,9 @@ class WorkPage(models.Model):
 
 
 saved_file.connect(generate_aliases)
+
+
+class RemotePage(models.Model):
+    sequence = AutoIncrementField()
+    work = models.ForeignKey(Work, related_name='remote_pages', db_index=True)
+    url = models.URLField(blank=True, null=True)
