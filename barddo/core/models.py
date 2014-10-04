@@ -105,6 +105,7 @@ class Collection(models.Model):
     extra_data = models.CharField(_('Extra Data'), max_length=100, db_index=True, blank=True, null=True)  # TODO rever D:
 
     cover = models.ImageField(_('Cover Art'), upload_to=get_collection_cover_path, blank=True, null=True)
+    cover_url = models.URLField(_('Remote Cover Url'), blank=True, null=True)
 
     objects = WorkManager()
     search_manager = SearchManager()
@@ -162,7 +163,8 @@ class Work(models.Model):
     slug = models.SlugField(_('Slug'), max_length=250, db_index=True)
 
     summary = models.TextField(_('Summary'))
-    cover = models.ImageField(_('Cover Art'), upload_to=get_work_cover_path)
+    cover = models.ImageField(_('Cover Art'), upload_to=get_work_cover_path, null=True, blank=True)
+    cover_url = models.URLField(_('Remote Cover Url'), blank=True, null=True)
 
     author = models.ForeignKey(BarddoUser, related_name='author_works', db_index=True)
 
@@ -246,7 +248,7 @@ class Work(models.Model):
         return self.price == 0.0
 
     def has_pages(self):
-        return bool(self.work_pages.count())
+        return bool(self.work_pages.count()) or bool(self.remote_pages.count())
 
     def is_owned_by(self, user):
         return Purchase.objects.is_owned_by(self, user)
@@ -377,6 +379,6 @@ saved_file.connect(generate_aliases)
 
 
 class RemotePage(models.Model):
-    sequence = AutoIncrementField()
+    sequence = models.PositiveIntegerField(_("Page Sequence"))
     work = models.ForeignKey(Work, related_name='remote_pages', db_index=True)
     url = models.URLField(blank=True, null=True)

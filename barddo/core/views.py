@@ -51,7 +51,7 @@ class IndexView(ProfileAwareView):
         new_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(
             user).filter(publish_date__gte=limit,
                          is_published=True). \
-            order_by("-publish_date")
+            order_by("-publish_date")[:30]
         return self.__filter_works_with_pages(new_works)
 
     def get_rising_works(self, user):
@@ -62,7 +62,7 @@ class IndexView(ProfileAwareView):
         rising_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(
             user).liked_after(limit).filter(
             is_published=True).distinct(). \
-            order_by("-total_likes")
+            order_by("-total_likes")[:30]
         return self.__filter_works_with_pages(rising_works)
 
     def get_trending_works(self, user):
@@ -73,7 +73,7 @@ class IndexView(ProfileAwareView):
         trending_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(
             user).liked_after(limit).filter(
             is_published=True).distinct(). \
-            order_by("-total_likes")
+            order_by("-total_likes")[:30]
         return self.__filter_works_with_pages(trending_works)
 
     def get_barddo_user(self, user):
