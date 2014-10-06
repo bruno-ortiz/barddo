@@ -68,9 +68,14 @@ def __status(soup):
 def __sinopse(soup):
     try:
         sinopse = soup.find('p').text
+        if not sinopse:
+            sinopse = soup.find('p').find_next_sibling('div').text
     except Exception as e:
         print 'Falha ao obter sinopse. Erro: {}'.format(str(e))
         sinopse = 'Sem sinopse'
+    else:
+        if not sinopse:
+            sinopse = u'Sem descrição'
     return sinopse
 
 
