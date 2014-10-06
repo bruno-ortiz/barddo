@@ -1,0 +1,9 @@
+{% load work_element %}
+{% load endless %}
+
+{% lazy_paginate 16,20 works %}
+{% for work in works %}
+    {% work_element work "collection-new" %}
+{% endfor %}
+
+{% show_more "Load More Comics!" %}

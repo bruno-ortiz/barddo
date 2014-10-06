@@ -7,7 +7,7 @@ from .views import artist_dashboard, upload_work_page, move_work_page, remove_wo
 
 urlpatterns = patterns(
     '',
-    url(r'^$',
+    url(r'^/?$',
         index,
         name='core.index'),
 

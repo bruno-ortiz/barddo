@@ -3,6 +3,7 @@ import hashlib
 import os
 from hashlib import md5
 import time
+from django.utils import timezone
 
 from PIL import Image
 from django.db import models
@@ -106,6 +107,8 @@ class Collection(models.Model):
 
     cover = models.ImageField(_('Cover Art'), upload_to=get_collection_cover_path, blank=True, null=True)
     cover_url = models.URLField(_('Remote Cover Url'), blank=True, null=True)
+
+    last_updated = models.DateTimeField(_('Last Updated'), auto_now_add=True, auto_now=True, default=timezone.now(), db_index=True)
 
     objects = WorkManager()
     search_manager = SearchManager()
@@ -248,7 +251,7 @@ class Work(models.Model):
         return self.price == 0.0
 
     def has_pages(self):
-        return bool(self.work_pages.count()) or bool(self.remote_pages.count())
+        return bool(self.work_pages.count())
 
     def is_owned_by(self, user):
         return Purchase.objects.is_owned_by(self, user)
@@ -320,7 +323,7 @@ class Work(models.Model):
         """
         thumbs_url = self.get_thumbnail_sprite_file()
 
-        if not os.path.exists(thumbs_url):
+        if self.has_pages() and not os.path.exists(thumbs_url):
             thumb_width, thumb_height = settings.THUMBNAIL_ALIASES['core.WorkPage.image']['reader_thumbs']['size']
             thumb_images = [page.image for page in self.pages]
 

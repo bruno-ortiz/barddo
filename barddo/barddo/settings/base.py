@@ -491,3 +491,5 @@ SOUTH_MIGRATION_MODULES = {
     'easy_thumbnails': 'easy_thumbnails.south_migrations',
     'taggit': 'taggit.south_migrations',
 }
+
+ENDLESS_PAGINATION_PER_PAGE = 20

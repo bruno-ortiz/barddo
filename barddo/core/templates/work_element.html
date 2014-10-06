@@ -6,7 +6,11 @@
     <div class="boxcontainer">
 
         <div class="cover-wrap">
-            <img src="{{ work.cover|thumbnail_url:"big_cover" }}" alt="">
+            {% if work.cover_url %}
+                <img src="{{ work.cover_url }}" alt="Remote Cover" style="min-width:100%">
+            {% else %}
+                <img src="{{ work.cover|thumbnail_url:"big_cover" }}" alt="">
+            {% endif %}
         </div>
 
         <div class="roll" style="cursor: -webkit-zoom-in;" onclick="window.location.href = '{% url "core.work.detail" work.id %}/{{ work.collection.slug }}';">

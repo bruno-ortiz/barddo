@@ -25,56 +25,28 @@ class IndexView(ProfileAwareView):
 
     LAST_YEAR = -365
 
+    model = Work
+
     template_name = 'index.html'
+
+    page_template = 'work_list_page.html'
 
     def get(self, request, *args, **kwargs):
         next_url = request.GET.get('next', '')
 
         barddo_user = self.get_barddo_user(request.user)
+        works = self.get_index_works(barddo_user)
+        context = {"next_url": next_url, "works": works, 'page_template': self.page_template}
 
-        new_works = self.get_new_works(barddo_user)
-        rising_works = self.get_rising_works(barddo_user)
-        trending_works = self.get_trending_works(barddo_user)
-        context = {"next_url": next_url,
-                   "new_works": new_works,
-                   "rising_works": rising_works,
-                   "trending_works": trending_works}
-        if barddo_user:
-            owned_works = self.get_owned_works(barddo_user)
-            context['owned_works'] = owned_works
+        if request.is_ajax():
+            self.template_name = self.page_template
+
         return super(IndexView, self).get(request, **context)
 
-    def get_new_works(self, user):
-        # TODO: quando tivermos fluxo constante, limitar o que é exibido
-        limit = self.get_relative_date(self.LAST_YEAR)
-
+    def get_index_works(self, user):
         new_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(
-            user).filter(publish_date__gte=limit,
-                         is_published=True). \
-            order_by("-publish_date")[:30]
-        return self.__filter_works_with_pages(new_works)
-
-    def get_rising_works(self, user):
-        # TODO: quando tivermos fluxo constante, limitar o que é exibido
-        limit = self.get_relative_date(self.LAST_YEAR)
-
-        # TODO: Rever o distinct
-        rising_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(
-            user).liked_after(limit).filter(
-            is_published=True).distinct(). \
-            order_by("-total_likes")[:30]
-        return self.__filter_works_with_pages(rising_works)
-
-    def get_trending_works(self, user):
-        # TODO: quando tivermos fluxo constante, limitar o que é exibido
-        limit = self.get_relative_date(self.LAST_YEAR)
-
-        # TODO: Rever o distinct
-        trending_works = Work.objects.select_related("collection", "author", "author__profile").total_likes().liked_by(
-            user).liked_after(limit).filter(
-            is_published=True).distinct(). \
-            order_by("-total_likes")[:30]
-        return self.__filter_works_with_pages(trending_works)
+            user).filter(is_published=True).order_by("-publish_date")
+        return new_works
 
     def get_barddo_user(self, user):
         return user if user.is_authenticated() else None
@@ -84,10 +56,6 @@ class IndexView(ProfileAwareView):
 
     def get_owned_works(self, barddo_user):
         return Work.objects.owned_by(barddo_user)
-
-    def __filter_works_with_pages(self, works):
-        # TODO: REMOVER quando tivermos controle de páginas pelo banco
-        return filter(lambda work: work.has_pages(), works)
 
 
 index = IndexView.as_view()

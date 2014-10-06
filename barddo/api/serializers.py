@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer, DateTimeField, CharField, SerializerMethodField, IntegerField, Serializer
+from rest_framework.serializers import ModelSerializer, DateTimeField, CharField, SerializerMethodField, IntegerField, Serializer, URLField
 from django.contrib.sites.models import Site
 from easy_thumbnails.files import get_thumbnailer
 

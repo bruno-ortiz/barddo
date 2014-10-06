@@ -9,14 +9,6 @@ from django.utils.translation import ugettext as _
 
 from core.models import Collection
 
-
-try:
-    from django_bitly.templatetags.bitly import bitlify
-
-    DJANGO_BITLY = True
-except ImportError:
-    DJANGO_BITLY = False
-
 register = template.Library()
 
 TWITTER_ENDPOINT = 'http://twitter.com/intent/tweet?text=%s'
@@ -47,10 +39,7 @@ def _build_url(request, obj_or_url, force_raw=False):
         if isinstance(obj_or_url, ImageFieldFile):
             return request.build_absolute_uri(obj_or_url.url)
         elif isinstance(obj_or_url, Model):
-            if not force_raw and DJANGO_BITLY:
-                return bitlify(obj_or_url)
-            else:
-                return request.build_absolute_uri(obj_or_url.get_absolute_url())
+            return request.build_absolute_uri(obj_or_url.get_absolute_url())
         else:
             return request.build_absolute_uri(obj_or_url)
     return ''
@@ -150,7 +139,12 @@ def render_work_opengraph_header(context, work):
     context['facebook_app_name'] = settings.FACEBOOK_APP_NAME
     context['work_url'] = _build_url(request, work, True)
     context['work_title'] = work.title
-    context['work_image'] = _build_url(request, work.cover)
+
+    if work.cover_url:
+        context['work_image'] = work.cover_url
+    else:
+        context['work_image'] = _build_url(request, work.cover)
+
     context['work_description'] = work.summary
     context['collection_name'] = work.collection.name
     context['artist_name'] = work.author.get_full_name()
@@ -166,7 +160,11 @@ def render_collection_opengraph_header(context, collection):
     context['facebook_app_name'] = settings.FACEBOOK_APP_NAME
     context['collection_url'] = _build_url(request, collection, True)
     context['collection_name'] = collection.name
-    context['collection_cover'] = _build_url(request, collection.cover)
+
+    if collection.cover_url:
+        context['collection_cover'] = collection.cover_url
+    else:
+        context['collection_cover'] = _build_url(request, collection.cover)
     context['collection_description'] = collection.summary
     context['artist_name'] = collection.author.get_full_name()
 

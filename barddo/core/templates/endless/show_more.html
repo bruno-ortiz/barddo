@@ -1,0 +1,15 @@
+{% load i18n %}
+
+<div class="endless_container" style="text-align: center; clear: both;">
+    <a class="btn btn-danger endless_more" href="{{ path }}{{ querystring }}" rel="{{ querystring_key }}">
+        {% if label %}
+            {{ label }}
+        {% else %}
+            {% trans "more" %}
+        {% endif %}
+    </a>
+
+    <div class="endless_loading" style="display: none;">
+        <i class="icon icon-spinner icon-spin icon-2x"></i>
+    </div>
+</div>
