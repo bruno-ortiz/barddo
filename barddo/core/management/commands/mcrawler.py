@@ -2,7 +2,7 @@ from optparse import make_option
 
 from django.core.management.base import BaseCommand
 
-from crawler import INITIAL_URL, execute
+from crawler.fetch import INITIAL_URL, execute
 
 
 class Command(BaseCommand):
