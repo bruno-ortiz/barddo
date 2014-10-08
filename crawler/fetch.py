@@ -12,24 +12,24 @@ BASE_URL = "http://centraldemangas.net{}"
 INITIAL_URL = BASE_URL.format("/mangas/list/*")
 
 
-def __should_parse(url):
+def should_parse(url):
     return 'informacoes/sinopse' not in url
 
 
-def __get_html(url):
+def get_html(url):
     url_open = urllib2.urlopen(url)
     html = url_open.read()
     url_open.close()
     return html
 
 
-def __get_manga_pages(soup):
+def get_manga_pages(soup):
     pagination_links = soup.find('ul', class_='pagination').find_all('a', href=re.compile(r'.*/mangas/list/*/.*'))
     pagination_urls = [a['href'] for a in pagination_links]
     manga_urls = []
     for page_url in pagination_urls:
         url = BASE_URL.format(page_url)
-        html = __get_html(url)
+        html = get_html(url)
         manga_soup = BeautifulSoup(html, 'lxml')
         manga_links = manga_soup.find('table', class_='table').find_all('a', href=re.compile(r".*/mangas/info/.*"))
         url_list = [a['href'] for a in manga_links]
@@ -79,29 +79,33 @@ def __sinopse(soup):
     return sinopse
 
 
+def parse_chapters_pages(url):
+    try:
+        url = BASE_URL.format(url)
+        html = get_html(url)
+        r = re.compile(r'.*var\spages.*\[(.*)\]')
+        if r.search(html):
+            raw_pages = r.search(html).group(1)
+            pages = raw_pages.replace('\\', '').replace('"', '').split(',')
+        else:
+            pages = []
+        return pages
+    except Exception as e:
+        print 'Falha ao obter capitulos. Erro: {}'.format(str(e))
+        return []
+
+
 def __parse_chapters(soup):
     try:
         chapter_links = soup.find_all('a', href=re.compile(r'.*/online/.*'))
-        chapter_list = [{'url': a['href'], 'name': a.text} for a in chapter_links]
-        for chapter in chapter_list:
-            url = BASE_URL.format(chapter['url'])
-            html = __get_html(url)
-            r = re.compile(r'.*var\spages.*\[(.*)\]')
-            if r.search(html):
-                print 'Obtendo páginas do capitulos {}'.format(chapter['name'])
-                raw_pages = r.search(html).group(1)
-                pages = raw_pages.replace('\\', '').replace('"', '').split(',')
-            else:
-                pages = []
-            chapter['pages'] = pages
+        return [{'url': a['href'], 'name': a.text} for a in chapter_links]
     except Exception as e:
         print 'Falha ao obter capitulos. Erro: {}'.format(str(e))
-        chapter_list = []
-    return chapter_list
+        return []
 
 
-def __extract_manga_data(url):
-    html = __get_html(url)
+def extract_manga_data(url):
+    html = get_html(url)
     soup = BeautifulSoup(html, 'lxml')
     cover = soup.find('div', class_="pull-left").find('img', class_='img-thumbnail')['src']
     name = soup.find('div', class_='page-header').find('h1').contents[0].strip()
@@ -120,7 +124,7 @@ def __extract_manga_data(url):
     return name, data
 
 
-def __count_data(data):
+def count_data(data):
     chapter_count = 0
     page_count = 0
     for d in data:
@@ -134,19 +138,19 @@ def __count_data(data):
 
 
 def extract_data():
-    html = __get_html(INITIAL_URL)
+    html = get_html(INITIAL_URL)
     soup = BeautifulSoup(html, 'lxml')
-    all_pages = __get_manga_pages(soup)
+    all_pages = get_manga_pages(soup)
     data = {}
     for page in all_pages:
         url = BASE_URL.format(page)
-        if __should_parse(url):
-            name, manga_data = __extract_manga_data(url)
+        if should_parse(url):
+            name, manga_data = extract_manga_data(url)
             data[name] = manga_data
     data_file = expanduser("~") + '/mangas.pickle'
     with open(data_file, 'wb') as handle:
         pickle.dump(data, handle)
-    __count_data(data)
+    count_data(data)
     return data
 
 

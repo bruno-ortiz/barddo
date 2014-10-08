@@ -2,7 +2,7 @@ from optparse import make_option
 
 from django.core.management.base import BaseCommand
 
-from crawler.fetch import INITIAL_URL, execute
+from crawler.main import threaded_crawler
 
 
 class Command(BaseCommand):
@@ -11,22 +11,13 @@ class Command(BaseCommand):
     """
 
     option_list = BaseCommand.option_list + (
-        make_option('--file',
-                    '-f',
-                    dest='_file',
+        make_option('--threads',
+                    '-t',
+                    dest='_threads',
                     default=None,
-                    help='File containing the data of the site'),
+                    help='Total threads to fetch data'),
     )
 
     def handle(self, *args, **options):
-        file_ = options['_file']
-        if file_:
-            msg = "Voce gostaria de importa os dados do arquivo {} '(s/n)'?".format(file_)
-        else:
-            msg = "Voce tem certeza que gostaria de executar o crawler na url {} '(s/n)'?".format(INITIAL_URL)
-        confirm = raw_input(msg)
-        while 1:
-            if confirm not in ('s', 'n'):
-                confirm = raw_input('Entre s ou n!: ')
-            elif confirm == 's':
-                data = execute(file_)
+        threads_count = options['_threads']
+        threaded_crawler(int(threads_count))
