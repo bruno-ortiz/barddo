@@ -7,6 +7,14 @@ from base import *
 # into your settings, but ImproperlyConfigured is an exception.
 from django.core.exceptions import ImproperlyConfigured
 
+# ######### MANAGER CONFIGURATION
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
+ADMINS = (
+    ('Mangas Brasil', 'contato@mangasbrasil.com'),
+)
+
+DEFAULT_FROM_EMAIL = 'contato@mangasbrasil.com'
+
 
 def get_env_setting(setting):
     """ Get the environment setting or return exception """
@@ -52,12 +60,12 @@ SERVER_EMAIL = DEFAULT_FROM_EMAIL
 # ######### DATABASE CONFIGURATION
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'barddo_development',
-        'USER': 'barddo',
-        'PASSWORD': 'barddo@01',
-        'HOST': 'localhost',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'mangas_production',  # Or path to database file if using sqlite3.
+        'USER': 'mangas',
+        'PASSWORD': 'mangas@01',
+        'HOST': 'datanode.israelcrisanto.com',
+        'PORT': '',  # Set to empty string for default.
     }
 }
 ########## END DATABASE CONFIGURATION
