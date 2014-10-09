@@ -1,8 +1,8 @@
 from django.conf.urls import patterns, url, include
 from rest_framework.routers import DefaultRouter
 
-from .views import register_by_access_token, UserFeedViewSet, PageRetrieve, UserFriendsViewSet, FavoritesViewSet, WorksViewSet, WorkSearchViewSet, CompleteWorkViewSet
-from .new_api import RemotePagesViewSet, MangaListViewSet
+from api.views import register_by_access_token, UserFeedViewSet, PageRetrieve, UserFriendsViewSet, FavoritesViewSet, WorksViewSet, WorkSearchViewSet, CompleteWorkViewSet
+from api.new_api import RemotePagesViewSet, MangaListViewSet
 
 
 router = DefaultRouter()
