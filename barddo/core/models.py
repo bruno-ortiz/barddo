@@ -3,8 +3,8 @@ import hashlib
 import os
 from hashlib import md5
 import time
-from django.utils import timezone
 
+from django.utils import timezone
 from PIL import Image
 from django.db import models
 from django.db import transaction
@@ -103,12 +103,10 @@ class Collection(models.Model):
 
     author = models.ForeignKey(BarddoUser, null=False, db_index=True)
 
-    extra_data = models.CharField(_('Extra Data'), max_length=100, db_index=True, blank=True, null=True)  # TODO rever D:
-
     cover = models.ImageField(_('Cover Art'), upload_to=get_collection_cover_path, blank=True, null=True)
     cover_url = models.URLField(_('Remote Cover Url'), blank=True, null=True)
 
-    last_updated = models.DateTimeField(_('Last Updated'), auto_now_add=True, auto_now=True, default=timezone.now(), db_index=True)
+    last_updated = models.DateTimeField(_('Last Updated'), auto_now_add=True, default=timezone.now(), db_index=True)
 
     objects = WorkManager()
     search_manager = SearchManager()

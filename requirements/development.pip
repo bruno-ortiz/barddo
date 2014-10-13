@@ -32,3 +32,4 @@ model_mommy==1.2.1
 dj-inmemorystorage==1.0.3
 beautifulsoup4
 django-taggit
+dateutils
