@@ -1,10 +1,6 @@
 import cPickle as pickle
 import os
 
-# TODO: remove this line
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "barddo.settings.mb_development")
-
-
 from django.utils import timezone
 
 from core.models import Collection, Work, RemotePage
