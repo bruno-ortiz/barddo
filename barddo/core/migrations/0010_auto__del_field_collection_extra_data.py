@@ -12,18 +12,12 @@ class Migration(SchemaMigration):
         db.delete_column(u'core_collection', 'extra_data')
 
 
-        # Changing field 'Collection.last_updated'
-        db.alter_column(u'core_collection', 'last_updated', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True))
-
     def backwards(self, orm):
         # Adding field 'Collection.extra_data'
         db.add_column(u'core_collection', 'extra_data',
                       self.gf('django.db.models.fields.CharField')(blank=True, max_length=100, null=True, db_index=True),
                       keep_default=False)
 
-
-        # Changing field 'Collection.last_updated'
-        db.alter_column(u'core_collection', 'last_updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, auto_now_add=True))
 
     models = {
         u'accounts.barddouser': {
@@ -70,7 +64,7 @@ class Migration(SchemaMigration):
             'cover_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'end_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'last_updated': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2014, 10, 13, 0, 0)', 'auto_now_add': 'True', 'db_index': 'True', 'blank': 'True'}),
+            'last_updated': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2014, 10, 14, 0, 0)', 'auto_now': 'True', 'db_index': 'True', 'auto_now_add': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '250'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '250'}),
             'start_date': ('django.db.models.fields.DateField', [], {'db_index': 'True'}),

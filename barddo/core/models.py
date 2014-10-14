@@ -106,7 +106,7 @@ class Collection(models.Model):
     cover = models.ImageField(_('Cover Art'), upload_to=get_collection_cover_path, blank=True, null=True)
     cover_url = models.URLField(_('Remote Cover Url'), blank=True, null=True)
 
-    last_updated = models.DateTimeField(_('Last Updated'), auto_now_add=True, default=timezone.now(), db_index=True)
+    last_updated = models.DateTimeField(_('Last Updated'), auto_now_add=True, auto_now=True, default=timezone.now(), db_index=True)
 
     objects = WorkManager()
     search_manager = SearchManager()
