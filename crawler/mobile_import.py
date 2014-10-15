@@ -45,11 +45,11 @@ def import_to_mobile():
         current += 1
 
     with open('mobile_database.sql', 'w') as output:
-        output.write("CREATE TABLE manga (_id INT, title TEXT, cover TEXT,  author TEXT, summary TEXT, favourite BOOLEAN);\n")
+        output.write("CREATE TABLE manga (_id INT PRIMARY KEY, title TEXT, cover TEXT,  author TEXT, summary TEXT, favourite BOOLEAN);\n")
         output.write("CREATE TABLE manga_tags (manga_id INT, tag_id INT);\n")
-        output.write("CREATE TABLE manga_chapter (manga_id INT, _id INT, read BOOLEAN DEFAULT 0, new BOOLEAN DEFAULT 0);\n")
+        output.write("CREATE TABLE manga_chapter (manga_id INT, _id INT PRIMARY KEY, read BOOLEAN DEFAULT 0, new BOOLEAN DEFAULT 0);\n")
         output.write("CREATE TABLE manga_chapter_page (chapter_id INT, position INT, url TEXT);\n")
-        output.write("CREATE TABLE tags (_id INT, name TEXT);\n")
+        output.write("CREATE TABLE tags (_id INT PRIMARY KEY, name TEXT);\n")
         output.write("CREATE TABLE last_updated (updated TEXT);\n")
 
         output.write("BEGIN;\n")
