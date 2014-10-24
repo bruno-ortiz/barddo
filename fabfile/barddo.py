@@ -13,37 +13,15 @@ env.key_filename = fabconf['SSH_PRIVATE_KEY_PATH']
 env.host_string = fabconf['SSH_HOST']
 
 
+
 @task
-def main():
-    # TODO
-    env.service = ""
-    env.settings = ""
+def mangasbrasil():
+    env.service = "mangas"
+    env.settings = "barddo.settings.mb_production"
     env.project = fabconf['PROJECT_PATH']
     env.app = fabconf['APP_PATH']
     env.python = fabconf['PYTHON_PATH']
     env.pip = fabconf['PIP_PATH']
-    env.branch = fabconf['BRANCH']
-
-
-@task
-def production():
-    env.service = "barddo"
-    env.settings = "barddo.settings.production"
-    env.project = fabconf['PROJECT_PATH.BETA']
-    env.app = fabconf['APP_PATH.BETA']
-    env.python = fabconf['PYTHON_PATH.BETA']
-    env.pip = fabconf['PIP_PATH.BETA']
-    env.branch = fabconf['BRANCH']
-
-
-@task
-def landpage():
-    env.service = "barddo.landpage"
-    env.settings = "landpage.settings.production"
-    env.project = fabconf['PROJECT_PATH.LANDPAGE']
-    env.app = fabconf['APP_PATH.LANDPAGE']
-    env.python = fabconf['PYTHON_PATH.LANDPAGE']
-    env.pip = fabconf['PIP_PATH.LANDPAGE']
     env.branch = fabconf['BRANCH']
 
 
@@ -62,7 +40,6 @@ def deploy():
     cleanup()
     apply_static()
     apply_compress()
-    apply_migrations()
     start_services()
 
     end_time = time.time()
