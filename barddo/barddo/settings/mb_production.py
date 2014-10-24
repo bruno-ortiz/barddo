@@ -26,7 +26,7 @@ def get_env_setting(setting):
 
 # ######### HOST CONFIGURATION
 # See: https://docs.djangoproject.com/en/1.5/releases/1.5/#allowed-hosts-required-in-production
-ALLOWED_HOSTS = ['.mangasbrasil.com', 'mangasbrasil.com', '127.0.0.1:8000']
+ALLOWED_HOSTS = ['.mangasbrasil.com', 'mangasbrasil.com', 'mangasbrasil.com:9000', '127.0.0.1:8000']
 # ######### END HOST CONFIGURATION
 
 
