@@ -113,5 +113,5 @@ def threaded_crawler(queue_size):
 
     print "Elapsed Time: {} with {} threads".format(time.time() - start, queue_size)
 
-# TODO: remove this line, tests only
+# # TODO: remove this line, tests only
 # threaded_crawler(15)

@@ -26,7 +26,8 @@ class MangaParser(object):
                 break
 
         if not chapters:
-            raise RuntimeError("Cannot find a valid chapters parser for {}".format(real_url))
+            chapters = []
+            #raise RuntimeError("Cannot find a valid chapters parser for {}".format(real_url))
 
         data = {'cover': cover,
                 'author': author,
