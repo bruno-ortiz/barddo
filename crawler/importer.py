@@ -106,5 +106,3 @@ def threaded_crawler(queue_size):
     tags_queue.join()
 
     print "Elapsed Time: {} with {} threads".format(time.time() - start, queue_size)
-
-threaded_crawler(15)
