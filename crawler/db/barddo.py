@@ -2,6 +2,9 @@ import cPickle as pickle
 import os
 
 from django.utils import timezone
+from django.db import models, connection
+from taggit.models import Tag
+from core.lock_manager import LockingManager
 
 from core.models import Collection, Work, RemotePage
 from accounts.models import BarddoUser
@@ -12,10 +15,10 @@ from django.db import transaction, IntegrityError
 
 def get_or_create_work(collection, author, title, number):
     with transaction.atomic():
-        return Work.objects.get_or_create(collection=collection, title=title, summary=title,
-                                          cover_url=collection.cover_url, author=author, unit_count=number,
+        return Work.objects.get_or_create(collection=collection, title=title, summary=title, author=author, unit_count=number,
                                           is_published=True,
-                                          defaults={'total_pages': 0, 'publish_date': timezone.now()})
+                                          defaults={'total_pages': 0, 'publish_date': timezone.now(),
+                                                    'cover_url': collection.cover_url})
 
 
 def create_pages_for_work(work, pages):
@@ -23,28 +26,22 @@ def create_pages_for_work(work, pages):
         RemotePage.objects.bulk_create([RemotePage(work=work, url=url, sequence=pages.index(url)) for url in pages])
 
 
-def get_or_create_collection(title, cover_url, summary, author, tags, status):
+def get_or_create_collection(title, cover_url, summary, author, tags, status, tags_queue):
     inner_status = Collection.STATUS_COMPLETED if status == u"Completo" else Collection.STATUS_ONGOING
 
     with transaction.atomic():
-        collection, created = Collection.objects.get_or_create(name=title, summary=summary, cover_url=cover_url,
-                                                               author=author, defaults={'start_date': timezone.now(), 'status': inner_status})
+        collection, created = Collection.objects.get_or_create(name=title, author=author,
+                                                               defaults={'start_date': timezone.now(),
+                                                                         'status': Collection.STATUS_ONGOING,
+                                                                         'summary': summary,
+                                                                         'cover_url': cover_url
+                                                                        })
 
-        # Update status if needed
-        if collection.status != inner_status:
-            collection.status = inner_status
-            collection.save()
-
+    # Schedule for post saving
     if created:
-        try:
-            with transaction.atomic():
-                collection.tags.add(*tags)
-                collection.save()
-        except IntegrityError:
-            print "Error saving tags because duplication"
-            pass
+        tags_queue.put((collection, tags))
 
-    return collection
+    return collection, inner_status, created
 
 
 def get_or_create_author(name):
@@ -56,7 +53,10 @@ def get_or_create_author(name):
         last = ''
 
     with transaction.atomic():
-        return BarddoUser.objects.get_or_create(username=login, first_name=first, last_name=last, is_publisher=True)[0]
+        return BarddoUser.objects.get_or_create(username=login, is_publisher=True, defaults={
+            'first_name': first,
+            'last_name': last,
+        })[0]
 
 
 # TO REMOVE

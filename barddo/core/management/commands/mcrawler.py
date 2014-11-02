@@ -2,7 +2,7 @@ from optparse import make_option
 
 from django.core.management.base import BaseCommand
 
-from crawler.main import threaded_crawler
+from crawler.importer import threaded_crawler
 
 
 class Command(BaseCommand):

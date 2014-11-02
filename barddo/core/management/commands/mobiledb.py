@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from crawler.mobile_import import import_to_mobile
+from crawler.exporter import import_to_mobile
 
 
 class Command(BaseCommand):

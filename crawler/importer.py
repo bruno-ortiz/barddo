@@ -1,18 +1,37 @@
 import Queue
 import threading
 import time
+import db.barddo as mb
 
 from django.utils import timezone
-from bs4 import BeautifulSoup
 from django.db import transaction
 
 from core.models import Collection
-from fetch import extract_manga_data, get_html, should_parse, get_manga_pages, INITIAL_URL, BASE_URL, \
-    parse_chapters_pages
-import barddo_import as mb
+from centraldemangas.pages_parser import PagesParser
+from centraldemangas.index_parser import IndexParser
+from centraldemangas.manga_parser import MangaParser
 
 
 queue = Queue.Queue()
+
+
+tags_queue = Queue.Queue()
+
+
+class ThreadTags(threading.Thread):
+    def __init__(self, queue):
+        threading.Thread.__init__(self)
+        self.queue = queue
+
+    def run(self):
+        while True:
+            collection, tags = self.queue.get()
+            try:
+                with transaction.atomic():
+                    collection.tags.add(*tags)
+                    collection.save()
+            finally:
+                self.queue.task_done()
 
 
 class ThreadUrl(threading.Thread):
@@ -25,16 +44,18 @@ class ThreadUrl(threading.Thread):
             url = self.queue.get()
 
             try:
-                print "Fetching data from manga '{}'".format(url)
-                name, data = extract_manga_data(url)
+                # print "Fetching data from manga '{}'".format(url)
+                parser = MangaParser()
+                name, data = parser.extract_manga_data(url)
 
                 author = mb.get_or_create_author(data['author'])
                 tags = [t for t in data['tags']]
-                collection = mb.get_or_create_collection(name, data['cover'], data['sinopse'], author, tags,
-                                                         data['status'])
+                collection, new_status, created = mb.get_or_create_collection(name, data['cover'], data['sinopse'], author, tags,
+                                                         data['status'], tags_queue)
 
-                if collection.status == Collection.STATUS_ONGOING:
-                    need_to_update = False
+                if created or collection.status == Collection.STATUS_ONGOING:
+                    need_to_update = False if new_status == collection.status else True
+                    chapter_parser = PagesParser()
 
                     for pos in xrange(len(data['chapters'])):
                         chapter_data = data['chapters'][pos]
@@ -43,12 +64,13 @@ class ThreadUrl(threading.Thread):
                         work, created = mb.get_or_create_work(collection, author, chapter_title, pos)
 
                         if created:
-                            pages = parse_chapters_pages(chapter_url)
+                            pages = chapter_parser.parse_chapters_pages(chapter_url)
                             mb.create_pages_for_work(work, pages)
                             need_to_update = True
 
                     if need_to_update:
                         with transaction.atomic():
+                            collection.status = new_status
                             collection.last_updated = timezone.now()
                             collection.save()
                 else:
@@ -68,17 +90,21 @@ def threaded_crawler(queue_size):
         t.start()
 
     # populate queue with data
-    html = get_html(INITIAL_URL)
-    soup = BeautifulSoup(html, 'lxml')
-    all_pages = get_manga_pages(soup)
-
-    for page in all_pages:
-        url = BASE_URL.format(page)
-        if should_parse(url):
-            queue.put(url)
+    index_parser = IndexParser()
+    for url in index_parser.get_manga_list():
+        queue.put(url)
 
     # wait on the queue until everything has been processed
     queue.join()
+
+    print "Done importing... Starting to save tags..."
+
+    # save tags
+    t = ThreadTags(tags_queue)
+    t.setDaemon(True)
+    t.start()
+    tags_queue.join()
+
     print "Elapsed Time: {} with {} threads".format(time.time() - start, queue_size)
 
-# threaded_crawler(15)
+threaded_crawler(15)
