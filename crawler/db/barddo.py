@@ -2,15 +2,11 @@ import cPickle as pickle
 import os
 
 from django.utils import timezone
-from django.db import models, connection
-from taggit.models import Tag
-from core.lock_manager import LockingManager
+from django.utils.text import slugify
+from django.db import transaction
 
 from core.models import Collection, Work, RemotePage
 from accounts.models import BarddoUser
-from django.utils.text import slugify
-
-from django.db import transaction, IntegrityError
 
 
 def get_or_create_work(collection, author, title, number):
