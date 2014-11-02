@@ -1,3 +1,7 @@
+# TODO: remove this line, tests only
+# import os
+# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "barddo.settings.mb_development")
+
 import Queue
 import threading
 import time
@@ -75,6 +79,8 @@ class ThreadUrl(threading.Thread):
                             collection.save()
                 else:
                     print "Ignoring '{}', it's complete...".format(name)
+            except Exception, e:
+                print "Error loading manga '{}'".format(e)
             finally:
                 self.queue.task_done()
 
@@ -106,3 +112,6 @@ def threaded_crawler(queue_size):
     tags_queue.join()
 
     print "Elapsed Time: {} with {} threads".format(time.time() - start, queue_size)
+
+# TODO: remove this line, tests only
+# threaded_crawler(15)

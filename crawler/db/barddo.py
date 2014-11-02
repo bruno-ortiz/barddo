@@ -11,10 +11,14 @@ from accounts.models import BarddoUser
 
 def get_or_create_work(collection, author, title, number):
     with transaction.atomic():
-        return Work.objects.get_or_create(collection=collection, title=title, summary=title, author=author, unit_count=number,
+        return Work.objects.get_or_create(collection=collection, unit_count=number,
                                           is_published=True,
                                           defaults={'total_pages': 0, 'publish_date': timezone.now(),
-                                                    'cover_url': collection.cover_url})
+                                                    'cover_url': collection.cover_url,
+                                                    'author': author,
+                                                    'summary': title,
+                                                    'title': title,
+                                                    })
 
 
 def create_pages_for_work(work, pages):
@@ -26,11 +30,12 @@ def get_or_create_collection(title, cover_url, summary, author, tags, status, ta
     inner_status = Collection.STATUS_COMPLETED if status == u"Completo" else Collection.STATUS_ONGOING
 
     with transaction.atomic():
-        collection, created = Collection.objects.get_or_create(name=title, author=author,
+        collection, created = Collection.objects.get_or_create(name=title,
                                                                defaults={'start_date': timezone.now(),
                                                                          'status': Collection.STATUS_ONGOING,
                                                                          'summary': summary,
-                                                                         'cover_url': cover_url
+                                                                        'cover_url': cover_url,
+                                                                         'author': author,
                                                                         })
 
     # Schedule for post saving
