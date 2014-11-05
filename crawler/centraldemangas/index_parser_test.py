@@ -1,10 +1,10 @@
 # coding=utf-8
 import unittest
-from centraldemangas.index_parser import IndexParser
+
+from crawler.centraldemangas.index_parser import IndexParser
 
 
 class IndexParserTest(unittest.TestCase):
-
     def setUp(self):
         self.parser = IndexParser()
 

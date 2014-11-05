@@ -1,12 +1,13 @@
 # coding=utf-8
 import unittest
+
 from bs4 import BeautifulSoup
-from centraldemangas.chapters_parser import CommonChapterParser, CustomPageChapterParser
-from utils import get_html
+
+from crawler.centraldemangas.chapters_parser import CommonChapterParser, CustomPageChapterParser
+from crawler.utils import get_html
 
 
 class CommonChapterParserTest(unittest.TestCase):
-
     def setUp(self):
         self.parser = CommonChapterParser()
 
@@ -22,7 +23,6 @@ class CommonChapterParserTest(unittest.TestCase):
 
 
 class CustomPageChapterParserTest(unittest.TestCase):
-
     def setUp(self):
         self.parser = CustomPageChapterParser()
 

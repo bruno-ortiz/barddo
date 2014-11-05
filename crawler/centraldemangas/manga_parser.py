@@ -1,12 +1,11 @@
 # coding=utf-8
-import re
 from bs4 import BeautifulSoup
-from centraldemangas.chapters_parser import available_chapter_parsers
-from utils import get_html
+
+from crawler.centraldemangas.chapters_parser import available_chapter_parsers
+from crawler.utils import get_html
 
 
 class MangaParser(object):
-
     def extract_manga_data(self, url):
         html, real_url = get_html(url)
         soup = BeautifulSoup(html, 'lxml')
@@ -27,7 +26,7 @@ class MangaParser(object):
 
         if not chapters:
             chapters = []
-            #raise RuntimeError("Cannot find a valid chapters parser for {}".format(real_url))
+            # raise RuntimeError("Cannot find a valid chapters parser for {}".format(real_url))
 
         data = {'cover': cover,
                 'author': author,

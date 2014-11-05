@@ -1,10 +1,11 @@
 import re
+
 from bs4 import BeautifulSoup
-from utils import get_html
+
+from crawler.utils import get_html
 
 
 class IndexParser(object):
-
     BASE_URL = "http://centraldemangas.net{}"
 
     INITIAL_URL = BASE_URL.format("/mangas/list/*")

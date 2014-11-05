@@ -1,10 +1,10 @@
 # coding=utf-8
 import re
-from utils import get_html
+
+from crawler.utils import get_html
 
 
 class PagesParser(object):
-
     def parse_chapters_pages(self, complete_url):
         try:
             html, _ = get_html(complete_url)

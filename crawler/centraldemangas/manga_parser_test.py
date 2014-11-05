@@ -1,10 +1,10 @@
 # coding=utf-8
 import unittest
-from centraldemangas.manga_parser import MangaParser
+
+from crawler.centraldemangas.manga_parser import MangaParser
 
 
 class MangaParserTest(unittest.TestCase):
-
     def setUp(self):
         self.parser = MangaParser()
 

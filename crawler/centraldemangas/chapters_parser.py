@@ -1,10 +1,11 @@
 import re
+
 from bs4 import BeautifulSoup
-from utils import get_html
+
+from crawler.utils import get_html
 
 
 class CommonChapterParser(object):
-
     BASE_URL = "http://centraldemangas.net{}"
 
     def should_parse(self, url):
@@ -16,7 +17,6 @@ class CommonChapterParser(object):
 
 
 class CustomPageChapterParser(object):
-
     def should_parse(self, url):
         return "centraldemangas.net" not in url
 

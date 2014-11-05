@@ -1,6 +1,7 @@
 # coding=utf-8
 import unittest
-from centraldemangas.pages_parser import PagesParser
+
+from crawler.centraldemangas.pages_parser import PagesParser
 
 
 class PagesParserTest(unittest.TestCase):

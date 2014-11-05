@@ -3,8 +3,7 @@ from rest_framework.routers import DefaultRouter
 
 from api.views import register_by_access_token, UserFeedViewSet, PageRetrieve, UserFriendsViewSet, FavoritesViewSet, WorksViewSet, WorkSearchViewSet, \
     CompleteWorkViewSet
-
-from api.new_api import RemotePagesViewSet, MangaListViewSet
+from api.new_api import RemotePagesViewSet, MangaListViewSet, MangaStatusListViewSet
 
 
 router = DefaultRouter()
@@ -27,6 +26,7 @@ router.register(r'search-work', WorkSearchViewSet, base_name="search-work")
 # New Api URL's
 router.register(r'mangas', MangaListViewSet, base_name="manga-brazil-list")
 router.register(r'pages', RemotePagesViewSet, base_name="remote-pages")
+router.register(r'status', MangaStatusListViewSet, base_name="mangas-status")
 
 urlpatterns = patterns(
     '',

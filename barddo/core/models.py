@@ -135,6 +135,7 @@ class Collection(models.Model):
         index_together = [
             ["name", "summary"],
         ]
+        ordering = ['name']
 
 
 def get_work_cover_path(instance, filename):
@@ -383,3 +384,16 @@ class RemotePage(models.Model):
     sequence = models.PositiveIntegerField(_("Page Sequence"))
     work = models.ForeignKey(Work, related_name='remote_pages', db_index=True)
     url = models.URLField(blank=True, null=True)
+
+
+class CollectionAvailability(models.Model):
+    DELETED = 0
+    NEEDS_UPDATE = 1
+    STATUS_CHOICES = (
+        (DELETED, _('Deleted')),
+        (NEEDS_UPDATE, _('Needs Update')),
+    )
+
+    collection = models.OneToOneField(Collection)
+    modify_date = models.DateTimeField(_('Availability'), auto_now_add=True, auto_now=True, default=timezone.now(), db_index=True)
+    status = models.SmallIntegerField(_('Status'), choices=STATUS_CHOICES, default=DELETED, db_index=True)

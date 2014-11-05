@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Collection, Work
+from .models import Collection, Work, CollectionAvailability
 
 
 class CollectionAdmin(admin.ModelAdmin):
@@ -21,3 +21,10 @@ class WorkAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Work, WorkAdmin)
+
+
+class CollectionAvailabilityAdmin(admin.ModelAdmin):
+    list_display = ('collection', 'modify_date', 'status')
+
+
+admin.site.register(CollectionAvailability, CollectionAvailabilityAdmin)
