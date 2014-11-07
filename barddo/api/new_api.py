@@ -156,20 +156,7 @@ class MangaStatusListViewSet(viewsets.ReadOnlyModelViewSet):
         last_date = dateutil.parser.parse(last_date_string)
 
         queryset = CollectionAvailability.objects.filter(modify_date__gte=last_date).order_by('id')
-        paginator = Paginator(queryset, self.page_size)
-
-        page = request.QUERY_PARAMS.get('page')
-        try:
-            mangas_availability = paginator.page(page)
-        except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
-            mangas_availability = paginator.page(1)
-        except EmptyPage:
-            # If page is out of range (e.g. 9999), deliver last page of results
-            mangas_availability = paginator.page(paginator.num_pages)
-
-        serializer_context = {'request': request}
-        serializer = PaginatedMangaStatusSerializer(mangas_availability, context=serializer_context)
+        serializer = CollectionAvailabilitySerializer(queryset, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None, *args, **kwargs):
