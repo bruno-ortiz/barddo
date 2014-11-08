@@ -24,7 +24,7 @@ class MangaSerializer(ModelSerializer):
         """
         Helper method to render all manga chapters as a list
         """
-        only_new = self.context['only_new']
+        only_new = self.context.get('only_new', False)
         if only_new:
             last_date = self.context['last_date']
             queryset = collection.works.filter(publish_date__gte=last_date)
@@ -84,7 +84,9 @@ class MangaListViewSet(viewsets.ReadOnlyModelViewSet):
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None, *args, **kwargs):
-        return Response("Call not allowed", status=status.HTTP_404_NOT_FOUND)
+        queryset = Collection.objects.filter(pk=pk)
+        serializer = MangaSerializer(queryset)
+        return Response(serializer.data)
 
 
 class RemotePageSerializer(ModelSerializer):
