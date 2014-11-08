@@ -33,3 +33,4 @@ dj-inmemorystorage==1.0.3
 beautifulsoup4
 django-taggit
 dateutils
+natsort

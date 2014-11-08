@@ -3,6 +3,7 @@ import re
 from bs4 import BeautifulSoup
 
 from crawler.utils import get_html
+from natsort import natsorted
 
 
 class CommonChapterParser(object):
@@ -13,7 +14,8 @@ class CommonChapterParser(object):
 
     def parse(self, soup, url):
         chapter_links = soup.find_all('a', href=re.compile(r'.*/online/.*'))
-        return [{'url': self.BASE_URL.format(a['href']), 'name': a.text} for a in chapter_links]
+        sorted_chapter_links = natsorted(chapter_links, key=lambda x: x.text)
+        return [{'url': self.BASE_URL.format(a['href']), 'name': a.text} for a in sorted_chapter_links]
 
 
 class CustomPageChapterParser(object):
