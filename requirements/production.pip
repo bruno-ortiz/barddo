@@ -31,3 +31,4 @@ Markdown==2.4.1
 beautifulsoup4
 django-taggit
 dateutils
+natsort
