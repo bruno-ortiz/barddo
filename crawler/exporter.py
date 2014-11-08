@@ -51,12 +51,14 @@ def import_to_mobile():
         output.write("CREATE TABLE manga_chapter_page (chapter_id INT, position INT, url TEXT);\n")
         output.write("CREATE TABLE tags (_id INT PRIMARY KEY, name TEXT);\n")
         output.write("CREATE TABLE last_updated (updated TEXT);\n")
+        output.write("CREATE TABLE last_status_updated(_id INT PRIMARY KEY, last_status_updated TEXT)")
 
         output.write("BEGIN;\n")
         output.write("\n".join(tags_sql))
         output.write("\n".join(result_sql))
         output.write("\n".join(chapters_sql))
         output.write("\nINSERT INTO last_updated (updated) VALUES ('{}');".format(timezone.now().__str__()))
+        output.write("\nINSERT INTO last_status_updated (updated) VALUES ('{}');".format(timezone.now().__str__()))
         output.write("\nCOMMIT;")
 
-    print "Done!"
+        print "Done!"
