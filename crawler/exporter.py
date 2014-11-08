@@ -51,7 +51,7 @@ def import_to_mobile():
         output.write("CREATE TABLE manga_chapter_page (chapter_id INT, position INT, url TEXT);\n")
         output.write("CREATE TABLE tags (_id INT PRIMARY KEY, name TEXT);\n")
         output.write("CREATE TABLE last_updated (updated TEXT);\n")
-        output.write("CREATE TABLE last_status_updated(_id INT PRIMARY KEY, last_status_updated TEXT)")
+        output.write("CREATE TABLE last_status_updated(_id INT PRIMARY KEY, updated TEXT);\n")
 
         output.write("BEGIN;\n")
         output.write("\n".join(tags_sql))
