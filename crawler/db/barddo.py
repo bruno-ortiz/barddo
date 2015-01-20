@@ -18,7 +18,7 @@ def get_or_create_work(collection, author, title, number):
                                                     'author': author,
                                                     'summary': title,
                                                     'title': title,
-                                                    })
+                                          })
 
 
 def create_pages_for_work(work, pages):
@@ -26,17 +26,20 @@ def create_pages_for_work(work, pages):
         RemotePage.objects.bulk_create([RemotePage(work=work, url=url, sequence=pages.index(url)) for url in pages])
 
 
-def get_or_create_collection(title, cover_url, summary, author, tags, status, tags_queue):
+def get_or_create_collection(title, cover_url, summary, author, tags, status, tags_queue, source):
     inner_status = Collection.STATUS_COMPLETED if status == u"Completo" else Collection.STATUS_ONGOING
+    title_slug = slugify(title)
 
     with transaction.atomic():
-        collection, created = Collection.objects.get_or_create(name=title,
-                                                               defaults={'start_date': timezone.now(),
-                                                                         'status': Collection.STATUS_ONGOING,
-                                                                         'summary': summary,
-                                                                        'cover_url': cover_url,
-                                                                         'author': author,
-                                                                        })
+        collection, created = Collection.objects.select_related("source").get_or_create(slug=title_slug,
+                                                                                        defaults={'name': title,
+                                                                                                  'start_date': timezone.now(),
+                                                                                                  'status': Collection.STATUS_ONGOING,
+                                                                                                  'summary': summary,
+                                                                                                  'cover_url': cover_url,
+                                                                                                  'author': author,
+                                                                                                  'source': source
+                                                                                        })
 
     # Schedule for post saving
     if created:
@@ -46,6 +49,9 @@ def get_or_create_collection(title, cover_url, summary, author, tags, status, ta
 
 
 def get_or_create_author(name):
+    if len(name) > 30:
+        name = name[:30]
+
     login = slugify(name if isinstance(name, unicode) else name.decode("UTF-8"))
     if ' ' in name:
         first, last = name.rsplit(' ', 1)
@@ -62,7 +68,7 @@ def get_or_create_author(name):
 
 # TO REMOVE
 if __name__ == "__main__":
-    print 'Loading file...'
+    print u'Loading file...'
     pickle_path = os.path.join(os.path.dirname(__file__), 'mangas.pickle')
     manga_data = pickle.load(open(pickle_path, 'rb'))
 

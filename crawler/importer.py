@@ -1,6 +1,9 @@
+# coding=utf-8
 # TODO: remove this line, tests only
-# import os
-# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "barddo.settings.mb_development")
+import os
+from colorama import Fore
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "barddo.settings.mb_development")
 
 import Queue
 import threading
@@ -10,10 +13,29 @@ import db.barddo as mb
 from django.utils import timezone
 from django.db import transaction
 
+
 from core.models import Collection
-from centraldemangas.pages_parser import PagesParser
-from centraldemangas.index_parser import IndexParser
-from centraldemangas.manga_parser import MangaParser
+
+import centraldemangas
+import mangashost
+
+centraldemangas.create_source()
+
+importers = [
+    # {
+    #     u"source": centraldemangas.create_source(),
+    #     u"index": centraldemangas.IndexParser,
+    #     u'manga': centraldemangas.MangaParser,
+    #     u"pages": centraldemangas.PagesParser
+    # },
+
+    {
+        u"source": mangashost.create_source(),
+        u"index": mangashost.IndexParser,
+        u'manga': mangashost.MangaParser,
+        u"pages": mangashost.PagesParser
+    }
+]
 
 
 queue = Queue.Queue()
@@ -45,48 +67,55 @@ class ThreadUrl(threading.Thread):
 
     def run(self):
         while True:
-            url = self.queue.get()
+            url, idx = self.queue.get()
 
             try:
                 # print "Fetching data from manga '{}'".format(url)
-                parser = MangaParser()
+                parser = importers[idx][u"manga"]()
+                source = importers[idx][u"source"]
                 name, data = parser.extract_manga_data(url)
 
                 author = mb.get_or_create_author(data['author'])
                 tags = [t for t in data['tags']]
                 collection, new_status, created = mb.get_or_create_collection(name, data['cover'], data['sinopse'], author, tags,
-                                                         data['status'], tags_queue)
+                                                         data['status'], tags_queue, source)
 
-                if created or collection.status == Collection.STATUS_ONGOING:
-                    need_to_update = False if new_status == collection.status else True
-                    chapter_parser = PagesParser()
+                # Only update if from the same source, otherwise it'll replicate chapter data
+                if source == collection.source:
 
-                    for pos in xrange(len(data['chapters'])):
-                        chapter_data = data['chapters'][pos]
-                        chapter_title = chapter_data['name']
-                        chapter_url = chapter_data['url']
-                        work, created = mb.get_or_create_work(collection, author, chapter_title, pos)
+                    # Only update if not completed
+                    if created or collection.status == Collection.STATUS_ONGOING:
+                        need_to_update = False if new_status == collection.status else True
+                        chapter_parser = importers[idx][u"pages"]()
 
-                        if created:
-                            pages = chapter_parser.parse_chapters_pages(chapter_url)
-                            mb.create_pages_for_work(work, pages)
-                            need_to_update = True
+                        for pos in xrange(len(data['chapters'])):
+                            chapter_data = data['chapters'][pos]
+                            chapter_title = chapter_data['name']
+                            chapter_url = chapter_data['url']
+                            work, created = mb.get_or_create_work(collection, author, chapter_title, pos)
 
-                    if need_to_update:
-                        with transaction.atomic():
-                            collection.status = new_status
-                            collection.last_updated = timezone.now()
-                            collection.save()
+                            if created:
+                                pages = chapter_parser.parse_chapters_pages(chapter_url)
+                                mb.create_pages_for_work(work, pages)
+                                need_to_update = True
+
+                        if need_to_update:
+                            with transaction.atomic():
+                                collection.status = new_status
+                                collection.last_updated = timezone.now()
+                                collection.save()
+                    else:
+                        print Fore.YELLOW + u"Ignoring '{}', it's complete...".format(name) + Fore.WHITE
                 else:
-                    print "Ignoring '{}', it's complete...".format(name)
+                    print Fore.YELLOW + u"Ignoring '{}', already imported by {}...".format(name, collection.source.name)  + Fore.WHITE
             except Exception, e:
-                print "Error loading manga '{}'".format(e)
+                print Fore.RED + u"Error loading manga '{}'".format(str(e)) + Fore.WHITE
             finally:
                 self.queue.task_done()
 
 
 def threaded_crawler(queue_size):
-    print "Crawling central de mangas"
+    print "Crawling mangas"
     start = time.time()
 
     # spawn a pool of threads, and pass them queue instance
@@ -96,9 +125,10 @@ def threaded_crawler(queue_size):
         t.start()
 
     # populate queue with data
-    index_parser = IndexParser()
-    for url in index_parser.get_manga_list():
-        queue.put(url)
+    for idx in xrange(len(importers)):
+        index_parser = importers[idx]["index"]()
+        for url in index_parser.get_manga_list():
+            queue.put((url, idx))
 
     # wait on the queue until everything has been processed
     queue.join()
@@ -114,4 +144,4 @@ def threaded_crawler(queue_size):
     print "Elapsed Time: {} with {} threads".format(time.time() - start, queue_size)
 
 # # TODO: remove this line, tests only
-# threaded_crawler(15)
+threaded_crawler(15)

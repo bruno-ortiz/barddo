@@ -13,15 +13,16 @@ class IndexParser(object):
     PAGINATED_URL = BASE_URL.format("/mangas/page/{}")
 
     HEADERS = {
-        "Refererer": "http://br.mangahost.com/",
+        "Referer": "http://br.mangahost.com/",
         "User-Agent": "Mozilla/5.0"
     }
 
     def get_manga_list(self):
-        manga_urls = []
         for absolute_url in self.get_all_pages():
-            manga_urls.extend(self.get_mangas_in_page(absolute_url))
-        return [self.BASE_URL.format(url) for url in manga_urls if self.should_parse(url)]
+            print "Crawling page " + absolute_url
+            # for link in self.get_mangas_in_page(absolute_url):
+            #     yield link
+            self.get_mangas_in_page(absolute_url)
 
     def get_all_pages(self):
         html, _ = get_html(self.INITIAL_URL, self.HEADERS)

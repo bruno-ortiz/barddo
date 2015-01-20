@@ -32,3 +32,4 @@ beautifulsoup4
 django-taggit
 dateutils
 natsort
+colorama

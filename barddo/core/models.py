@@ -74,6 +74,11 @@ def get_collection_cover_path(instance, filename):
     return os.path.join('covers', 'collection', "{0}{1}".format(md5(filename).hexdigest(), ext))
 
 
+class CollectionSource(models.Model):
+    name = models.CharField(_('Collection Name'), max_length=250, unique=True)
+    referer = models.CharField(_('Source Referer'), max_length=250, unique=True)
+
+
 class Collection(models.Model):
     """
     A collection is a catalog of works from one or more artists.
@@ -105,6 +110,8 @@ class Collection(models.Model):
 
     cover = models.ImageField(_('Cover Art'), upload_to=get_collection_cover_path, blank=True, null=True)
     cover_url = models.URLField(_('Remote Cover Url'), blank=True, null=True)
+
+    source = models.ForeignKey(CollectionSource, db_index=True)
 
     last_updated = models.DateTimeField(_('Last Updated'), auto_now_add=True, auto_now=True, default=timezone.now(), db_index=True)
 

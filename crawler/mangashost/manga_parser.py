@@ -1,5 +1,6 @@
 # coding=utf-8
 from bs4 import BeautifulSoup
+from colorama import Fore
 
 from crawler.utils import get_html
 from mangashost.chapters_parser import available_chapter_parsers
@@ -12,9 +13,10 @@ class MangaParser(object):
         soup = BeautifulSoup(html, 'lxml')
 
         cover = soup.find('div', class_="content").find('img', class_='thumbnail')['src']
-        name = soup.find('div', class_='content').find('h1', class_="entry-title").contents[0].strip()
+        name = soup.find('div', class_='content').find('h1', class_="entry-title").contents[0]
+        name = name.replace("(PT-BR)", "").strip()
 
-        print 'Obtendo dados de: {}'.format(name)
+        print u'Obtendo dados de: {}'.format(name)
         author = self.__author_name(soup)
         tags = self.__tags(soup)
         status = self.__status(soup)
@@ -28,7 +30,6 @@ class MangaParser(object):
 
         if not chapters:
             chapters = []
-            # raise RuntimeError("Cannot find a valid chapters parser for {}".format(real_url))
 
         data = {'cover': cover,
                 'author': author,
@@ -44,7 +45,8 @@ class MangaParser(object):
         try:
             author = soup.find('strong', text='Autor: ').next_sibling
         except Exception as e:
-            print 'Falha ao obter nome do author. Erro: {}'.format(str(e))
+            print ">>>> 4.1"
+            print Fore.RED + u'Falha ao obter nome do author. Erro: {}'.format(str(e)) + Fore.WHITE
             author = 'Desconhecido'
         return author
 
@@ -54,7 +56,8 @@ class MangaParser(object):
             tags_links = soup.find('strong', text='Categoria(s): ').parent.findChildren("a")
             tags = [a.text for a in tags_links]
         except Exception as e:
-            print 'Falha ao obter tags. Erro: {}'.format(str(e))
+            print ">>>> 4.2"
+            print Fore.RED + u'Falha ao obter tags. Erro: {}'.format(str(e)) + Fore.WHITE
             tags = ['Desconhecido']
         return tags
 
@@ -64,7 +67,8 @@ class MangaParser(object):
         try:
             status = soup.find('strong', text='Status: ').next_sibling
         except Exception as e:
-            print 'Falha ao obter status. Erro: {}'.format(str(e))
+            print ">>>> 4.3"
+            print Fore.RED + u'Falha ao obter status. Erro: {}'.format(str(e)) + Fore.WHITE
             status = 'Desconhecido'
         return status
 
@@ -73,7 +77,8 @@ class MangaParser(object):
         try:
             sinopse = soup.find('div', id="divSpdInText").text
         except Exception as e:
-            print 'Falha ao obter sinopse. Erro: {}'.format(str(e))
+            print ">>>> 4.4"
+            print Fore.RED + u'Falha ao obter sinopse. Erro: {}'.format(str(e)) + Fore.WHITE
             sinopse = 'Sem sinopse'
         else:
             if not sinopse:
