@@ -13,13 +13,12 @@ class PagesParser(object):
             html, _ = get_html(complete_url, IndexParser.HEADERS)
             r = re.compile(r'.*var\s+pages\s+=\s+(.*);')
             if r.search(html):
-                raw_pages = r.search(html).group(1)
+                raw_pages = r.search(html).group(1).replace("}\s*,\s*]", "}]")
                 pages_dict = json.loads(raw_pages)
                 pages = [d["url"] for d in pages_dict]
             else:
                 pages = []
             return pages
         except Exception as e:
-            print ">>>> 5"
             print Fore.RED + u'Falha ao obter páginas de capitulos de "{}". Erro: {}'.format(complete_url, str(e)) + Fore.WHITE
             return []

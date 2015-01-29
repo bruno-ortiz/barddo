@@ -145,6 +145,11 @@ class Collection(models.Model):
         ordering = ['name']
 
 
+class CollectionAlias(models.Model):
+    collection = models.ForeignKey(Collection)
+    slug = models.SlugField(_('Slug'), max_length=250, db_index=True)
+
+
 def get_work_cover_path(instance, filename):
     """
         Default work cover path
