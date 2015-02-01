@@ -2,7 +2,7 @@ import urllib2
 from difflib import SequenceMatcher
 
 
-def is_similar(a, b, rating=0.5):
+def is_similar(a, b, rating=0.8):
     return SequenceMatcher(None, a, b).ratio() > rating
 
 

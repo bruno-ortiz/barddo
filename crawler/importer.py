@@ -2,6 +2,8 @@
 # TODO: remove this line, tests only
 import os
 from colorama import Fore
+from similarity import find_similar_after_import
+from utils import is_similar
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "barddo.settings.mb_development")
 
@@ -77,11 +79,11 @@ class ThreadUrl(threading.Thread):
 
                 author = mb.get_or_create_author(data['author'])
                 tags = [t for t in data['tags']]
-                collection, new_status, created = mb.get_or_create_collection(name, data['cover'], data['sinopse'], author, tags,
+                collection, new_status, created, repeated = mb.get_or_create_collection(name, data['cover'], data['sinopse'], author, tags,
                                                          data['status'], tags_queue, source)
 
                 # Only update if from the same source, otherwise it'll replicate chapter data
-                if source == collection.source:
+                if (not repeated) and source == collection.source:
 
                     # Only update if not completed
                     if created or collection.status == Collection.STATUS_ONGOING:
@@ -140,6 +142,9 @@ def threaded_crawler(queue_size):
     t.setDaemon(True)
     t.start()
     tags_queue.join()
+
+    print "Done creating tags... Starting do filter similar collections..."
+    find_similar_after_import()
 
     print "Elapsed Time: {} with {} threads".format(time.time() - start, queue_size)
 

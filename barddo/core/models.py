@@ -75,6 +75,10 @@ def get_collection_cover_path(instance, filename):
 
 
 class CollectionSource(models.Model):
+
+    CENTRAL_DE_MANGAS_ID = 1
+    MANGA_HOST_ID = 2
+
     name = models.CharField(_('Collection Name'), max_length=250, unique=True)
     referer = models.CharField(_('Source Referer'), max_length=250, unique=True)
 
@@ -114,6 +118,8 @@ class Collection(models.Model):
     source = models.ForeignKey(CollectionSource, db_index=True)
 
     last_updated = models.DateTimeField(_('Last Updated'), auto_now_add=True, auto_now=True, default=timezone.now(), db_index=True)
+
+    enabled = models.BooleanField(_("Enabled"), default=True)
 
     objects = WorkManager()
     search_manager = SearchManager()
@@ -395,7 +401,7 @@ saved_file.connect(generate_aliases)
 class RemotePage(models.Model):
     sequence = models.PositiveIntegerField(_("Page Sequence"))
     work = models.ForeignKey(Work, related_name='remote_pages', db_index=True)
-    url = models.URLField(blank=True, null=True)
+    url = models.URLField(max_length=500, blank=True, null=True)
 
 
 class CollectionAvailability(models.Model):

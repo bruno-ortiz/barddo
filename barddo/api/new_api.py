@@ -7,7 +7,7 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from core.models import RemotePage, Collection, CollectionAvailability
+from core.models import RemotePage, Collection, CollectionAvailability, CollectionSource
 
 
 class MangaSerializer(ModelSerializer):
@@ -17,6 +17,7 @@ class MangaSerializer(ModelSerializer):
     id = IntegerField(source="id", read_only=True)
     name = CharField(source="name", read_only=True)
     summary = CharField(source="summary", read_only=True)
+    source_id = CharField(source="source_id", read_only=True)
     author = CharField(source="author.get_full_name", read_only=True)
     chapters = SerializerMethodField('get_chapters')
 
@@ -34,7 +35,7 @@ class MangaSerializer(ModelSerializer):
 
     class Meta:
         model = Collection
-        fields = ('id', 'name', 'author', 'cover_url', 'chapters', 'summary')
+        fields = ('id', 'name', 'author', 'cover_url', 'chapters', 'summary', 'source_id')
 
 
 class PaginatedMangaSerializer(PaginationSerializer):
@@ -47,6 +48,13 @@ class PaginatedMangaSerializer(PaginationSerializer):
 
 
 _is_true = lambda value: bool(value) and value.lower() not in ('false', '0')
+
+
+def _api_version(val):
+    try:
+        return int(val)
+    except:
+        return 1
 
 
 class MangaListViewSet(viewsets.ReadOnlyModelViewSet):
@@ -65,8 +73,13 @@ class MangaListViewSet(viewsets.ReadOnlyModelViewSet):
         only_new = _is_true(request.GET.get("new", "false"))
         last_date = dateutil.parser.parse(last_date_string)
 
-        queryset = Collection.objects.select_related("author").prefetch_related('works').filter(
-            last_updated__gte=last_date).order_by('name')
+        api_version = _api_version(request.GET.get("version", "1"))
+
+        if api_version == 1:
+            queryset = Collection.objects.select_related("author").prefetch_related('works').filter(last_updated__gte=last_date, enabled=True, source=CollectionSource.CENTRAL_DE_MANGAS_ID).order_by('name')
+        else:
+            queryset = Collection.objects.select_related("author").prefetch_related('works').filter(last_updated__gte=last_date, enabled=True).order_by('name')
+
         paginator = Paginator(queryset, self.page_size)
 
         page = request.QUERY_PARAMS.get('page')
