@@ -30,12 +30,11 @@ def get_or_create_collection(title, cover_url, summary, author, tags, status, ta
     inner_status = Collection.STATUS_COMPLETED if status == u"Completo" else Collection.STATUS_ONGOING
     title_slug = slugify(title)
 
-    try:
-        alias = CollectionAlias.objects.get(slug=title_slug)
+    aliases = CollectionAlias.objects.filter(slug=title_slug)
+    if len(aliases) > 0:
         print "Ignoring {}, alias already found".format(title_slug)
-        return alias.collection, inner_status, False, True
-
-    except CollectionAlias.DoesNotExist:
+        return aliases[0].collection, inner_status, False, True
+    else:
         with transaction.atomic():
             collection, created = Collection.objects.select_related("source").get_or_create(slug=title_slug,
                                                                                             defaults={'name': title,

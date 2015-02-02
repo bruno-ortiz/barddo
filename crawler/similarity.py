@@ -1,6 +1,8 @@
 # coding=utf-8
 # TODO: remove this line, tests only
 import os
+from django.core.mail import mail_admins
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "barddo.settings.mb_development")
 
 #
@@ -45,15 +47,20 @@ def find_similar_after_import():
         filtered[name] = (id, cover, similar)
 
     print "Done filtering data"
+    result_string = ""
     for name, results in filtered.items():
         id = results[0]
         cover = results[1]
         similar = results[2]
 
-        print "-------------------------------------------------"
-        print "{} - {} ({}) is similar to: ".format(id, name, cover)
+        result_string += "-------------------------------------------------\n"
+        result_string += "{} - {} ({}) is similar to: ".format(id, name, cover) + '\n'
         for n in similar:
-            print str(n[0]) + " - " + n[1] + ": " + n[2]
+            result_string += str(n[0]) + " - " + n[1] + ": " + n[2] + "\n"
+
+    subject = "Importacao de mangás possivelmente repetidos"
+    body = "Os Mangas abaixo provavelmente estao repetidos, analise e remova da base se for o caso...\n\n"
+    mail_admins(subject, body)
 
     print "Done, filtering valuable results..."
 
@@ -112,22 +119,22 @@ def find_similar_after_import():
 #     print "Done, filtering valuable results..."
 #
 #
-# def import_similar():
-#     print "Importing repeated items"
-#     with open("repeated.txt") as f:
-#         lines = f.readlines()
-#         for line in lines:
-#             items = line.strip().split("|")
-#             id = items[0]
-#             keya = items[1]
-#             keyb = items[2]
-#
-#             print "importing {} - {}/{}".format(id, keya, keyb)
-#
-#             CollectionAlias.objects.get_or_create(slug=keya, collection_id=id)
-#             CollectionAlias.objects.get_or_create(slug=keyb, collection_id=id)
-#     print "Done"
-#
-#
-# if __name__ == "__main__":
-#     import_similar()
+def import_similar():
+    print "Importing repeated items"
+    with open("repeated.txt") as f:
+        lines = f.readlines()
+        for line in lines:
+            items = line.strip().split("|")
+            id = items[0]
+            keya = items[1]
+            keyb = items[2]
+
+            print "importing {} - {}/{}".format(id, keya, keyb)
+
+            CollectionAlias.objects.get_or_create(slug=keya, collection_id=id)
+            CollectionAlias.objects.get_or_create(slug=keyb, collection_id=id)
+    print "Done"
+
+
+if __name__ == "__main__":
+    import_similar()

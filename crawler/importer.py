@@ -24,12 +24,12 @@ import mangashost
 centraldemangas.create_source()
 
 importers = [
-    # {
-    #     u"source": centraldemangas.create_source(),
-    #     u"index": centraldemangas.IndexParser,
-    #     u'manga': centraldemangas.MangaParser,
-    #     u"pages": centraldemangas.PagesParser
-    # },
+    {
+        u"source": centraldemangas.create_source(),
+        u"index": centraldemangas.IndexParser,
+        u'manga': centraldemangas.MangaParser,
+        u"pages": centraldemangas.PagesParser
+    },
 
     {
         u"source": mangashost.create_source(),
@@ -58,6 +58,8 @@ class ThreadTags(threading.Thread):
                 with transaction.atomic():
                     collection.tags.add(*tags)
                     collection.save()
+            except Exception, e:
+                print "Error importing tags " + str(e)
             finally:
                 self.queue.task_done()
 

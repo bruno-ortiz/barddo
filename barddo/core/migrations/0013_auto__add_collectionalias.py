@@ -18,8 +18,8 @@ class Migration(SchemaMigration):
         db.send_create_signal(u'core', ['CollectionAlias'])
 
         if not db.dry_run:
-            for collection in Collection.objects.filter():
-                CollectionAlias.objects.create(collection=collection, slug=collection.slug)
+            for collection in orm.Collection.objects.filter():
+                orm.CollectionAlias.objects.create(collection=collection, slug=collection.slug)
 
 
     def backwards(self, orm):
