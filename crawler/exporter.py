@@ -3,7 +3,7 @@ from django.utils import timezone
 from core.models import Collection
 
 
-SQL_INSERT_MANGA = "INSERT INTO manga (_id, title, cover, author, summary, favourite) VALUES ({}, '{}', '{}','{}', '{}', 0);"
+SQL_INSERT_MANGA = "INSERT INTO manga (_id, title, cover, author, summary, favourite, source) VALUES ({}, '{}', '{}','{}', '{}', 0, {});"
 SQL_INSERT_TAGS = "INSERT INTO tags (_id, name) VALUES ({}, '{}');"
 SQL_RELATE_MANGA_TAGS = 'INSERT INTO manga_tags (manga_id, tag_id) VALUES ({}, {});'
 SQL_INSERT_CHAPTER = "INSERT INTO manga_chapter (manga_id, _id) VALUES ({}, {});"
@@ -26,7 +26,8 @@ def import_to_mobile():
         result_sql.append(
             SQL_INSERT_MANGA.format(manga.id, manga.name.encode("UTF-8").replace("'", "''"), manga.cover_url,
                                     manga.author.get_full_name().encode("UTF-8").replace("'", "''"),
-                                    manga.summary.encode("UTF-8").replace("'", "''").replace('\n', " ")))
+                                    manga.summary.encode("UTF-8").replace("'", "''").replace('\n', " "),
+                                    manga.source_id))
 
         # Tags
         for tag in manga.tags.all():
@@ -45,7 +46,7 @@ def import_to_mobile():
         current += 1
 
     with open('mobile_database.sql', 'w') as output:
-        output.write("CREATE TABLE manga (_id INT PRIMARY KEY, title TEXT, cover TEXT,  author TEXT, summary TEXT, favourite BOOLEAN);\n")
+        output.write("CREATE TABLE manga (_id INT PRIMARY KEY, title TEXT, cover TEXT,  author TEXT, summary TEXT, favourite BOOLEAN, source INT);\n")
         output.write("CREATE TABLE manga_tags (manga_id INT, tag_id INT);\n")
         output.write("CREATE TABLE manga_chapter (manga_id INT, _id INT PRIMARY KEY, read BOOLEAN DEFAULT 0, new BOOLEAN DEFAULT 0);\n")
         output.write("CREATE TABLE manga_chapter_page (chapter_id INT, position INT, url TEXT);\n")
