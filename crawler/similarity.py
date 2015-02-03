@@ -8,7 +8,6 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "barddo.settings.mb_development"
 #
 from core.models import Collection, CollectionAlias
 from utils import is_similar
-import cPickle as pickle
 import os
 
 
@@ -53,13 +52,23 @@ def find_similar_after_import():
         cover = results[1]
         similar = results[2]
 
-        result_string += "-------------------------------------------------\n"
-        result_string += "{} - {} ({}) is similar to: ".format(id, name, cover) + '\n'
+        result_string += u"-------------------------------------------------\n"
+        result_string += u"{} - {} ({}) is similar to: ".format(id, name, cover) + u'\n'
         for n in similar:
-            result_string += str(n[0]) + " - " + n[1] + ": " + n[2] + "\n"
+            result_string += str(n[0]) + u" - " + n[1] + u": " + n[2] + u"\n"
 
-    subject = "Importacao de mangás possivelmente repetidos"
-    body = "Os Mangas abaixo provavelmente estao repetidos, analise e remova da base se for o caso...\n\n"
+    subject = u"Importacao de novas coleções"
+
+    if len(new_slugs) > 1:
+        body = u"Os seguintes mangás foram importados:\n"
+        for _, name, _ in new_slugs:
+            body += "- {}\n".format(name)
+
+        body += "\n\n"
+        body += u"Os Mangas abaixo provavelmente estao repetidos, analise e remova da base se for o caso...\n\n"
+        body += result_string
+    else:
+        body = u"Nenhum mangá criado hoje..."
     mail_admins(subject, body)
 
     print "Done, filtering valuable results..."
