@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.utils.text import slugify
 from django.db import transaction
 
-from core.models import Collection, Work, RemotePage
+from core.models import Collection, Work, RemotePage, CollectionAlias
 from accounts.models import BarddoUser
 
 
@@ -30,22 +30,31 @@ def get_or_create_collection(title, cover_url, summary, author, tags, status, ta
     inner_status = Collection.STATUS_COMPLETED if status == u"Completo" else Collection.STATUS_ONGOING
     title_slug = slugify(title)
 
-    with transaction.atomic():
-        collection, created = Collection.objects.select_related("source").get_or_create(slug=title_slug,
-                                                                                        defaults={'name': title,
-                                                                                                  'start_date': timezone.now(),
-                                                                                                  'status': Collection.STATUS_ONGOING,
-                                                                                                  'summary': summary,
-                                                                                                  'cover_url': cover_url,
-                                                                                                  'author': author,
-                                                                                                  'source': source
-                                                                                        })
+    aliases = CollectionAlias.objects.filter(slug=title_slug)
+    if len(aliases) > 0:
+        print "Ignoring {}, alias already found".format(title_slug)
+        return aliases[0].collection, inner_status, False, True
+    else:
+        with transaction.atomic():
+            collection, created = Collection.objects.select_related("source").get_or_create(slug=title_slug,
+                                                                                            defaults={'name': title,
+                                                                                                      'start_date': timezone.now(),
+                                                                                                      'status': Collection.STATUS_ONGOING,
+                                                                                                      'summary': summary,
+                                                                                                      'cover_url': cover_url,
+                                                                                                      'author': author,
+                                                                                                      'source': source,
+                                                                                                      "enabled": False
+                                                                                            })
 
-    # Schedule for post saving
-    if created:
-        tags_queue.put((collection, tags))
+            if created:
+                CollectionAlias.objects.create(slug=title_slug, collection=collection)
 
-    return collection, inner_status, created
+        # Schedule for post saving
+        if created:
+            tags_queue.put((collection, tags))
+
+        return collection, inner_status, created, False
 
 
 def get_or_create_author(name):

@@ -3,29 +3,19 @@ from south.utils import datetime_utils as datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
-from core.models import Collection, CollectionAlias
 
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'CollectionAlias'
-        db.create_table(u'core_collectionalias', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('collection', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.Collection'])),
-            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=250)),
-        ))
-        db.send_create_signal(u'core', ['CollectionAlias'])
 
-        if not db.dry_run:
-            for collection in orm.Collection.objects.filter():
-                orm.CollectionAlias.objects.create(collection=collection, slug=collection.slug)
-
+        # Changing field 'RemotePage.url'
+        db.alter_column(u'core_remotepage', 'url', self.gf('django.db.models.fields.URLField')(max_length=500, null=True))
 
     def backwards(self, orm):
-        # Deleting model 'CollectionAlias'
-        db.delete_table(u'core_collectionalias')
 
+        # Changing field 'RemotePage.url'
+        db.alter_column(u'core_remotepage', 'url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True))
 
     models = {
         u'accounts.barddouser': {
@@ -70,9 +60,10 @@ class Migration(SchemaMigration):
             'author': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['accounts.BarddoUser']"}),
             'cover': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'cover_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'enabled': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'end_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'last_updated': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2015, 1, 28, 0, 0)', 'auto_now': 'True', 'db_index': 'True', 'auto_now_add': 'True', 'blank': 'True'}),
+            'last_updated': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2015, 2, 1, 0, 0)', 'auto_now': 'True', 'db_index': 'True', 'auto_now_add': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '250'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '250'}),
             'source': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.CollectionSource']"}),
@@ -90,7 +81,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'CollectionAvailability'},
             'collection': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['core.Collection']", 'unique': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'modify_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2015, 1, 28, 0, 0)', 'auto_now': 'True', 'db_index': 'True', 'auto_now_add': 'True', 'blank': 'True'}),
+            'modify_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2015, 2, 1, 0, 0)', 'auto_now': 'True', 'db_index': 'True', 'auto_now_add': 'True', 'blank': 'True'}),
             'status': ('django.db.models.fields.SmallIntegerField', [], {'default': '0', 'db_index': 'True'})
         },
         u'core.collectionsource': {
@@ -103,7 +94,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'RemotePage'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'sequence': ('django.db.models.fields.PositiveIntegerField', [], {}),
-            'url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '500', 'null': 'True', 'blank': 'True'}),
             'work': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'remote_pages'", 'to': u"orm['core.Work']"})
         },
         u'core.work': {

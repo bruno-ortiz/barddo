@@ -1,4 +1,5 @@
 import re
+import os
 
 from bs4 import BeautifulSoup
 
@@ -18,13 +19,11 @@ class IndexParser(object):
     }
 
     def get_manga_list(self):
-        mangas = []
-        for absolute_url in self.get_all_pages():
-            print "Crawling page " + absolute_url
-            for link in self.get_mangas_in_page(absolute_url):
-                yield link
-        #     mangas.extend(self.get_mangas_in_page(absolute_url))
-        # return mangas
+        base_path = os.path.dirname(__file__)
+        file_path = os.path.join(base_path, "mangas_list.txt")
+
+        with open(file_path) as mangas_list:
+            return mangas_list.readlines()
 
     def get_all_pages(self):
         html, _ = get_html(self.INITIAL_URL, self.HEADERS)

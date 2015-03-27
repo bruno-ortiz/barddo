@@ -1,5 +1,8 @@
 # coding=utf-8
 import unittest
+from django.conf import settings
+settings.configure()
+
 
 from crawler.centraldemangas.pages_parser import PagesParser
 

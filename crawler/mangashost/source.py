@@ -5,5 +5,5 @@ from core.models import CollectionSource
 
 def create_source():
     with transaction.atomic():
-        obj, _ = CollectionSource.objects.get_or_create(id=2, name=u"Mangás Host", referer=u"http://mangashost")
+        obj, _ = CollectionSource.objects.get_or_create(id=CollectionSource.MANGA_HOST_ID, defaults={'name': u"Mangás Host", 'referer': u"www.mangashost.com"})
     return obj

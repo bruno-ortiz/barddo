@@ -7,10 +7,10 @@ from natsort import natsorted
 
 
 class CommonChapterParser(object):
-    BASE_URL = "http://centraldemangas.net{}"
+    BASE_URL = "http://centraldemangas.org{}"
 
     def should_parse(self, url):
-        return "centraldemangas.net" in url
+        return "centraldemangas.org" in url
 
     def parse(self, soup, url):
         chapter_links = soup.find_all('a', href=re.compile(r'.*/online/.*'))
@@ -20,7 +20,7 @@ class CommonChapterParser(object):
 
 class CustomPageChapterParser(object):
     def should_parse(self, url):
-        return "centraldemangas.net" not in url
+        return "centraldemangas.org" not in url
 
     def parse(self, soup, url):
         raw_url = url.replace("/informacoes/sinopse", "")

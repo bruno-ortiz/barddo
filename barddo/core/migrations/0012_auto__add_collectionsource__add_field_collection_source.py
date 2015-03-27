@@ -3,6 +3,7 @@ from south.utils import datetime_utils as datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
+from core.models import CollectionSource
 
 
 class Migration(SchemaMigration):
@@ -20,6 +21,11 @@ class Migration(SchemaMigration):
         db.add_column(u'core_collection', 'source',
                       self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['core.CollectionSource']),
                       keep_default=False)
+
+        if not db.dry_run:
+            orm.CollectionSource.objects.get_or_create(id=0, defaults={'name': u"Mangás Brasil", 'referer': u"www.mangasbrasil.com"})
+            orm.CollectionSource.objects.get_or_create(id=1, defaults={'name': u"Central de Mangás", 'referer': u"www.centraldemangas.net"})
+            orm.CollectionSource.objects.get_or_create(id=2, defaults={'name': u"Mangás Host", 'referer': u"www.mangashost.com"})
 
 
     def backwards(self, orm):
