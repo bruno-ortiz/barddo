@@ -145,7 +145,7 @@ def threaded_crawler(queue_size):
     t.start()
     tags_queue.join()
 
-    print "Done creating tags... Starting do filter similar collections..."
-    find_similar_after_import()
+    #print "Done creating tags... Starting do filter similar collections..."
+    #find_similar_after_import()
 
     print "Elapsed Time: {} with {} threads".format(time.time() - start, queue_size)
