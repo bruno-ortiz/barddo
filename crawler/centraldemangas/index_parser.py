@@ -6,7 +6,7 @@ from crawler.utils import get_html
 
 
 class IndexParser(object):
-    BASE_URL = "http://centraldemangas.net{}"
+    BASE_URL = "http://centraldemangas.org{}"
 
     INITIAL_URL = BASE_URL.format("/mangas/list/*")
 
