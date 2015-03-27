@@ -85,7 +85,7 @@ class ThreadUrl(threading.Thread):
                                                          data['status'], tags_queue, source)
 
                 # Only update if from the same source, otherwise it'll replicate chapter data
-                if (not repeated) and source == collection.source:
+                if (not repeated) and (source.id == collection.source.id):
 
                     # Only update if not completed
                     if created or collection.status == Collection.STATUS_ONGOING:
