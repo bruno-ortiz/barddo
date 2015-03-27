@@ -11,6 +11,9 @@ class IndexParserTest(unittest.TestCase):
     def setUp(self):
         self.parser = IndexParser()
 
+    def test_can_fetch_from_file(self):
+        self.assertTrue(len(self.parser.get_manga_list()) >= 1, u"Cannot get pages from mangás host file...")
+
     def test_can_fetch_all_pages(self):
         self.assertTrue(len(self.parser.get_all_pages()) >= 68, u"Cannot get paginated pages from mangás host...")
 
