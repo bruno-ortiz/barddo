@@ -23,7 +23,7 @@ class Migration(SchemaMigration):
                       keep_default=False)
 
         if not db.dry_run:
-            orm.CollectionSource.objects.get_or_create(id=0, defaults={'name': u"Mangás Brasil", 'referer': u"www.mangasbrasil.com"})
+            orm.CollectionSource.objects.get_or_create(id=99, defaults={'name': u"Mangás Brasil", 'referer': u"www.mangasbrasil.com"})
             orm.CollectionSource.objects.get_or_create(id=1, defaults={'name': u"Central de Mangás", 'referer': u"www.centraldemangas.net"})
             orm.CollectionSource.objects.get_or_create(id=2, defaults={'name': u"Mangás Host", 'referer': u"www.mangashost.com"})
 

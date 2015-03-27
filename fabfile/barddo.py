@@ -92,7 +92,7 @@ def update_repository():
     with cd(env.app):
         run('hg pull')
         run('hg up -C ' + env.branch)
-        run('hg purge')
+        # run('hg purge')
 
 
 def update_pip():
