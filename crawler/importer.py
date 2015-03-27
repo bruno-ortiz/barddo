@@ -149,6 +149,3 @@ def threaded_crawler(queue_size):
     find_similar_after_import()
 
     print "Elapsed Time: {} with {} threads".format(time.time() - start, queue_size)
-
-# # TODO: remove this line, tests only
-threaded_crawler(45)
