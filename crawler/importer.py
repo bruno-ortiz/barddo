@@ -21,8 +21,6 @@ from core.models import Collection
 import centraldemangas
 import mangashost
 
-centraldemangas.create_source()
-
 importers = [
     {
         u"source": centraldemangas.create_source(),
@@ -111,7 +109,7 @@ class ThreadUrl(threading.Thread):
                     else:
                         print Fore.YELLOW + u"Ignoring '{}', it's complete...".format(name) + Fore.WHITE
                 else:
-                    print Fore.YELLOW + u"Ignoring '{}', already imported by {}...".format(name, collection.source.name)  + Fore.WHITE
+                    print Fore.YELLOW + u"Ignoring '{}', already imported by {}...".format(name, collection.source.name) + Fore.WHITE
             except Exception, e:
                 print Fore.RED + u"Error loading manga '{}'".format(str(e)) + Fore.WHITE
             finally:

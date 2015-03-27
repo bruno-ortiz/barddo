@@ -7,6 +7,7 @@ from django.db import transaction
 
 from core.models import Collection, Work, RemotePage, CollectionAlias
 from accounts.models import BarddoUser
+from django.db.models import Q
 
 
 def get_or_create_work(collection, author, title, number):
@@ -30,7 +31,7 @@ def get_or_create_collection(title, cover_url, summary, author, tags, status, ta
     inner_status = Collection.STATUS_COMPLETED if status == u"Completo" else Collection.STATUS_ONGOING
     title_slug = slugify(title)
 
-    aliases = CollectionAlias.objects.filter(slug=title_slug)
+    aliases = CollectionAlias.objects.select_related("collection").filter(slug=title_slug).exclude(collection__source_id=source.id)
     if len(aliases) > 0:
         print "Ignoring {}, alias already found".format(title_slug)
         return aliases[0].collection, inner_status, False, True
